@@ -1,3 +1,5 @@
+<a href="https://www.ibm.com/it-it" target="blank"><img align="center" src="https://www.ibm.com/brand/experience-guides/developer/8f4e3cc2b5d52354a6d43c8edba1e3c9/02_8-bar-reverse.svg" alt="IBM_Logo" height="90" width="90" /></a>
+
 # IBM - Memory Coach
 Progetto per il corso EMAD in collaborazione con IBM. TEAM: Sergio del Sorbo, Emanuele Fittipaldi, Alessandra Parziale, Paolo Plomitallo
 
