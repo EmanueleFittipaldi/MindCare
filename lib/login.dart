@@ -1,3 +1,5 @@
+import 'package:mindcare/registrazione.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -344,8 +346,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       5, 0, 0, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      Navigator.of(context)
-                                          .pushNamed('Registrazione');
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const RegistrazioneWidget()));
                                     },
                                     text: 'Registrazione',
                                     options: FFButtonOptions(
