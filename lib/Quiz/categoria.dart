@@ -1,4 +1,4 @@
-import 'package:mindcare/Quiz/tipologia.dart';
+import 'package:mindcare/quiz/tipologia.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';

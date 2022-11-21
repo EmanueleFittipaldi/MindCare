@@ -5,8 +5,8 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'aggiuntaPaziente.dart';
-import 'dashboardPaziente.dart';
+import 'gestione_paziente/aggiuntaPaziente.dart';
+import 'gestione_paziente/dashboardPaziente.dart';
 import 'homePaziente.dart';
 import 'login.dart';
 import 'opzioni.dart';
