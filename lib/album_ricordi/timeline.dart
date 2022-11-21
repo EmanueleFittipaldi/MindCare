@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:timeline_list/timeline.dart';
+// ignore: depend_on_referenced_packages
 import 'package:timeline_list/timeline_model.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+// ignore: unused_import
 import '../flutter_flow/flutter_flow_util.dart';
 import 'data.dart';
 
