@@ -57,7 +57,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
@@ -72,7 +72,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                   borderRadius: 30,
                   borderWidth: 1,
                   buttonSize: 60,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_left,
                     color: Color(0xFFEBF9FF),
                     size: 30,
@@ -83,7 +83,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 40, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 40, 0),
                     child: Text(
                       'MindCare',
                       textAlign: TextAlign.center,
@@ -119,9 +119,10 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(0, 0.99),
+                    alignment: const AlignmentDirectional(0, 0.99),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -141,13 +142,13 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 10, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 10, 15, 0),
                           child: TextFormField(
                             controller: textController1,
                             autofocus: true,
@@ -190,14 +191,14 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
@@ -216,8 +217,8 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 30, 15, 0),
                           child: TextFormField(
                             controller: textController2,
                             autofocus: true,
@@ -260,14 +261,14 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
@@ -286,8 +287,8 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 20, 15, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -307,8 +308,9 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        12, 5, 12, 5),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 5, 12, 5),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -345,7 +347,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                                   DateTime.now().day,
                                                 ));
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.date_range_outlined,
                                             color: Color(0xFF57636C),
                                             size: 24,
@@ -360,8 +362,8 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 30, 15, 0),
                           child: TextFormField(
                             controller: textController3,
                             autofocus: true,
@@ -404,14 +406,14 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
@@ -431,8 +433,8 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 30, 15, 0),
                           child: TextFormField(
                             controller: textController4,
                             autofocus: true,
@@ -475,14 +477,14 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
@@ -498,7 +500,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   passwordVisibility1
                                       ? Icons.visibility_outlined
                                       : Icons.visibility_off_outlined,
-                                  color: Color(0xFF757575),
+                                  color: const Color(0xFF757575),
                                   size: 22,
                                 ),
                               ),
@@ -515,8 +517,8 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 30, 15, 0),
                           child: TextFormField(
                             controller: textController5,
                             autofocus: true,
@@ -559,14 +561,14 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
@@ -582,7 +584,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   passwordVisibility2
                                       ? Icons.visibility_outlined
                                       : Icons.visibility_off_outlined,
-                                  color: Color(0xFF757575),
+                                  color: const Color(0xFF757575),
                                   size: 22,
                                 ),
                               ),
@@ -599,14 +601,14 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 35, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 35, 15, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 5, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
@@ -619,7 +621,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                     options: FFButtonOptions(
                                       width: 130,
                                       height: 60,
-                                      color: Color(0xFFC11215),
+                                      color: const Color(0xFFC11215),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .subtitle2
                                           .override(
@@ -639,7 +641,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               ),
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 0, 0),
                                   child: FFButtonWidget(
                                     onPressed: () {

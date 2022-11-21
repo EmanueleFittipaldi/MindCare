@@ -1,14 +1,12 @@
+import 'package:mindcare/appbar/appbar_caregiver.dart';
+
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import 'datiPaziente.dart';
-import '../homeCaregiver.dart';
-import '../login.dart';
-import '../opzioni.dart';
+import '../gestione_ricordi/gestione_album.dart';
+import 'dati_paziente.dart';
 
 class DashboardPazienteWidget extends StatefulWidget {
   const DashboardPazienteWidget({Key? key}) : super(key: key);
@@ -26,85 +24,9 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Color(0xFFEBF9FF),
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const HomeCaregiverWidget()));
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                  child: Text(
-                    'MindCare',
-                    style: FlutterFlowTheme.of(context).title2.override(
-                          fontFamily: 'IBM Plex Sans',
-                          color: Colors.white,
-                          fontSize: 22,
-                        ),
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.settings,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        size: 30,
-                      ),
-                      onPressed: () async {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const OpzioniWidget()));
-                      },
-                    ),
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.logout,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        size: 30,
-                      ),
-                      onPressed: () async {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const LoginWidget()));
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 2,
-        ),
+        child: AppbarcaregiverWidget(),
       ),
       body: SafeArea(
         child: GestureDetector(
@@ -118,7 +40,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                   height: 250,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryColor,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(155),
                       bottomRight: Radius.circular(0),
                       topLeft: Radius.circular(0),
@@ -129,12 +51,13 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                         child: Container(
                           width: 150,
                           height: 150,
                           clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
                           child: Image.network(
@@ -144,7 +67,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
                         child: SelectionArea(
                             child: Text(
                           'Giuseppe Giglio',
@@ -163,17 +87,18 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFF24A148),
+                            color: const Color(0xFF24A148),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -183,7 +108,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 120,
@@ -198,7 +123,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(
@@ -220,10 +145,11 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFEE5396),
+                            color: const Color(0xFFEE5396),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -233,7 +159,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 120,
@@ -244,11 +170,14 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     size: 50,
                                   ),
                                   onPressed: () async {
-                                    //context.pushNamed('GestioneAlbum');
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const GestioneAlbumWidget()));
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(
@@ -272,17 +201,18 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 5, 20, 5),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 5, 20, 5),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFFF832B),
+                            color: const Color(0xFFFF832B),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -292,7 +222,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 120,
@@ -307,7 +237,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(
@@ -329,10 +259,11 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFF919191),
+                            color: const Color(0xFF919191),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -342,7 +273,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 120,
@@ -360,7 +291,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(

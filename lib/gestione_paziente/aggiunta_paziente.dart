@@ -1,13 +1,12 @@
+import 'package:mindcare/appbar/appbar_caregiver.dart';
+
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../homeCaregiver.dart';
-import '../login.dart';
-import '../opzioni.dart';
+import '../caregiver/home_caregiver.dart';
 
 class AggiuntaPazienteWidget extends StatefulWidget {
   const AggiuntaPazienteWidget({Key? key}) : super(key: key);
@@ -50,90 +49,15 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Color(0xFFEBF9FF),
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                  child: Text(
-                    'MindCare',
-                    style: FlutterFlowTheme.of(context).title2.override(
-                          fontFamily: 'IBM Plex Sans',
-                          color: Colors.white,
-                          fontSize: 22,
-                        ),
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.settings,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        size: 30,
-                      ),
-                      onPressed: () async {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const OpzioniWidget()));
-                      },
-                    ),
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.logout,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        size: 30,
-                      ),
-                      onPressed: () async {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const LoginWidget()));
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 2,
-        ),
+        child: AppbarcaregiverWidget(),
       ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
             child: Form(
               key: formKey,
               autovalidateMode: AutovalidateMode.disabled,
@@ -142,7 +66,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                     child: Text(
                       'Aggiunta del paziente',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -152,13 +76,15 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 4, 0, 0),
                             child: Container(
                               width: 120,
                               height: 120,
@@ -171,7 +97,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                     'assets/images/emptyState@2x.png',
                                   ).image,
                                 ),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 6,
                                     color: Color(0x3A000000),
@@ -183,8 +109,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController1,
                               autofocus: true,
@@ -210,14 +136,14 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -234,8 +160,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController2,
                               autofocus: true,
@@ -261,14 +187,14 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -285,8 +211,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: Container(
                               width: double.infinity,
                               height: 52,
@@ -300,7 +226,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                 ),
                               ),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     10, 0, 12, 0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -317,7 +243,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                             fontWeight: FontWeight.normal,
                                           ),
                                     ),
-                                    Icon(
+                                    const Icon(
                                       Icons.date_range_outlined,
                                       color: Color(0xFF57636C),
                                       size: 24,
@@ -328,12 +254,10 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 10),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
+                              onPressed: () {},
                               text: 'Genera credenziali',
                               options: FFButtonOptions(
                                 width: 160,
@@ -347,7 +271,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
                                     ),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
@@ -356,8 +280,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController3,
                               autofocus: true,
@@ -383,14 +307,14 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -407,8 +331,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController4,
                               autofocus: true,
@@ -434,14 +358,14 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -457,7 +381,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                     passwordVisibility
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    color: Color(0xFF757575),
+                                    color: const Color(0xFF757575),
                                     size: 22,
                                   ),
                                 ),
@@ -472,8 +396,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 15),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -486,7 +410,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                   options: FFButtonOptions(
                                     width: 130,
                                     height: 40,
-                                    color: Color(0xFFC11215),
+                                    color: const Color(0xFFC11215),
                                     textStyle: FlutterFlowTheme.of(context)
                                         .subtitle2
                                         .override(
@@ -494,7 +418,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                           color: Colors.white,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       color: Colors.transparent,
                                       width: 1,
                                     ),
@@ -521,7 +445,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                           color: Colors.white,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       color: Colors.transparent,
                                       width: 1,
                                     ),

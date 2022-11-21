@@ -25,7 +25,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
@@ -40,7 +40,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                   borderRadius: 30,
                   borderWidth: 1,
                   buttonSize: 60,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_left,
                     color: Color(0xFFEBF9FF),
                     size: 30,
@@ -50,7 +50,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                   },
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                   child: Text(
                     'MindCare',
                     style: FlutterFlowTheme.of(context).title2.override(
@@ -95,7 +95,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                   height: 230,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryColor,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(155),
                       bottomRight: Radius.circular(0),
                       topLeft: Radius.circular(0),
@@ -114,10 +114,10 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                           fit: BoxFit.fill,
                         ),
                         Align(
-                          alignment: AlignmentDirectional(0.98, -0.88),
+                          alignment: const AlignmentDirectional(0.98, -0.88),
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 10, 0),
                             child: SelectionArea(
                                 child: Text(
                               'Seleziona una \ncategoria',
@@ -139,17 +139,18 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFF4589FF),
+                            color: const Color(0xFF4589FF),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -159,7 +160,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 180,
@@ -178,7 +179,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 25),
                                   child: SelectionArea(
                                       child: Text(
@@ -201,10 +202,11 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFF24A148),
+                            color: const Color(0xFF24A148),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -214,7 +216,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 180,
@@ -232,7 +234,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 25),
                                   child: SelectionArea(
                                       child: Text(
@@ -257,17 +259,18 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 5, 20, 10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 5, 20, 10),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFEE5396),
+                            color: const Color(0xFFEE5396),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -277,7 +280,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 180,
@@ -296,7 +299,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 25),
                                   child: SelectionArea(
                                       child: Text(
@@ -319,10 +322,11 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFA56EFF),
+                            color: const Color(0xFFA56EFF),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -332,7 +336,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 180,
@@ -350,7 +354,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 25),
                                   child: SelectionArea(
                                       child: Text(

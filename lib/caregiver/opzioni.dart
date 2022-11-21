@@ -1,12 +1,11 @@
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import '../../flutter_flow/flutter_flow_icon_button.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+// ignore: unused_import
+import '../../flutter_flow/flutter_flow_util.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'login.dart';
+import '../login.dart';
 
 class OpzioniWidget extends StatefulWidget {
   const OpzioniWidget({Key? key}) : super(key: key);
@@ -61,7 +60,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
@@ -76,7 +75,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                   borderRadius: 30,
                   borderWidth: 1,
                   buttonSize: 60,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_left,
                     color: Color(0xFFEBF9FF),
                     size: 30,
@@ -87,7 +86,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 40, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 40, 0),
                     child: Text(
                       'MindCare',
                       textAlign: TextAlign.center,
@@ -118,7 +117,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                 color: FlutterFlowTheme.of(context).primaryColor,
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -132,7 +131,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.network(
@@ -146,7 +146,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -163,15 +164,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                       ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 4, 0, 0),
                               child: Text(
                                 'ID: 0001',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Lexend Deca',
-                                      color: Color(0xB4FFFFFF),
+                                      color: const Color(0xB4FFFFFF),
                                       fontSize: 14,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -186,7 +187,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
               child: Container(
                 width: double.infinity,
                 color: Colors.white,
@@ -194,7 +195,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                   initialExpanded: false,
                   child: ExpandablePanel(
                     header: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
                       child: Text(
                         'Modifica dati',
                         style: FlutterFlowTheme.of(context).subtitle2,
@@ -208,13 +210,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                           ),
                     ),
                     expanded: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController1,
                               autofocus: true,
@@ -240,14 +243,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -264,8 +267,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController2,
                               autofocus: true,
@@ -291,14 +294,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -315,8 +318,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: Container(
                               width: double.infinity,
                               height: 55,
@@ -330,7 +333,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 ),
                               ),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     10, 0, 12, 0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -347,7 +350,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             fontWeight: FontWeight.normal,
                                           ),
                                     ),
-                                    Icon(
+                                    const Icon(
                                       Icons.date_range_outlined,
                                       color: Color(0xFF57636C),
                                       size: 24,
@@ -358,8 +361,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController3,
                               autofocus: true,
@@ -385,14 +388,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -409,12 +412,10 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 15),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
+                              onPressed: () {},
                               text: 'Salva',
                               options: FFButtonOptions(
                                 width: 130,
@@ -428,7 +429,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
                                     ),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
@@ -439,7 +440,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                         ],
                       ),
                     ),
-                    theme: ExpandableThemeData(
+                    theme: const ExpandableThemeData(
                       tapHeaderToExpand: true,
                       tapBodyToExpand: false,
                       tapBodyToCollapse: false,
@@ -451,7 +452,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
               child: Container(
                 width: double.infinity,
                 color: Colors.white,
@@ -459,7 +460,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                   initialExpanded: false,
                   child: ExpandablePanel(
                     header: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
                       child: Text(
                         'Cambia password',
                         style: FlutterFlowTheme.of(context).subtitle2,
@@ -473,13 +475,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                           ),
                     ),
                     expanded: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController4,
                               autofocus: true,
@@ -505,14 +508,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -528,7 +531,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                     passwordVisibility1
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    color: Color(0xFF757575),
+                                    color: const Color(0xFF757575),
                                     size: 22,
                                   ),
                                 ),
@@ -543,8 +546,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController5,
                               autofocus: true,
@@ -570,14 +573,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -593,7 +596,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                     passwordVisibility2
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    color: Color(0xFF757575),
+                                    color: const Color(0xFF757575),
                                     size: 22,
                                   ),
                                 ),
@@ -608,8 +611,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController6,
                               autofocus: true,
@@ -635,14 +638,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -658,7 +661,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                     passwordVisibility3
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    color: Color(0xFF757575),
+                                    color: const Color(0xFF757575),
                                     size: 22,
                                   ),
                                 ),
@@ -673,12 +676,10 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 15),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
+                              onPressed: () {},
                               text: 'Salva',
                               options: FFButtonOptions(
                                 width: 130,
@@ -692,7 +693,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
                                     ),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
@@ -703,7 +704,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                         ],
                       ),
                     ),
-                    theme: ExpandableThemeData(
+                    theme: const ExpandableThemeData(
                       tapHeaderToExpand: true,
                       tapBodyToExpand: false,
                       tapBodyToCollapse: false,
@@ -715,7 +716,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(15, 20, 15, 20),
+              padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 20),
               child: Container(
                 width: double.infinity,
                 color: Colors.white,
@@ -723,7 +724,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                   initialExpanded: false,
                   child: ExpandablePanel(
                     header: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
                       child: Text(
                         'Termini & Servizi',
                         style: FlutterFlowTheme.of(context).subtitle2,
@@ -737,16 +739,17 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                           ),
                     ),
                     expanded: Align(
-                      alignment: AlignmentDirectional(-1, 0),
+                      alignment: const AlignmentDirectional(-1, 0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 15),
                               child: Text(
                                 'Lorem ipsum Lorem ipsum Lorem ipsum  Lorem ipsumLorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum',
                                 textAlign: TextAlign.start,
@@ -762,7 +765,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                         ),
                       ),
                     ),
-                    theme: ExpandableThemeData(
+                    theme: const ExpandableThemeData(
                       tapHeaderToExpand: true,
                       tapBodyToExpand: false,
                       tapBodyToCollapse: false,
@@ -774,7 +777,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
               child: FFButtonWidget(
                 onPressed: () async {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -789,7 +792,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                         fontFamily: 'IBM Plex Sans',
                         color: Colors.white,
                       ),
-                  borderSide: BorderSide(
+                  borderSide: const BorderSide(
                     color: Colors.transparent,
                     width: 1,
                   ),

@@ -1,5 +1,5 @@
 import 'package:mindcare/album_ricordi/timeline.dart';
-import 'package:mindcare/appbarpaziente.dart';
+import 'package:mindcare/appbar/appbar_paziente.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';

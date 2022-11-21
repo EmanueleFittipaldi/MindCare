@@ -4,7 +4,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PasswordDimenticataWidget extends StatefulWidget {
   const PasswordDimenticataWidget({Key? key}) : super(key: key);
@@ -41,7 +40,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
@@ -56,7 +55,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                   borderRadius: 30,
                   borderWidth: 1,
                   buttonSize: 60,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_left,
                     color: Color(0xFFEBF9FF),
                     size: 30,
@@ -67,7 +66,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 40, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 40, 0),
                     child: Text(
                       'MindCare',
                       textAlign: TextAlign.center,
@@ -103,9 +102,10 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(0, 0.99),
+                    alignment: const AlignmentDirectional(0, 0.99),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -125,13 +125,13 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 30, 15, 0),
                           child: TextFormField(
                             controller: textController,
                             autofocus: true,
@@ -174,14 +174,14 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
@@ -201,15 +201,13 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 30, 15, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
-                                },
+                                onPressed: () {},
                                 text: 'Invia email',
                                 options: FFButtonOptions(
                                   width: 170,

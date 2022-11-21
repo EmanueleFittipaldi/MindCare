@@ -1,8 +1,10 @@
 // ignore_for_file: overridden_fields, annotate_overrides
 
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
 
 const kThemeModeKey = '__theme_mode__';
@@ -95,8 +97,8 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color primaryText = const Color(0xFF101213);
   late Color secondaryText = const Color(0xFF57636C);
 
-  late Color primaryBtnText = Color(0xFF0F62FE);
-  late Color lineColor = Color(0xFFE0E3E7);
+  late Color primaryBtnText = const Color(0xFF0F62FE);
+  late Color lineColor = const Color(0xFFE0E3E7);
 }
 
 class DarkModeTheme extends FlutterFlowTheme {
@@ -109,8 +111,8 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color primaryText = const Color(0xFFFFFFFF);
   late Color secondaryText = const Color(0xFF95A1AC);
 
-  late Color primaryBtnText = Color(0xFFFFFFFF);
-  late Color lineColor = Color(0xFF22282F);
+  late Color primaryBtnText = const Color(0xFFFFFFFF);
+  late Color lineColor = const Color(0xFF22282F);
 }
 
 extension TextStyleHelper on TextStyle {

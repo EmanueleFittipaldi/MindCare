@@ -23,7 +23,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
@@ -38,7 +38,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                   borderRadius: 30,
                   borderWidth: 1,
                   buttonSize: 60,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_left,
                     color: Color(0xFFEBF9FF),
                     size: 30,
@@ -48,7 +48,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                   },
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                   child: Text(
                     'MindCare',
                     style: FlutterFlowTheme.of(context).title2.override(
@@ -93,7 +93,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                   height: 230,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryColor,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(155),
                       bottomRight: Radius.circular(0),
                       topLeft: Radius.circular(0),
@@ -112,10 +112,10 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                           fit: BoxFit.fill,
                         ),
                         Align(
-                          alignment: AlignmentDirectional(0.94, -0.92),
+                          alignment: const AlignmentDirectional(0.94, -0.92),
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 10, 0),
                             child: SelectionArea(
                                 child: Text(
                               'Seleziona una \ntipologia',
@@ -137,17 +137,18 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFFA4D56),
+                            color: const Color(0xFFFA4D56),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -157,7 +158,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 150,
@@ -172,7 +173,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 5),
                                   child: SelectionArea(
                                       child: Text(
@@ -189,7 +190,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   )),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 25),
                                   child: SelectionArea(
                                       child: Text(
@@ -214,17 +215,18 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 5, 20, 10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 5, 20, 10),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFA56EFF),
+                            color: const Color(0xFFA56EFF),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -234,7 +236,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 150,
@@ -249,7 +251,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 5),
                                   child: SelectionArea(
                                       child: Text(
@@ -266,7 +268,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   )),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 0, 25),
                                   child: SelectionArea(
                                       child: Text(

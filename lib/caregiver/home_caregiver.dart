@@ -1,14 +1,12 @@
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import '../../flutter_flow/flutter_flow_icon_button.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+// ignore: unused_import
+import '../../flutter_flow/flutter_flow_util.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'gestione_paziente/aggiuntaPaziente.dart';
-import 'gestione_paziente/dashboardPaziente.dart';
-import 'homePaziente.dart';
-import 'login.dart';
+import '../gestione_paziente/aggiunta_paziente.dart';
+import '../gestione_paziente/dashboard_paziente.dart';
+import '../login.dart';
 import 'opzioni.dart';
 
 class HomeCaregiverWidget extends StatefulWidget {
@@ -27,18 +25,18 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
-          actions: [],
+          actions: const [],
           flexibleSpace: FlexibleSpaceBar(
             title: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                   child: Text(
                     'MindCare',
                     style: FlutterFlowTheme.of(context).title2.override(
@@ -108,7 +106,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                   height: 250,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryColor,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(155),
                       bottomRight: Radius.circular(0),
                       topLeft: Radius.circular(0),
@@ -119,12 +117,13 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                         child: Container(
                           width: 150,
                           height: 150,
                           clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
                           child: Image.network(
@@ -134,7 +133,8 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
                         child: SelectionArea(
                             child: Text(
                           'Benvenuta Teresa!',
@@ -154,15 +154,15 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 5, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10, 5, 0, 0),
                             child: SelectionArea(
                                 child: Text(
                               'Pazienti:',
@@ -175,21 +175,21 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                             )),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 10, 10),
                                   child: Container(
                                     width: double.infinity,
                                     height: 80,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                           blurRadius: 4,
                                           color: Color(0x76000000),
@@ -199,8 +199,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 8, 12, 8),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 8, 12, 8),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -215,7 +216,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                               width: 80,
                                               height: 80,
                                               clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 shape: BoxShape.circle,
                                               ),
                                               child: Image.network(
@@ -226,8 +227,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 0, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -251,7 +253,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                               .override(
                                                                 fontFamily:
                                                                     'Outfit',
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xFF101213),
                                                                 fontSize: 18,
                                                                 fontWeight:
@@ -265,9 +267,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                   Expanded(
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 4, 0, 0),
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 4, 0, 0),
                                                       child: Text(
                                                         '10 Gennaio 1959',
                                                         style:
@@ -277,7 +279,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                 .override(
                                                                   fontFamily:
                                                                       'Outfit',
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0xFF57636C),
                                                                   fontSize: 14,
                                                                   fontWeight:
@@ -296,14 +298,12 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                             borderRadius: 30,
                                             borderWidth: 1,
                                             buttonSize: 50,
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.delete_forever_outlined,
                                               color: Color(0xFF8E8E8E),
                                               size: 30,
                                             ),
-                                            onPressed: () {
-                                              print('IconButton pressed ...');
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ],
                                       ),
@@ -311,14 +311,14 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 10, 10),
                                   child: Container(
                                     width: double.infinity,
                                     height: 80,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                           blurRadius: 4,
                                           color: Color(0x76000000),
@@ -328,8 +328,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 8, 12, 8),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 8, 12, 8),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -337,7 +338,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                             width: 80,
                                             height: 80,
                                             clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
                                             child: Image.network(
@@ -347,8 +348,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 0, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -372,7 +374,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                               .override(
                                                                 fontFamily:
                                                                     'Outfit',
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xFF101213),
                                                                 fontSize: 18,
                                                                 fontWeight:
@@ -386,9 +388,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                   Expanded(
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 4, 0, 0),
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 4, 0, 0),
                                                       child: Text(
                                                         '5 Ottobre 1958',
                                                         style:
@@ -398,7 +400,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                 .override(
                                                                   fontFamily:
                                                                       'Outfit',
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0xFF57636C),
                                                                   fontSize: 14,
                                                                   fontWeight:
@@ -417,14 +419,12 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                             borderRadius: 30,
                                             borderWidth: 1,
                                             buttonSize: 50,
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.delete_forever_outlined,
                                               color: Color(0xFF8E8E8E),
                                               size: 30,
                                             ),
-                                            onPressed: () {
-                                              print('IconButton pressed ...');
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ],
                                       ),
@@ -432,14 +432,14 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       10, 0, 10, 10),
                                   child: Container(
                                     width: double.infinity,
                                     height: 80,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                           blurRadius: 4,
                                           color: Color(0x76000000),
@@ -449,8 +449,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 8, 12, 8),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 8, 12, 8),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -458,7 +459,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                             width: 80,
                                             height: 80,
                                             clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                             ),
                                             child: Image.network(
@@ -468,8 +469,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 0, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -493,7 +495,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                               .override(
                                                                 fontFamily:
                                                                     'Outfit',
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xFF101213),
                                                                 fontSize: 18,
                                                                 fontWeight:
@@ -507,9 +509,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                   Expanded(
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 4, 0, 0),
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 4, 0, 0),
                                                       child: Text(
                                                         '18 Maggio 1948',
                                                         style:
@@ -519,7 +521,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                 .override(
                                                                   fontFamily:
                                                                       'Outfit',
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0xFF57636C),
                                                                   fontSize: 14,
                                                                   fontWeight:
@@ -538,14 +540,12 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                             borderRadius: 30,
                                             borderWidth: 1,
                                             buttonSize: 50,
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.delete_forever_outlined,
                                               color: Color(0xFF8E8E8E),
                                               size: 30,
                                             ),
-                                            onPressed: () {
-                                              print('IconButton pressed ...');
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ],
                                       ),
@@ -561,15 +561,16 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(-0.35, 0),
+                  alignment: const AlignmentDirectional(-0.35, 0),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               Navigator.of(context).push(MaterialPageRoute(
@@ -589,7 +590,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                         .tertiaryColor,
                                     fontSize: 36,
                                   ),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Color(0x00101213),
                                 width: 1,
                               ),

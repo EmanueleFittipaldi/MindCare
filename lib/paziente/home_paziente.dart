@@ -1,12 +1,10 @@
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
+import '../../flutter_flow/flutter_flow_icon_button.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import 'quiz/categoria.dart';
-import 'login.dart';
+import '../quiz/categoria.dart';
+import '../login.dart';
 
 class HomePazienteWidget extends StatefulWidget {
   const HomePazienteWidget({Key? key}) : super(key: key);
@@ -24,7 +22,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
@@ -35,7 +33,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                   child: Text(
                     'MindCare',
                     style: FlutterFlowTheme.of(context).title2.override(
@@ -80,7 +78,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                   height: 300,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryColor,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(155),
                       bottomRight: Radius.circular(0),
                       topLeft: Radius.circular(0),
@@ -91,12 +89,13 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                         child: Container(
                           width: 150,
                           height: 150,
                           clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
                           child: Image.network(
@@ -106,7 +105,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
                         child: SelectionArea(
                             child: Text(
                           'Benvenuto Giuseppe!',
@@ -122,7 +122,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                         )),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(50, 0, 15, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(50, 0, 15, 0),
                         child: SelectionArea(
                             child: Text(
                           'Questa è la tua schermata principale.\nCompleta un quiz oppure rivivi i tuoi ricordi!',
@@ -142,17 +143,18 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFF24A148),
+                            color: const Color(0xFF24A148),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -162,7 +164,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 120,
@@ -179,7 +181,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(
@@ -201,10 +203,11 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFEE5396),
+                            color: const Color(0xFFEE5396),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -214,7 +217,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 120,
@@ -229,7 +232,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(
@@ -253,17 +256,18 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 5, 20, 5),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 5, 20, 5),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFA56EFF),
+                            color: const Color(0xFFA56EFF),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -273,22 +277,20 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 120,
                                   icon: FaIcon(
-                                    FontAwesomeIcons.pencilRuler,
+                                    FontAwesomeIcons.penRuler,
                                     color: FlutterFlowTheme.of(context)
                                         .tertiaryColor,
                                     size: 50,
                                   ),
-                                  onPressed: () {
-                                    print('IconButton pressed ...');
-                                  },
+                                  onPressed: () {},
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(
@@ -310,10 +312,11 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFE16D4E),
+                            color: const Color(0xFFE16D4E),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -323,22 +326,20 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
+                                  borderColor: const Color(0x00FFFFFF),
                                   borderRadius: 0,
                                   borderWidth: 0,
                                   buttonSize: 120,
                                   icon: FaIcon(
-                                    FontAwesomeIcons.handsHelping,
+                                    FontAwesomeIcons.handshakeAngle,
                                     color: FlutterFlowTheme.of(context)
                                         .tertiaryColor,
                                     size: 50,
                                   ),
-                                  onPressed: () {
-                                    print('IconButton pressed ...');
-                                  },
+                                  onPressed: () {},
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(

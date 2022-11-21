@@ -1,4 +1,4 @@
-import 'package:mindcare/appbarpaziente.dart';
+import 'package:mindcare/appbar/appbar_paziente.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';

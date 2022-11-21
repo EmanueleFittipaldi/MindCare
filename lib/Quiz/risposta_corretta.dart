@@ -5,7 +5,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../homePaziente.dart';
+import '../paziente/home_paziente.dart';
 import '../login.dart';
 
 class RispostaCorrettaWidget extends StatefulWidget {
@@ -24,7 +24,7 @@ class _RispostaCorrettaWidgetState extends State<RispostaCorrettaWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
@@ -35,7 +35,7 @@ class _RispostaCorrettaWidgetState extends State<RispostaCorrettaWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                   child: Text(
                     'MindCare',
                     style: FlutterFlowTheme.of(context).title2.override(
@@ -74,11 +74,11 @@ class _RispostaCorrettaWidgetState extends State<RispostaCorrettaWidget> {
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: Align(
-              alignment: AlignmentDirectional(0.05, -0.3),
+              alignment: const AlignmentDirectional(0.05, -0.3),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -94,7 +94,8 @@ class _RispostaCorrettaWidgetState extends State<RispostaCorrettaWidget> {
                           ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                       child: Image.asset(
                         'assets/images/smart-guy-getting-award-winner-standing-pedestal-holding-golden-cup-cartoon-illustration_74855-14511.jpg.webp',
                         width: double.infinity,
@@ -103,7 +104,8 @@ class _RispostaCorrettaWidgetState extends State<RispostaCorrettaWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -122,7 +124,7 @@ class _RispostaCorrettaWidgetState extends State<RispostaCorrettaWidget> {
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
                                   ),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,
                           ),

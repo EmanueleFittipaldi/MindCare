@@ -1,13 +1,11 @@
+import 'package:mindcare/appbar/appbar_caregiver.dart';
+
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import '../login.dart';
-import '../opzioni.dart';
 
 class DatiPazienteWidget extends StatefulWidget {
   const DatiPazienteWidget({Key? key}) : super(key: key);
@@ -49,84 +47,9 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Color(0xFFEBF9FF),
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                  child: Text(
-                    'MindCare',
-                    style: FlutterFlowTheme.of(context).title2.override(
-                          fontFamily: 'IBM Plex Sans',
-                          color: Colors.white,
-                          fontSize: 22,
-                        ),
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.settings,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        size: 30,
-                      ),
-                      onPressed: () async {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const OpzioniWidget()));
-                      },
-                    ),
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.logout,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        size: 30,
-                      ),
-                      onPressed: () async {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const LoginWidget()));
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 2,
-        ),
+        child: AppbarcaregiverWidget(),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -139,7 +62,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                 color: FlutterFlowTheme.of(context).primaryColor,
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -153,7 +76,8 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.network(
@@ -167,7 +91,8 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -192,7 +117,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
               child: Container(
                 width: double.infinity,
                 color: Colors.white,
@@ -200,7 +125,8 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                   initialExpanded: false,
                   child: ExpandablePanel(
                     header: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
                       child: Text(
                         'Informazioni paziente',
                         style: FlutterFlowTheme.of(context).subtitle2,
@@ -214,7 +140,8 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                           ),
                     ),
                     expanded: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -323,7 +250,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                         ],
                       ),
                     ),
-                    theme: ExpandableThemeData(
+                    theme: const ExpandableThemeData(
                       tapHeaderToExpand: true,
                       tapBodyToExpand: false,
                       tapBodyToCollapse: false,
@@ -335,7 +262,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
               child: Container(
                 width: double.infinity,
                 color: Colors.white,
@@ -343,7 +270,8 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                   initialExpanded: false,
                   child: ExpandablePanel(
                     header: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
                       child: Text(
                         'Modifica password',
                         style: FlutterFlowTheme.of(context).subtitle2,
@@ -357,13 +285,14 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                           ),
                     ),
                     expanded: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController1,
                               autofocus: true,
@@ -390,14 +319,14 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -414,8 +343,8 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController2,
                               autofocus: true,
@@ -441,14 +370,14 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -464,7 +393,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                     passwordVisibility1
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    color: Color(0xFF757575),
+                                    color: const Color(0xFF757575),
                                     size: 22,
                                   ),
                                 ),
@@ -479,8 +408,8 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 15, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 15, 0, 5),
                             child: TextFormField(
                               controller: textController3,
                               autofocus: true,
@@ -506,14 +435,14 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
@@ -529,7 +458,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                     passwordVisibility2
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    color: Color(0xFF757575),
+                                    color: const Color(0xFF757575),
                                     size: 22,
                                   ),
                                 ),
@@ -544,12 +473,10 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 15),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
+                              onPressed: () {},
                               text: 'Salva',
                               options: FFButtonOptions(
                                 width: 130,
@@ -563,7 +490,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.normal,
                                     ),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
@@ -574,7 +501,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                         ],
                       ),
                     ),
-                    theme: ExpandableThemeData(
+                    theme: const ExpandableThemeData(
                       tapHeaderToExpand: true,
                       tapBodyToExpand: false,
                       tapBodyToCollapse: false,
@@ -586,7 +513,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
               child: Container(
                 width: double.infinity,
                 color: Colors.white,
@@ -594,7 +521,8 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                   initialExpanded: false,
                   child: ExpandablePanel(
                     header: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
                       child: Text(
                         'Cancella paziente',
                         style: FlutterFlowTheme.of(context).subtitle2,
@@ -608,24 +536,23 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                           ),
                     ),
                     expanded: Align(
-                      alignment: AlignmentDirectional(0, 0),
+                      alignment: const AlignmentDirectional(0, 0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 5, 0, 15),
                               child: FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
-                                },
+                                onPressed: () {},
                                 text: 'Elimina paziente',
                                 options: FFButtonOptions(
                                   width: 170,
                                   height: 40,
-                                  color: Color(0xFFC11215),
+                                  color: const Color(0xFFC11215),
                                   textStyle: FlutterFlowTheme.of(context)
                                       .subtitle2
                                       .override(
@@ -633,7 +560,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                         color: Colors.white,
                                         fontWeight: FontWeight.normal,
                                       ),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1,
                                   ),
@@ -645,7 +572,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                         ),
                       ),
                     ),
-                    theme: ExpandableThemeData(
+                    theme: const ExpandableThemeData(
                       tapHeaderToExpand: true,
                       tapBodyToExpand: false,
                       tapBodyToCollapse: false,

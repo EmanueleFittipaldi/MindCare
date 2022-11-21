@@ -5,7 +5,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../homePaziente.dart';
+import '../paziente/home_paziente.dart';
 import '../login.dart';
 
 class RispostaSbagliataWidget extends StatefulWidget {
@@ -25,7 +25,7 @@ class _RispostaSbagliataWidgetState extends State<RispostaSbagliataWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
@@ -36,7 +36,7 @@ class _RispostaSbagliataWidgetState extends State<RispostaSbagliataWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                   child: Text(
                     'MindCare',
                     style: FlutterFlowTheme.of(context).title2.override(
@@ -76,11 +76,11 @@ class _RispostaSbagliataWidgetState extends State<RispostaSbagliataWidget> {
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: Align(
-              alignment: AlignmentDirectional(0.05, -0.4),
+              alignment: const AlignmentDirectional(0.05, -0.4),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -88,7 +88,8 @@ class _RispostaSbagliataWidgetState extends State<RispostaSbagliataWidget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
                       child: Text(
                         'Oh no! la risposta non è giusta',
                         textAlign: TextAlign.center,
@@ -100,7 +101,8 @@ class _RispostaSbagliataWidgetState extends State<RispostaSbagliataWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                       child: Image.asset(
                         'assets/images/employees-giving-hands-helping-colleagues-walk-upstairs_74855-5236.jpg.webp',
                         width: 300,
@@ -109,7 +111,8 @@ class _RispostaSbagliataWidgetState extends State<RispostaSbagliataWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(15, 50, 15, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(15, 50, 15, 0),
                       child: Text(
                         'Vuoi riprovare?',
                         style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -120,7 +123,8 @@ class _RispostaSbagliataWidgetState extends State<RispostaSbagliataWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -135,7 +139,7 @@ class _RispostaSbagliataWidgetState extends State<RispostaSbagliataWidget> {
                             options: FFButtonOptions(
                               width: 140,
                               height: 60,
-                              color: Color(0xFFDA1E28),
+                              color: const Color(0xFFDA1E28),
                               textStyle: FlutterFlowTheme.of(context)
                                   .subtitle2
                                   .override(
@@ -144,7 +148,7 @@ class _RispostaSbagliataWidgetState extends State<RispostaSbagliataWidget> {
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
                                   ),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.transparent,
                                 width: 1,
                               ),
@@ -168,7 +172,7 @@ class _RispostaSbagliataWidgetState extends State<RispostaSbagliataWidget> {
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
                                   ),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.transparent,
                                 width: 1,
                               ),
