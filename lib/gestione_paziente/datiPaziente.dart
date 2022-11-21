@@ -1,13 +1,13 @@
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import '../../flutter_flow/flutter_flow_icon_button.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../flutter_flow/flutter_flow_util.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'login.dart';
-import 'opzioni.dart';
+import '../login.dart';
+import '../opzioni.dart';
 
 class DatiPazienteWidget extends StatefulWidget {
   const DatiPazienteWidget({Key? key}) : super(key: key);
