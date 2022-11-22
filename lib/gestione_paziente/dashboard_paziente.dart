@@ -1,9 +1,9 @@
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/gestione_quiz/gestione_quiz.dart';
-
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../gestione_ricordi/gestione_album.dart';

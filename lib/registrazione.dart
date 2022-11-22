@@ -1,18 +1,13 @@
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mindcare/login.dart';
 import 'package:mindcare/widget_tree.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth.dart';
-
 
 class RegistrazioneWidget extends StatefulWidget {
   const RegistrazioneWidget({Key? key}) : super(key: key);
@@ -37,19 +32,19 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
   String? errorMessage = 'Qualcosa è andato storto';
   final TextEditingController _controllerEmail = new TextEditingController();
   final TextEditingController _controllerPassword = new TextEditingController();
-  final TextEditingController _controllerRepeatPassword = new TextEditingController();
+  final TextEditingController _controllerRepeatPassword =
+      new TextEditingController();
   final TextEditingController _controllerNome = new TextEditingController();
   final TextEditingController _controllerCognome = new TextEditingController();
   final TextEditingController _controllerDate = new TextEditingController();
-
 
   Future<void> createNewUser() async {
     print("hai premuto il pulsante");
     try {
       await Auth().createNewUser(
         email: _controllerEmail.text,
-        password: _controllerPassword.text, 
-        cognome: _controllerCognome.text, 
+        password: _controllerPassword.text,
+        cognome: _controllerCognome.text,
         name: _controllerNome.text,
       );
     } on FirebaseAuthException catch (e) {
@@ -677,11 +672,11 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                       await createNewUser();
                                       print("Stampo il nuovo user");
                                       print(Auth().currentUser);
-                                      if(Auth().currentUser != null){
+                                      if (Auth().currentUser != null) {
                                         Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const WidgetTree()));
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const WidgetTree()));
                                       }
                                     },
                                     text: 'Conferma',

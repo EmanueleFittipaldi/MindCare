@@ -1,11 +1,8 @@
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/gestione_ricordi/creazione_ricordo.dart';
-
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class GestioneAlbumWidget extends StatefulWidget {
   const GestioneAlbumWidget({Key? key}) : super(key: key);

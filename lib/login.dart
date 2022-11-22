@@ -1,14 +1,9 @@
-import 'package:mindcare/home_page.dart';
 import 'package:mindcare/registrazione.dart';
-import 'package:mindcare/widget_tree.dart';
-
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth.dart';
-
 import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginWidget extends StatefulWidget {

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mindcare/caregiver/home_caregiver.dart';
-import 'package:mindcare/login.dart';
-import 'package:mindcare/paziente/home_paziente.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mindcare/widget_tree.dart';
-import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

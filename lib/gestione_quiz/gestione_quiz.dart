@@ -1,13 +1,10 @@
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/gestione_quiz/domanda_img_a_nome.dart';
 import 'package:mindcare/gestione_quiz/domanda_nome_a_img.dart';
-
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class GestionQuizWidget extends StatefulWidget {
   const GestionQuizWidget({Key? key}) : super(key: key);
