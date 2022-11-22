@@ -1,6 +1,8 @@
+// ignore: depend_on_referenced_packages
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// ignore: depend_on_referenced_packages
 import 'package:video_player/video_player.dart';
 
 const kDefaultAspectRatio = 16 / 9;

@@ -1,15 +1,15 @@
-import 'package:mindcare/home_page.dart';
 import 'package:mindcare/registrazione.dart';
+<<<<<<< HEAD
 import 'package:mindcare/widget_tree.dart';
 
+=======
+>>>>>>> f1bfc8b13358295483daa33cbd5d72438b800df2
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth.dart';
-
-import 'package:fluttertoast/fluttertoast.dart';  
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -19,7 +19,6 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-
   late bool passwordVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -27,22 +26,20 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
-  
+
   Future<void> signInWithEmailAndPassword() async {
     try {
       await Auth().signInWithEmailAndPassword(
-        email: _controllerEmail.text, 
-        password: _controllerPassword.text);
+          email: _controllerEmail.text, password: _controllerPassword.text);
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(
-        msg: "Email o Password errati",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );  
+          msg: "Email o Password errati",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
       setState(() {
         errorMessage = e.message;
       });
