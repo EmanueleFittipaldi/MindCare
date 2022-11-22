@@ -1,0 +1,90 @@
+import 'package:mindcare/caregiver/home_caregiver.dart';
+import 'package:mindcare/login.dart';
+import 'package:mindcare/caregiver/opzioni.dart';
+import '../../flutter_flow/flutter_flow_icon_button.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+import 'package:flutter/material.dart';
+
+class AppbarcaregiverWidget extends StatelessWidget {
+  const AppbarcaregiverWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+      automaticallyImplyLeading: false,
+      actions: [],
+      flexibleSpace: FlexibleSpaceBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30,
+              borderWidth: 1,
+              buttonSize: 60,
+              icon: const Icon(
+                Icons.keyboard_arrow_left,
+                color: Color(0xFFEBF9FF),
+                size: 30,
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+              },
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+              child: Text(
+                'MindCare',
+                style: FlutterFlowTheme.of(context).title2.override(
+                      fontFamily: 'IBM Plex Sans',
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
+              ),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                FlutterFlowIconButton(
+                  borderColor: Colors.transparent,
+                  borderRadius: 30,
+                  borderWidth: 1,
+                  buttonSize: 60,
+                  icon: Icon(
+                    Icons.settings,
+                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                    size: 30,
+                  ),
+                  onPressed: () async {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const OpzioniWidget()));
+                  },
+                ),
+                FlutterFlowIconButton(
+                  borderColor: Colors.transparent,
+                  borderRadius: 30,
+                  borderWidth: 1,
+                  buttonSize: 60,
+                  icon: Icon(
+                    Icons.logout,
+                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                    size: 30,
+                  ),
+                  onPressed: () async {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const LoginWidget()));
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+        centerTitle: true,
+        expandedTitleScale: 1.0,
+      ),
+      elevation: 2,
+    );
+  }
+}

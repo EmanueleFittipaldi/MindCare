@@ -1,5 +1,7 @@
+// ignore: depend_on_referenced_packages
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
 class FFButtonOptions {
@@ -65,6 +67,7 @@ class _FFButtonWidgetState extends State<FFButtonWidget> {
   Widget build(BuildContext context) {
     Widget textWidget = loading
         ? Center(
+            // ignore: sized_box_for_whitespace
             child: Container(
               width: 23,
               height: 23,
@@ -135,6 +138,7 @@ class _FFButtonWidgetState extends State<FFButtonWidget> {
     );
 
     if (widget.icon != null || widget.iconData != null) {
+      // ignore: sized_box_for_whitespace
       return Container(
         height: widget.options.height,
         width: widget.options.width,
@@ -156,6 +160,7 @@ class _FFButtonWidgetState extends State<FFButtonWidget> {
       );
     }
 
+    // ignore: sized_box_for_whitespace
     return Container(
       height: widget.options.height,
       width: widget.options.width,

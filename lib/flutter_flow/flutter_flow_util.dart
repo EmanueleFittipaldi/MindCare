@@ -2,17 +2,24 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
+// ignore: depend_on_referenced_packages
 import 'package:json_path/json_path.dart';
+// ignore: depend_on_referenced_packages
 import 'package:timeago/timeago.dart' as timeago;
+// ignore: depend_on_referenced_packages
 import 'package:url_launcher/url_launcher.dart';
 
+// ignore: unused_import
 import 'lat_lng.dart';
 
 export 'lat_lng.dart';
 export 'place.dart';
 export 'dart:math' show min, max;
+// ignore: depend_on_referenced_packages
 export 'package:intl/intl.dart';
+// ignore: depend_on_referenced_packages
 export 'package:page_transition/page_transition.dart';
 
 T valueOrDefault<T>(T? value, T defaultValue) =>
@@ -170,7 +177,8 @@ void showSnackbar(
         children: [
           if (loading)
             Padding(
-              padding: EdgeInsetsDirectional.only(end: 10.0),
+              padding: const EdgeInsetsDirectional.only(end: 10.0),
+              // ignore: sized_box_for_whitespace
               child: Container(
                 height: 20,
                 width: 20,

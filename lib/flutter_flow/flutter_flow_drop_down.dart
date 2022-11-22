@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:flutter/scheduler.dart';
 
 class FlutterFlowDropDown extends StatefulWidget {
   const FlutterFlowDropDown({
+    super.key,
     this.initialOption,
     this.hintText,
     required this.options,
@@ -94,6 +96,7 @@ class _FlutterFlowDropDownState extends State<FlutterFlowDropDown> {
       ),
     );
     if (widget.height != null || widget.width != null) {
+      // ignore: sized_box_for_whitespace
       return Container(
         width: widget.width,
         height: widget.height,
