@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mindcare/login.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mindcare/widget_tree.dart';
+import 'firebase_options.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MindCare());
 }
 
@@ -14,7 +20,7 @@ class MindCare extends StatelessWidget {
     return MaterialApp(
       title: 'MindCare',
       theme: ThemeData(),
-      home: const LoginWidget(),
+      home: const WidgetTree(),
     );
   }
 }

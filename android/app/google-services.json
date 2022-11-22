@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "765786458667",
+    "project_id": "emad-mindcare",
+    "storage_bucket": "emad-mindcare.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765786458667:android:8d625432bf22978a54786e",
+        "android_client_info": {
+          "package_name": "com.example.mindcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765786458667-eh867j8aciio94rubhd9c5ac5tfqdn44.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgH-wJwO_jeiVybpJesHIPrDgYWSjN1zE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765786458667-eh867j8aciio94rubhd9c5ac5tfqdn44.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "765786458667-k5vg944s47h7lic31apegr3a8ksbfq17.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mindcare"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

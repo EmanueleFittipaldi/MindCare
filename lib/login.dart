@@ -1,10 +1,17 @@
+import 'package:mindcare/home_page.dart';
 import 'package:mindcare/registrazione.dart';
+import 'package:mindcare/widget_tree.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'auth.dart';
+
+import 'package:fluttertoast/fluttertoast.dart';  
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -14,24 +21,46 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  TextEditingController? textController1;
-  TextEditingController? textController2;
 
   late bool passwordVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  String? errorMessage = 'Email o password errata';
+
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+  
+  Future<void> signInWithEmailAndPassword() async {
+    try {
+      await Auth().signInWithEmailAndPassword(
+        email: _controllerEmail.text, 
+        password: _controllerPassword.text);
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(
+        msg: "Email o Password errati",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );  
+      setState(() {
+        errorMessage = e.message;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
     passwordVisibility = false;
   }
 
   @override
   void dispose() {
-    textController1?.dispose();
-    textController2?.dispose();
+    _controllerEmail.dispose();
+    _controllerPassword.dispose();
     super.dispose();
   }
 
@@ -117,7 +146,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
                           child: TextFormField(
-                            controller: textController1,
+                            controller: _controllerEmail,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -181,7 +210,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
                           child: TextFormField(
-                            controller: textController2,
+                            controller: _controllerPassword,
                             autofocus: true,
                             obscureText: !passwordVisibility,
                             decoration: InputDecoration(
@@ -268,7 +297,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               Navigator.of(context)
                                   .pushNamed('passwordDimenticata');
                             },
-                            text: 'Passsword dimenticata?',
+                            text: 'Password dimenticata?',
                             options: FFButtonOptions(
                               width: 270,
                               height: 40,
@@ -300,23 +329,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 5, 0),
                                   child: FFButtonWidget(
-                                    onPressed: () async {
-                                      if ((textController1!.text ==
-                                              'caregiver') &&
-                                          (textController2!.text ==
-                                              'caregiver')) {
-                                        Navigator.of(context)
-                                            .pushNamed('HomeCaregiver');
-                                      } else {
-                                        if ((textController1!.text ==
-                                                'paziente') &&
-                                            (textController2!.text ==
-                                                'paziente')) {
-                                          Navigator.of(context)
-                                              .pushNamed('HomePaziente');
-                                        }
-                                      }
-                                    },
+                                    onPressed: signInWithEmailAndPassword,
                                     text: 'Accedi',
                                     options: FFButtonOptions(
                                       width: 130,

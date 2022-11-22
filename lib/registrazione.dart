@@ -1,4 +1,6 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/login.dart';
+import 'package:mindcare/widget_tree.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -7,6 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'auth.dart';
+
 
 class RegistrazioneWidget extends StatefulWidget {
   const RegistrazioneWidget({Key? key}) : super(key: key);
@@ -27,6 +33,29 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
 
   late bool passwordVisibility2;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  String? errorMessage = 'Qualcosa è andato storto';
+  final TextEditingController _controllerEmail = new TextEditingController();
+  final TextEditingController _controllerPassword = new TextEditingController();
+  final TextEditingController _controllerRepeatPassword = new TextEditingController();
+  final TextEditingController _controllerNome = new TextEditingController();
+  final TextEditingController _controllerCognome = new TextEditingController();
+  final TextEditingController _controllerDate = new TextEditingController();
+
+
+  Future<void> createNewUser() async {
+    print("hai premuto il pulsante");
+    try {
+      await Auth().createNewUser(
+        email: _controllerEmail.text,
+        password: _controllerPassword.text, 
+        cognome: _controllerCognome.text, 
+        name: _controllerNome.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: "qualcosa è andato storto");
+    }
+  }
 
   @override
   void initState() {
@@ -149,7 +178,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(15, 10, 15, 0),
                           child: TextFormField(
-                            controller: textController1,
+                            controller: _controllerNome,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -219,7 +248,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
                           child: TextFormField(
-                            controller: textController2,
+                            controller: _controllerCognome,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -363,7 +392,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
                           child: TextFormField(
-                            controller: textController3,
+                            controller: _controllerEmail,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -434,7 +463,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
                           child: TextFormField(
-                            controller: textController4,
+                            controller: _controllerPassword,
                             autofocus: true,
                             obscureText: !passwordVisibility1,
                             decoration: InputDecoration(
@@ -518,7 +547,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
                           child: TextFormField(
-                            controller: textController5,
+                            controller: _controllerRepeatPassword,
                             autofocus: true,
                             obscureText: !passwordVisibility2,
                             decoration: InputDecoration(
@@ -613,7 +642,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const LoginWidget()));
+                                                  const WidgetTree()));
                                     },
                                     text: 'Annulla',
                                     options: FFButtonOptions(
@@ -642,8 +671,16 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       5, 0, 0, 0),
                                   child: FFButtonWidget(
-                                    onPressed: () {
-                                      print('Button pressed ...');
+                                    onPressed: () async {
+                                      await createNewUser();
+                                      print("Stampo il nuovo user");
+                                      print(Auth().currentUser);
+                                      if(Auth().currentUser != null){
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const WidgetTree()));
+                                      }
                                     },
                                     text: 'Conferma',
                                     options: FFButtonOptions(
