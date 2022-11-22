@@ -227,17 +227,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 hintStyle:
                                     FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
@@ -278,17 +276,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 hintStyle:
                                     FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
@@ -328,8 +324,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                     .secondaryBackground,
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: const Color(0xFFE0E3E7),
                                 ),
                               ),
                               child: Padding(
@@ -372,17 +367,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 hintStyle:
                                     FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
@@ -492,17 +485,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 hintStyle:
                                     FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
@@ -557,17 +548,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 hintStyle:
                                     FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
@@ -622,17 +611,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 hintStyle:
                                     FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),

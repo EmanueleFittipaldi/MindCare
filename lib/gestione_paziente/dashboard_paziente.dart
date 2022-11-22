@@ -1,4 +1,5 @@
 import 'package:mindcare/appbar/appbar_caregiver.dart';
+import 'package:mindcare/gestione_quiz/gestione_quiz.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -119,7 +120,10 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     size: 50,
                                   ),
                                   onPressed: () async {
-                                    //context.pushNamed('GestioneQuiz');
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const GestionQuizWidget()));
                                   },
                                 ),
                                 Padding(

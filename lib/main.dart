@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/login.dart';
+import 'package:mindcare/paziente/home_paziente.dart';
 
 void main() {
   runApp(const MindCare());
@@ -14,7 +16,7 @@ class MindCare extends StatelessWidget {
     return MaterialApp(
       title: 'MindCare',
       theme: ThemeData(),
-      home: const LoginWidget(),
+      home: const HomeCaregiverWidget(),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:mindcare/album_ricordi/album_ricordi.dart';
+
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
@@ -228,7 +230,10 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                     size: 50,
                                   ),
                                   onPressed: () async {
-                                    //context.pushNamed('AlbumRicordi');
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const AlbumRicordiWidget()));
                                   },
                                 ),
                                 Padding(

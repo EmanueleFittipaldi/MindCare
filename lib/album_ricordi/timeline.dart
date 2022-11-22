@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mindcare/album_ricordi/ricordo.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timeline_list/timeline.dart';
 // ignore: depend_on_referenced_packages
@@ -39,7 +40,8 @@ class _TimelinePageState extends State<TimelinePage> {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () async {
-              //Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const RicordoWidget()));
             },
             child: Padding(
               padding: const EdgeInsets.all(16.0),

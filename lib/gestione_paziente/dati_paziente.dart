@@ -303,17 +303,15 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                 hintStyle:
                                     FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
@@ -354,17 +352,15 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                 hintStyle:
                                     FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
@@ -419,17 +415,15 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                 hintStyle:
                                     FlutterFlowTheme.of(context).bodyText2,
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                  borderSide: const BorderSide(
+                                    color: Color(0xFFE0E3E7),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(15),
