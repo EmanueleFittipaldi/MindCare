@@ -22,11 +22,7 @@ class MindCare extends StatelessWidget {
     return MaterialApp(
       title: 'MindCare',
       theme: ThemeData(),
-<<<<<<< HEAD
       home: const WidgetTree(),
-=======
-      home: const HomeCaregiverWidget(),
->>>>>>> cb9731505db765c875e27f6039626c4782f7eaf0
     );
   }
 }
