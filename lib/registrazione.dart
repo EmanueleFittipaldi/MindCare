@@ -673,7 +673,6 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                       await createNewUser();
                                       print("Stampo il nuovo user");
                                       print(Auth().currentUser);
-<<<<<<< HEAD
                                       final currentUser = Auth().currentUser;
                                       if(currentUser != null){
 
@@ -685,9 +684,6 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
 
                                         userRef.child(currentUser.uid).set(userDataMap);
                                         Fluttertoast.showToast(msg: "bravo ti sei registrato");
-=======
-                                      if (Auth().currentUser != null) {
->>>>>>> f1bfc8b13358295483daa33cbd5d72438b800df2
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
