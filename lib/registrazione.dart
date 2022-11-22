@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/utente.dart';
 import 'package:mindcare/widget_tree.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -33,16 +35,15 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
   String? errorMessage = 'Qualcosa è andato storto';
   final TextEditingController _controllerEmail = new TextEditingController();
   final TextEditingController _controllerPassword = new TextEditingController();
-  final TextEditingController _controllerRepeatPassword =
-      new TextEditingController();
+  final TextEditingController _controllerRepeatPassword = new TextEditingController();
   final TextEditingController _controllerNome = new TextEditingController();
   final TextEditingController _controllerCognome = new TextEditingController();
   final TextEditingController _controllerDate = new TextEditingController();
 
-  Future<void> createNewUser() async {
+  Future<void> createNewAccount() async {
     print("hai premuto il pulsante");
     try {
-      await Auth().createNewUser(
+      await Auth().createNewAccount(
         email: _controllerEmail.text,
         password: _controllerPassword.text,
         cognome: _controllerCognome.text,
@@ -670,19 +671,15 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                       5, 0, 0, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await createNewUser();
-                                      print("Stampo il nuovo user");
-                                      print(Auth().currentUser);
+                                      await createNewAccount();
                                       final currentUser = Auth().currentUser;
                                       if(currentUser != null){
-
-                                        Map userDataMap = {
-                                          "name": _controllerNome.text,
-                                          "lastName": _controllerCognome.text,
-                                          "email": _controllerEmail.text,
-                                        };
-
-                                        userRef.child(currentUser.uid).set(userDataMap);
+                                        final user = Utente(
+                                          userID: currentUser.uid,
+                                          name: _controllerNome.text, 
+                                          lastname: _controllerCognome.text, 
+                                          email: _controllerEmail.text);
+                                        user.createNewUser();
                                         Fluttertoast.showToast(msg: "bravo ti sei registrato");
                                         Navigator.of(context).push(
                                             MaterialPageRoute(

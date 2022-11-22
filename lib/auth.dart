@@ -20,7 +20,7 @@ class Auth {
     );
   }
 
-  Future<void> createNewUser({
+  Future<void> createNewAccount({
     required String email,
     required String password,
     required String name,
