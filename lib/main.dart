@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/login.dart';
@@ -13,6 +14,8 @@ Future<void> main() async {
   runApp(const MindCare());
 }
 
+DatabaseReference userRef = FirebaseDatabase.instance.reference().child("users");
+
 class MindCare extends StatelessWidget {
   const MindCare({Key? key}) : super(key: key);
 
@@ -22,11 +25,7 @@ class MindCare extends StatelessWidget {
     return MaterialApp(
       title: 'MindCare',
       theme: ThemeData(),
-<<<<<<< HEAD
       home: const WidgetTree(),
-=======
-      home: const HomeCaregiverWidget(),
->>>>>>> cb9731505db765c875e27f6039626c4782f7eaf0
     );
   }
 }

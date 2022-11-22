@@ -12,6 +12,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth.dart';
+import 'main.dart';
 
 
 class RegistrazioneWidget extends StatefulWidget {
@@ -677,7 +678,17 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                       await createNewUser();
                                       print("Stampo il nuovo user");
                                       print(Auth().currentUser);
-                                      if(Auth().currentUser != null){
+                                      final currentUser = Auth().currentUser;
+                                      if(currentUser != null){
+
+                                        Map userDataMap = {
+                                          "name": _controllerNome.text,
+                                          "lastName": _controllerCognome.text,
+                                          "email": _controllerEmail.text,
+                                        };
+
+                                        userRef.child(currentUser.uid).set(userDataMap);
+                                        Fluttertoast.showToast(msg: "bravo ti sei registrato");
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>

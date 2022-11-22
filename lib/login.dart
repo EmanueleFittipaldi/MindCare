@@ -1,10 +1,7 @@
 import 'package:mindcare/home_page.dart';
 import 'package:mindcare/registrazione.dart';
-<<<<<<< HEAD
 import 'package:mindcare/widget_tree.dart';
 
-=======
->>>>>>> cb9731505db765c875e27f6039626c4782f7eaf0
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
