@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '765786458667',
     projectId: 'emad-mindcare',
     storageBucket: 'emad-mindcare.appspot.com',
-    iosClientId: '765786458667-k5vg944s47h7lic31apegr3a8ksbfq17.apps.googleusercontent.com',
+    iosClientId:
+        '765786458667-k5vg944s47h7lic31apegr3a8ksbfq17.apps.googleusercontent.com',
     iosBundleId: 'com.example.mindcare',
   );
 }

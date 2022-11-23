@@ -1,3 +1,5 @@
+import 'package:mindcare/image_upload.dart';
+
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -13,7 +15,7 @@ class AggiuntaPazienteWidget extends StatefulWidget {
 class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
   bool isMediaUploading = false;
   String uploadedFileUrl = '';
-
+  String? profileImageUrl;
   TextEditingController? textController1;
   TextEditingController? textController2;
   TextEditingController? textController3;
@@ -108,12 +110,6 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .primaryBackground,
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: Image.asset(
-                                          'assets/images/add_photo.png',
-                                        ).image,
-                                      ),
                                       boxShadow: const [
                                         BoxShadow(
                                           blurRadius: 6,
@@ -124,13 +120,25 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: InkWell(
-                                      onTap: () async {},
-                                      child: Image.asset(
-                                        'assets/images/add_photo.png',
-                                        width: 100,
-                                        height: 100,
-                                        fit: BoxFit.contain,
-                                      ),
+                                      onTap: () async {
+                                        var imgUrl =
+                                            await ImageUpload().uploadImage();
+                                        print('imgURL:');
+                                        print(imgUrl);
+                                      },
+                                      child: profileImageUrl != null
+                                          ? Image.asset(
+                                              profileImageUrl!,
+                                              width: 100,
+                                              height: 100,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.asset(
+                                              'assets/images/add_photo.png',
+                                              width: 100,
+                                              height: 100,
+                                              fit: BoxFit.cover,
+                                            ),
                                     ),
                                   ),
                                 ),

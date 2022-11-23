@@ -35,7 +35,8 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
   String? errorMessage = 'Qualcosa è andato storto';
   final TextEditingController _controllerEmail = new TextEditingController();
   final TextEditingController _controllerPassword = new TextEditingController();
-  final TextEditingController _controllerRepeatPassword = new TextEditingController();
+  final TextEditingController _controllerRepeatPassword =
+      new TextEditingController();
   final TextEditingController _controllerNome = new TextEditingController();
   final TextEditingController _controllerCognome = new TextEditingController();
   final TextEditingController _controllerDate = new TextEditingController();
@@ -673,14 +674,18 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                     onPressed: () async {
                                       await createNewAccount();
                                       final currentUser = Auth().currentUser;
-                                      if(currentUser != null){
+                                      if (currentUser != null) {
                                         final user = Utente(
-                                          userID: currentUser.uid,
-                                          name: _controllerNome.text, 
-                                          lastname: _controllerCognome.text, 
-                                          email: _controllerEmail.text);
+                                            userID: currentUser.uid,
+                                            name: _controllerNome.text,
+                                            lastname: _controllerCognome.text,
+                                            email: _controllerEmail.text,
+                                            date: datePicked!,
+                                            type: 'Caregiver',
+                                            profileImgPath: '');
                                         user.createNewUser();
-                                        Fluttertoast.showToast(msg: "bravo ti sei registrato");
+                                        Fluttertoast.showToast(
+                                            msg: "bravo ti sei registrato");
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
