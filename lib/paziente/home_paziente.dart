@@ -1,4 +1,5 @@
 import 'package:mindcare/album_ricordi/album_ricordi.dart';
+import 'package:mindcare/widget_tree.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../auth.dart';
 import '../quiz/categoria.dart';
 import '../login.dart';
 
@@ -57,8 +59,9 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                     size: 30,
                   ),
                   onPressed: () async {
+                    Auth().signOut;
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const LoginWidget()));
+                        builder: (context) => const WidgetTree()));
                   },
                 ),
               ],

@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/caregiver/home_caregiver.dart';
+import 'package:mindcare/paziente/home_paziente.dart';
 
 import 'auth.dart';
 import 'home_page.dart';
@@ -13,8 +15,16 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
+
+
   @override
   Widget build(BuildContext context) {
+
+    final db = FirebaseFirestore.instance;
+    final userRef = db.collection("user");
+    
+    bool isCaregiver = false;
+
     return StreamBuilder(
       stream: Auth().authStateChanges,
       builder: (context, snapshot) {
@@ -29,3 +39,4 @@ class _WidgetTreeState extends State<WidgetTree> {
     );
   }
 }
+
