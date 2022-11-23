@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mindcare/auth.dart';
 import 'package:mindcare/utente.dart';
+import 'package:mindcare/widget_tree.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -23,7 +25,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Stream<List<Utente>> readUser() => FirebaseFirestore.instance
-  // .collection('users').snapshots().map((snapshot) => 
+  // .collection('users').snapshots().map((snapshot) =>
   // snapshot.docs.map((doc) => Utente.fromJson(doc.data())).toList());
 
   // final queryUser = FirebaseFirestore.instance.collection('user');
@@ -93,8 +95,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                         size: 30,
                       ),
                       onPressed: () async {
+                        Auth().signOut();
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const LoginWidget()));
+                            builder: (context) => const WidgetTree()));
                       },
                     ),
                   ],

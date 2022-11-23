@@ -1,5 +1,7 @@
+import 'package:mindcare/auth.dart';
 import 'package:mindcare/login.dart';
 import 'package:mindcare/caregiver/opzioni.dart';
+import 'package:mindcare/widget_tree.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
@@ -72,8 +74,9 @@ class AppbarcaregiverWidget extends StatelessWidget {
                     size: 30,
                   ),
                   onPressed: () async {
+                    Auth().signOut();
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const LoginWidget()));
+                        builder: (context) => const WidgetTree()));
                   },
                 ),
               ],
