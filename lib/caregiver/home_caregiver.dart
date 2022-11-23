@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mindcare/utente.dart';
+
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 // ignore: unused_import
@@ -18,6 +21,21 @@ class HomeCaregiverWidget extends StatefulWidget {
 
 class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  // Stream<List<Utente>> readUser() => FirebaseFirestore.instance
+  // .collection('users').snapshots().map((snapshot) => 
+  // snapshot.docs.map((doc) => Utente.fromJson(doc.data())).toList());
+
+  // final queryUser = FirebaseFirestore.instance.collection('user');
+
+  // final String testo = 'ciao';
+
+  // String getName(){
+  //   final name = queryUser.where("name", isEqualTo: "pasqualino").get();
+  //   print("stampo il nome");
+  //   print(name.toString());
+  //   return name.toString();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +155,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                             const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
                         child: SelectionArea(
                             child: Text(
-                          'Benvenuta Teresa!',
+                          'Benvenut* [Nome]!',
                           textAlign: TextAlign.start,
                           style: FlutterFlowTheme.of(context)
                               .bodyText1

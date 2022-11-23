@@ -1,3 +1,5 @@
+import 'package:mindcare/caregiver/home_caregiver.dart';
+
 import 'auth.dart';
 import 'home_page.dart';
 import 'login.dart';
@@ -18,7 +20,7 @@ class _WidgetTreeState extends State<WidgetTree> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           print("sono dentro widgetTree - SnapShot");
-          return HomePage();
+          return HomeCaregiverWidget();
         } else {
           print("sono dentro widgetTre - Snapshot NULL");
           return LoginWidget();

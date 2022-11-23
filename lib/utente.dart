@@ -15,6 +15,7 @@ class Utente {
   });
   
   final docUser = FirebaseFirestore.instance.collection('user').doc();
+  final queryUser = FirebaseFirestore.instance.collection('user');
 
   Map<String, dynamic> toJson() => {
     'userID': userID,
@@ -23,11 +24,25 @@ class Utente {
     'email': email
     };
 
+  static Utente fromJson(Map<String, dynamic> json) => Utente(
+    userID: json['id'],
+    name: json['name'],
+    lastname: json['lastname'],
+    email: json['email']
+  );
+
   Future<void> createNewUser() async{
 
     final json = this.toJson();
 
     await docUser.set(json);
+  }
+
+  String getName(){
+    final name = queryUser.where("name", isEqualTo: "pasqualino").get();
+    print("stampo il nome");
+    print(name.toString());
+    return name.toString();
   }
 
 }
