@@ -45,11 +45,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
     print("hai premuto il pulsante");
     try {
       await Auth().createNewAccount(
-        email: _controllerEmail.text,
-        password: _controllerPassword.text,
-        cognome: _controllerCognome.text,
-        name: _controllerNome.text,
-      );
+          email: _controllerEmail.text, password: _controllerPassword.text);
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: "qualcosa è andato storto");
     }

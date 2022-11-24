@@ -48,6 +48,16 @@ class Utente {
     await docUser.set(json);
   }
 
+  Future<void> createPatient() async {
+    final json = toJson();
+    final docUser = FirebaseFirestore.instance
+        .collection('user')
+        .doc(Auth().currentUser?.uid)
+        .collection('Pazienti')
+        .doc(json['userID']);
+    await docUser.set(json);
+  }
+
   String getName() {
     final name = queryUser.where("name", isEqualTo: "pasqualino").get();
     print("stampo il nome");

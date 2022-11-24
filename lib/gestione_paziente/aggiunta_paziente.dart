@@ -1,4 +1,13 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/auth.dart';
+import 'package:mindcare/caregiver/home_caregiver.dart';
+import 'package:mindcare/flutter_flow/flutter_flow_util.dart';
 import 'package:mindcare/image_upload.dart';
+import 'package:mindcare/utente.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -15,11 +24,12 @@ class AggiuntaPazienteWidget extends StatefulWidget {
 class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
   bool isMediaUploading = false;
   String uploadedFileUrl = '';
-  String? profileImageUrl;
-  TextEditingController? textController1;
-  TextEditingController? textController2;
-  TextEditingController? textController3;
-  TextEditingController? textController4;
+  String imagePickedPath = '';
+  DateTime? datePicked;
+  TextEditingController? controllerNome;
+  TextEditingController? controllerCognome;
+  TextEditingController? controllerUsername;
+  TextEditingController? controllerPassword;
 
   late bool passwordVisibility;
   final formKey = GlobalKey<FormState>();
@@ -28,20 +38,54 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
-    textController4 = TextEditingController();
+    controllerNome = TextEditingController();
+    controllerCognome = TextEditingController();
+    controllerUsername = TextEditingController();
+    controllerPassword = TextEditingController();
     passwordVisibility = false;
   }
 
   @override
   void dispose() {
-    textController1?.dispose();
-    textController2?.dispose();
-    textController3?.dispose();
-    textController4?.dispose();
+    controllerNome?.dispose();
+    controllerCognome?.dispose();
+    controllerUsername?.dispose();
+    controllerPassword?.dispose();
     super.dispose();
+  }
+
+  String generatePassword() {
+    String upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    String lower = 'abcdefghijklmnopqrstuvwxyz';
+    String numbers = '1234567890';
+    String symbols = '!@#\$%^&*()<>,./-';
+    int passLength = 14;
+    String seed = upper + lower + numbers + symbols;
+    String password = '';
+    List<String> list = seed.split('').toList();
+    Random rand = Random();
+    for (int i = 0; i < passLength; i++) {
+      int index = rand.nextInt(list.length);
+      password += list[index];
+    }
+    password += rand.nextInt(10).toString();
+    return password;
+  }
+
+  String generateRandomString(int len) {
+    var r = Random();
+    const _chars = '1234567890';
+    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
+        .join();
+  }
+
+  Future<String?> createNewPatientAccount() async {
+    try {
+      return await Auth().createNewPatientAccount(
+          email: controllerUsername!.text, password: controllerPassword!.text);
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: "Problema con la creazione dell'account!");
+    }
   }
 
   @override
@@ -80,401 +124,503 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                child: Form(
-                  key: formKey,
-                  autovalidateMode: AutovalidateMode.disabled,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 4, 0, 0),
-                                child: InkWell(
-                                  onTap: () async {},
-                                  child: Container(
-                                    width: 120,
-                                    height: 120,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 6,
-                                          color: Color(0x3A000000),
-                                          offset: Offset(0, 2),
-                                        )
-                                      ],
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        var imgUrl =
-                                            await ImageUpload().uploadImage();
-                                        print('imgURL:');
-                                        print(imgUrl);
-                                      },
-                                      child: profileImageUrl != null
-                                          ? Image.asset(
-                                              profileImageUrl!,
-                                              width: 100,
-                                              height: 100,
-                                              fit: BoxFit.cover,
-                                            )
-                                          : Image.asset(
-                                              'assets/images/add_photo.png',
-                                              width: 100,
-                                              height: 100,
-                                              fit: BoxFit.cover,
-                                            ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 15, 0, 5),
-                                child: TextFormField(
-                                  controller: textController1,
-                                  autofocus: true,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Nome:',
-                                    hintStyle:
-                                        FlutterFlowTheme.of(context).bodyText2,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFFE0E3E7),
-                                        width: 1,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  child: Form(
+                    key: formKey,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              20, 0, 20, 15),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 4, 0, 0),
+                                  child: InkWell(
+                                    onTap: () async {},
+                                    child: Container(
+                                      width: 120,
+                                      height: 120,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 6,
+                                            color: Color(0x3A000000),
+                                            offset: Offset(0, 2),
+                                          )
+                                        ],
+                                        shape: BoxShape.circle,
                                       ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFFE0E3E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 15, 0, 5),
-                                child: TextFormField(
-                                  controller: textController2,
-                                  autofocus: true,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Cognome:',
-                                    hintStyle:
-                                        FlutterFlowTheme.of(context).bodyText2,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFFE0E3E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFFE0E3E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 15, 0, 5),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 52,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(
-                                      color: const Color(0xFFE0E3E7),
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            10, 0, 12, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Data di nascita',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'IBM Plex Sans',
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                        ),
-                                        const Icon(
-                                          Icons.date_range_outlined,
-                                          color: Color(0xFF57636C),
-                                          size: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 15, 0, 10),
-                                child: FFButtonWidget(
-                                  onPressed: () {},
-                                  text: 'Genera credenziali',
-                                  options: FFButtonOptions(
-                                    width: 160,
-                                    height: 40,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'IBM Plex Sans',
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: 8,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 15, 0, 5),
-                                child: TextFormField(
-                                  controller: textController3,
-                                  autofocus: true,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Username:',
-                                    hintStyle:
-                                        FlutterFlowTheme.of(context).bodyText2,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFFE0E3E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFFE0E3E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 15, 0, 5),
-                                child: TextFormField(
-                                  controller: textController4,
-                                  autofocus: true,
-                                  obscureText: !passwordVisibility,
-                                  decoration: InputDecoration(
-                                    labelText: 'Password:',
-                                    hintStyle:
-                                        FlutterFlowTheme.of(context).bodyText2,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFFE0E3E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFFE0E3E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    suffixIcon: InkWell(
-                                      onTap: () => setState(
-                                        () => passwordVisibility =
-                                            !passwordVisibility,
-                                      ),
-                                      focusNode: FocusNode(skipTraversal: true),
-                                      child: Icon(
-                                        passwordVisibility
-                                            ? Icons.visibility_outlined
-                                            : Icons.visibility_off_outlined,
-                                        color: const Color(0xFF757575),
-                                        size: 22,
-                                      ),
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 15, 0, 15),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 20, 0, 16),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          if (formKey.currentState == null ||
-                                              !formKey.currentState!
-                                                  .validate()) {
-                                            return;
+                                      child: InkWell(
+                                        onTap: () async {
+                                          var imagePath =
+                                              await ImageUpload().pickImage();
+                                          if (imagePath != null) {
+                                            setState(() {
+                                              imagePickedPath = imagePath;
+                                            });
                                           }
                                         },
-                                        text: 'Salva',
-                                        options: FFButtonOptions(
-                                          width: 200,
-                                          height: 50,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .subtitle1
-                                                  .override(
-                                                    fontFamily: 'IBM Plex Sans',
-                                                    color: Colors.white,
-                                                  ),
-                                          elevation: 3,
-                                          borderSide: const BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
+                                        child: imagePickedPath != ''
+                                            ? Image.asset(
+                                                imagePickedPath,
+                                                width: 100,
+                                                height: 100,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/add_photo.png',
+                                                width: 100,
+                                                height: 100,
+                                                fit: BoxFit.contain,
+                                              ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 15, 0, 5),
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Inserisci un nome!';
+                                      }
+                                      return null;
+                                    },
+                                    controller: controllerNome,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Nome:',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFE0E3E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFE0E3E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'IBM Plex Sans',
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 15, 0, 5),
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Inserisci un cognome!';
+                                      }
+                                      return null;
+                                    },
+                                    controller: controllerCognome,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Cognome:',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFE0E3E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFE0E3E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'IBM Plex Sans',
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 15, 0, 5),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 52,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(
+                                        color: const Color(0xFFE0E3E7),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              10, 0, 12, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            datePicked == null
+                                                ? 'Data di nascita'
+                                                : DateFormat('dd-MM-yyyy')
+                                                    .format(DateTime.parse(
+                                                        datePicked.toString())),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                          InkWell(
+                                            onTap: () async {
+                                              await DatePicker.showDatePicker(
+                                                  context,
+                                                  showTitleActions: true,
+                                                  onConfirm: (date) {
+                                                setState(
+                                                    () => datePicked = date);
+                                              },
+                                                  currentTime:
+                                                      getCurrentTimestamp,
+                                                  minTime: DateTime(0, 0, 0),
+                                                  maxTime: DateTime(
+                                                    DateTime.now().year,
+                                                    DateTime.now().month,
+                                                    DateTime.now().day,
+                                                  ));
+                                            },
+                                            child: const Icon(
+                                              Icons.date_range_outlined,
+                                              color: Color(0xFF57636C),
+                                              size: 24,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 15, 0, 10),
+                                  child: FFButtonWidget(
+                                    onPressed: () {
+                                      if (controllerNome!.text.isEmpty ||
+                                          controllerCognome!.text.isEmpty) {
+                                        controllerPassword!.text = '';
+                                        controllerUsername!.text = '';
+                                        Fluttertoast.showToast(
+                                            msg: 'Inserisci nome o cognome!');
+                                      } else {
+                                        var stringGenerated =
+                                            generateRandomString(4);
+                                        controllerUsername!.text =
+                                            '${controllerNome!.text[0]}.${controllerCognome!.text}.$stringGenerated@paziente.mindcare.it';
+                                        controllerPassword!.text =
+                                            generatePassword();
+                                      }
+                                    },
+                                    text: 'Genera credenziali',
+                                    options: FFButtonOptions(
+                                      width: 160,
+                                      height: 40,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle2
+                                          .override(
+                                            fontFamily: 'IBM Plex Sans',
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      borderSide: const BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: 8,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 15, 0, 5),
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Inserisci l\'username!';
+                                      }
+                                      return null;
+                                    },
+                                    controller: controllerUsername,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Username:',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFE0E3E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFE0E3E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'IBM Plex Sans',
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 15, 0, 5),
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      RegExp regex = RegExp(
+                                          r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%^&*()<>,./-]).{8,20}$');
+                                      if (value == null || value.isEmpty) {
+                                        return 'Inserisci la password!';
+                                      } else if (!regex.hasMatch(value)) {
+                                        return 'Inserisci una password valida!\nAlmeno 8 caratteri\nCarattere maiuscolo\nCarattere minuscolo\nUn numero\nUn carattere speciale';
+                                      }
+                                      return null;
+                                    },
+                                    controller: controllerPassword,
+                                    autofocus: true,
+                                    obscureText: !passwordVisibility,
+                                    decoration: InputDecoration(
+                                      labelText: 'Password:',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFE0E3E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFE0E3E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      suffixIcon: InkWell(
+                                        onTap: () => setState(
+                                          () => passwordVisibility =
+                                              !passwordVisibility,
+                                        ),
+                                        focusNode:
+                                            FocusNode(skipTraversal: true),
+                                        child: Icon(
+                                          passwordVisibility
+                                              ? Icons.visibility_outlined
+                                              : Icons.visibility_off_outlined,
+                                          color: const Color(0xFF757575),
+                                          size: 22,
+                                        ),
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'IBM Plex Sans',
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 15, 0, 15),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 20, 0, 16),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            if (formKey.currentState!
+                                                    .validate() &&
+                                                datePicked != null) {
+                                              var imageUrl;
+                                              if (imagePickedPath != '') {
+                                                imageUrl = await ImageUpload()
+                                                    .uploadImage(
+                                                        imagePickedPath);
+                                              }
+                                              final patientUID =
+                                                  await createNewPatientAccount();
+                                              if (patientUID != null) {
+                                                final user = Utente(
+                                                    userID: patientUID,
+                                                    name: controllerNome!.text,
+                                                    lastname:
+                                                        controllerCognome!.text,
+                                                    email: controllerUsername!
+                                                        .text,
+                                                    type: 'Paziente',
+                                                    date: datePicked!,
+                                                    profileImgPath:
+                                                        imageUrl ?? '');
+                                                user.createPatient();
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const HomeCaregiverWidget()));
+                                              }
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      'Inserisci tutti i campi!');
+                                            }
+                                          },
+                                          text: 'Salva',
+                                          options: FFButtonOptions(
+                                            width: 200,
+                                            height: 50,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle1
+                                                    .override(
+                                                      fontFamily:
+                                                          'IBM Plex Sans',
+                                                      color: Colors.white,
+                                                    ),
+                                            elevation: 3,
+                                            borderSide: const BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
