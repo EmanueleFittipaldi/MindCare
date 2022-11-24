@@ -383,7 +383,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                         var stringGenerated =
                                             generateRandomString(4);
                                         controllerUsername!.text =
-                                            '${controllerNome!.text[0]}.${controllerCognome!.text}.$stringGenerated@paziente.mindcare.it';
+                                            '${controllerNome!.text[0]}.${controllerCognome!.text.replaceAll(' ', '')}.$stringGenerated@paziente.mindcare.it';
                                         controllerPassword!.text =
                                             generatePassword();
                                       }
