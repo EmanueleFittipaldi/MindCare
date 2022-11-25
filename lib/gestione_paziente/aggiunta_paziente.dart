@@ -175,8 +175,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          var imagePath =
-                                              await ImageUpload().pickImage();
+                                          var imagePath = await ImageUpload()
+                                              .pickFile('image');
                                           if (imagePath != null) {
                                             setState(() {
                                               imagePickedPath = imagePath;
