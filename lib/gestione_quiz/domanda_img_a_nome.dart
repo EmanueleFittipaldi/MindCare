@@ -187,16 +187,11 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                           child: Container(
                                             width: 70,
                                             height: 70,
+                                            clipBehavior: Clip.antiAlias,
                                             decoration: BoxDecoration(
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBackground,
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: Image.asset(
-                                                  '',
-                                                ).image,
-                                              ),
                                               boxShadow: const [
                                                 BoxShadow(
                                                   blurRadius: 6,
@@ -208,11 +203,11 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                             ),
                                             child: InkWell(
                                               onTap: () async {},
-                                              child: Image.network(
-                                                '',
+                                              child: Image.asset(
+                                                'assets/images/add_photo.png',
                                                 width: 100,
                                                 height: 100,
-                                                fit: BoxFit.contain,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                           ),
@@ -244,16 +239,11 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                           child: Container(
                                             width: 70,
                                             height: 70,
+                                            clipBehavior: Clip.antiAlias,
                                             decoration: BoxDecoration(
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBackground,
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: Image.asset(
-                                                  '',
-                                                ).image,
-                                              ),
                                               boxShadow: const [
                                                 BoxShadow(
                                                   blurRadius: 6,
@@ -265,8 +255,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                             ),
                                             child: InkWell(
                                               onTap: () async {},
-                                              child: Image.network(
-                                                '',
+                                              child: Image.asset(
+                                                'assets/images/add_photo.png',
                                                 width: 100,
                                                 height: 100,
                                                 fit: BoxFit.contain,
@@ -312,16 +302,11 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                           child: Container(
                                             width: 70,
                                             height: 70,
+                                            clipBehavior: Clip.antiAlias,
                                             decoration: BoxDecoration(
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBackground,
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: Image.asset(
-                                                  '',
-                                                ).image,
-                                              ),
                                               boxShadow: const [
                                                 BoxShadow(
                                                   blurRadius: 6,
@@ -333,8 +318,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                             ),
                                             child: InkWell(
                                               onTap: () async {},
-                                              child: Image.network(
-                                                '',
+                                              child: Image.asset(
+                                                'assets/images/add_photo.png',
                                                 width: 100,
                                                 height: 100,
                                                 fit: BoxFit.contain,
@@ -369,16 +354,11 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                           child: Container(
                                             width: 70,
                                             height: 70,
+                                            clipBehavior: Clip.antiAlias,
                                             decoration: BoxDecoration(
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBackground,
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: Image.asset(
-                                                  '',
-                                                ).image,
-                                              ),
                                               boxShadow: const [
                                                 BoxShadow(
                                                   blurRadius: 6,
@@ -390,8 +370,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                             ),
                                             child: InkWell(
                                               onTap: () async {},
-                                              child: Image.network(
-                                                '',
+                                              child: Image.asset(
+                                                'assets/images/add_photo.png',
                                                 width: 100,
                                                 height: 100,
                                                 fit: BoxFit.contain,

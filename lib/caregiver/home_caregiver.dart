@@ -38,6 +38,10 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
       if (userSnap.exists) {
         Map<String, dynamic>? userMap =
             userSnap.data(); //mappatura dei dati prelevati
+
+        user.doc(Auth().currentUser?.uid).snapshots().listen((event) {
+          setState(() {});
+        });
         return userMap;
       }
     } else if (flag == 'patient_data') {
