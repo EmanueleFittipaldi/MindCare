@@ -20,20 +20,43 @@ class _WidgetTreeState extends State<WidgetTree> {
   @override
   Widget build(BuildContext context) {
 
-    final db = FirebaseFirestore.instance;
-    final userRef = db.collection("user");
-    
-    bool isCaregiver = false;
+    var flag = false;
+    var docSnaphot;
+
+    Future<bool> isCaregiver() async {
+    var collection = FirebaseFirestore.instance.collection("user");
+    docSnaphot = await collection.doc(Auth().currentUser?.uid).get();
+    return flag;
+    }
 
     return StreamBuilder(
       stream: Auth().authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          print("sono dentro widgetTree - SnapShot");
-          return HomeCaregiverWidget();
+          return FutureBuilder(
+            future: isCaregiver(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData){
+                if(docSnaphot.exists){
+                  Map<String, dynamic>? data = docSnaphot.data();
+                  if(data?["type"] == "Caregiver"){
+                    flag = true;
+                  }else {
+                    flag = false;
+                  }
+                } 
+                if (flag) {
+                  return const HomeCaregiverWidget();
+                } else {
+                  return const HomePazienteWidget();
+                }
+              }
+              else 
+                return const LoginWidget();
+            });
         } else {
-          print("sono dentro widgetTre - Snapshot NULL");
-          return LoginWidget();
+          print("sono dentro widgetTree - Snapshot NULL");
+          return const LoginWidget();
         }
       },
     );
