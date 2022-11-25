@@ -729,6 +729,11 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                     onPressed: () async {
                                       await createNewAccount();
                                       final currentUser = Auth().currentUser;
+                                      var imageUrl;
+                                      if (imagePickedPath != '') {
+                                        imageUrl = await ImageUpload()
+                                            .uploadImage(imagePickedPath);
+                                      }
                                       if (currentUser != null) {
                                         final user = Utente(
                                             userID: currentUser.uid,
@@ -737,10 +742,11 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                             email: _controllerEmail.text,
                                             date: datePicked!,
                                             type: 'Caregiver',
-                                            profileImgPath: '');
+                                            profileImgPath: imageUrl ?? '');
                                         user.createNewUser();
                                         Fluttertoast.showToast(
-                                            msg: "bravo ti sei registrato");
+                                            msg:
+                                                "Registrazione avvenuta con successo!");
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
