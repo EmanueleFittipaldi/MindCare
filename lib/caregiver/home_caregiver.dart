@@ -23,13 +23,6 @@ class HomeCaregiverWidget extends StatefulWidget {
 
 class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late final Future getPatientFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    getPatientFuture = getData('patient_data');
-  }
 
   Future<Object?> getData(flag) async {
     var user = FirebaseFirestore.instance.collection('user');
@@ -138,56 +131,69 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
-                  width: double.infinity,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryColor,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(155),
-                      bottomRight: Radius.circular(0),
-                      topLeft: Radius.circular(0),
-                      topRight: Radius.circular(0),
+                    width: double.infinity,
+                    height: 250,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(155),
+                        bottomRight: Radius.circular(0),
+                        topLeft: Radius.circular(0),
+                        topRight: Radius.circular(0),
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                        child: Container(
-                          width: 150,
-                          height: 150,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.network(
-                            'https://thumbs.dreamstime.com/b/portrait-indian-asian-female-medical-doctor-hospital-office-happy-smiling-stethoscope-asian-indian-female-woman-161674392.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
-                        child: SelectionArea(
-                            child: Text(
-                          'Benvenut* [Nome]!',
-                          textAlign: TextAlign.start,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'IBM Plex Sans',
-                                color:
-                                    FlutterFlowTheme.of(context).tertiaryColor,
-                                fontSize: 30,
+                    child: FutureBuilder(
+                      future: getData('caregiver_data'),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var data = (snapshot.data as Map<String, dynamic>);
+                          return Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 15, 0, 0),
+                                child: Container(
+                                  width: 150,
+                                  height: 150,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: data['profileImagePath'] != ''
+                                      ? Image.network(
+                                          data['profileImagePath'],
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.asset(
+                                          'assets/images/add_photo.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                ),
                               ),
-                        )),
-                      ),
-                    ],
-                  ),
-                ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    15, 10, 0, 0),
+                                child: SelectionArea(
+                                    child: Text(
+                                  '${'Salve, ' + data['name']}!',
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        fontSize: 30,
+                                      ),
+                                )),
+                              ),
+                            ],
+                          );
+                        }
+                        return Text('Loading...');
+                      },
+                    )),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
@@ -214,10 +220,11 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 10, 0, 0),
                             child: FutureBuilder(
-                                future: getPatientFuture,
+                                future: getData('patient_data'),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     var data = (snapshot.data as List<dynamic>);
+
                                     if (data.isEmpty) {
                                       return Column(
                                           mainAxisSize: MainAxisSize.max,
@@ -233,7 +240,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                     fontFamily: 'Outfit',
                                                     color:
                                                         const Color(0xFF57636C),
-                                                    fontSize: 14,
+                                                    fontSize: 18,
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),
@@ -274,11 +281,25 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                   children: [
                                                     InkWell(
                                                       onTap: () async {
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const DashboardPazienteWidget()));
+                                                        Navigator.of(context).push(MaterialPageRoute(
+                                                            builder: (context) => DashboardPazienteWidget(
+                                                                user: Utente(
+                                                                    userID: item[
+                                                                        'userID'],
+                                                                    name: item[
+                                                                        'name'],
+                                                                    lastname: item[
+                                                                        'lastname'],
+                                                                    email: item[
+                                                                        'email'],
+                                                                    type: item[
+                                                                        'type'],
+                                                                    date: (item['dateOfBirth']
+                                                                            as Timestamp)
+                                                                        .toDate(),
+                                                                    profileImgPath:
+                                                                        item[
+                                                                            'profileImagePath']))));
                                                       },
                                                       child: Container(
                                                         width: 80,
@@ -297,12 +318,12 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                     item[
                                                                         'profileImagePath'],
                                                                     fit: BoxFit
-                                                                        .fitWidth,
+                                                                        .cover,
                                                                   )
                                                                 : Image.asset(
                                                                     'assets/images/add_photo.png',
                                                                     fit: BoxFit
-                                                                        .fitWidth,
+                                                                        .cover,
                                                                   ),
                                                       ),
                                                     ),
@@ -363,7 +384,11 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                         0,
                                                                         0),
                                                                 child: Text(
-                                                                  'inserire data',
+                                                                  DateFormat('dd-MM-yyyy').format(DateTime.parse((item[
+                                                                              'dateOfBirth']
+                                                                          as Timestamp)
+                                                                      .toDate()
+                                                                      .toString())),
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyText2
@@ -407,7 +432,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                       ],
                                     );
                                   }
-                                  return Text('Error');
+                                  return Text('Loading...');
                                 }),
                           )
                         ],
