@@ -24,20 +24,30 @@ class HomeCaregiverWidget extends StatefulWidget {
 class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  //funzione che permette di ottenere i dati dal database.
+  //invocata in FutureBuilder, per caricare dapprima i dati del caregiver
+  //e successivamente la lista dei pazienti (la collezione contenuta nel caregiver).
   Future<Object?> getData(flag) async {
+    //ottenimento della collezione 'user'
     var user = FirebaseFirestore.instance.collection('user');
     if (flag == 'caregiver_data') {
-      var userSnap = await user.doc(Auth().currentUser?.uid).get();
+      var userSnap = await user
+          .doc(Auth().currentUser?.uid)
+          .get(); //documento del caregiver -> userID autenticato
       if (userSnap.exists) {
-        Map<String, dynamic>? userMap = userSnap.data();
+        Map<String, dynamic>? userMap =
+            userSnap.data(); //mappatura dei dati prelevati
         return userMap;
       }
     } else if (flag == 'patient_data') {
-      var collection = user.doc(Auth().currentUser?.uid).collection('Pazienti');
-      var markers = [];
+      var collection = user.doc(Auth().currentUser?.uid).collection(
+          'Pazienti'); //collezione dei pazienti collegati al caregiver
+      var markers = []; //lista dei pazienti
       await collection.get().then((querySnapshot) {
+        //ottenimento di tutti i documenti della collezione 'pazienti'
         querySnapshot.docs.forEach((doc) {
-          Map<String, dynamic>? patientMap = doc.data();
+          //iterazione sui singoli documenti
+          Map<String, dynamic>? patientMap = doc.data(); //mappatura dei dati
           markers.add(patientMap);
         });
       });
@@ -143,11 +153,16 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                       ),
                     ),
                     child: FutureBuilder(
-                      future: getData('caregiver_data'),
+                      //FutureBuilder per caricare i dati del caregiver
+                      future: getData(
+                          'caregiver_data'), //funzione per ottenere i dati
                       builder: (context, snapshot) {
+                        //costruzione degli widget dopo che la funzione si è eseguita
                         if (snapshot.hasData) {
+                          //verifica se in snapshot ci sono dati da mostrare
                           var data = (snapshot.data as Map<String, dynamic>);
                           return Column(
+                            //Widget che viene ritornato con i dati caricati
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
@@ -191,7 +206,8 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                             ],
                           );
                         }
-                        return Text('Loading...');
+                        return Text(
+                            'Loading...'); //se non ci sono ancora dati, mostra un testo di caricamento.
                       },
                     )),
                 Expanded(
@@ -220,12 +236,17 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 10, 0, 0),
                             child: FutureBuilder(
-                                future: getData('patient_data'),
+                                //FutureBuilder per caricare i dati dei pazienti
+                                future: getData(
+                                    'patient_data'), //funzione per ottenere i dati dei pazienti
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    var data = (snapshot.data as List<dynamic>);
+                                    //verifica se snapshot contiene i dati
+                                    var data = (snapshot.data as List<
+                                        dynamic>); //mappatura i lista dei pazienti
 
                                     if (data.isEmpty) {
+                                      //se la lista è vuota mostra 'Non ci sono pazienti'
                                       return Column(
                                           mainAxisSize: MainAxisSize.max,
                                           crossAxisAlignment:
@@ -247,12 +268,14 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                             ),
                                           ]);
                                     }
+                                    //altrimenti ritorna i diversi container uno per ogni paziente
                                     return Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        for (var item in data)
+                                        for (var item
+                                            in data) //iterazione sui pazienti della lista per creare i diversi widget
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(10, 0, 10, 10),
@@ -281,25 +304,21 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                   children: [
                                                     InkWell(
                                                       onTap: () async {
-                                                        Navigator.of(context).push(MaterialPageRoute(
-                                                            builder: (context) => DashboardPazienteWidget(
-                                                                user: Utente(
-                                                                    userID: item[
-                                                                        'userID'],
-                                                                    name: item[
-                                                                        'name'],
-                                                                    lastname: item[
-                                                                        'lastname'],
-                                                                    email: item[
-                                                                        'email'],
-                                                                    type: item[
-                                                                        'type'],
-                                                                    date: (item['dateOfBirth']
-                                                                            as Timestamp)
-                                                                        .toDate(),
-                                                                    profileImgPath:
-                                                                        item[
-                                                                            'profileImagePath']))));
+                                                        Navigator.of(context).push(
+                                                            MaterialPageRoute(
+                                                                //navigazione verso dashboardpazientewidgt
+                                                                builder: (context) =>
+                                                                    DashboardPazienteWidget(
+                                                                        //passaggio dei dati -> Utente user
+                                                                        user: Utente(
+                                                                            userID:
+                                                                                item['userID'],
+                                                                            name: item['name'],
+                                                                            lastname: item['lastname'],
+                                                                            email: item['email'],
+                                                                            type: item['type'],
+                                                                            date: (item['dateOfBirth'] as Timestamp).toDate(),
+                                                                            profileImgPath: item['profileImagePath']))));
                                                       },
                                                       child: Container(
                                                         width: 80,
