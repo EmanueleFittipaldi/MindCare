@@ -185,7 +185,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const GestioneAlbumWidget()));
+                                                GestioneAlbumWidget(
+                                                    user: widget.user)));
                                   },
                                 ),
                                 Padding(
