@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mindcare/auth.dart';
 import 'package:mindcare/utente.dart';
 import 'package:mindcare/widget_tree.dart';
@@ -55,6 +56,24 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
     }
 
     return null;
+  }
+
+  //funzione per eliminare un paziente e la sua immagine salvate nello storage
+  Future<void> deletePatient(patientUID, imgPath) async {
+    var user = FirebaseFirestore.instance.collection('user');
+    var docSnapshot = user
+        .doc(Auth().currentUser?.uid)
+        .collection('Pazienti')
+        .doc(patientUID); //riferimento al documento da eliminare
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction deleteTransaction) async {
+      deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione
+    });
+    if (imgPath != '') {
+      await FirebaseStorage.instance
+          .refFromURL(imgPath)
+          .delete(); //eliminazione immagine
+    }
   }
 
   @override
@@ -441,7 +460,13 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                             Color(0xFF8E8E8E),
                                                         size: 30,
                                                       ),
-                                                      onPressed: () {},
+                                                      onPressed: () async {
+                                                        await deletePatient(
+                                                            item['userID'],
+                                                            item[
+                                                                'profileImagePath']);
+                                                        setState(() {});
+                                                      },
                                                     ),
                                                   ],
                                                 ),
