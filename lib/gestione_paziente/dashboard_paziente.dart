@@ -1,5 +1,6 @@
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/gestione_quiz/gestione_quiz.dart';
+import 'package:mindcare/utente.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,9 @@ import '../gestione_ricordi/gestione_album.dart';
 import 'dati_paziente.dart';
 
 class DashboardPazienteWidget extends StatefulWidget {
-  const DashboardPazienteWidget({Key? key}) : super(key: key);
+  final Utente user;
+  const DashboardPazienteWidget({Key? key, required this.user})
+      : super(key: key);
 
   @override
   _DashboardPazienteWidgetState createState() =>
@@ -61,10 +64,15 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
-                          child: Image.network(
-                            'https://procedural-generation.isaackarth.com/tumblr_files/tumblr_pnpkvnwpWI1uo5d9jo5_1280.jpg',
-                            fit: BoxFit.contain,
-                          ),
+                          child: widget.user.profileImgPath != ''
+                              ? Image.network(
+                                  widget.user.profileImgPath,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.asset(
+                                  'assets/images/add_photo.png',
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                       Padding(
@@ -72,7 +80,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                             const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
                         child: SelectionArea(
                             child: Text(
-                          'Giuseppe Giglio',
+                          widget.user.name + ' ' + widget.user.lastname,
                           textAlign: TextAlign.start,
                           style: FlutterFlowTheme.of(context)
                               .bodyText1

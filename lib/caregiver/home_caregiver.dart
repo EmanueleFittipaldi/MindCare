@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mindcare/auth.dart';
 import 'package:mindcare/utente.dart';
 import 'package:mindcare/widget_tree.dart';
@@ -24,20 +25,60 @@ class HomeCaregiverWidget extends StatefulWidget {
 class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // Stream<List<Utente>> readUser() => FirebaseFirestore.instance
-  // .collection('users').snapshots().map((snapshot) =>
-  // snapshot.docs.map((doc) => Utente.fromJson(doc.data())).toList());
+  //funzione che permette di ottenere i dati dal database.
+  //invocata in FutureBuilder, per caricare dapprima i dati del caregiver
+  //e successivamente la lista dei pazienti (la collezione contenuta nel caregiver).
+  Future<Object?> getData(flag) async {
+    //ottenimento della collezione 'user'
+    var user = FirebaseFirestore.instance.collection('user');
+    if (flag == 'caregiver_data') {
+      var userSnap = await user
+          .doc(Auth().currentUser?.uid)
+          .get(); //documento del caregiver -> userID autenticato
+      if (userSnap.exists) {
+        Map<String, dynamic>? userMap =
+            userSnap.data(); //mappatura dei dati prelevati
 
-  // final queryUser = FirebaseFirestore.instance.collection('user');
+        user.doc(Auth().currentUser?.uid).snapshots().listen((event) {
+          setState(() {});
+        });
+        return userMap;
+      }
+    } else if (flag == 'patient_data') {
+      var collection = user.doc(Auth().currentUser?.uid).collection(
+          'Pazienti'); //collezione dei pazienti collegati al caregiver
+      var markers = []; //lista dei pazienti
+      await collection.get().then((querySnapshot) {
+        //ottenimento di tutti i documenti della collezione 'pazienti'
+        querySnapshot.docs.forEach((doc) {
+          //iterazione sui singoli documenti
+          Map<String, dynamic>? patientMap = doc.data(); //mappatura dei dati
+          markers.add(patientMap);
+        });
+      });
+      return markers;
+    }
 
-  // final String testo = 'ciao';
+    return null;
+  }
 
-  // String getName(){
-  //   final name = queryUser.where("name", isEqualTo: "pasqualino").get();
-  //   print("stampo il nome");
-  //   print(name.toString());
-  //   return name.toString();
-  // }
+  //funzione per eliminare un paziente e la sua immagine salvate nello storage
+  Future<void> deletePatient(patientUID, imgPath) async {
+    var user = FirebaseFirestore.instance.collection('user');
+    var docSnapshot = user
+        .doc(Auth().currentUser?.uid)
+        .collection('Pazienti')
+        .doc(patientUID); //riferimento al documento da eliminare
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction deleteTransaction) async {
+      deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione
+    });
+    if (imgPath != '') {
+      await FirebaseStorage.instance
+          .refFromURL(imgPath)
+          .delete(); //eliminazione immagine
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,56 +164,75 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
-                  width: double.infinity,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryColor,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(155),
-                      bottomRight: Radius.circular(0),
-                      topLeft: Radius.circular(0),
-                      topRight: Radius.circular(0),
+                    width: double.infinity,
+                    height: 250,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(155),
+                        bottomRight: Radius.circular(0),
+                        topLeft: Radius.circular(0),
+                        topRight: Radius.circular(0),
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                        child: Container(
-                          width: 150,
-                          height: 150,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.network(
-                            'https://thumbs.dreamstime.com/b/portrait-indian-asian-female-medical-doctor-hospital-office-happy-smiling-stethoscope-asian-indian-female-woman-161674392.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
-                        child: SelectionArea(
-                            child: Text(
-                          'Benvenut* [Nome]!',
-                          textAlign: TextAlign.start,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'IBM Plex Sans',
-                                color:
-                                    FlutterFlowTheme.of(context).tertiaryColor,
-                                fontSize: 30,
+                    child: FutureBuilder(
+                      //FutureBuilder per caricare i dati del caregiver
+                      future: getData(
+                          'caregiver_data'), //funzione per ottenere i dati
+                      builder: (context, snapshot) {
+                        //costruzione degli widget dopo che la funzione si è eseguita
+                        if (snapshot.hasData) {
+                          //verifica se in snapshot ci sono dati da mostrare
+                          var data = (snapshot.data as Map<String, dynamic>);
+                          return Column(
+                            //Widget che viene ritornato con i dati caricati
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 15, 0, 0),
+                                child: Container(
+                                  width: 150,
+                                  height: 150,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: data['profileImagePath'] != ''
+                                      ? Image.network(
+                                          data['profileImagePath'],
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.asset(
+                                          'assets/images/add_photo.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                ),
                               ),
-                        )),
-                      ),
-                    ],
-                  ),
-                ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    15, 10, 0, 0),
+                                child: SelectionArea(
+                                    child: Text(
+                                  '${'Salve, ' + data['name']}!',
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        fontSize: 30,
+                                      ),
+                                )),
+                              ),
+                            ],
+                          );
+                        }
+                        return Text(
+                            'Loading...'); //se non ci sono ancora dati, mostra un testo di caricamento.
+                      },
+                    )),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
@@ -198,384 +258,231 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 10, 0, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 10),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 4,
-                                          color: Color(0x76000000),
-                                          offset: Offset(0, 2),
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              12, 8, 12, 8),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          InkWell(
-                                            onTap: () async {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const DashboardPazienteWidget()));
-                                            },
+                            child: FutureBuilder(
+                                //FutureBuilder per caricare i dati dei pazienti
+                                future: getData(
+                                    'patient_data'), //funzione per ottenere i dati dei pazienti
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    //verifica se snapshot contiene i dati
+                                    var data = (snapshot.data as List<
+                                        dynamic>); //mappatura i lista dei pazienti
+
+                                    if (data.isEmpty) {
+                                      //se la lista è vuota mostra 'Non ci sono pazienti'
+                                      return Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Non ci sono pazienti',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily: 'Outfit',
+                                                    color:
+                                                        const Color(0xFF57636C),
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                            ),
+                                          ]);
+                                    }
+                                    //altrimenti ritorna i diversi container uno per ogni paziente
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        for (var item
+                                            in data) //iterazione sui pazienti della lista per creare i diversi widget
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(10, 0, 10, 10),
                                             child: Container(
-                                              width: 80,
+                                              width: double.infinity,
                                               height: 80,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    blurRadius: 4,
+                                                    color: Color(0x76000000),
+                                                    offset: Offset(0, 2),
+                                                  )
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                               ),
-                                              child: Image.network(
-                                                'https://procedural-generation.isaackarth.com/tumblr_files/tumblr_pnpkvnwpWI1uo5d9jo5_1280.jpg',
-                                                fit: BoxFit.fitWidth,
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(12, 0, 0, 0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Expanded(
-                                                        child: Text(
-                                                          'Giusseppe Giglio',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .subtitle1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Outfit',
-                                                                color: const Color(
-                                                                    0xFF101213),
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(12, 8, 12, 8),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () async {
+                                                        Navigator.of(context).push(
+                                                            MaterialPageRoute(
+                                                                //navigazione verso dashboardpazientewidgt
+                                                                builder: (context) =>
+                                                                    DashboardPazienteWidget(
+                                                                        //passaggio dei dati -> Utente user
+                                                                        user: Utente(
+                                                                            userID:
+                                                                                item['userID'],
+                                                                            name: item['name'],
+                                                                            lastname: item['lastname'],
+                                                                            email: item['email'],
+                                                                            type: item['type'],
+                                                                            date: (item['dateOfBirth'] as Timestamp).toDate(),
+                                                                            profileImgPath: item['profileImagePath']))));
+                                                      },
+                                                      child: Container(
+                                                        width: 80,
+                                                        height: 80,
+                                                        clipBehavior:
+                                                            Clip.antiAlias,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              0, 4, 0, 0),
-                                                      child: Text(
-                                                        '10 Gennaio 1959',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: const Color(
-                                                                      0xFF57636C),
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
+                                                        child:
+                                                            item['profileImagePath'] !=
+                                                                    ''
+                                                                ? Image.network(
+                                                                    item[
+                                                                        'profileImagePath'],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  )
+                                                                : Image.asset(
+                                                                    'assets/images/add_photo.png',
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                    Expanded(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                12, 0, 0, 0),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Text(
+                                                                    item['name'] +
+                                                                        ' ' +
+                                                                        item[
+                                                                            'lastname'],
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .subtitle1
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Outfit',
+                                                                          color:
+                                                                              const Color(0xFF101213),
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Expanded(
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                        0,
+                                                                        4,
+                                                                        0,
+                                                                        0),
+                                                                child: Text(
+                                                                  DateFormat('dd-MM-yyyy').format(DateTime.parse((item[
+                                                                              'dateOfBirth']
+                                                                          as Timestamp)
+                                                                      .toDate()
+                                                                      .toString())),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText2
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Outfit',
+                                                                        color: const Color(
+                                                                            0xFF57636C),
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    FlutterFlowIconButton(
+                                                      borderColor:
+                                                          Colors.transparent,
+                                                      borderRadius: 30,
+                                                      borderWidth: 1,
+                                                      buttonSize: 50,
+                                                      icon: const Icon(
+                                                        Icons
+                                                            .delete_forever_outlined,
+                                                        color:
+                                                            Color(0xFF8E8E8E),
+                                                        size: 30,
+                                                      ),
+                                                      onPressed: () async {
+                                                        await deletePatient(
+                                                            item['userID'],
+                                                            item[
+                                                                'profileImagePath']);
+                                                        setState(() {});
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          FlutterFlowIconButton(
-                                            borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 50,
-                                            icon: const Icon(
-                                              Icons.delete_forever_outlined,
-                                              color: Color(0xFF8E8E8E),
-                                              size: 30,
-                                            ),
-                                            onPressed: () {},
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 10),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 4,
-                                          color: Color(0x76000000),
-                                          offset: Offset(0, 2),
-                                        )
+                                          )
                                       ],
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              12, 8, 12, 8),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Container(
-                                            width: 80,
-                                            height: 80,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Image.network(
-                                              'https://i.dailymail.co.uk/1s/2019/03/23/22/11373528-6843297-image-m-70_1553381338112.jpg',
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(12, 0, 0, 0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Expanded(
-                                                        child: Text(
-                                                          'Maria Benevole',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .subtitle1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Outfit',
-                                                                color: const Color(
-                                                                    0xFF101213),
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              0, 4, 0, 0),
-                                                      child: Text(
-                                                        '5 Ottobre 1958',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: const Color(
-                                                                      0xFF57636C),
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          FlutterFlowIconButton(
-                                            borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 50,
-                                            icon: const Icon(
-                                              Icons.delete_forever_outlined,
-                                              color: Color(0xFF8E8E8E),
-                                              size: 30,
-                                            ),
-                                            onPressed: () {},
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 10, 10),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 4,
-                                          color: Color(0x76000000),
-                                          offset: Offset(0, 2),
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              12, 8, 12, 8),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Container(
-                                            width: 80,
-                                            height: 80,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Image.network(
-                                              'https://media.istockphoto.com/id/153011771/photo/cheerful-senior-man.jpg?s=612x612&w=0&k=20&c=BYpISz7fcryegrzbLGVv9pqu7ENRyEKw9QqMxfp4ahw=',
-                                              fit: BoxFit.fitWidth,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(12, 0, 0, 0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Expanded(
-                                                        child: Text(
-                                                          'Francesco Martini',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .subtitle1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Outfit',
-                                                                color: const Color(
-                                                                    0xFF101213),
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              0, 4, 0, 0),
-                                                      child: Text(
-                                                        '18 Maggio 1948',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: const Color(
-                                                                      0xFF57636C),
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          FlutterFlowIconButton(
-                                            borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 50,
-                                            icon: const Icon(
-                                              Icons.delete_forever_outlined,
-                                              color: Color(0xFF8E8E8E),
-                                              size: 30,
-                                            ),
-                                            onPressed: () {},
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                                    );
+                                  }
+                                  return Text('Loading...');
+                                }),
+                          )
                         ],
                       ),
                     ),

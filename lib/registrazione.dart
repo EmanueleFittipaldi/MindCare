@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/image_upload.dart';
 import 'package:mindcare/utente.dart';
 import 'package:mindcare/widget_tree.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -31,7 +32,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
 
   late bool passwordVisibility2;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  String imagePickedPath = '';
   String? errorMessage = 'Qualcosa è andato storto';
   final TextEditingController _controllerEmail = new TextEditingController();
   final TextEditingController _controllerPassword = new TextEditingController();
@@ -170,6 +171,54 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                          child: InkWell(
+                            onTap: () async {},
+                            child: Container(
+                              width: 120,
+                              height: 120,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 6,
+                                    color: Color(0x3A000000),
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                                shape: BoxShape.circle,
+                              ),
+                              child: InkWell(
+                                onTap: () async {
+                                  var imagePath =
+                                      await ImageUpload().pickImage();
+                                  if (imagePath != null) {
+                                    setState(() {
+                                      imagePickedPath = imagePath;
+                                    });
+                                  }
+                                },
+                                child: imagePickedPath != ''
+                                    ? Image.asset(
+                                        imagePickedPath,
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.asset(
+                                        'assets/images/add_photo.png',
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.contain,
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               15, 10, 15, 0),
                           child: TextFormField(
@@ -193,14 +242,14 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   .override(
                                     fontFamily: 'IBM Plex Sans',
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                        .tertiaryColor,
                                     fontSize: 20,
                                     fontWeight: FontWeight.w300,
                                   ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -208,21 +257,23 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -270,7 +321,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -278,21 +329,23 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -326,7 +379,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                                          .borderColor,
                                       width: 1,
                                     ),
                                   ),
@@ -415,7 +468,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -423,21 +476,23 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -486,7 +541,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -494,21 +549,23 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -570,7 +627,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -578,21 +635,23 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -670,6 +729,11 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                     onPressed: () async {
                                       await createNewAccount();
                                       final currentUser = Auth().currentUser;
+                                      var imageUrl;
+                                      if (imagePickedPath != '') {
+                                        imageUrl = await ImageUpload()
+                                            .uploadImage(imagePickedPath);
+                                      }
                                       if (currentUser != null) {
                                         final user = Utente(
                                             userID: currentUser.uid,
@@ -678,10 +742,11 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                             email: _controllerEmail.text,
                                             date: datePicked!,
                                             type: 'Caregiver',
-                                            profileImgPath: '');
+                                            profileImgPath: imageUrl ?? '');
                                         user.createNewUser();
                                         Fluttertoast.showToast(
-                                            msg: "bravo ti sei registrato");
+                                            msg:
+                                                "Registrazione avvenuta con successo!");
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>

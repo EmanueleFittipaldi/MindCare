@@ -113,29 +113,31 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                             hintText: 'Testo domanda:',
                             hintStyle: FlutterFlowTheme.of(context).bodyText2,
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0xFFE0E3E7),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).borderColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0xFFE0E3E7),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).borderColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context)
+                                    .borderErrorColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context)
+                                    .borderErrorColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
@@ -179,15 +181,10 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                 child: Container(
                                   width: 100,
                                   height: 100,
+                                  clipBehavior: Clip.antiAlias,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: Image.asset(
-                                        'assets/images/emptyState@2x.png',
-                                      ).image,
-                                    ),
                                     boxShadow: const [
                                       BoxShadow(
                                         blurRadius: 6,
@@ -199,8 +196,8 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                   ),
                                   child: InkWell(
                                     onTap: () async {},
-                                    child: Image.network(
-                                      '',
+                                    child: Image.asset(
+                                      'assets/images/add_photo.png',
                                       width: 100,
                                       height: 100,
                                       fit: BoxFit.contain,
@@ -267,32 +264,36 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFE0E3E7),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFE0E3E7),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0x00000000),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderErrorColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0x00000000),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderErrorColor,
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -347,32 +348,36 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFE0E3E7),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFE0E3E7),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0x00000000),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderErrorColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0x00000000),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderErrorColor,
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -427,32 +432,36 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFE0E3E7),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFE0E3E7),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0x00000000),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderErrorColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0x00000000),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderErrorColor,
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -507,32 +516,36 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .bodyText2,
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFE0E3E7),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFE0E3E7),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0x00000000),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderErrorColor,
                                             width: 1,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(15),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0x00000000),
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderErrorColor,
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -602,7 +615,8 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                     ),
                                 fillColor: Colors.white,
                                 elevation: 2,
-                                borderColor: const Color(0xFFE0E3E7),
+                                borderColor:
+                                    FlutterFlowTheme.of(context).borderColor,
                                 borderWidth: 0,
                                 borderRadius: 10,
                                 margin: const EdgeInsetsDirectional.fromSTEB(

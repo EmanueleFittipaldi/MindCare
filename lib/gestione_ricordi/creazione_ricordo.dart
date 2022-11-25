@@ -98,29 +98,31 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                             hintText: 'Titolo:',
                             hintStyle: FlutterFlowTheme.of(context).bodyText2,
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0xFFE0E3E7),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).borderColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0xFFE0E3E7),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).borderColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context)
+                                    .borderErrorColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context)
+                                    .borderErrorColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
@@ -145,29 +147,31 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                             hintText: 'Anno ricordo:',
                             hintStyle: FlutterFlowTheme.of(context).bodyText2,
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0xFFE0E3E7),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).borderColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0xFFE0E3E7),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).borderColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context)
+                                    .borderErrorColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context)
+                                    .borderErrorColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
@@ -303,29 +307,31 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                             hintText: 'Descrizione:',
                             hintStyle: FlutterFlowTheme.of(context).bodyText2,
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0xFFE0E3E7),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).borderColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0xFFE0E3E7),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).borderColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context)
+                                    .borderErrorColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context)
+                                    .borderErrorColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(15),
