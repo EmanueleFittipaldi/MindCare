@@ -419,7 +419,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                       value: switchDescritpionValue ??= true,
                                       onChanged: (newValue) async {
                                         setState(() =>
-                                            switchDescritpionValue = newValue!);
+                                            switchDescritpionValue = newValue);
                                       },
                                       activeColor: FlutterFlowTheme.of(context)
                                           .primaryColor,
