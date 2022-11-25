@@ -51,8 +51,9 @@ class _WidgetTreeState extends State<WidgetTree> {
                   return const HomePazienteWidget();
                 }
               }
-              else 
+              else {
                 return const LoginWidget();
+              }
             });
         } else {
           print("sono dentro widgetTree - Snapshot NULL");
