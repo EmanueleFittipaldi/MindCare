@@ -60,8 +60,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                   ),
                   onPressed: () async {
                     Auth().signOut();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const WidgetTree()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const WidgetTree()));
                   },
                 ),
               ],

@@ -3,6 +3,9 @@ import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../auth.dart';
+import '../widget_tree.dart';
+
 class AppbarWidget extends StatelessWidget {
   const AppbarWidget({super.key});
 
@@ -53,8 +56,9 @@ class AppbarWidget extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () async {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const LoginWidget()));
+                 Auth().signOut();
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const WidgetTree()));
               },
             ),
           ],
