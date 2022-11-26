@@ -51,7 +51,6 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.userID);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,

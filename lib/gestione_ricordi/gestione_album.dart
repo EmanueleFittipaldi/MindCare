@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
+import 'package:mindcare/auth.dart';
 import 'package:mindcare/gestione_ricordi/creazione_ricordo.dart';
 import 'package:mindcare/utente.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -18,7 +20,6 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.user.name);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -133,114 +134,178 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        primary: false,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16, 0, 16, 8),
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).lineColor,
-                                  width: 2,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8, 8, 8, 8),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                        child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('user')
+                              .doc(Auth().currentUser?.uid)
+                              .collection('Pazienti')
+                              .doc(widget.user.userID)
+                              .collection('Ricordi')
+                              .snapshots(),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              var data = [];
+                              var count = 0;
+                              snapshot.data?.docs.forEach((doc) {
+                                //iterazione sui singoli documenti
+                                Map<String, dynamic>? memoryMap =
+                                    doc.data(); //mappatura dei dati
+                                data.add(memoryMap);
+                              });
+
+                              if (data.isNotEmpty) {
+                                return ListView(
+                                  padding: EdgeInsets.zero,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
                                   children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      alignment:
-                                          const AlignmentDirectional(0, 0),
-                                      child: Text(
-                                        '1',
-                                        textAlign: TextAlign.center,
-                                        style:
-                                            FlutterFlowTheme.of(context).title2,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
+                                    for (int i = 0; i < data.length; i++)
+                                      Padding(
                                         padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 4, 0, 0),
-                                              child: Text(
-                                                'Zio Enrico, viene a tro...',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          fontSize: 12,
-                                                        ),
-                                              ),
+                                            .fromSTEB(16, 0, 16, 8),
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            border: Border.all(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .lineColor,
+                                              width: 2,
                                             ),
-                                          ],
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(8, 8, 8, 8),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryBackground,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Text(
+                                                    i.toString(),
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .title2,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            12, 0, 0, 0),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  0, 4, 0, 0),
+                                                          child: Text(
+                                                            data[i]['titolo'],
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  fontSize: 12,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                FlutterFlowIconButton(
+                                                  borderColor:
+                                                      Colors.transparent,
+                                                  borderRadius: 30,
+                                                  borderWidth: 1,
+                                                  buttonSize: 45,
+                                                  icon: const Icon(
+                                                    Icons.mode_edit,
+                                                    color: Color(0xFF8E8E8E),
+                                                    size: 25,
+                                                  ),
+                                                  onPressed: () {},
+                                                ),
+                                                FlutterFlowIconButton(
+                                                  borderColor:
+                                                      Colors.transparent,
+                                                  borderRadius: 30,
+                                                  borderWidth: 1,
+                                                  buttonSize: 45,
+                                                  icon: const Icon(
+                                                    Icons.cancel,
+                                                    color: Color(0xFF8E8E8E),
+                                                    size: 25,
+                                                  ),
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 45,
-                                      icon: const Icon(
-                                        Icons.mode_edit,
-                                        color: Color(0xFF8E8E8E),
-                                        size: 25,
-                                      ),
-                                      onPressed: () {},
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 45,
-                                      icon: const Icon(
-                                        Icons.cancel,
-                                        color: Color(0xFF8E8E8E),
-                                        size: 25,
-                                      ),
-                                      onPressed: () {},
-                                    ),
                                   ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                                );
+                              } else {
+                                return Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            15, 0, 0, 0),
+                                    child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Non ci sono ricordi!',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'Outfit',
+                                                  color:
+                                                      const Color(0xFF57636C),
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ]));
+                              }
+                            }
+                            return Text('Loading...');
+                          },
+                        )),
                   ],
                 ),
               ),
