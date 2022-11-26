@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Auth {
@@ -53,5 +54,11 @@ class Auth {
 // after creating the account, delete the secondary app as below:
     await secondaryApp.delete();
     return null;
+  }
+
+  Future<void> forgottenPassword({required String email}) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email.trim());
+
+    Fluttertoast.showToast(msg: "Email per il reset della password inviata");
   }
 }
