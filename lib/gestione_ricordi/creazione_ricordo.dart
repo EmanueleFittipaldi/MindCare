@@ -511,7 +511,8 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 16),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        if (formKey.currentState!.validate()) {
+                        if (formKey.currentState!.validate() &&
+                            (imagePickedPath != '' || videoPickedPath != '')) {
                           var filePath;
                           if (imagePickedPath != '') {
                             filePath = await ImageUpload()
