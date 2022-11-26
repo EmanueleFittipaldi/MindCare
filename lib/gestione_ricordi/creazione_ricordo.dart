@@ -32,7 +32,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late VideoPlayerController _videoPlayerController;
-  bool? switchDescritpionValue;
+  bool? switchDescritpionValue = true;
   @override
   void initState() {
     super.initState();
@@ -253,6 +253,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                     dropDownType = val;
                                     imagePickedPath = '';
                                     videoPickedPath = '';
+                                    switchDescritpionValue = true;
                                   });
                                 },
                                 width: double.infinity,
