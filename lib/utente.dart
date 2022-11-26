@@ -20,8 +20,6 @@ class Utente {
       required this.date,
       required this.profileImgPath});
 
-  final docUser = FirebaseFirestore.instance.collection('user').doc(Auth().currentUser?.uid);
-
   Map<String, dynamic> toJson() => {
         'userID': userID,
         'name': name,
@@ -43,6 +41,7 @@ class Utente {
       );
 
   Future<void> createNewUser() async {
+    final docUser = FirebaseFirestore.instance.collection('user').doc(Auth().currentUser?.uid);
     final json = toJson();
     await docUser.set(json);
   }
