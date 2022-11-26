@@ -1,11 +1,18 @@
+import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/flutter_flow/flutter_flow_drop_down.dart';
+import 'package:mindcare/gestione_ricordi/ricordo.dart';
+import 'package:mindcare/image_upload.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_video_player.dart';
+import 'package:video_player/video_player.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 
 class RicordoImmagineWidget extends StatefulWidget {
-  const RicordoImmagineWidget({Key? key}) : super(key: key);
+  final String userID;
+  const RicordoImmagineWidget({Key? key, required this.userID})
+      : super(key: key);
 
   @override
   _RicordoImmagineWidgetState createState() => _RicordoImmagineWidgetState();
@@ -14,34 +21,37 @@ class RicordoImmagineWidget extends StatefulWidget {
 class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
   bool isMediaUploading1 = false;
   String uploadedFileUrl1 = '';
-
+  String? dropDownType;
   bool isMediaUploading2 = false;
   String uploadedFileUrl2 = '';
-
-  TextEditingController? textController1;
-  TextEditingController? textController2;
-  TextEditingController? textController3;
+  String imagePickedPath = '';
+  String videoPickedPath = '';
+  TextEditingController? controllerTitolo;
+  TextEditingController? controllerAnno;
+  TextEditingController? controllerDescrizione;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  late VideoPlayerController _videoPlayerController;
+  bool? switchDescritpionValue;
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
+    controllerTitolo = TextEditingController();
+    controllerAnno = TextEditingController();
+    controllerDescrizione = TextEditingController();
   }
 
   @override
   void dispose() {
-    textController1?.dispose();
-    textController2?.dispose();
-    textController3?.dispose();
+    controllerTitolo?.dispose();
+    controllerAnno?.dispose();
+    controllerDescrizione?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.userID);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -91,7 +101,13 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 5),
                         child: TextFormField(
-                          controller: textController1,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Inserisci un titolo!';
+                            }
+                            return null;
+                          },
+                          controller: controllerTitolo,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -140,7 +156,23 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 5),
                         child: TextFormField(
-                          controller: textController2,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Inserisci l\'anno del ricordo!';
+                            } else if (value.length != 4) {
+                              return 'Anno non valido!';
+                            }
+                            final n = num.tryParse(value);
+                            if (n == null) {
+                              return '"$value" non è un numero!';
+                            }
+                            if (n < 1800 || n > DateTime.now().year) {
+                              return 'Anno non valido!';
+                            }
+                            return null;
+                          },
+                          controller: controllerAnno,
+                          keyboardType: TextInputType.number,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -211,150 +243,294 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 4, 0, 0),
-                              child: InkWell(
-                                onTap: () async {},
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    image: DecorationImage(
-                                      fit: BoxFit.contain,
-                                      image: Image.asset(
-                                        'assets/images/add_photo.png',
-                                      ).image,
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                              child: FlutterFlowDropDown(
+                                initialOption: dropDownType ??= 'Immagine',
+                                options: const ['Video', 'Immagine'],
+                                onChanged: (val) async {
+                                  setState(() {
+                                    dropDownType = val;
+                                    imagePickedPath = '';
+                                    videoPickedPath = '';
+                                  });
+                                },
+                                width: double.infinity,
+                                height: 50,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'IBM Plex Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
                                     ),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        blurRadius: 6,
-                                        color: Color(0x3A000000),
-                                        offset: Offset(0, 2),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(8),
-                                    shape: BoxShape.rectangle,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      //;
-                                    },
-                                    child: Image.asset(
-                                      'assets/images/add_photo.png',
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                ),
+                                fillColor: Colors.white,
+                                elevation: 2,
+                                borderColor:
+                                    FlutterFlowTheme.of(context).borderColor,
+                                borderWidth: 1,
+                                borderRadius: 10,
+                                margin: EdgeInsetsDirectional.fromSTEB(
+                                    12, 4, 12, 4),
+                                hidesUnderline: true,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 10, 0, 10),
-                              child: InkWell(
-                                onTap: () async {},
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: Image.asset(
-                                        'assets/images/add_photo.png',
-                                      ).image,
+                            dropDownType == 'Immagine'
+                                ? Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 4, 0, 0),
+                                    child: InkWell(
+                                      onTap: () async {},
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 160,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBackground,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              blurRadius: 6,
+                                              color: Color(0x3A000000),
+                                              offset: Offset(0, 2),
+                                            )
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          shape: BoxShape.rectangle,
+                                        ),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            var imagePath = await ImageUpload()
+                                                .pickFile('image');
+                                            if (imagePath != null) {
+                                              setState(() {
+                                                imagePickedPath = imagePath;
+                                              });
+                                            }
+                                          },
+                                          child: Image.asset(
+                                            imagePickedPath != ''
+                                                ? imagePickedPath
+                                                : 'assets/images/add_photo_plus.png',
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        blurRadius: 6,
-                                        color: Color(0x3A000000),
-                                        offset: Offset(0, 2),
+                                  )
+                                : videoPickedPath == ''
+                                    ? Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 4, 0, 0),
+                                        child: InkWell(
+                                          onTap: () async {},
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: 160,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBackground,
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  blurRadius: 6,
+                                                  color: Color(0x3A000000),
+                                                  offset: Offset(0, 2),
+                                                )
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              shape: BoxShape.rectangle,
+                                            ),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                var videoPath =
+                                                    await ImageUpload()
+                                                        .pickFile('video');
+                                                if (videoPath != null) {
+                                                  var _video = File(videoPath);
+
+                                                  _videoPlayerController =
+                                                      VideoPlayerController
+                                                          .file(_video)
+                                                        ..initialize()
+                                                            .then((_) {
+                                                          setState(() {
+                                                            videoPickedPath =
+                                                                videoPath;
+                                                          });
+                                                          _videoPlayerController
+                                                              .play();
+                                                        });
+                                                }
+                                              },
+                                              child: Image.asset(
+                                                'assets/images/add_video.png',
+                                                width: 100,
+                                                height: 100,
+                                                fit: BoxFit.contain,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       )
-                                    ],
-                                    borderRadius: BorderRadius.circular(8),
-                                    shape: BoxShape.rectangle,
-                                  ),
-                                  child: const FlutterFlowVideoPlayer(
-                                    path:
-                                        'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
-                                    videoType: VideoType.network,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    autoPlay: false,
-                                    looping: true,
-                                    showControls: true,
-                                    allowFullScreen: true,
-                                    allowPlaybackSpeedMenu: false,
-                                  ),
-                                ),
-                              ),
-                            ),
+                                    : AspectRatio(
+                                        aspectRatio: _videoPlayerController
+                                            .value.aspectRatio,
+                                        child:
+                                            VideoPlayer(_videoPlayerController),
+                                      )
                           ],
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 5),
-                        child: TextFormField(
-                          controller: textController3,
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: 'Descrizione:',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).borderColor,
-                                width: 1,
+                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-1, 0),
+                              child: Text(
+                                'Descrizione: ',
+                                textAlign: TextAlign.center,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'IBM Plex Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      fontSize: 15,
+                                    ),
                               ),
-                              borderRadius: BorderRadius.circular(15),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).borderColor,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              child: dropDownType == 'Video'
+                                  ? Switch(
+                                      value: switchDescritpionValue ??= true,
+                                      onChanged: (newValue) async {
+                                        setState(() =>
+                                            switchDescritpionValue = newValue);
+                                      },
+                                      activeColor: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      inactiveThumbColor:
+                                          FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                    )
+                                  : Switch(
+                                      value: true,
+                                      onChanged: null,
+                                      activeColor: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      inactiveThumbColor:
+                                          FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                    ),
                             ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context)
-                                    .borderErrorColor,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context)
-                                    .borderErrorColor,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                          maxLines: 7,
+                          ],
                         ),
                       ),
+                      switchDescritpionValue == true
+                          ? Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  15, 5, 15, 5),
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (switchDescritpionValue == false) {
+                                    return null;
+                                  }
+                                  if (value == null || value.isEmpty) {
+                                    return 'Inserisci una descrizione!';
+                                  }
+                                  return null;
+                                },
+                                controller: controllerDescrizione,
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Descrizione:',
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .borderColor,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .borderColor,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .borderErrorColor,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .borderErrorColor,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'IBM Plex Sans',
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                maxLines: 7,
+                              ),
+                            )
+                          : Text(''),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 16),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        if (formKey.currentState == null ||
-                            !formKey.currentState!.validate()) {
-                          return;
+                        if (formKey.currentState!.validate() &&
+                            (imagePickedPath != '' || videoPickedPath != '')) {
+                          var filePath;
+                          if (imagePickedPath != '') {
+                            filePath = await ImageUpload()
+                                .uploadImage(imagePickedPath);
+                          } else if (videoPickedPath != '') {
+                            filePath = await ImageUpload()
+                                .uploadVideo(videoPickedPath);
+                          }
+                          final ricordo = Ricordo(
+                              titolo: controllerTitolo!.text,
+                              annoRicordo: int.parse(controllerAnno!.text),
+                              descrizione: controllerDescrizione!.text,
+                              filePath: filePath ?? '');
+                          ricordo.createMemory(widget.userID);
+                          Navigator.of(context).pop();
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: 'Inserisci tutti i campi!');
                         }
                       },
                       text: 'Salva',

@@ -1,11 +1,13 @@
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/gestione_ricordi/creazione_ricordo.dart';
+import 'package:mindcare/utente.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
 class GestioneAlbumWidget extends StatefulWidget {
-  const GestioneAlbumWidget({Key? key}) : super(key: key);
+  final Utente user;
+  const GestioneAlbumWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   _GestioneAlbumWidgetState createState() => _GestioneAlbumWidgetState();
@@ -16,6 +18,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.user.name);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -121,8 +124,9 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                             ),
                             onPressed: () async {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RicordoImmagineWidget()));
+                                  builder: (context) => RicordoImmagineWidget(
+                                        userID: widget.user.userID,
+                                      )));
                             },
                           ),
                         ],

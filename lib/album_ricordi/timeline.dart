@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mindcare/album_ricordi/ricordo.dart';
+import 'package:mindcare/album_ricordi/ricordo_widget.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timeline_list/timeline.dart';
 // ignore: depend_on_referenced_packages

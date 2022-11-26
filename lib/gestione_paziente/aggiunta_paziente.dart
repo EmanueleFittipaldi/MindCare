@@ -175,8 +175,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          var imagePath =
-                                              await ImageUpload().pickImage();
+                                          var imagePath = await ImageUpload()
+                                              .pickFile('image');
                                           if (imagePath != null) {
                                             setState(() {
                                               imagePickedPath = imagePath;
@@ -400,7 +400,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                         var stringGenerated =
                                             generateRandomString(4);
                                         controllerUsername!.text =
-                                            '${controllerNome!.text[0].toLowerCase()}.${controllerCognome!.text.replaceAll(' ', '').toLowerCase()}.$stringGenerated@paziente.mindcare.it';
+                                            '${controllerNome!.text[0].toLowerCase()}.${controllerCognome!.text.replaceAll(' ', '').toLowerCase()}.$stringGenerated';
                                         controllerPassword!.text =
                                             generatePassword();
                                       }
