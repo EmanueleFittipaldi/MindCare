@@ -59,7 +59,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                     size: 30,
                   ),
                   onPressed: () async {
-                    Auth().signOut;
+                    Auth().signOut();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const WidgetTree()));
                   },

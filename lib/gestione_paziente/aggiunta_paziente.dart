@@ -59,16 +59,24 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
     String lower = 'abcdefghijklmnopqrstuvwxyz';
     String numbers = '1234567890';
     String symbols = '!@#\$%^&*()<>,./-';
+    RegExp regex = RegExp(
+        r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%^&*()<>,./-]).{8,20}$');
     int passLength = 14;
     String seed = upper + lower + numbers + symbols;
     String password = '';
     List<String> list = seed.split('').toList();
     Random rand = Random();
-    for (int i = 0; i < passLength; i++) {
-      int index = rand.nextInt(list.length);
-      password += list[index];
+    while (true) {
+      for (int i = 0; i < passLength; i++) {
+        int index = rand.nextInt(list.length);
+        password += list[index];
+      }
+      if (regex.hasMatch(password)) {
+        break;
+      } else {
+        password = '';
+      }
     }
-    password += rand.nextInt(10).toString();
     return password;
   }
 
@@ -167,8 +175,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          var imagePath =
-                                              await ImageUpload().pickImage();
+                                          var imagePath = await ImageUpload()
+                                              .pickFile('image');
                                           if (imagePath != null) {
                                             setState(() {
                                               imagePickedPath = imagePath;
@@ -210,29 +218,33 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFE0E3E7),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFE0E3E7),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0x00000000),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderErrorColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0x00000000),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderErrorColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
@@ -265,29 +277,33 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFE0E3E7),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFE0E3E7),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0x00000000),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderErrorColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0x00000000),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderErrorColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
@@ -313,7 +329,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                           .secondaryBackground,
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
-                                        color: const Color(0xFFE0E3E7),
+                                        color: FlutterFlowTheme.of(context)
+                                            .borderColor,
                                       ),
                                     ),
                                     child: Padding(
@@ -383,7 +400,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                         var stringGenerated =
                                             generateRandomString(4);
                                         controllerUsername!.text =
-                                            '${controllerNome!.text[0]}.${controllerCognome!.text.replaceAll(' ', '')}.$stringGenerated@paziente.mindcare.it';
+                                            '${controllerNome!.text[0].toLowerCase()}.${controllerCognome!.text.replaceAll(' ', '').toLowerCase()}.$stringGenerated';
                                         controllerPassword!.text =
                                             generatePassword();
                                       }
@@ -413,6 +430,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 15, 0, 5),
                                   child: TextFormField(
+                                    readOnly: true,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Inserisci l\'username!';
@@ -427,29 +445,33 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFE0E3E7),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFE0E3E7),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0x00000000),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderErrorColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0x00000000),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderErrorColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
@@ -468,6 +490,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 15, 0, 5),
                                   child: TextFormField(
+                                    readOnly: true,
                                     validator: (value) {
                                       RegExp regex = RegExp(
                                           r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%^&*()<>,./-]).{8,20}$');
@@ -486,29 +509,33 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFE0E3E7),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFE0E3E7),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0x00000000),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderErrorColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0x00000000),
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderErrorColor,
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
