@@ -4,8 +4,12 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../utente.dart';
+
 class CreazioneDomandaNomeAImmagineWidget extends StatefulWidget {
-  const CreazioneDomandaNomeAImmagineWidget({Key? key}) : super(key: key);
+  final Utente user;
+  const CreazioneDomandaNomeAImmagineWidget({Key? key, required this.user})
+      : super(key: key);
 
   @override
   _CreazioneDomandaNomeAImmagineWidgetState createState() =>

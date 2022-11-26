@@ -400,7 +400,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                         var stringGenerated =
                                             generateRandomString(4);
                                         controllerUsername!.text =
-                                            '${controllerNome!.text[0].toLowerCase()}.${controllerCognome!.text.replaceAll(' ', '').toLowerCase()}.$stringGenerated';
+                                            '${controllerNome!.text[0].toLowerCase()}.${controllerCognome!.text.replaceAll(' ', '').toLowerCase()}.$stringGenerated@pazienti.mindcare.it';
                                         controllerPassword!.text =
                                             generatePassword();
                                       }
@@ -578,6 +578,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                             .fromSTEB(0, 20, 0, 16),
                                         child: FFButtonWidget(
                                           onPressed: () async {
+                                            /* Quando clicco su Salva viene salvato
+                                            il paziente*/
                                             if (formKey.currentState!
                                                     .validate() &&
                                                 datePicked != null) {
