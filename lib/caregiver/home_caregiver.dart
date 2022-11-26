@@ -263,10 +263,34 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                 future: getData(
                                     'patient_data'), //funzione per ottenere i dati dei pazienti
                                 builder: (context, snapshot) {
+                                  //verifica se snapshot contiene i dati
                                   if (snapshot.hasData) {
-                                    //verifica se snapshot contiene i dati
                                     var data = (snapshot.data as List<
                                         dynamic>); //mappatura i lista dei pazienti
+
+                                    //controllo se ci sono errori (best practice)
+                                    if (snapshot.hasError) {
+                                      return Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Ci dispiace, qualcosa è andato storto',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily: 'Outfit',
+                                                    color:
+                                                        const Color(0xFF57636C),
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                            ),
+                                          ]);
+                                    }
 
                                     if (data.isEmpty) {
                                       //se la lista è vuota mostra 'Non ci sono pazienti'
@@ -296,6 +320,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
+                                      /*Devo costruire il widget di un paziente rappresentato da un
+                                          container per ogni paziente che ho recuperato in data. Per fare
+                                          Questo utilizzo un for.*/
                                       children: [
                                         for (var item
                                             in data) //iterazione sui pazienti della lista per creare i diversi widget
@@ -332,7 +359,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                 //navigazione verso dashboardpazientewidgt
                                                                 builder: (context) =>
                                                                     DashboardPazienteWidget(
-                                                                        //passaggio dei dati -> Utente user
+                                                                        //passaggio dei dati del paziente alla
+                                                                        //Dashboard del paziente creando un oggetto utente
+                                                                        //e riempiendolo con i dati presi dall'item corrente
                                                                         user: Utente(
                                                                             userID:
                                                                                 item['userID'],
@@ -464,6 +493,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                             Color(0xFF8E8E8E),
                                                         size: 30,
                                                       ),
+                                                      //Se premo il bidone, elimina il paziente
+                                                      //Tramite il metodo onPressed di questo widget
+                                                      //performo questa azione
                                                       onPressed: () async {
                                                         await deletePatient(
                                                             item['userID'],
@@ -480,7 +512,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                       ],
                                     );
                                   }
-                                  return Text('Loading...');
+                                  return Text('Caricamento...');
                                 }),
                           )
                         ],

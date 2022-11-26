@@ -128,10 +128,12 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     size: 50,
                                   ),
                                   onPressed: () async {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const GestionQuizWidget()));
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            //const GestionQuizWidget()));
+                                            //voglio passare a GestioneQuizWidget lo stesso
+                                            //user che ho ricevuto da home_caregiver
+                                            GestionQuizWidget(user: widget.user)));
                                   },
                                 ),
                                 Padding(

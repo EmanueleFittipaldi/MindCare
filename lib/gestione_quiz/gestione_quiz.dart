@@ -6,8 +6,11 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../utente.dart';
+
 class GestionQuizWidget extends StatefulWidget {
-  const GestionQuizWidget({Key? key}) : super(key: key);
+  final Utente user;
+  const GestionQuizWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   _GestionQuizWidgetState createState() => _GestionQuizWidgetState();
