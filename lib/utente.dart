@@ -20,7 +20,7 @@ class Utente {
       required this.date,
       required this.profileImgPath});
 
-  final docUser = FirebaseFirestore.instance.collection('user').doc();
+  final docUser = FirebaseFirestore.instance.collection('user').doc(Auth().currentUser?.uid);
   final queryUser = FirebaseFirestore.instance.collection('user');
 
   Map<String, dynamic> toJson() => {
