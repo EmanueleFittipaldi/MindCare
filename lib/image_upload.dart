@@ -8,11 +8,16 @@ class ImageUpload {
   pickFile(String filetype) async {
     final _imagePicker = ImagePicker();
     final XFile? image;
+    
+    PermissionStatus permissionStatus;
 
     //verifico i permessi per accedere alla galleria
-    await Permission.photos.request();
-    var premissionStatus = await Permission.photos.status;
-    if (premissionStatus.isGranted || premissionStatus.isLimited) {
+    if(Platform.isAndroid){
+      permissionStatus = await Permission.storage.request();
+    } else {
+      permissionStatus = await Permission.photos.request();
+    }
+    if (permissionStatus.isGranted || permissionStatus.isLimited) {
       if (filetype.toLowerCase() == 'image') {
         image = await _imagePicker.pickImage(
             source: ImageSource.gallery,
