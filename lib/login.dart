@@ -29,18 +29,32 @@ class _LoginWidgetState extends State<LoginWidget> {
       await Auth().signInWithEmailAndPassword(
           email: _controllerEmail.text, password: _controllerPassword.text);
     } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(
-          msg: "Email o Password errati",
+      String msg = '';
+      if(e.toString().contains("Given String is empty or null")){
+        msg = "Inserire Email e Password prima di procedere";
+      } else if(e.toString().contains("The email address is badly formatted")) {
+        msg = "Inserire una Email valida prima di procedere";
+      } else if(e.toString().contains("There is no user record")){
+        msg = "Email o Password errati";
+      } else {
+        msg = "Errore sconosciuto";
+      }
+      errorToast(msg);
+      setState(() {
+        errorMessage = e.message;
+      });
+    }
+  }
+
+  void errorToast(String msg) {
+       Fluttertoast.showToast(
+          msg: msg,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-      setState(() {
-        errorMessage = e.message;
-      });
-    }
   }
 
   @override
