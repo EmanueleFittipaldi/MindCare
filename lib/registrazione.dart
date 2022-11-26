@@ -225,6 +225,12 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 15, 10, 15, 0),
                             child: TextFormField(
+                              validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Inserisci un nome!';
+                                      }
+                                      return null;
+                                    },
                               controller: _controllerNome,
                               autofocus: true,
                               obscureText: false,
@@ -297,6 +303,12 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 15, 30, 15, 0),
                             child: TextFormField(
+                              validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Inserisci un cognome!';
+                                      }
+                                      return null;
+                                    },
                               controller: _controllerCognome,
                               autofocus: true,
                               obscureText: false,
@@ -445,6 +457,15 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 15, 30, 15, 0),
                             child: TextFormField(
+                              validator: (value) {
+                                RegExp regex = RegExp(
+                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                                if (value == null || value.isEmpty) {
+                                  return 'Inserisci una email!';
+                                } else if(!regex.hasMatch(value))
+                                  return 'Inserisci una email valida!';
+                                return null;
+                              },
                               controller: _controllerEmail,
                               autofocus: true,
                               obscureText: false,
@@ -518,6 +539,16 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 15, 30, 15, 0),
                             child: TextFormField(
+                              validator: (value) {
+                                RegExp regex = RegExp(
+                                    r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%^&*()<>,./-]).{8,20}$');
+                                  if (value == null || value.isEmpty) {
+                                    return 'Inserisci la password!';
+                                  } else if (!regex.hasMatch(value)) {
+                                    return 'Inserisci una password valida!\nAlmeno 8 caratteri\nCarattere maiuscolo\nCarattere minuscolo\nUn numero\nUn carattere speciale';
+                                  }
+                                  return null;
+                              },
                               controller: _controllerPassword,
                               autofocus: true,
                               obscureText: !passwordVisibility1,
@@ -604,6 +635,11 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 15, 30, 15, 0),
                             child: TextFormField(
+                              validator: (value) {
+                                if (value?.compareTo(_controllerPassword.text) == 1)
+                                  return 'Le password devono coincidere!';
+                                return null;
+                                  },
                               controller: _controllerRepeatPassword,
                               autofocus: true,
                               obscureText: !passwordVisibility2,
@@ -734,36 +770,35 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         if (formKey.currentState!.validate() &&
-                                            datePicked != null) {
+                                          datePicked != null) {
                                           //qui dentro ci va il codice di dopo
                                           //significa che tutti i campi sono stati compilati e corretti
-
-                                        }
-                                        await createNewAccount();
-                                        final currentUser = Auth().currentUser;
-                                        var imageUrl;
-                                        if (imagePickedPath != '') {
-                                          imageUrl = await ImageUpload()
+                                          await createNewAccount();
+                                          final currentUser = Auth().currentUser;
+                                          var imageUrl;
+                                          if (imagePickedPath != '') {
+                                            imageUrl = await ImageUpload()
                                               .uploadImage(imagePickedPath);
-                                        }
-                                        if (currentUser != null) {
-                                          final user = Utente(
-                                              userID: currentUser.uid,
-                                              name: _controllerNome.text,
-                                              lastname: _controllerCognome.text,
-                                              email: _controllerEmail.text,
-                                              date: datePicked!,
-                                              type: 'Caregiver',
-                                              profileImgPath: imageUrl ?? '');
-                                          user.createNewUser();
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Registrazione avvenuta con successo!");
-                                          Navigator.of(context).push(
+                                          }
+                                          if (currentUser != null) {
+                                            final user = Utente(
+                                            userID: currentUser.uid,
+                                            name: _controllerNome.text,
+                                            lastname: _controllerCognome.text,
+                                            email: _controllerEmail.text,
+                                            date: datePicked!,
+                                            type: 'Caregiver',
+                                            profileImgPath: imageUrl ?? '');
+                                            user.createNewUser();
+                                            Fluttertoast.showToast(msg:"Registrazione avvenuta con successo!");
+                                            Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       const WidgetTree()));
-                                        }
+                                          }
+                                        } else {
+                                            Fluttertoast.showToast(msg:'Inserisci tutti i campi!');
+                                          }
                                       },
                                       text: 'Conferma',
                                       options: FFButtonOptions(

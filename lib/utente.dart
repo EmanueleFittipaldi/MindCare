@@ -21,7 +21,6 @@ class Utente {
       required this.profileImgPath});
 
   final docUser = FirebaseFirestore.instance.collection('user').doc(Auth().currentUser?.uid);
-  final queryUser = FirebaseFirestore.instance.collection('user');
 
   Map<String, dynamic> toJson() => {
         'userID': userID,
@@ -58,10 +57,4 @@ class Utente {
     await docUser.set(json);
   }
 
-  String getName() {
-    final name = queryUser.where("name", isEqualTo: "pasqualino").get();
-    print("stampo il nome");
-    print(name.toString());
-    return name.toString();
-  }
 }

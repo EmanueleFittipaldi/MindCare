@@ -13,8 +13,6 @@ class Auth {
     required String email,
     required String password,
   }) async {
-    print("Stampo l'user");
-    print(currentUser);
     await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
   }
