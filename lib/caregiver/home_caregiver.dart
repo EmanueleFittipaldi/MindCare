@@ -221,7 +221,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                           );
                         }
                         return Text(
-                            'Loading...'); //se non ci sono ancora dati, mostra un testo di caricamento.
+                            ''); //se non ci sono ancora dati, mostra un testo di caricamento.
                       },
                     )),
                 Expanded(
@@ -462,7 +462,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                       ],
                                     );
                                   }
-                                  return Text('Caricamento...');
+                                  return Text('');
                                 }),
                           )
                         ],
