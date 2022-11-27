@@ -1,11 +1,25 @@
+import 'package:mindcare/gestione_quiz/quesito.dart';
+
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../image_upload.dart';
+import '../utente.dart';
+import 'gestione_quiz.dart';
+
 class CreazioneDomandaNomeAImmagineWidget extends StatefulWidget {
-  const CreazioneDomandaNomeAImmagineWidget({Key? key}) : super(key: key);
+  final Utente user;
+  final String? tipologia;
+  final String? categoria;
+  const CreazioneDomandaNomeAImmagineWidget(
+      {Key? key,
+      required this.user,
+      required this.tipologia,
+      required this.categoria})
+      : super(key: key);
 
   @override
   _CreazioneDomandaNomeAImmagineWidgetState createState() =>
@@ -14,8 +28,9 @@ class CreazioneDomandaNomeAImmagineWidget extends StatefulWidget {
 
 class _CreazioneDomandaNomeAImmagineWidgetState
     extends State<CreazioneDomandaNomeAImmagineWidget> {
-  bool isMediaUploading = false;
-  String uploadedFileUrl = '';
+  /*bool isMediaUploading = false;
+  String uploadedFileUrl = '';*/
+  String imagDomanda = '';
 
   TextEditingController? textController1;
   TextEditingController? textController2;
@@ -195,13 +210,30 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                     shape: BoxShape.circle,
                                   ),
                                   child: InkWell(
-                                    onTap: () async {},
-                                    child: Image.asset(
-                                      'assets/images/add_photo.png',
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.contain,
-                                    ),
+                                    /*Quando clicco sull'icona di Inserisci immagine domanda
+                                    faccio selezionare una immagine dalla galleria all'utente*/
+                                    onTap: () async {
+                                      var imagePath =
+                                          await ImageUpload().pickFile('image');
+                                      if (imagePath != null) {
+                                        setState(() {
+                                          imagDomanda = imagePath;
+                                        });
+                                      }
+                                    },
+                                    child: imagDomanda != ''
+                                        ? Image.asset(
+                                            imagDomanda,
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.asset(
+                                            'assets/images/add_photo.png',
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.contain,
+                                          ),
                                   ),
                                 ),
                               ),
@@ -632,11 +664,44 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 16),
                     child: FFButtonWidget(
+                      /* 
+                      Quando clicco su Salva devo andare a creare un nuovo
+                      Quesito ed aggiungerlo alla colezione "Quesiti" del 
+                      paziente. Se essa non esiste allora viene creata. */
                       onPressed: () async {
+                        //Controlli sui campi riempiti
                         if (formKey.currentState == null ||
                             !formKey.currentState!.validate()) {
                           return;
                         }
+
+                        // Caricamento dell'immagine oggetto
+                        // della domanda su firebase
+                        var imageUrlDomanda;
+                        if (imagDomanda != '') {
+                          imageUrlDomanda =
+                              await ImageUpload().uploadImage(imagDomanda);
+                        }
+                        //Creazione del quesito
+                        final quesito = Quesito(
+                            quesitoID: Quesito.quesitoIdGenerator(9),
+                            opzione1: textController2?.text,
+                            opzione2: textController3?.text,
+                            opzione3: textController4?.text,
+                            opzione4: textController5?.text,
+                            domanda: textController1?.text,
+                            domandaImmagine:
+                                imageUrlDomanda ?? '', //Titolo della domanda
+                            risposta:
+                                dropDownValue, //Immagine 1, Immagine 2,...
+                            categoria: widget.categoria,
+                            tipologia: widget.tipologia);
+                        quesito.createNewQuestion(widget.user);
+
+                        //Una volta creato il quesito ritorno a GestioneQuiz
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                GestionQuizWidget(user: widget.user)));
                       },
                       text: 'Salva',
                       options: FFButtonOptions(

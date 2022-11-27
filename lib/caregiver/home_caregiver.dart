@@ -220,7 +220,8 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                             ],
                           );
                         }
-                        return Text(''); //se non ci sono ancora dati, mostra un testo di caricamento.
+                        return Text(
+                            ''); //se non ci sono ancora dati, mostra un testo di caricamento.
                       },
                     )),
                 Expanded(
@@ -293,6 +294,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
+                                      /*Devo costruire il widget di un paziente rappresentato da un
+                                          container per ogni paziente che ho recuperato in data. Per fare
+                                          Questo utilizzo un for.*/
                                       children: [
                                         for (var item
                                             in data) //iterazione sui pazienti della lista per creare i diversi widget
@@ -329,7 +333,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                 //navigazione verso dashboardpazientewidgt
                                                                 builder: (context) =>
                                                                     DashboardPazienteWidget(
-                                                                        //passaggio dei dati -> Utente user
+                                                                        //passaggio dei dati del paziente alla
+                                                                        //Dashboard del paziente creando un oggetto utente
+                                                                        //e riempiendolo con i dati presi dall'item corrente
                                                                         user: Utente(
                                                                             userID:
                                                                                 item['userID'],

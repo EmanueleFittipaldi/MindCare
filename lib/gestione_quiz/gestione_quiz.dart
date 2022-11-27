@@ -1,13 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/gestione_quiz/domanda_img_a_nome.dart';
 import 'package:mindcare/gestione_quiz/domanda_nome_a_img.dart';
+import '../auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../utente.dart';
+
 class GestionQuizWidget extends StatefulWidget {
-  const GestionQuizWidget({Key? key}) : super(key: key);
+  final Utente user;
+  const GestionQuizWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   _GestionQuizWidgetState createState() => _GestionQuizWidgetState();
@@ -251,15 +256,27 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                               size: 25,
                             ),
                             onPressed: () async {
+                              /* A prescindere dalla tipologia del quesito che sto creando
+                              voglio portarmi avanti le informazioni di user, categoria e tipologia
+                              perchè mi serviranno per creare l'istanza di un Quesito ed assegnarla
+                              successivamente alla collezione "Quesiti" del paziente.*/
                               if (typology == 'Associa il nome all\'immagine') {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
-                                        const CreazioneDomandaNomeAImmagineWidget()));
+                                        CreazioneDomandaNomeAImmagineWidget(
+                                          user: widget.user,
+                                          tipologia: category,
+                                          categoria: typology,
+                                        )));
                               } else if (typology ==
                                   'Associa l\'immagine al nome') {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
-                                        const CreazioneDomandaImmagineANomeWidget()));
+                                        CreazioneDomandaImmagineANomeWidget(
+                                          user: widget.user,
+                                          tipologia: category,
+                                          categoria: typology,
+                                        )));
                               }
                             },
                           ),
@@ -270,6 +287,7 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                       child: ListView(
+                        //LISTVIEW
                         padding: EdgeInsets.zero,
                         primary: false,
                         shrinkWrap: true,
@@ -278,7 +296,10 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 16, 0, 16, 8),
+                            // Questo è il container che contiene la lista
+                            //delle domande
                             child: Container(
+                              //CONTAINER
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
@@ -289,7 +310,183 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                   width: 2,
                                 ),
                               ),
-                              child: Padding(
+
+                              /*StreamBuilder per caricare dinamicamente
+                               le domande da firebase*/
+                              child: StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('user')
+                                      .doc(Auth().currentUser?.uid)
+                                      .collection('Pazienti')
+                                      .doc(widget.user.userID)
+                                      .collection('Quesiti')
+                                      .where('tipologia',
+                                          isEqualTo:
+                                              category) //categoria e tipologia sono
+                                      .where('categoria',
+                                          isEqualTo:
+                                              typology) //invertite non so perché
+                                      .snapshots(),
+                                  //StreamBuilder per caricare i dati dei quesiti
+                                  //funzione per ottenere i dati dei quesiti
+                                  builder: (context, AsyncSnapshot snapshot) {
+                                    if (snapshot.hasData) {
+                                      var data = [];
+                                      snapshot.data?.docs.forEach((doc) {
+                                        //iterazione sui singoli documenti
+                                        Map<String, dynamic>? quesitiMap =
+                                            doc.data(); //mappatura dei dati
+                                        data.add(quesitiMap);
+                                      });
+                                      if (data.isEmpty) {
+                                        //se la lista è vuota mostra 'Non ci sono domande'
+                                        return Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Non ci sono domande',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Outfit',
+                                                          color: const Color(
+                                                              0xFF57636C),
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                              ),
+                                            ]);
+                                      }
+                                      //altrimenti ritorna i diversi widget delle domande
+                                      return Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          /*Devo costruire il widget di un paziente rappresentato da un
+                                          container per ogni paziente che ho recuperato in data. Per fare
+                                          Questo utilizzo un for.*/
+                                          children: [
+                                            for (var item in data)
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(8, 8, 8, 8),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Container(
+                                                      width: 80,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .primaryBackground,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      alignment:
+                                                          const AlignmentDirectional(
+                                                              0, 0),
+                                                      //ho pensato che è meglio inserire la categoria
+                                                      //delle domande piuttosto che un numero progressivo
+                                                      child: Text(
+                                                        item['tipologia'],
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1,
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                12, 0, 0, 0),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      0,
+                                                                      4,
+                                                                      0,
+                                                                      0),
+                                                              child: Text(
+                                                                item['domanda'],
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'IBM Plex Sans',
+                                                                      fontSize:
+                                                                          12,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    FlutterFlowIconButton(
+                                                      borderColor:
+                                                          Colors.transparent,
+                                                      borderRadius: 30,
+                                                      borderWidth: 1,
+                                                      buttonSize: 45,
+                                                      icon: const Icon(
+                                                        Icons.mode_edit,
+                                                        color:
+                                                            Color(0xFF8E8E8E),
+                                                        size: 25,
+                                                      ),
+                                                      onPressed: () {},
+                                                    ),
+                                                    FlutterFlowIconButton(
+                                                      borderColor:
+                                                          Colors.transparent,
+                                                      borderRadius: 30,
+                                                      borderWidth: 1,
+                                                      buttonSize: 45,
+                                                      icon: const Icon(
+                                                        Icons.cancel,
+                                                        color:
+                                                            Color(0xFF8E8E8E),
+                                                        size: 25,
+                                                      ),
+                                                      onPressed: () {},
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                          ]);
+                                    }
+                                    return const Text(
+                                        'Caricamento dei quesiti in corso...');
+                                  }),
+
+                              //Questo è il widgeto che devo realizzare dinamicamente con i dati
+                              //che mi prendo da firebase
+
+                              /*child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     8, 8, 8, 8),
                                 child: Row(
@@ -373,7 +570,7 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                     ),
                                   ],
                                 ),
-                              ),
+                              ),*/
                             ),
                           ),
                         ],

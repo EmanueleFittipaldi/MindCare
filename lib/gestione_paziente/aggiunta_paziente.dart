@@ -578,6 +578,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                             .fromSTEB(0, 20, 0, 16),
                                         child: FFButtonWidget(
                                           onPressed: () async {
+                                            /* Quando clicco su Salva viene salvato
+                                            il paziente*/
                                             if (formKey.currentState!
                                                     .validate() &&
                                                 datePicked != null) {
