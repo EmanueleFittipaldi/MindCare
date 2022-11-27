@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+
+import 'auth.dart';
 
 class PasswordDimenticataWidget extends StatefulWidget {
   const PasswordDimenticataWidget({Key? key}) : super(key: key);
@@ -20,17 +25,34 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
   void initState() {
     super.initState();
     // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      Navigator.of(context).pop();
-    });
 
-    textController = TextEditingController();
+    //Commentato perchè non permette di caricare correttamente la pagina
+    // SchedulerBinding.instance.addPostFrameCallback((_) async {
+    //   Navigator.of(context).pop();
+    // });
   }
 
   @override
   void dispose() {
     textController?.dispose();
     super.dispose();
+  }
+
+  final TextEditingController _controllerEmail = TextEditingController();
+
+  Future<void> forgottenPassword() async {
+    showDialog(
+      context: context, 
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator())
+    );
+    try {
+      await Auth().forgottenPassword(email: _controllerEmail.text);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -132,7 +154,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               15, 30, 15, 0),
                           child: TextFormField(
-                            controller: textController,
+                            controller: _controllerEmail,
                             autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -206,7 +228,8 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               FFButtonWidget(
-                                onPressed: () {},
+                                onPressed: () => {forgottenPassword(), print("hai premuto il pulsante")
+                                },
                                 text: 'Invia email',
                                 options: FFButtonOptions(
                                   width: 170,

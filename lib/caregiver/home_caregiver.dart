@@ -25,41 +25,33 @@ class HomeCaregiverWidget extends StatefulWidget {
 class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   //funzione che permette di ottenere i dati dal database.
   //invocata in FutureBuilder, per caricare dapprima i dati del caregiver
-  //e successivamente la lista dei pazienti (la collezione contenuta nel caregiver).
-  Future<Object?> getData(flag) async {
+  Future<Object?> getCaregiverData() async {
     //ottenimento della collezione 'user'
     var user = FirebaseFirestore.instance.collection('user');
-    if (flag == 'caregiver_data') {
-      var userSnap = await user
-          .doc(Auth().currentUser?.uid)
-          .get(); //documento del caregiver -> userID autenticato
-      if (userSnap.exists) {
-        Map<String, dynamic>? userMap =
-            userSnap.data(); //mappatura dei dati prelevati
+    var userSnap = await user
+        .doc(Auth().currentUser?.uid)
+        .get(); //documento del caregiver -> userID autenticato
+    if (userSnap.exists) {
+      Map<String, dynamic>? userMap =
+          userSnap.data(); //mappatura dei dati prelevati
 
-        user.doc(Auth().currentUser?.uid).snapshots().listen((event) {
-          setState(() {});
-        });
-        return userMap;
-      }
-    } else if (flag == 'patient_data') {
-      var collection = user.doc(Auth().currentUser?.uid).collection(
-          'Pazienti'); //collezione dei pazienti collegati al caregiver
-      var markers = []; //lista dei pazienti
-      await collection.get().then((querySnapshot) {
-        //ottenimento di tutti i documenti della collezione 'pazienti'
-        querySnapshot.docs.forEach((doc) {
-          //iterazione sui singoli documenti
-          Map<String, dynamic>? patientMap = doc.data(); //mappatura dei dati
-          markers.add(patientMap);
-        });
-      });
-      return markers;
+      //user.doc(Auth().currentUser?.uid).snapshots().listen((event) {
+      //  setState(() {});
+      //});
+      return userMap;
     }
-
-    return null;
   }
 
   //funzione per eliminare un paziente e la sua immagine salvate nello storage
@@ -177,8 +169,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                     ),
                     child: FutureBuilder(
                       //FutureBuilder per caricare i dati del caregiver
-                      future: getData(
-                          'caregiver_data'), //funzione per ottenere i dati
+                      future: getCaregiverData(), //funzione per ottenere i dati
                       builder: (context, snapshot) {
                         //costruzione degli widget dopo che la funzione si è eseguita
                         if (snapshot.hasData) {
@@ -258,40 +249,23 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 10, 0, 0),
-                            child: FutureBuilder(
-                                //FutureBuilder per caricare i dati dei pazienti
-                                future: getData(
-                                    'patient_data'), //funzione per ottenere i dati dei pazienti
-                                builder: (context, snapshot) {
-                                  //verifica se snapshot contiene i dati
+                            child: StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('user')
+                                    .doc(Auth().currentUser?.uid)
+                                    .collection('Pazienti')
+                                    .snapshots(),
+                                //StreamBuilder per caricare i dati dei pazienti
+                                //funzione per ottenere i dati dei pazienti
+                                builder: (context, AsyncSnapshot snapshot) {
                                   if (snapshot.hasData) {
-                                    var data = (snapshot.data as List<
-                                        dynamic>); //mappatura i lista dei pazienti
-
-                                    //controllo se ci sono errori (best practice)
-                                    if (snapshot.hasError) {
-                                      return Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Ci dispiace, qualcosa è andato storto',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily: 'Outfit',
-                                                    color:
-                                                        const Color(0xFF57636C),
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                            ),
-                                          ]);
-                                    }
-
+                                    var data = [];
+                                    snapshot.data?.docs.forEach((doc) {
+                                      //iterazione sui singoli documenti
+                                      Map<String, dynamic>? patientMap =
+                                          doc.data(); //mappatura dei dati
+                                      data.add(patientMap);
+                                    });
                                     if (data.isEmpty) {
                                       //se la lista è vuota mostra 'Non ci sono pazienti'
                                       return Column(
@@ -479,30 +453,6 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                           ],
                                                         ),
                                                       ),
-                                                    ),
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          Colors.transparent,
-                                                      borderRadius: 30,
-                                                      borderWidth: 1,
-                                                      buttonSize: 50,
-                                                      icon: const Icon(
-                                                        Icons
-                                                            .delete_forever_outlined,
-                                                        color:
-                                                            Color(0xFF8E8E8E),
-                                                        size: 30,
-                                                      ),
-                                                      //Se premo il bidone, elimina il paziente
-                                                      //Tramite il metodo onPressed di questo widget
-                                                      //performo questa azione
-                                                      onPressed: () async {
-                                                        await deletePatient(
-                                                            item['userID'],
-                                                            item[
-                                                                'profileImagePath']);
-                                                        setState(() {});
-                                                      },
                                                     ),
                                                   ],
                                                 ),

@@ -1,3 +1,4 @@
+import 'package:mindcare/password_dimenticata.dart';
 import 'package:mindcare/registrazione.dart';
 import 'package:mindcare/widget_tree.dart';
 
@@ -300,8 +301,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              Navigator.of(context)
-                                  .pushNamed('passwordDimenticata');
+                              Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const PasswordDimenticataWidget()));
                             },
                             text: 'Password dimenticata?',
                             options: FFButtonOptions(

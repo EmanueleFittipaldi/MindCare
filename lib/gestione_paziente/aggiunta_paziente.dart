@@ -433,7 +433,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                     readOnly: true,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'Inserisci l\'username!';
+                                        return 'Inserisci l\'email!';
                                       }
                                       return null;
                                     },
@@ -441,7 +441,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Username:',
+                                      labelText: 'Email:',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                       enabledBorder: OutlineInputBorder(

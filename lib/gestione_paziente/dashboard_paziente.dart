@@ -302,7 +302,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const DatiPazienteWidget()));
+                                                DatiPazienteWidget( user: widget.user)));
                                   },
                                 ),
                                 Padding(
