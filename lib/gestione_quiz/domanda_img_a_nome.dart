@@ -618,8 +618,10 @@ class _CreazioneDomandaImmagineANomeWidgetState
                               opzione2: imageUrlOp2 ?? '',
                               opzione3: imageUrlOp3 ?? '',
                               opzione4: imageUrlOp4 ?? '',
-                              domanda: textController?.text,
-                              risposta: dropDownValue,
+                              domanda:
+                                  textController?.text, //Titolo della domanda
+                              risposta:
+                                  dropDownValue, //Immagine 1, Immagine 2,...
                               categoria: widget.categoria,
                               tipologia: widget.tipologia);
                           quesito.createNewQuestion(widget.user);
