@@ -320,6 +320,12 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                       .collection('Pazienti')
                                       .doc(widget.user.userID)
                                       .collection('Quesiti')
+                                      .where('tipologia',
+                                          isEqualTo:
+                                              category) //categoria e tipologia sono
+                                      .where('categoria',
+                                          isEqualTo:
+                                              typology) //invertite non so perché
                                       .snapshots(),
                                   //StreamBuilder per caricare i dati dei quesiti
                                   //funzione per ottenere i dati dei quesiti
@@ -452,10 +458,7 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                             Color(0xFF8E8E8E),
                                                         size: 25,
                                                       ),
-                                                      onPressed: () {
-                                                        print(
-                                                            'IconButton pressed ...');
-                                                      },
+                                                      onPressed: () {},
                                                     ),
                                                     FlutterFlowIconButton(
                                                       borderColor:
@@ -469,17 +472,14 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                             Color(0xFF8E8E8E),
                                                         size: 25,
                                                       ),
-                                                      onPressed: () {
-                                                        print(
-                                                            'IconButton pressed ...');
-                                                      },
+                                                      onPressed: () {},
                                                     ),
                                                   ],
                                                 ),
                                               )
                                           ]);
                                     }
-                                    return Text(
+                                    return const Text(
                                         'Caricamento dei quesiti in corso...');
                                   }),
 
