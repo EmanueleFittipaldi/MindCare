@@ -257,12 +257,15 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                               /* A prescindere dalla tipologia del quesito che sto creando
                               voglio portarmi avanti le informazioni di user, categoria e tipologia
                               perchè mi serviranno per creare l'istanza di un Quesito ed assegnarla
-                              ed assegnarlo successivamente alla collezione "Quesiti" del paziente.*/
+                              successivamente alla collezione "Quesiti" del paziente.*/
                               if (typology == 'Associa il nome all\'immagine') {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         CreazioneDomandaNomeAImmagineWidget(
-                                            user: widget.user)));
+                                          user: widget.user,
+                                          tipologia: category,
+                                          categoria: typology,
+                                        )));
                               } else if (typology ==
                                   'Associa l\'immagine al nome') {
                                 Navigator.of(context).push(MaterialPageRoute(

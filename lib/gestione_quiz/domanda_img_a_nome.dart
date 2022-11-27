@@ -12,15 +12,6 @@ import '../image_upload.dart';
 import '../utente.dart';
 import 'gestione_quiz.dart';
 
-/*Questa funzione mi serve per generare un ID per il quesito. Se per 
-l'utente esso veniva creato in automatico dal processo di autenticazione
-per i quesiti ho bisogno di crearlo io manualmente.*/
-String quesitoIdGenerator(int len) {
-  var r = Random();
-  const chars = '1234567890aAbBcCdDeEfFgGhHiIlLmMnNoOpPqQrRsStTuUvVzZ';
-  return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
-}
-
 class CreazioneDomandaImmagineANomeWidget extends StatefulWidget {
   final Utente user;
   final String? tipologia;
@@ -607,30 +598,26 @@ class _CreazioneDomandaImmagineANomeWidgetState
                               await ImageUpload().uploadImage(imagOp4);
                         }
 
-                        //Creazione dell'ID del quesito
-                        final quesitoID = quesitoIdGenerator(9);
-
                         //Creazione del quesito
-                        if (quesitoID != null) {
-                          final quesito = Quesito(
-                              quesitoID: quesitoID,
-                              opzione1: imageUrlOp1 ?? '',
-                              opzione2: imageUrlOp2 ?? '',
-                              opzione3: imageUrlOp3 ?? '',
-                              opzione4: imageUrlOp4 ?? '',
-                              domanda:
-                                  textController?.text, //Titolo della domanda
-                              risposta:
-                                  dropDownValue, //Immagine 1, Immagine 2,...
-                              categoria: widget.categoria,
-                              tipologia: widget.tipologia);
-                          quesito.createNewQuestion(widget.user);
+                        final quesito = Quesito(
+                            quesitoID: Quesito.quesitoIdGenerator(9),
+                            opzione1: imageUrlOp1 ?? '',
+                            opzione2: imageUrlOp2 ?? '',
+                            opzione3: imageUrlOp3 ?? '',
+                            opzione4: imageUrlOp4 ?? '',
+                            domanda:
+                                textController?.text, //Titolo della domanda
+                            domandaImmagine: '',
+                            risposta:
+                                dropDownValue, //Immagine 1, Immagine 2,...
+                            categoria: widget.categoria,
+                            tipologia: widget.tipologia);
+                        quesito.createNewQuestion(widget.user);
 
-                          //Una volta creato il quesito ritorno a GestioneQuiz
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  GestionQuizWidget(user: widget.user)));
-                        }
+                        //Una volta creato il quesito ritorno a GestioneQuiz
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                GestionQuizWidget(user: widget.user)));
                       },
                       text: 'Salva',
                       options: FFButtonOptions(
