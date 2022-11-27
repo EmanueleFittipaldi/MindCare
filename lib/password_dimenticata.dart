@@ -228,8 +228,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               FFButtonWidget(
-                                onPressed: () => {forgottenPassword(), print("hai premuto il pulsante")
-                                },
+                                onPressed: () => {forgottenPassword()},
                                 text: 'Invia email',
                                 options: FFButtonOptions(
                                   width: 170,
