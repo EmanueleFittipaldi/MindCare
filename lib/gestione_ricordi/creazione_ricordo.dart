@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:mindcare/gestione_ricordi/ricordo.dart';
@@ -11,7 +12,9 @@ import 'package:flutter/material.dart';
 
 class RicordoImmagineWidget extends StatefulWidget {
   final String userID;
-  const RicordoImmagineWidget({Key? key, required this.userID})
+  final Ricordo? memoryItem;
+  const RicordoImmagineWidget(
+      {Key? key, required this.userID, required this.memoryItem})
       : super(key: key);
 
   @override
@@ -33,12 +36,32 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late VideoPlayerController _videoPlayerController;
   bool? switchDescritpionValue = true;
+  bool isNetworkImage = false;
+  bool isMediaChanged = false;
   @override
   void initState() {
     super.initState();
     controllerTitolo = TextEditingController();
     controllerAnno = TextEditingController();
     controllerDescrizione = TextEditingController();
+    if (widget.memoryItem != null) {
+      controllerTitolo!.text = widget.memoryItem!.titolo;
+      controllerAnno!.text = widget.memoryItem!.annoRicordo.toString();
+      controllerDescrizione!.text = widget.memoryItem!.descrizione;
+      dropDownType = widget.memoryItem!.tipoRicordo;
+      if (dropDownType == 'Immagine') {
+        imagePickedPath = widget.memoryItem!.filePath;
+        isNetworkImage = true;
+      } else if (dropDownType == 'Video') {
+        videoPickedPath = widget.memoryItem!.filePath;
+        var _video = File(videoPickedPath);
+
+        _videoPlayerController = VideoPlayerController.network(videoPickedPath)
+          ..initialize().then((_) {
+            _videoPlayerController.play();
+          });
+      }
+    }
   }
 
   @override
@@ -47,6 +70,12 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
     controllerAnno?.dispose();
     controllerDescrizione?.dispose();
     super.dispose();
+  }
+
+  static String ricordoIdGenerator(int len) {
+    var r = Random();
+    const chars = '1234567890aAbBcCdDeEfFgGhHiIlLmMnNoOpPqQrRsStTuUvVzZ';
+    return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
   }
 
   @override
@@ -250,9 +279,12 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                 onChanged: (val) async {
                                   setState(() {
                                     dropDownType = val;
+
                                     imagePickedPath = '';
                                     videoPickedPath = '';
+                                    isNetworkImage = false;
                                     switchDescritpionValue = true;
+                                    isMediaChanged = true;
                                   });
                                 },
                                 width: double.infinity,
@@ -309,17 +341,27 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                             if (imagePath != null) {
                                               setState(() {
                                                 imagePickedPath = imagePath;
+                                                isMediaChanged = true;
+                                                isNetworkImage = false;
                                               });
                                             }
                                           },
-                                          child: Image.asset(
-                                            imagePickedPath != ''
-                                                ? imagePickedPath
-                                                : 'assets/images/add_photo_plus.png',
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.contain,
-                                          ),
+                                          child: (widget.memoryItem == null ||
+                                                  isNetworkImage == false)
+                                              ? Image.asset(
+                                                  imagePickedPath != ''
+                                                      ? imagePickedPath
+                                                      : 'assets/images/add_photo_plus.png',
+                                                  width: 100,
+                                                  height: 100,
+                                                  fit: BoxFit.contain,
+                                                )
+                                              : Image.network(
+                                                  imagePickedPath,
+                                                  width: 100,
+                                                  height: 100,
+                                                  fit: BoxFit.contain,
+                                                ),
                                         ),
                                       ),
                                     ),
@@ -365,6 +407,8 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                                           setState(() {
                                                             videoPickedPath =
                                                                 videoPath;
+                                                            isMediaChanged =
+                                                                true;
                                                           });
                                                           _videoPlayerController
                                                               .play();
@@ -513,20 +557,49 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                       onPressed: () async {
                         if (formKey.currentState!.validate() &&
                             (imagePickedPath != '' || videoPickedPath != '')) {
-                          var filePath;
-                          if (imagePickedPath != '') {
-                            filePath = await ImageUpload()
-                                .uploadImage(imagePickedPath);
-                          } else if (videoPickedPath != '') {
-                            filePath = await ImageUpload()
-                                .uploadVideo(videoPickedPath);
+                          if (widget.memoryItem != null) {
+                            var filePath;
+
+                            if (isMediaChanged) {
+                              ImageUpload()
+                                  .deleteFile(widget.memoryItem!.filePath);
+                              if (imagePickedPath != '') {
+                                filePath = await ImageUpload()
+                                    .uploadImage(imagePickedPath);
+                              } else if (videoPickedPath != '') {
+                                filePath = await ImageUpload()
+                                    .uploadVideo(videoPickedPath);
+                              }
+                            }
+                            final ricordo = Ricordo(
+                                titolo: controllerTitolo!.text,
+                                annoRicordo: int.parse(controllerAnno!.text),
+                                descrizione: switchDescritpionValue == true
+                                    ? controllerDescrizione!.text
+                                    : '',
+                                filePath:
+                                    filePath ?? widget.memoryItem!.filePath,
+                                ricordoID: widget.memoryItem!.ricordoID,
+                                tipoRicordo: dropDownType!);
+                            ricordo.createMemory(widget.userID);
+                          } else {
+                            var filePath;
+                            if (imagePickedPath != '') {
+                              filePath = await ImageUpload()
+                                  .uploadImage(imagePickedPath);
+                            } else if (videoPickedPath != '') {
+                              filePath = await ImageUpload()
+                                  .uploadVideo(videoPickedPath);
+                            }
+                            final ricordo = Ricordo(
+                                titolo: controllerTitolo!.text,
+                                annoRicordo: int.parse(controllerAnno!.text),
+                                descrizione: controllerDescrizione!.text,
+                                filePath: filePath ?? '',
+                                ricordoID: ricordoIdGenerator(28),
+                                tipoRicordo: dropDownType!);
+                            ricordo.createMemory(widget.userID);
                           }
-                          final ricordo = Ricordo(
-                              titolo: controllerTitolo!.text,
-                              annoRicordo: int.parse(controllerAnno!.text),
-                              descrizione: controllerDescrizione!.text,
-                              filePath: filePath ?? '');
-                          ricordo.createMemory(widget.userID);
                           Navigator.of(context).pop();
                         } else {
                           Fluttertoast.showToast(
