@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,11 +9,11 @@ class ImageUpload {
   pickFile(String filetype) async {
     final _imagePicker = ImagePicker();
     final XFile? image;
-    
+
     PermissionStatus permissionStatus;
 
     //verifico i permessi per accedere alla galleria
-    if(Platform.isAndroid){
+    if (Platform.isAndroid) {
       permissionStatus = await Permission.storage.request();
     } else {
       permissionStatus = await Permission.photos.request();
@@ -88,5 +89,13 @@ class ImageUpload {
       print(e.toString());
     }
     return null;
+  }
+
+  deleteFile(filePath) async {
+    if (filePath != '') {
+      await FirebaseStorage.instance
+          .refFromURL(filePath)
+          .delete(); //eliminazione file
+    }
   }
 }
