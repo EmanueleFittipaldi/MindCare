@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/gestione_quiz/quesito.dart';
 
+import '../auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -16,11 +18,13 @@ class CreazioneDomandaImmagineANomeWidget extends StatefulWidget {
   final Utente user;
   final String? tipologia;
   final String? categoria;
+  final Quesito? item;
   const CreazioneDomandaImmagineANomeWidget(
       {Key? key,
       required this.user,
       required this.tipologia,
-      required this.categoria})
+      required this.categoria,
+      required this.item})
       : super(key: key);
 
   @override
@@ -36,18 +40,6 @@ class _CreazioneDomandaImmagineANomeWidgetState
   String imagOp3 = '';
   String imagOp4 = '';
 
-  /*bool isMediaUploading1 = false;
-  String uploadedFileUrl1 = '';
-
-  bool isMediaUploading2 = false;
-  String uploadedFileUrl2 = '';
-
-  bool isMediaUploading3 = false;
-  String uploadedFileUrl3 = '';
-
-  bool isMediaUploading4 = false;
-  String uploadedFileUrl4 = '';*/
-
   TextEditingController? textController;
   String? dropDownValue;
   final formKey = GlobalKey<FormState>();
@@ -57,6 +49,12 @@ class _CreazioneDomandaImmagineANomeWidgetState
   void initState() {
     super.initState();
     textController = TextEditingController();
+
+    /*Se è stato passato un quesito riempio i placeholder */
+    if (widget.item != null) {
+      textController!.text = widget.item!.domanda!;
+      dropDownValue = widget.item!.risposta!;
+    }
   }
 
   @override
@@ -250,12 +248,20 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                       height: 100,
                                                       fit: BoxFit.cover,
                                                     )
-                                                  : Image.asset(
-                                                      'assets/images/add_photo.png',
-                                                      width: 100,
-                                                      height: 100,
-                                                      fit: BoxFit.cover,
-                                                    ),
+                                                  : widget.item != null
+                                                      ? Image.network(
+                                                          widget
+                                                              .item!.opzione1!,
+                                                          width: 100,
+                                                          height: 100,
+                                                          fit: BoxFit.cover,
+                                                        )
+                                                      : Image.asset(
+                                                          'assets/images/add_photo.png',
+                                                          width: 100,
+                                                          height: 100,
+                                                          fit: BoxFit.contain,
+                                                        ),
                                             ),
                                           ),
                                         ),
@@ -318,12 +324,20 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                       height: 100,
                                                       fit: BoxFit.cover,
                                                     )
-                                                  : Image.asset(
-                                                      'assets/images/add_photo.png',
-                                                      width: 100,
-                                                      height: 100,
-                                                      fit: BoxFit.contain,
-                                                    ),
+                                                  : widget.item != null
+                                                      ? Image.network(
+                                                          widget
+                                                              .item!.opzione2!,
+                                                          width: 100,
+                                                          height: 100,
+                                                          fit: BoxFit.cover,
+                                                        )
+                                                      : Image.asset(
+                                                          'assets/images/add_photo.png',
+                                                          width: 100,
+                                                          height: 100,
+                                                          fit: BoxFit.contain,
+                                                        ),
                                             ),
                                           ),
                                         ),
@@ -397,12 +411,20 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                       height: 100,
                                                       fit: BoxFit.cover,
                                                     )
-                                                  : Image.asset(
-                                                      'assets/images/add_photo.png',
-                                                      width: 100,
-                                                      height: 100,
-                                                      fit: BoxFit.contain,
-                                                    ),
+                                                  : widget.item != null
+                                                      ? Image.network(
+                                                          widget
+                                                              .item!.opzione3!,
+                                                          width: 100,
+                                                          height: 100,
+                                                          fit: BoxFit.cover,
+                                                        )
+                                                      : Image.asset(
+                                                          'assets/images/add_photo.png',
+                                                          width: 100,
+                                                          height: 100,
+                                                          fit: BoxFit.contain,
+                                                        ),
                                             ),
                                           ),
                                         ),
@@ -465,12 +487,20 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                       height: 100,
                                                       fit: BoxFit.cover,
                                                     )
-                                                  : Image.asset(
-                                                      'assets/images/add_photo.png',
-                                                      width: 100,
-                                                      height: 100,
-                                                      fit: BoxFit.contain,
-                                                    ),
+                                                  : widget.item != null
+                                                      ? Image.network(
+                                                          widget
+                                                              .item!.opzione4!,
+                                                          width: 100,
+                                                          height: 100,
+                                                          fit: BoxFit.cover,
+                                                        )
+                                                      : Image.asset(
+                                                          'assets/images/add_photo.png',
+                                                          width: 100,
+                                                          height: 100,
+                                                          fit: BoxFit.contain,
+                                                        ),
                                             ),
                                           ),
                                         ),
@@ -528,7 +558,9 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                   'Immagine 4'
                                 ],
                                 onChanged: (val) async {
-                                  setState(() => dropDownValue = val);
+                                  setState(() {
+                                    dropDownValue = val;
+                                  });
                                 },
                                 width: 180,
                                 height: 50,
@@ -570,54 +602,87 @@ class _CreazioneDomandaImmagineANomeWidgetState
                           return;
                         }
 
-                        //caricamento immagine 1 su firebase
-                        var imageUrlOp1;
-                        if (imagOp1 != '') {
-                          imageUrlOp1 =
-                              await ImageUpload().uploadImage(imagOp1);
-                        }
+                        if (widget.item != null) {
+                          FirebaseFirestore.instance
+                              .collection('user')
+                              .doc(Auth().currentUser?.uid)
+                              .collection('Pazienti')
+                              .doc(widget.user.userID)
+                              .collection('Quesiti')
+                              .doc(widget.item?.quesitoID)
+                              .update({
+                            'quesitoID': widget.item?.quesitoID,
+                            'opzione1': imagOp1 != ''
+                                ? await ImageUpload().uploadImage(imagOp1)
+                                : widget.item?.opzione1,
+                            'opzione2': imagOp2 != ''
+                                ? await ImageUpload().uploadImage(imagOp2)
+                                : widget.item?.opzione2,
+                            'opzione3': imagOp3 != ''
+                                ? await ImageUpload().uploadImage(imagOp3)
+                                : widget.item?.opzione3,
+                            'opzione4': imagOp4 != ''
+                                ? await ImageUpload().uploadImage(imagOp4)
+                                : widget.item?.opzione4,
+                            'domanda': textController?.text,
+                            'domandaImmagine': '',
+                            'risposta': dropDownValue,
+                            'categoria': widget.categoria,
+                            'tipologia': widget.tipologia,
+                          });
+                        } else {
+                          //caricamento immagine 1 su firebase
+                          var imageUrlOp1;
+                          if (imagOp1 != '') {
+                            imageUrlOp1 =
+                                await ImageUpload().uploadImage(imagOp1);
+                          }
 
-                        //caricamento immagine 2 su firebase
-                        var imageUrlOp2;
-                        if (imagOp2 != '') {
-                          imageUrlOp2 =
-                              await ImageUpload().uploadImage(imagOp2);
-                        }
+                          //caricamento immagine 2 su firebase
+                          var imageUrlOp2;
+                          if (imagOp2 != '') {
+                            imageUrlOp2 =
+                                await ImageUpload().uploadImage(imagOp2);
+                          }
 
-                        //caricamento immagine 3 su firebase
-                        var imageUrlOp3;
-                        if (imagOp3 != '') {
-                          imageUrlOp3 =
-                              await ImageUpload().uploadImage(imagOp3);
-                        }
+                          //caricamento immagine 3 su firebase
+                          var imageUrlOp3;
+                          if (imagOp3 != '') {
+                            imageUrlOp3 =
+                                await ImageUpload().uploadImage(imagOp3);
+                          }
 
-                        //Caricamento immagine 4 su firebase
-                        var imageUrlOp4;
-                        if (imagOp4 != '') {
-                          imageUrlOp4 =
-                              await ImageUpload().uploadImage(imagOp4);
-                        }
+                          //Caricamento immagine 4 su firebase
+                          var imageUrlOp4;
+                          if (imagOp4 != '') {
+                            imageUrlOp4 =
+                                await ImageUpload().uploadImage(imagOp4);
+                          }
 
-                        //Creazione del quesito
-                        final quesito = Quesito(
-                            quesitoID: Quesito.quesitoIdGenerator(9),
-                            opzione1: imageUrlOp1 ?? '',
-                            opzione2: imageUrlOp2 ?? '',
-                            opzione3: imageUrlOp3 ?? '',
-                            opzione4: imageUrlOp4 ?? '',
-                            domanda:
-                                textController?.text, //Titolo della domanda
-                            domandaImmagine: '',
-                            risposta:
-                                dropDownValue, //Immagine 1, Immagine 2,...
-                            categoria: widget.categoria,
-                            tipologia: widget.tipologia);
-                        quesito.createNewQuestion(widget.user);
+                          //Creazione del quesito
+                          final quesitoIDGenerato =
+                              Quesito.quesitoIdGenerator(28);
+                          final quesito = Quesito(
+                              quesitoID: quesitoIDGenerato,
+                              opzione1: imageUrlOp1 ?? '',
+                              opzione2: imageUrlOp2 ?? '',
+                              opzione3: imageUrlOp3 ?? '',
+                              opzione4: imageUrlOp4 ?? '',
+                              domanda:
+                                  textController?.text, //Titolo della domanda
+                              domandaImmagine: '',
+                              risposta:
+                                  dropDownValue, //Immagine 1, Immagine 2,...
+                              categoria: widget.categoria,
+                              tipologia: widget.tipologia);
+                          quesito.createNewQuestion(
+                              widget.user, quesitoIDGenerato);
 
-                        //Una volta creato il quesito ritorno a GestioneQuiz
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                GestionQuizWidget(user: widget.user)));
+                          //Una volta creato il quesito ritorno a GestioneQuiz
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  GestionQuizWidget(user: widget.user)));
+                        } //fine if
                       },
                       text: 'Salva',
                       options: FFButtonOptions(
