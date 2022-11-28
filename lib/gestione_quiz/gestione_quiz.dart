@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/gestione_quiz/domanda_img_a_nome.dart';
 import 'package:mindcare/gestione_quiz/domanda_nome_a_img.dart';
+import 'package:mindcare/gestione_quiz/quesito.dart';
 import '../auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -264,19 +265,19 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         CreazioneDomandaNomeAImmagineWidget(
-                                          user: widget.user,
-                                          tipologia: typology,
-                                          categoria: category,
-                                        )));
+                                            user: widget.user,
+                                            tipologia: typology,
+                                            categoria: category,
+                                            item: null)));
                               } else if (typology ==
                                   'Associa l\'immagine al nome') {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         CreazioneDomandaImmagineANomeWidget(
-                                          user: widget.user,
-                                          tipologia: typology,
-                                          categoria: category,
-                                        )));
+                                            user: widget.user,
+                                            tipologia: typology,
+                                            categoria: category,
+                                            item: null)));
                               }
                             },
                           ),
@@ -459,10 +460,59 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                         size: 25,
                                                       ),
 
-                                                      /*Icona per cancellare un quesito.
-                                                      Alla pressione di questa icona viene cancellata
-                                                      la domanda corrispondete da Firebase. */
-                                                      onPressed: () {},
+                                                      /*Icona modificare un quesito*/
+                                                      onPressed: () {
+                                                        if ('Associa il nome all\'immagine' ==
+                                                            item['tipologia']) {
+                                                          Navigator.of(context).push(
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          CreazioneDomandaNomeAImmagineWidget(
+                                                                            user:
+                                                                                widget.user,
+                                                                            tipologia:
+                                                                                typology,
+                                                                            categoria:
+                                                                                category,
+                                                                            item: Quesito(
+                                                                                quesitoID: item['quesitoID'],
+                                                                                opzione1: item['opzione1'],
+                                                                                opzione2: item['opzione2'],
+                                                                                opzione3: item['opzione3'],
+                                                                                opzione4: item['opzione4'],
+                                                                                domanda: item['domanda'],
+                                                                                domandaImmagine: item['domandaImmagine'],
+                                                                                risposta: item['risposta'],
+                                                                                categoria: item['categoria'],
+                                                                                tipologia: item['tipologia']),
+                                                                          )));
+                                                        } else {
+                                                          Navigator.of(context).push(
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          CreazioneDomandaImmagineANomeWidget(
+                                                                            user:
+                                                                                widget.user,
+                                                                            tipologia:
+                                                                                typology,
+                                                                            categoria:
+                                                                                category,
+                                                                            item: Quesito(
+                                                                                quesitoID: item['quesitoID'],
+                                                                                opzione1: item['opzione1'],
+                                                                                opzione2: item['opzione2'],
+                                                                                opzione3: item['opzione3'],
+                                                                                opzione4: item['opzione4'],
+                                                                                domanda: item['domanda'],
+                                                                                domandaImmagine: item['domandaImmagine'],
+                                                                                risposta: item['risposta'],
+                                                                                categoria: item['categoria'],
+                                                                                tipologia: item['tipologia']),
+                                                                          )));
+                                                        }
+                                                      },
                                                     ),
                                                     FlutterFlowIconButton(
                                                       borderColor:
@@ -476,6 +526,9 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                             Color(0xFF8E8E8E),
                                                         size: 25,
                                                       ),
+                                                      /*Icona per cancellare un quesito.
+                                                      Alla pressione di questa icona viene cancellata
+                                                      la domanda corrispondete da Firebase. */
                                                       onPressed: () {
                                                         FirebaseFirestore
                                                             .instance
@@ -502,95 +555,6 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                     return const Text(
                                         'Caricamento dei quesiti in corso...');
                                   }),
-
-                              //Questo è il widgeto che devo realizzare dinamicamente con i dati
-                              //che mi prendo da firebase
-
-                              /*child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8, 8, 8, 8),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      alignment:
-                                          const AlignmentDirectional(0, 0),
-                                      child: Text(
-                                        '1',
-                                        textAlign: TextAlign.center,
-                                        style:
-                                            FlutterFlowTheme.of(context).title2,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 0, 0, 0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 4, 0, 0),
-                                              child: Text(
-                                                'Chi è Mario, tuo figlio?',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          fontSize: 12,
-                                                        ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 45,
-                                      icon: const Icon(
-                                        Icons.mode_edit,
-                                        color: Color(0xFF8E8E8E),
-                                        size: 25,
-                                      ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 45,
-                                      icon: const Icon(
-                                        Icons.cancel,
-                                        color: Color(0xFF8E8E8E),
-                                        size: 25,
-                                      ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),*/
                             ),
                           ),
                         ],

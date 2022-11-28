@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/gestione_quiz/quesito.dart';
 
+import '../auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -14,11 +16,13 @@ class CreazioneDomandaNomeAImmagineWidget extends StatefulWidget {
   final Utente user;
   final String? tipologia;
   final String? categoria;
+  final Quesito? item;
   const CreazioneDomandaNomeAImmagineWidget(
       {Key? key,
       required this.user,
       required this.tipologia,
-      required this.categoria})
+      required this.categoria,
+      required this.item})
       : super(key: key);
 
   @override
@@ -28,8 +32,6 @@ class CreazioneDomandaNomeAImmagineWidget extends StatefulWidget {
 
 class _CreazioneDomandaNomeAImmagineWidgetState
     extends State<CreazioneDomandaNomeAImmagineWidget> {
-  /*bool isMediaUploading = false;
-  String uploadedFileUrl = '';*/
   String imagDomanda = '';
 
   TextEditingController? textController1;
@@ -49,6 +51,15 @@ class _CreazioneDomandaNomeAImmagineWidgetState
     textController3 = TextEditingController();
     textController4 = TextEditingController();
     textController5 = TextEditingController();
+
+    if (widget.item != null) {
+      textController1!.text = widget.item!.domanda!;
+      textController2!.text = widget.item!.opzione1!;
+      textController3!.text = widget.item!.opzione2!;
+      textController4!.text = widget.item!.opzione3!;
+      textController5!.text = widget.item!.opzione4!;
+      dropDownValue = widget.item!.risposta!;
+    }
   }
 
   @override
@@ -221,6 +232,15 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                         });
                                       }
                                     },
+                                    /*Qui c'è una doppia condizione: 
+                                    - Se imagDomanda è diverso da null allora significa che noi abbiamo
+                                    cliccato sul bottone dell'immagine per caricarne una e quindi imagDomanda
+                                    conterrà l'URL di firestore. 
+                                    - Se invece è null allora controllo se item non è null. Se è questo il caso allora
+                                    significa che ho passato un Quesito da modificare a questo widget
+                                    - Se anche item è null allora significa che devo creare un nuovo quesito.
+                                    - Tutto questo viene fatto usando l'operatore ternario in maniera nidificata.
+                                     */
                                     child: imagDomanda != ''
                                         ? Image.asset(
                                             imagDomanda,
@@ -228,12 +248,19 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                             height: 100,
                                             fit: BoxFit.cover,
                                           )
-                                        : Image.asset(
-                                            'assets/images/add_photo.png',
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.contain,
-                                          ),
+                                        : widget.item != null
+                                            ? Image.network(
+                                                widget.item!.domandaImmagine!,
+                                                width: 100,
+                                                height: 100,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/add_photo.png',
+                                                width: 100,
+                                                height: 100,
+                                                fit: BoxFit.contain,
+                                              ),
                                   ),
                                 ),
                               ),
@@ -625,6 +652,13 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 5),
                               child: FlutterFlowDropDown(
+                                /*Qui sto usando il cosìddetto operatore ternario
+                                testCondition ? trueValue : falseValue
+                                Questo mi permette di assegnare un valore ad un parametro
+                                del widget in base ad una condizione. In questo caso controllo
+                                se è stato passato un Quesito se si allora significa che ho
+                                cliccato in precedenza sull'icona della matita per modificare 
+                                il quesito */
                                 initialOption: dropDownValue ??= 'Opzione 1',
                                 options: const [
                                   'Opzione 1',
@@ -633,7 +667,9 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                   'Opzione 4'
                                 ],
                                 onChanged: (val) async {
-                                  setState(() => dropDownValue = val);
+                                  setState(() {
+                                    dropDownValue = val;
+                                  });
                                 },
                                 width: 180,
                                 height: 50,
@@ -675,35 +711,65 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                           return;
                         }
 
-                        // Caricamento dell'immagine oggetto
-                        // della domanda su firebase
-                        var imageUrlDomanda;
-                        if (imagDomanda != '') {
-                          imageUrlDomanda =
-                              await ImageUpload().uploadImage(imagDomanda);
-                        }
-                        //Creazione del quesito
-                        final quesitoIDGenerato = Quesito.quesitoIdGenerator(9);
-                        final quesito = Quesito(
-                            quesitoID: quesitoIDGenerato,
-                            opzione1: textController2?.text,
-                            opzione2: textController3?.text,
-                            opzione3: textController4?.text,
-                            opzione4: textController5?.text,
-                            domanda: textController1?.text,
-                            domandaImmagine:
-                                imageUrlDomanda ?? '', //Titolo della domanda
-                            risposta:
-                                dropDownValue, //Immagine 1, Immagine 2,...
-                            categoria: widget.categoria,
-                            tipologia: widget.tipologia);
-                        quesito.createNewQuestion(
-                            widget.user, quesitoIDGenerato);
+                        /*Distinguo il caso della modifica di un quesito esistente
+                        dalla creazione di un nuovo quesito constatando se è stato
+                        passato un oggetto di tipo Quesito a domanda_nome_a_imag.dart
+                        oppure no */
 
-                        //Una volta creato il quesito ritorno a GestioneQuiz
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                GestionQuizWidget(user: widget.user)));
+                        if (widget.item != null) {
+                          FirebaseFirestore.instance
+                              .collection('user')
+                              .doc(Auth().currentUser?.uid)
+                              .collection('Pazienti')
+                              .doc(widget.user.userID)
+                              .collection('Quesiti')
+                              .doc(widget.item?.quesitoID)
+                              .update({
+                            'quesitoID': widget.item?.quesitoID,
+                            'opzione1': textController2?.text,
+                            'opzione2': textController3?.text,
+                            'opzione3': textController4?.text,
+                            'opzione4': textController5?.text,
+                            'domanda': textController1?.text,
+                            'domandaImmagine': imagDomanda != ''
+                                ? await ImageUpload().uploadImage(imagDomanda)
+                                : widget.item?.domandaImmagine,
+                            'risposta': dropDownValue,
+                            'categoria': widget.categoria,
+                            'tipologia': widget.tipologia,
+                          });
+                        } else {
+                          // Caricamento dell'immagine oggetto
+                          // della domanda su firebase
+                          var imageUrlDomanda;
+                          if (imagDomanda != '') {
+                            imageUrlDomanda =
+                                await ImageUpload().uploadImage(imagDomanda);
+                          }
+                          //Creazione del quesito
+                          final quesitoIDGenerato =
+                              Quesito.quesitoIdGenerator(28);
+                          final quesito = Quesito(
+                              quesitoID: quesitoIDGenerato,
+                              opzione1: textController2?.text,
+                              opzione2: textController3?.text,
+                              opzione3: textController4?.text,
+                              opzione4: textController5?.text,
+                              domanda: textController1?.text,
+                              domandaImmagine:
+                                  imageUrlDomanda ?? '', //Titolo della domanda
+                              risposta:
+                                  dropDownValue, //Immagine 1, Immagine 2,...
+                              categoria: widget.categoria,
+                              tipologia: widget.tipologia);
+                          quesito.createNewQuestion(
+                              widget.user, quesitoIDGenerato);
+
+                          //Una volta creato il quesito ritorno a GestioneQuiz
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  GestionQuizWidget(user: widget.user)));
+                        } //fine if
                       },
                       text: 'Salva',
                       options: FFButtonOptions(
