@@ -458,6 +458,10 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                             Color(0xFF8E8E8E),
                                                         size: 25,
                                                       ),
+
+                                                      /*Icona per cancellare un quesito.
+                                                      Alla pressione di questa icona viene cancellata
+                                                      la domanda corrispondete da Firebase. */
                                                       onPressed: () {},
                                                     ),
                                                     FlutterFlowIconButton(
@@ -472,7 +476,9 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                             Color(0xFF8E8E8E),
                                                         size: 25,
                                                       ),
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        print(item);
+                                                      },
                                                     ),
                                                   ],
                                                 ),
