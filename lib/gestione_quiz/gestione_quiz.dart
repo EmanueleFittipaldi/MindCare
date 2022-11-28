@@ -265,8 +265,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                     builder: (context) =>
                                         CreazioneDomandaNomeAImmagineWidget(
                                           user: widget.user,
-                                          tipologia: category,
-                                          categoria: typology,
+                                          tipologia: typology,
+                                          categoria: category,
                                         )));
                               } else if (typology ==
                                   'Associa l\'immagine al nome') {
@@ -322,10 +322,10 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                       .collection('Quesiti')
                                       .where('tipologia',
                                           isEqualTo:
-                                              category) //categoria e tipologia sono
+                                              typology) //categoria e tipologia sono
                                       .where('categoria',
                                           isEqualTo:
-                                              typology) //invertite non so perché
+                                              category) //invertite non so perché
                                       .snapshots(),
                                   //StreamBuilder per caricare i dati dei quesiti
                                   //funzione per ottenere i dati dei quesiti
@@ -396,7 +396,7 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                       //ho pensato che è meglio inserire la categoria
                                                       //delle domande piuttosto che un numero progressivo
                                                       child: Text(
-                                                        item['tipologia'],
+                                                        item['categoria'],
                                                         textAlign:
                                                             TextAlign.center,
                                                         style:
