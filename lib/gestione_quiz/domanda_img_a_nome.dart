@@ -601,7 +601,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                         //Creazione del quesito
                         final quesitoIDGenerato = Quesito.quesitoIdGenerator(9);
                         final quesito = Quesito(
-                            quesitoID: Quesito.quesitoIdGenerator(9),
+                            quesitoID: quesitoIDGenerato,
                             opzione1: imageUrlOp1 ?? '',
                             opzione2: imageUrlOp2 ?? '',
                             opzione3: imageUrlOp3 ?? '',

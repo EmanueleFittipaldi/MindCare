@@ -274,8 +274,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                     builder: (context) =>
                                         CreazioneDomandaImmagineANomeWidget(
                                           user: widget.user,
-                                          tipologia: category,
-                                          categoria: typology,
+                                          tipologia: typology,
+                                          categoria: category,
                                         )));
                               }
                             },
