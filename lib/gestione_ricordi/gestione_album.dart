@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/auth.dart';
 import 'package:mindcare/gestione_ricordi/creazione_ricordo.dart';
+import 'package:mindcare/gestione_ricordi/ricordo.dart';
 import 'package:mindcare/utente.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -17,6 +19,26 @@ class GestioneAlbumWidget extends StatefulWidget {
 
 class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  //funzione per eliminare un paziente e la sua immagine salvate nello storage
+  Future<void> deleteMemory(memoryID, filePath) async {
+    var user = FirebaseFirestore.instance.collection('user');
+    var docSnapshot = user
+        .doc(Auth().currentUser?.uid)
+        .collection('Pazienti')
+        .doc(widget.user.userID)
+        .collection('Ricordi')
+        .doc(memoryID); //riferimento al documento da eliminare
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction deleteTransaction) async {
+      deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione
+    });
+    if (filePath != '') {
+      await FirebaseStorage.instance
+          .refFromURL(filePath)
+          .delete(); //eliminazione immagine
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +149,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => RicordoImmagineWidget(
                                         userID: widget.user.userID,
+                                        memoryItem: null,
                                       )));
                             },
                           ),
@@ -256,7 +279,42 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                                     color: Color(0xFF8E8E8E),
                                                     size: 25,
                                                   ),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                RicordoImmagineWidget(
+                                                                    userID: widget
+                                                                        .user
+                                                                        .userID,
+                                                                    memoryItem:
+                                                                        Ricordo(
+                                                                      titolo: data[
+                                                                              i]
+                                                                          [
+                                                                          'titolo'],
+                                                                      annoRicordo:
+                                                                          data[i]
+                                                                              [
+                                                                              'annoRicordo'],
+                                                                      descrizione:
+                                                                          data[i]
+                                                                              [
+                                                                              'descrizione'],
+                                                                      filePath:
+                                                                          data[i]
+                                                                              [
+                                                                              'filePath'],
+                                                                      ricordoID:
+                                                                          data[i]
+                                                                              [
+                                                                              'ricordoID'],
+                                                                      tipoRicordo:
+                                                                          data[i]
+                                                                              [
+                                                                              'tipoRicordo'],
+                                                                    ))));
+                                                  },
                                                 ),
                                                 FlutterFlowIconButton(
                                                   borderColor:
@@ -269,7 +327,11 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                                     color: Color(0xFF8E8E8E),
                                                     size: 25,
                                                   ),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    deleteMemory(
+                                                        data[i]['ricordoID'],
+                                                        data[i]['filePath']);
+                                                  },
                                                 ),
                                               ],
                                             ),

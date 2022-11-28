@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/auth.dart';
@@ -8,12 +9,16 @@ class Ricordo {
   final int annoRicordo;
   final String descrizione;
   final String filePath;
+  final String ricordoID;
+  final String tipoRicordo;
 
   Ricordo({
     required this.titolo,
     required this.annoRicordo,
     required this.descrizione,
     required this.filePath,
+    required this.ricordoID,
+    required this.tipoRicordo,
   });
 
   final docUser = FirebaseFirestore.instance.collection('user').doc();
@@ -22,7 +27,9 @@ class Ricordo {
         'titolo': titolo,
         'annoRicordo': annoRicordo,
         'descrizione': descrizione,
-        'filePath': filePath
+        'filePath': filePath,
+        'ricordoID': ricordoID,
+        'tipoRicordo': tipoRicordo,
       };
 
   Future<void> createMemory(String user) async {
@@ -33,7 +40,7 @@ class Ricordo {
         .collection('Pazienti')
         .doc(user)
         .collection('Ricordi')
-        .doc();
+        .doc(ricordoID);
     await docUser.set(json);
   }
 }
