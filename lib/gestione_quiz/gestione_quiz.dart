@@ -477,7 +477,21 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                         size: 25,
                                                       ),
                                                       onPressed: () {
-                                                        print(item);
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection('user')
+                                                            .doc(Auth()
+                                                                .currentUser
+                                                                ?.uid)
+                                                            .collection(
+                                                                'Pazienti')
+                                                            .doc(widget
+                                                                .user.userID)
+                                                            .collection(
+                                                                'Quesiti')
+                                                            .doc(item[
+                                                                'quesitoID'])
+                                                            .delete();
                                                       },
                                                     ),
                                                   ],

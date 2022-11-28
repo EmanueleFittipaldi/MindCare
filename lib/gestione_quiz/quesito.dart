@@ -57,7 +57,7 @@ class Quesito {
       categoria: json['categoria'],
       tipologia: json['tipologia']);
 
-  Future<void> createNewQuestion(Utente user) async {
+  Future<void> createNewQuestion(Utente user, String quesitoIDGenerato) async {
     final json = toJson();
     final docUser = FirebaseFirestore.instance
         .collection('user') //collezione principale di tutti gli utenti
@@ -65,7 +65,7 @@ class Quesito {
         .collection('Pazienti') //prendo la collezione dei suoi pazienti
         .doc(user.userID) //prendo lo user che mi interessa
         .collection('Quesiti') //prendo la collezione dei quesiti
-        .doc();
+        .doc(quesitoIDGenerato);
     await docUser.set(json);
   }
 

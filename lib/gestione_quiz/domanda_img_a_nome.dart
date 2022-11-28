@@ -599,6 +599,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                         }
 
                         //Creazione del quesito
+                        final quesitoIDGenerato = Quesito.quesitoIdGenerator(9);
                         final quesito = Quesito(
                             quesitoID: Quesito.quesitoIdGenerator(9),
                             opzione1: imageUrlOp1 ?? '',
@@ -612,7 +613,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                 dropDownValue, //Immagine 1, Immagine 2,...
                             categoria: widget.categoria,
                             tipologia: widget.tipologia);
-                        quesito.createNewQuestion(widget.user);
+                        quesito.createNewQuestion(
+                            widget.user, quesitoIDGenerato);
 
                         //Una volta creato il quesito ritorno a GestioneQuiz
                         Navigator.of(context).push(MaterialPageRoute(

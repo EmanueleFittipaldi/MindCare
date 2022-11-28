@@ -683,8 +683,9 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                               await ImageUpload().uploadImage(imagDomanda);
                         }
                         //Creazione del quesito
+                        final quesitoIDGenerato = Quesito.quesitoIdGenerator(9);
                         final quesito = Quesito(
-                            quesitoID: Quesito.quesitoIdGenerator(9),
+                            quesitoID: quesitoIDGenerato,
                             opzione1: textController2?.text,
                             opzione2: textController3?.text,
                             opzione3: textController4?.text,
@@ -696,7 +697,8 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                 dropDownValue, //Immagine 1, Immagine 2,...
                             categoria: widget.categoria,
                             tipologia: widget.tipologia);
-                        quesito.createNewQuestion(widget.user);
+                        quesito.createNewQuestion(
+                            widget.user, quesitoIDGenerato);
 
                         //Una volta creato il quesito ritorno a GestioneQuiz
                         Navigator.of(context).push(MaterialPageRoute(
