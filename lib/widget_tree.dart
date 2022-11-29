@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/paziente/home_paziente.dart';
 
@@ -14,18 +15,16 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
-
-
   @override
   Widget build(BuildContext context) {
-
     var flag = false;
     var docSnaphot;
 
     Future<bool> isCaregiver() async {
-    var collection = FirebaseFirestore.instance.collection("user");
-    docSnaphot = await collection.doc(Auth().currentUser?.uid).get();
-    return flag;
+      var collection = FirebaseFirestore.instance.collection("user");
+      docSnaphot = await collection.doc(Auth().currentUser?.uid).get();
+
+      return flag;
     }
 
     return StreamBuilder(
@@ -33,33 +32,69 @@ class _WidgetTreeState extends State<WidgetTree> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return FutureBuilder(
-            future: isCaregiver(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData){
-                if(docSnaphot.exists){
-                  Map<String, dynamic>? data = docSnaphot.data();
-                  if(data?["type"] == "Caregiver"){
-                    flag = true;
-                  }else {
-                    flag = false;
+              future: isCaregiver(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var type = '';
+                  if (docSnaphot != null) {
+                    Map<String, dynamic>? data = docSnaphot.data();
+
+                    if (data?["type"] == "Caregiver") {
+                      type = 'Caregiver';
+                    } else {
+                      type = 'Paziente';
+                    }
                   }
-                } 
-                if (flag) {
-                  return const HomeCaregiverWidget();
+                  if (type == 'Caregiver') {
+                    if (Auth().currentUser!.emailVerified) {
+                      return const HomeCaregiverWidget();
+                    } else {
+                      DateTime? date =
+                          Auth().currentUser!.metadata.creationTime;
+                      DateTime dateNow = DateTime.now();
+                      if (dateNow.difference(date!).inHours > 24) {
+                        Fluttertoast.showToast(
+                            msg: 'Verifica scaduta, account cancellato!');
+
+                        Auth().currentUser!.delete();
+                      } else {
+                        Fluttertoast.showToast(msg: 'Verifica email!');
+                        Auth().signOut();
+                      }
+                    }
+                    return const LoginWidget();
+                  } else if (type == 'Paziente') {
+                    // DA NON ELIMINARE -> server per verificare che il paziente ha verifica l'email, ma da limare alcuni dettagli
+                    if (Auth().currentUser!.emailVerified) {
+                      return const HomePazienteWidget();
+                    } else {
+                      DateTime? date =
+                          Auth().currentUser!.metadata.creationTime;
+                      DateTime dateNow = DateTime.now();
+                      if (dateNow.difference(date!).inHours > 24) {
+                        Fluttertoast.showToast(
+                            msg: 'Verifica scaduta, account cancellato!');
+                        Auth().signOut();
+                        Auth().currentUser!.delete();
+                      } else {
+                        Fluttertoast.showToast(msg: 'Verifica email!');
+                        Auth().signOut();
+                      }
+
+                      return const LoginWidget();
+                    }
+                  } else {
+                    return const LoginWidget();
+                  }
                 } else {
-                  return const HomePazienteWidget();
+                  return const Scaffold(
+                      body: Center(child: CircularProgressIndicator()));
                 }
-              }
-              else {
-                return const Scaffold(body:Center(child: CircularProgressIndicator()));
-              }
-            });
+              });
         } else {
-          print("sono dentro widgetTree - Snapshot NULL");
           return const LoginWidget();
         }
       },
     );
   }
 }
-

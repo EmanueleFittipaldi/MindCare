@@ -20,8 +20,13 @@ class Auth {
 
   Future<void> createNewAccount(
       {required String email, required String password}) async {
-    await _firebaseAuth.createUserWithEmailAndPassword(
+    final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
+    try {
+      credential.user!.sendEmailVerification();
+    } catch (e) {
+      Fluttertoast.showToast(msg: 'Email non esistente!');
+    }
   }
 
   Future<void> signOut() async {
@@ -45,6 +50,11 @@ class Auth {
       if (credential.user == null) {
         return null;
       } else {
+        try {
+          await credential.user!.sendEmailVerification();
+        } catch (e) {
+          Fluttertoast.showToast(msg: 'Email non esistente!');
+        }
         return credential.user?.uid;
       }
     } on FirebaseAuthException catch (e) {

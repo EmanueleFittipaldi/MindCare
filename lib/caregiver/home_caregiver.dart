@@ -35,17 +35,13 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
     super.dispose();
   }
 
-  
-
   //funzione che permette di ottenere i dati dal database.
   //invocata in FutureBuilder, per caricare dapprima i dati del caregiver
   Future<Object?> getCaregiverData() async {
     //ottenimento della collezione 'user'
     var user = FirebaseFirestore.instance.collection('user');
-    var userSnap = await user
-        .doc(Auth().currentUser?.uid)
-        .get();
-        //documento del caregiver -> userID autenticato
+    var userSnap = await user.doc(Auth().currentUser?.uid).get();
+    //documento del caregiver -> userID autenticato
     if (userSnap.exists) {
       Map<String, dynamic>? userMap =
           userSnap.data(); //mappatura dei dati prelevati
@@ -77,15 +73,13 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
 
   @override
   Widget build(BuildContext context) {
-
-    
     var docSnaphot;
     Map<String, dynamic>? data;
 
     Future<void> datiCaregiver() async {
-    var collection = FirebaseFirestore.instance.collection("user");
-    docSnaphot = await collection.doc(Auth().currentUser?.uid).get();
-    data = docSnaphot.data(); 
+      var collection = FirebaseFirestore.instance.collection("user");
+      docSnaphot = await collection.doc(Auth().currentUser?.uid).get();
+      data = docSnaphot.data();
     }
 
     return Scaffold(
@@ -127,23 +121,20 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                         size: 30,
                       ),
                       onPressed: () async {
-
                         await datiCaregiver();
-     
-                        Navigator.of(context).push(
-                        MaterialPageRoute(
-                        builder: (context) => 
-                        OpzioniWidget(
-                           user: Utente(
-                                  userID:
-                                        data?['userID'],
-                                        name: data?['name'],
-                                        lastname: data?['lastname'],
-                                        email: data?['email'],
-                                        type: data?['type'],
-                                        date: (data?['dateOfBirth'] as Timestamp).toDate(),
-                                        profileImgPath: data?['profileImagePath']))));
 
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => OpzioniWidget(
+                                user: Utente(
+                                    userID: data?['userID'],
+                                    name: data?['name'],
+                                    lastname: data?['lastname'],
+                                    email: data?['email'],
+                                    type: data?['type'],
+                                    date: (data?['dateOfBirth'] as Timestamp)
+                                        .toDate(),
+                                    profileImgPath:
+                                        data?['profileImagePath']))));
                       },
                     ),
                     FlutterFlowIconButton(
