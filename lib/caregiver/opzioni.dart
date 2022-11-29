@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 // ignore: unused_import
@@ -5,10 +9,17 @@ import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import '../auth.dart';
 import '../login.dart';
 
+import '../utente.dart';
+
 class OpzioniWidget extends StatefulWidget {
-  const OpzioniWidget({Key? key}) : super(key: key);
+  final Utente user;
+  const OpzioniWidget({Key? key, required this.user})
+    : super(key: key);
+   
+
 
   @override
   _OpzioniWidgetState createState() => _OpzioniWidgetState();
@@ -32,9 +43,9 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController(text: 'Teresa');
-    textController2 = TextEditingController(text: 'D\'amico');
-    textController3 = TextEditingController(text: 't.damico@gmail.com');
+    textController1 = TextEditingController(text: widget.user.name);
+    textController2 = TextEditingController(text: widget.user.lastname);
+    textController3 = TextEditingController(text: widget.user.email);
     textController4 = TextEditingController();
     passwordVisibility1 = false;
     textController5 = TextEditingController();
@@ -52,6 +63,36 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
     textController5?.dispose();
     textController6?.dispose();
     super.dispose();
+  }
+
+  Future<void> forgottenPassword() async {
+    showDialog(
+      context: context, 
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator())
+    );
+    try {
+      await Auth().forgottenPassword(email: widget.user.email);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> modificaDati() async{
+     var collection = FirebaseFirestore.instance.collection("user");
+     collection.doc(Auth().currentUser?.uid).update({
+      'name': textController1?.text.toString(), 
+      'lastname': textController2?.text.toString(),
+      'email': textController3?.text.toString(),});
+     
+     Fluttertoast.showToast(msg: "ho fatto la modifica");
+
+    print(textController1);
+    print(textController2);
+    print(textController3);
+
   }
 
   @override
@@ -135,12 +176,18 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             const EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            'https://thumbs.dreamstime.com/b/portrait-indian-asian-female-medical-doctor-hospital-office-happy-smiling-stethoscope-asian-indian-female-woman-161674392.jpg',
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          ),
+                          child: widget.user.profileImgPath != ''
+                          
+                          ?Image.network(
+                          widget.user.profileImgPath, 
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                          )
+                          :Image.asset('assets/images/add_photo.png', 
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,),
                         ),
                       ),
                     ),
@@ -154,7 +201,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Teresa',
+                              '${widget.user.name} ${widget.user.lastname}',
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'Lexend Deca',
@@ -167,7 +214,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 4, 0, 0),
                               child: Text(
-                                'ID: 0001',
+                                "",
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -341,7 +388,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '24/08/1993',
+                                      DateFormat("yyyy-MM-dd").format(widget.user.date),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -415,7 +462,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 5, 0, 15),
                             child: FFButtonWidget(
-                              onPressed: () {},
+                              onPressed: () {modificaDati();},
                               text: 'Salva',
                               options: FFButtonOptions(
                                 width: 130,
@@ -482,205 +529,10 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 15, 0, 5),
-                            child: TextFormField(
-                              controller: textController4,
-                              autofocus: true,
-                              obscureText: !passwordVisibility1,
-                              decoration: InputDecoration(
-                                labelText: 'Password attuale:',
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .borderColor,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .borderColor,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                suffixIcon: InkWell(
-                                  onTap: () => setState(
-                                    () => passwordVisibility1 =
-                                        !passwordVisibility1,
-                                  ),
-                                  focusNode: FocusNode(skipTraversal: true),
-                                  child: Icon(
-                                    passwordVisibility1
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
-                                    color: const Color(0xFF757575),
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 15, 0, 5),
-                            child: TextFormField(
-                              controller: textController5,
-                              autofocus: true,
-                              obscureText: !passwordVisibility2,
-                              decoration: InputDecoration(
-                                labelText: 'Nuova password:',
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .borderColor,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .borderColor,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                suffixIcon: InkWell(
-                                  onTap: () => setState(
-                                    () => passwordVisibility2 =
-                                        !passwordVisibility2,
-                                  ),
-                                  focusNode: FocusNode(skipTraversal: true),
-                                  child: Icon(
-                                    passwordVisibility2
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
-                                    color: const Color(0xFF757575),
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 15, 0, 5),
-                            child: TextFormField(
-                              controller: textController6,
-                              autofocus: true,
-                              obscureText: !passwordVisibility3,
-                              decoration: InputDecoration(
-                                labelText: 'Conferma password:',
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .borderColor,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .borderColor,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                suffixIcon: InkWell(
-                                  onTap: () => setState(
-                                    () => passwordVisibility3 =
-                                        !passwordVisibility3,
-                                  ),
-                                  focusNode: FocusNode(skipTraversal: true),
-                                  child: Icon(
-                                    passwordVisibility3
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
-                                    color: const Color(0xFF757575),
-                                    size: 22,
-                                  ),
-                                ),
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 5, 0, 15),
                             child: FFButtonWidget(
-                              onPressed: () {},
-                              text: 'Salva',
+                              onPressed: () => {forgottenPassword()},
+                              text: 'Modifica password',
                               options: FFButtonOptions(
                                 width: 130,
                                 height: 40,
