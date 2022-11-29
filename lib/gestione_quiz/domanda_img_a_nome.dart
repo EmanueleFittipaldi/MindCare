@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/gestione_quiz/quesito.dart';
 
 import '../auth.dart';
@@ -61,6 +62,13 @@ class _CreazioneDomandaImmagineANomeWidgetState
   void dispose() {
     textController?.dispose();
     super.dispose();
+  }
+
+  /*Questa funzione elimina l'immagine che c'era prima e carica quella
+passata come parametro */
+  Future<String> updateImage(String imagDomanda, String imagPrecedente) async {
+    ImageUpload().deleteFile(imagPrecedente);
+    return await ImageUpload().uploadImage(imagDomanda);
   }
 
   @override
@@ -613,16 +621,20 @@ class _CreazioneDomandaImmagineANomeWidgetState
                               .update({
                             'quesitoID': widget.item?.quesitoID,
                             'opzione1': imagOp1 != ''
-                                ? await ImageUpload().uploadImage(imagOp1)
+                                ? await updateImage(
+                                    imagOp1, widget.item!.opzione1!)
                                 : widget.item?.opzione1,
                             'opzione2': imagOp2 != ''
-                                ? await ImageUpload().uploadImage(imagOp2)
+                                ? await updateImage(
+                                    imagOp2, widget.item!.opzione2!)
                                 : widget.item?.opzione2,
                             'opzione3': imagOp3 != ''
-                                ? await ImageUpload().uploadImage(imagOp3)
+                                ? await updateImage(
+                                    imagOp3, widget.item!.opzione3!)
                                 : widget.item?.opzione3,
                             'opzione4': imagOp4 != ''
-                                ? await ImageUpload().uploadImage(imagOp4)
+                                ? await updateImage(
+                                    imagOp4, widget.item!.opzione4!)
                                 : widget.item?.opzione4,
                             'domanda': textController?.text,
                             'domandaImmagine': '',
@@ -659,29 +671,40 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                 await ImageUpload().uploadImage(imagOp4);
                           }
 
-                          //Creazione del quesito
-                          final quesitoIDGenerato =
-                              Quesito.quesitoIdGenerator(28);
-                          final quesito = Quesito(
-                              quesitoID: quesitoIDGenerato,
-                              opzione1: imageUrlOp1 ?? '',
-                              opzione2: imageUrlOp2 ?? '',
-                              opzione3: imageUrlOp3 ?? '',
-                              opzione4: imageUrlOp4 ?? '',
-                              domanda:
-                                  textController?.text, //Titolo della domanda
-                              domandaImmagine: '',
-                              risposta:
-                                  dropDownValue, //Immagine 1, Immagine 2,...
-                              categoria: widget.categoria,
-                              tipologia: widget.tipologia);
-                          quesito.createNewQuestion(
-                              widget.user, quesitoIDGenerato);
+                          /*Faccio un controllo se sono state effettivamente
+                          caricate delle immagini, altrimenti impedisco la creazione
+                          della domanda */
 
-                          //Una volta creato il quesito ritorno a GestioneQuiz
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  GestionQuizWidget(user: widget.user)));
+                          if (imageUrlOp1 == null ||
+                              imageUrlOp2 == null ||
+                              imageUrlOp3 == null ||
+                              imageUrlOp4 == null) {
+                            Fluttertoast.showToast(msg: 'Caricare le immagini');
+                          } else {
+                            //Creazione del quesito
+                            final quesitoIDGenerato =
+                                Quesito.quesitoIdGenerator(28);
+                            final quesito = Quesito(
+                                quesitoID: quesitoIDGenerato,
+                                opzione1: imageUrlOp1 ?? '',
+                                opzione2: imageUrlOp2 ?? '',
+                                opzione3: imageUrlOp3 ?? '',
+                                opzione4: imageUrlOp4 ?? '',
+                                domanda:
+                                    textController?.text, //Titolo della domanda
+                                domandaImmagine: '',
+                                risposta:
+                                    dropDownValue, //Immagine 1, Immagine 2,...
+                                categoria: widget.categoria,
+                                tipologia: widget.tipologia);
+                            quesito.createNewQuestion(
+                                widget.user, quesitoIDGenerato);
+
+                            //Una volta creato il quesito ritorno a GestioneQuiz
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    GestionQuizWidget(user: widget.user)));
+                          }
                         } //fine if
                       },
                       text: 'Salva',

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/gestione_quiz/quesito.dart';
 
 import '../auth.dart';
@@ -39,18 +40,18 @@ class _CreazioneDomandaNomeAImmagineWidgetState
   TextEditingController? textController3;
   TextEditingController? textController4;
   TextEditingController? textController5;
-  String? dropDownValue;
+  String? dropDownValue; //valore del dropdown
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
-    textController4 = TextEditingController();
-    textController5 = TextEditingController();
+    textController1 = TextEditingController(); //testo della domanda
+    textController2 = TextEditingController(); //opzione1
+    textController3 = TextEditingController(); //opzione2
+    textController4 = TextEditingController(); //opzione3
+    textController5 = TextEditingController(); //opzione4
 
     if (widget.item != null) {
       textController1!.text = widget.item!.domanda!;
@@ -70,6 +71,13 @@ class _CreazioneDomandaNomeAImmagineWidgetState
     textController4?.dispose();
     textController5?.dispose();
     super.dispose();
+  }
+
+/*Questa funzione elimina l'immagine che c'era prima e carica quella
+passata come parametro */
+  Future<String> updateImage(String imagDomanda, String imagPrecedente) async {
+    ImageUpload().deleteFile(imagPrecedente);
+    return await ImageUpload().uploadImage(imagDomanda);
   }
 
   @override
@@ -131,7 +139,15 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 5),
+                        //valido il campo di "Testo domanda". Voglio che ci sia
+                        //qualcosa scritto
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Inserire il testo della domanda';
+                            }
+                            return null;
+                          },
                           controller: textController1,
                           autofocus: true,
                           obscureText: false,
@@ -315,6 +331,12 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                   ),
                                   Expanded(
                                     child: TextFormField(
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Inserisci l\'opzione1';
+                                        }
+                                        return null;
+                                      },
                                       controller: textController2,
                                       autofocus: true,
                                       obscureText: false,
@@ -399,6 +421,12 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                   ),
                                   Expanded(
                                     child: TextFormField(
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Inserisci l\'opzione2';
+                                        }
+                                        return null;
+                                      },
                                       controller: textController3,
                                       autofocus: true,
                                       obscureText: false,
@@ -483,6 +511,12 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                   ),
                                   Expanded(
                                     child: TextFormField(
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Inserisci l\'opzione3';
+                                        }
+                                        return null;
+                                      },
                                       controller: textController4,
                                       autofocus: true,
                                       obscureText: false,
@@ -567,6 +601,12 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                                   ),
                                   Expanded(
                                     child: TextFormField(
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Inserisci l\'opzione4';
+                                        }
+                                        return null;
+                                      },
                                       controller: textController5,
                                       autofocus: true,
                                       obscureText: false,
@@ -711,7 +751,8 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                           return;
                         }
 
-                        /*Distinguo il caso della modifica di un quesito esistente
+                        /*
+                        Distinguo il caso della modifica di un quesito esistente
                         dalla creazione di un nuovo quesito constatando se è stato
                         passato un oggetto di tipo Quesito a domanda_nome_a_imag.dart
                         oppure no */
@@ -731,13 +772,24 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                             'opzione3': textController4?.text,
                             'opzione4': textController5?.text,
                             'domanda': textController1?.text,
+                            /*Se imagDomanda non è vuota allora significa che ho
+                            cliccato sull'immagine e ne ho scelto una nuova. Altrimenti
+                            Significa che devo riassegnare l'immagine che già c'era, e questa
+                            la posso reperire dall'oggetto Quesito che ho passato in precedenza
+                            a questo widget. */
                             'domandaImmagine': imagDomanda != ''
-                                ? await ImageUpload().uploadImage(imagDomanda)
+                                ? await updateImage(
+                                    imagDomanda, widget.item!.domandaImmagine!)
                                 : widget.item?.domandaImmagine,
                             'risposta': dropDownValue,
                             'categoria': widget.categoria,
                             'tipologia': widget.tipologia,
                           });
+
+                          //Una volta modificato il quesito ritorno a GestioneQuiz
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  GestionQuizWidget(user: widget.user)));
                         } else {
                           // Caricamento dell'immagine oggetto
                           // della domanda su firebase
@@ -746,29 +798,34 @@ class _CreazioneDomandaNomeAImmagineWidgetState
                             imageUrlDomanda =
                                 await ImageUpload().uploadImage(imagDomanda);
                           }
-                          //Creazione del quesito
-                          final quesitoIDGenerato =
-                              Quesito.quesitoIdGenerator(28);
-                          final quesito = Quesito(
-                              quesitoID: quesitoIDGenerato,
-                              opzione1: textController2?.text,
-                              opzione2: textController3?.text,
-                              opzione3: textController4?.text,
-                              opzione4: textController5?.text,
-                              domanda: textController1?.text,
-                              domandaImmagine:
-                                  imageUrlDomanda ?? '', //Titolo della domanda
-                              risposta:
-                                  dropDownValue, //Immagine 1, Immagine 2,...
-                              categoria: widget.categoria,
-                              tipologia: widget.tipologia);
-                          quesito.createNewQuestion(
-                              widget.user, quesitoIDGenerato);
+                          if (imageUrlDomanda == null) {
+                            Fluttertoast.showToast(
+                                msg: 'Caricara un\'immagine');
+                          } else {
+                            //Creazione del quesito
+                            final quesitoIDGenerato =
+                                Quesito.quesitoIdGenerator(28);
+                            final quesito = Quesito(
+                                quesitoID: quesitoIDGenerato,
+                                opzione1: textController2?.text,
+                                opzione2: textController3?.text,
+                                opzione3: textController4?.text,
+                                opzione4: textController5?.text,
+                                domanda: textController1?.text,
+                                domandaImmagine: imageUrlDomanda ??
+                                    '', //Titolo della domanda
+                                risposta:
+                                    dropDownValue, //Immagine 1, Immagine 2,...
+                                categoria: widget.categoria,
+                                tipologia: widget.tipologia);
+                            quesito.createNewQuestion(
+                                widget.user, quesitoIDGenerato);
 
-                          //Una volta creato il quesito ritorno a GestioneQuiz
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  GestionQuizWidget(user: widget.user)));
+                            //Una volta creato il quesito ritorno a GestioneQuiz
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    GestionQuizWidget(user: widget.user)));
+                          }
                         } //fine if
                       },
                       text: 'Salva',
