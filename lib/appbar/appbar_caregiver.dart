@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/auth.dart';
 import 'package:mindcare/login.dart';
 import 'package:mindcare/caregiver/opzioni.dart';
@@ -6,11 +7,23 @@ import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../utente.dart';
+
 class AppbarcaregiverWidget extends StatelessWidget {
   const AppbarcaregiverWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    var docSnaphot;
+    Map<String, dynamic>? data;
+
+    Future<void> datiCaregiver() async {
+    var collection = FirebaseFirestore.instance.collection("user");
+    docSnaphot = await collection.doc(Auth().currentUser?.uid).get();
+    data = docSnaphot.data(); 
+    }
+    
     return AppBar(
       backgroundColor: FlutterFlowTheme.of(context).primaryColor,
       automaticallyImplyLeading: false,
@@ -60,7 +73,16 @@ class AppbarcaregiverWidget extends StatelessWidget {
                   ),
                   onPressed: () async {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const OpzioniWidget()));
+                        builder: (context) => OpzioniWidget(
+                           user: Utente(
+                                  userID:
+                                        data?['userID'],
+                                        name: data?['name'],
+                                        lastname: data?['lastname'],
+                                        email: data?['email'],
+                                        type: data?['type'],
+                                        date: (data?['dateOfBirth'] as Timestamp).toDate(),
+                                        profileImgPath: data?['profileImagePath']))));
                   },
                 ),
                 FlutterFlowIconButton(
