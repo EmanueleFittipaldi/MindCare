@@ -187,14 +187,21 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                         topRight: Radius.circular(0),
                       ),
                     ),
-                    child: FutureBuilder(
-                      //FutureBuilder per caricare i dati del caregiver
-                      future: getCaregiverData(), //funzione per ottenere i dati
-                      builder: (context, snapshot) {
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('user')
+                          .snapshots(), //funzione per ottenere i dati
+                      builder: (context, AsyncSnapshot snapshot) {
                         //costruzione degli widget dopo che la funzione si è eseguita
                         if (snapshot.hasData) {
-                          //verifica se in snapshot ci sono dati da mostrare
-                          var data = (snapshot.data as Map<String, dynamic>);
+                          var data;
+                          snapshot.data?.docs.forEach((doc) {
+                            //iterazione sui singoli documenti
+                            Map<String, dynamic>? cmap = doc.data();
+                            if (cmap!['userID'] == Auth().currentUser!.uid) {
+                              data = cmap;
+                            } //mappatura dei dati
+                          });
                           return Column(
                             //Widget che viene ritornato con i dati caricati
                             mainAxisSize: MainAxisSize.max,
