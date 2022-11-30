@@ -44,6 +44,48 @@ class _WidgetTreeState extends State<WidgetTree> {
     return '';
   }
 
+  Future<void> deleteUserDB(String type) async {
+    var user = FirebaseFirestore.instance.collection('user');
+    if (type == 'Caregiver') {
+      var docSnapshot = user.doc(Auth().currentUser?.uid);
+      await FirebaseFirestore.instance
+          .runTransaction((Transaction deleteTransaction) async {
+        deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione
+      });
+      return;
+    } else if (type == 'Paziente') {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('user')
+          .get(); //ottenimento di tutti i documenti nella collezione user
+
+      for (var i = 0; i < snapshot.docs.length; i++) {
+        var caregiverMap = snapshot.docs[i].data() as Map<String, dynamic>?;
+        QuerySnapshot snapshotPat = await FirebaseFirestore.instance
+            .collection('user')
+            .doc(caregiverMap!['userID'])
+            .collection('Pazienti')
+            .get(); //ottengo la collezione del caregiver dato dall'UID salvato nel campo
+        for (var j = 0; j < snapshotPat.docs.length; j++) {
+          var patientMap = snapshotPat.docs[j].data() as Map<String, dynamic>?;
+          if (patientMap!['userID'] == Auth().currentUser!.uid) {
+            //se l'userID nel documento dei pazienti è uguale a quello loggato
+            var docSnapshot = FirebaseFirestore.instance
+                .collection('user')
+                .doc(caregiverMap['userID'])
+                .collection('Pazienti')
+                .doc(Auth().currentUser?.uid);
+            await FirebaseFirestore.instance
+                .runTransaction((Transaction deleteTransaction) async {
+              deleteTransaction
+                  .delete(docSnapshot); //transazione per l'eliminazione
+            });
+            return;
+          }
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -62,10 +104,10 @@ class _WidgetTreeState extends State<WidgetTree> {
                       DateTime? date =
                           Auth().currentUser!.metadata.creationTime;
                       DateTime dateNow = DateTime.now();
-                      if (dateNow.difference(date!).inHours > 24) {
+                      if (dateNow.difference(date!).inMicroseconds > 2) {
                         Fluttertoast.showToast(
                             msg: 'Verifica scaduta, account cancellato!');
-
+                        deleteUserDB(type!);
                         Auth().currentUser!.delete();
                       } else {
                         Fluttertoast.showToast(msg: 'Verifica email!');
@@ -81,10 +123,10 @@ class _WidgetTreeState extends State<WidgetTree> {
                       DateTime? date =
                           Auth().currentUser!.metadata.creationTime;
                       DateTime dateNow = DateTime.now();
-                      if (dateNow.difference(date!).inHours > 24) {
+                      if (dateNow.difference(date!).inMicroseconds > 2) {
                         Fluttertoast.showToast(
                             msg: 'Verifica scaduta, account cancellato!');
-                        Auth().signOut();
+                        deleteUserDB(type!);
                         Auth().currentUser!.delete();
                       } else {
                         Fluttertoast.showToast(msg: 'Verifica email!');
