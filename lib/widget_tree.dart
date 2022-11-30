@@ -16,36 +16,46 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
+  Future<String> checkUser() async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('user')
+        .get(); //ottenimento di tutti i documenti nella collezione user
+
+    for (var i = 0; i < snapshot.docs.length; i++) {
+      var caregiverMap = snapshot.docs[i].data() as Map<String, dynamic>?;
+      if (caregiverMap!['userID'] == Auth().currentUser!.uid) {
+        //verifico se il campo userID è uguale a quello loggato
+        return caregiverMap['type']; //allora è il caregiver
+      } else {
+        //altrimenti ciclo sui pazienti del caregiver
+        QuerySnapshot snapshotPat = await FirebaseFirestore.instance
+            .collection('user')
+            .doc(caregiverMap['userID'])
+            .collection('Pazienti')
+            .get(); //ottengo la collezione del caregiver dato dall'UID salvato nel campo
+        for (var j = 0; j < snapshotPat.docs.length; j++) {
+          var patientMap = snapshotPat.docs[j].data() as Map<String, dynamic>?;
+          if (patientMap!['userID'] == Auth().currentUser!.uid) {
+            //se l'userID nel documento dei pazienti è uguale a quello loggato
+            return patientMap['type']; //è il paziente e ritorna il tipo
+          }
+        }
+      }
+    }
+    return '';
+  }
+
   @override
   Widget build(BuildContext context) {
-    var flag = false;
-    var docSnaphot;
-
-    Future<bool> isCaregiver() async {
-      var collection = FirebaseFirestore.instance.collection("user");
-      docSnaphot = await collection.doc(Auth().currentUser?.uid).get();
-
-      return flag;
-    }
-
     return StreamBuilder(
       stream: Auth().authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return FutureBuilder(
-              future: isCaregiver(),
-              builder: (context, snapshot) {
+              future: checkUser(),
+              builder: (context, AsyncSnapshot<String> snapshot) {
                 if (snapshot.hasData) {
-                  var type = '';
-                  if (docSnaphot != null) {
-                    Map<String, dynamic>? data = docSnaphot.data();
-
-                    if (data?["type"] == "Caregiver") {
-                      type = 'Caregiver';
-                    } else {
-                      type = 'Paziente';
-                    }
-                  }
+                  var type = snapshot.data;
                   if (type == 'Caregiver') {
                     if (Auth().currentUser!.emailVerified) {
                       return const HomeCaregiverWidget();

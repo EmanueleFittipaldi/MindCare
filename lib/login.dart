@@ -31,11 +31,13 @@ class _LoginWidgetState extends State<LoginWidget> {
           email: _controllerEmail.text, password: _controllerPassword.text);
     } on FirebaseAuthException catch (e) {
       String msg = '';
-      if(e.toString().contains("Given String is empty or null")){
+      if (e.toString().contains("Given String is empty or null")) {
         msg = "Inserire Email e Password prima di procedere";
-      } else if(e.toString().contains("The email address is badly formatted")) {
+      } else if (e
+          .toString()
+          .contains("The email address is badly formatted")) {
         msg = "Inserire una Email valida prima di procedere";
-      } else if(e.toString().contains("There is no user record")){
+      } else if (e.toString().contains("There is no user record")) {
         msg = "Email o Password errati";
       } else {
         msg = "Errore sconosciuto";
@@ -48,14 +50,14 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   void errorToast(String msg) {
-       Fluttertoast.showToast(
-          msg: msg,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: FlutterFlowTheme.of(context).borderErrorColor,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   @override
@@ -171,7 +173,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -179,21 +181,23 @@ class _LoginWidgetState extends State<LoginWidget> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -244,7 +248,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -252,21 +256,23 @@ class _LoginWidgetState extends State<LoginWidget> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -301,10 +307,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const PasswordDimenticataWidget()));
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      const PasswordDimenticataWidget()));
                             },
                             text: 'Password dimenticata?',
                             options: FFButtonOptions(
