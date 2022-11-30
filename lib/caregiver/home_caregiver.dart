@@ -202,50 +202,52 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                               data = cmap;
                             } //mappatura dei dati
                           });
-                          return Column(
-                            //Widget che viene ritornato con i dati caricati
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 15, 0, 0),
-                                child: Container(
-                                  width: 150,
-                                  height: 150,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
+                          if (data != null) {
+                            return Column(
+                              //Widget che viene ritornato con i dati caricati
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 15, 0, 0),
+                                  child: Container(
+                                    width: 150,
+                                    height: 150,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: data['profileImagePath'] != ''
+                                        ? Image.network(
+                                            data['profileImagePath'],
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.asset(
+                                            'assets/images/add_photo.png',
+                                            fit: BoxFit.cover,
+                                          ),
                                   ),
-                                  child: data['profileImagePath'] != ''
-                                      ? Image.network(
-                                          data['profileImagePath'],
-                                          fit: BoxFit.cover,
-                                        )
-                                      : Image.asset(
-                                          'assets/images/add_photo.png',
-                                          fit: BoxFit.cover,
-                                        ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    15, 10, 0, 0),
-                                child: SelectionArea(
-                                    child: Text(
-                                  '${'Salve, ' + data['name']}!',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        fontSize: 30,
-                                      ),
-                                )),
-                              ),
-                            ],
-                          );
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      15, 10, 0, 0),
+                                  child: SelectionArea(
+                                      child: Text(
+                                    '${'Salve, ' + data['name']}!',
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'IBM Plex Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                          fontSize: 30,
+                                        ),
+                                  )),
+                                ),
+                              ],
+                            );
+                          }
                         }
                         return Text(
                             ''); //se non ci sono ancora dati, mostra un testo di caricamento.
