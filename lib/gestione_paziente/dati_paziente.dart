@@ -52,20 +52,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
     super.dispose();
   }
 
-  Future<void> forgottenPassword() async {
-    showDialog(
-      context: context, 
-      barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator())
-    );
-    try {
-      await Auth().forgottenPassword(email: widget.user.email);
-      Navigator.of(context).popUntil((route) => route.isFirst);
-    } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
-      Navigator.of(context).pop();
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -293,75 +280,6 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                     ),
                               ),
                             ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    theme: const ExpandableThemeData(
-                      tapHeaderToExpand: true,
-                      tapBodyToExpand: false,
-                      tapBodyToCollapse: false,
-                      headerAlignment: ExpandablePanelHeaderAlignment.center,
-                      hasIcon: true,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
-              child: Container(
-                width: double.infinity,
-                color: Colors.white,
-                child: ExpandableNotifier(
-                  initialExpanded: false,
-                  child: ExpandablePanel(
-                    header: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
-                      child: Text(
-                        'Modifica password',
-                        style: FlutterFlowTheme.of(context).subtitle2,
-                      ),
-                    ),
-                    collapsed: Text(
-                      'empty',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                          ),
-                    ),
-                    expanded: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 5, 0, 15),
-                            child: FFButtonWidget(
-                              onPressed: () => {forgottenPassword()},
-                              text: 'Modifica password',
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 40,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: 8,
-                              ),
-                            ),
                           ),
                         ],
                       ),
