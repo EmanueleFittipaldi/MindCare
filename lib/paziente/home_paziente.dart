@@ -319,7 +319,9 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const AlbumRicordiWidget()));
+                                                AlbumRicordiWidget(
+                                                    caregiverUID:
+                                                        caregiverID)));
                                   },
                                 ),
                                 Padding(
