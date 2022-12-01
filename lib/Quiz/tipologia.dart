@@ -1,11 +1,26 @@
+import 'dart:collection';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mindcare/gestione_quiz/quesito.dart';
+import 'package:mindcare/quiz/quiz_img_a_nome.dart';
+
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../login.dart';
+import '../utente.dart';
 
 class SelezionaTipologiaWidget extends StatefulWidget {
-  const SelezionaTipologiaWidget({Key? key}) : super(key: key);
+  final String categoria;
+  final Utente user;
+  final String caregiverID;
+  const SelezionaTipologiaWidget(
+      {Key? key,
+      required this.categoria,
+      required this.user,
+      required this.caregiverID})
+      : super(key: key);
 
   @override
   _SelezionaTipologiaWidgetState createState() =>
@@ -14,6 +29,29 @@ class SelezionaTipologiaWidget extends StatefulWidget {
 
 class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  /*Funzione che permette di reperire tutti i quesiti di un determinato paziente
+  specificando una categoria ed una tipologia. */
+  getQuesiti(String categoria, String tipologia, String userID,
+      String caregiverID) async {
+    CollectionReference _collectionRef = FirebaseFirestore.instance
+        .collection('user')
+        .doc(caregiverID)
+        .collection('Pazienti')
+        .doc(userID)
+        .collection('Quesiti');
+
+    QuerySnapshot QueryCategoria = await _collectionRef
+        .where('tipologia', isEqualTo: tipologia)
+        .where('categoria', isEqualTo: categoria)
+        .get();
+
+    /*Creo una Mappa a partire dai documenti che ho prelevato i cui elementi hanno
+    per chiave l'ID del quesito e per valore il documento del quesito.
+    */
+    var result = {for (var v in QueryCategoria.docs) v['quesitoID']: v.data()};
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +142,10 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                     child: Stack(
                       children: [
                         Image.asset(
-                          'assets/images/Opera_senza_titolo.png',
+                          'assets/images/add_photo.png',
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                         ),
                         Align(
                           alignment: const AlignmentDirectional(0.94, -0.92),
@@ -166,8 +204,20 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                         .tertiaryColor,
                                     size: 90,
                                   ),
+
+                                  /*Qui parte il quiz di tipologia associa l'immagine al nome*/
                                   onPressed: () async {
-                                    //context.pushNamed('ImmagineANome');
+                                    var quesiti = await getQuesiti(
+                                        widget.categoria,
+                                        'Associa il nome all\'immagine',
+                                        widget.user.userID,
+                                        widget.caregiverID);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ImmagineANomeWidget(
+                                                    quesiti: quesiti,
+                                                    user: widget.user)));
                                   },
                                 ),
                                 Padding(
@@ -244,9 +294,10 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                         .tertiaryColor,
                                     size: 115,
                                   ),
-                                  onPressed: () async {
-                                    //context.pushNamed('NomeAImmagine');
-                                  },
+                                  /*Quando seleziono questa tipologia passo alla schermata del quiz
+                                  tutte le domande contenute nel database che hanno una determinata
+                                  categoria e tipologia per uno specifico paziente. */
+                                  onPressed: () async {},
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(

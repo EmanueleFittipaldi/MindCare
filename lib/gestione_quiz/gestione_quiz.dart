@@ -321,12 +321,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                       .collection('Pazienti')
                                       .doc(widget.user.userID)
                                       .collection('Quesiti')
-                                      .where('tipologia',
-                                          isEqualTo:
-                                              typology) //categoria e tipologia sono
-                                      .where('categoria',
-                                          isEqualTo:
-                                              category) //invertite non so perché
+                                      .where('tipologia', isEqualTo: typology)
+                                      .where('categoria', isEqualTo: category)
                                       .snapshots(),
                                   //StreamBuilder per caricare i dati dei quesiti
                                   //funzione per ottenere i dati dei quesiti

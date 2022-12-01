@@ -263,9 +263,12 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                     size: 50,
                                   ),
                                   onPressed: () async {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SelezionaCategoriaWidget()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelezionaCategoriaWidget(
+                                                    user: user!,
+                                                    caregiverID: caregiverID)));
                                   },
                                 ),
                                 Padding(
