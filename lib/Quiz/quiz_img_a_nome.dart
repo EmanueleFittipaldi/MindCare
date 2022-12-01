@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/Quiz/fine_quiz.dart';
 import 'package:mindcare/gestione_quiz/quesito.dart';
 import 'package:mindcare/paziente/home_paziente.dart';
 import 'package:mindcare/quiz/risposta_corretta.dart';
@@ -33,21 +35,29 @@ class ImmagineANomeWidget extends StatefulWidget {
 class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int indexQuesito = 0;
+  int countTentativi = 1; //contatore dei tentativi
   Map<String, bool> mappaRisposte = <String, bool>{};
 
   @override
   Widget build(BuildContext context) {
     var quesito;
-    print(indexQuesito);
-    if (indexQuesito == widget.quesiti.length - 1) {
+    if (indexQuesito >= widget.quesiti.length) {
+      quesito = widget.quesiti[
+          indexQuesito - 1]; //carica lo stesso il quesito per non avere errori
       //stoppo il timer
       DateTime fineTempo = DateTime.now();
       int tempoImpiegato = fineTempo.difference(widget.inizioTempo).inSeconds;
-      print(mappaRisposte);
 
-      //da rimpiazzare con il dialog di "termina quiz"
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const HomePazienteWidget()));
+      Future.microtask(() => showDialog(
+          //dialog del quiz terminato
+          //ritarda l'esecuzione, in modo da attendere che buil si costruisca
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return const CustomDialogTerminato();
+          }));
+
+      //metto il primo quesito per non far uscire errori
       //creo il report
       //mostra schermata quiz finito
       //torno a homepage
@@ -194,31 +204,56 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                               //oppure no
                               if (quesito['risposta'] == 'Immagine 1') {
                                 //ho indovinato
-                                mappaRisposte[quesito['quesitoID']] = true;
                                 showDialog(
-                                    //barrierDismissible: false,
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) {
                                       return const CustomDialogCorretta();
                                     });
                                 setState(() {
+                                  countTentativi =
+                                      1; //aggiungo il tentativo per la domanda successiva
+                                  mappaRisposte[quesito['quesitoID']] = true;
                                   indexQuesito += 1;
                                 });
                               } else {
                                 //ho sbagliato
-                                var risposta = await showDialog(
-                                    //barrierDismissible: false,
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return const CustomDialogSbagliata();
-                                    });
+                                //verifico se ci sono tentativi
+                                if (countTentativi == 1) {
+                                  //se si mostro la scherma per il tentativo
+                                  var risposta = await showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const CustomDialogSbagliata();
+                                      });
 
-                                //se dico che non voglio riporvare allora vado
-                                //avanti con la domanda
-                                if (!risposta) {
+                                  //se dico che non voglio riporvare allora vado
+                                  //avanti con la domanda
+                                  if (!risposta) {
+                                    setState(() {
+                                      mappaRisposte[quesito['quesitoID']] =
+                                          false;
+                                      indexQuesito += 1;
+                                    });
+                                  } else {
+                                    //se dice che vuole riprovare azzero i tentativi
+                                    setState(() {
+                                      countTentativi = 0;
+                                    });
+                                  }
+                                } else {
+                                  //ha finito i tentativi
+                                  //MOSTRARE SCHERMATA CON SOLO RISPOSTA SBAGLIATA, VEDREMO COME!
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          'Risposta sbagliata! Hai già provato, quindi va avanti');
+
                                   setState(() {
                                     mappaRisposte[quesito['quesitoID']] = false;
                                     indexQuesito += 1;
+                                    countTentativi =
+                                        1; //aggiungo il tentativo per la domanda successiva
                                   });
                                 }
                               }
@@ -239,32 +274,49 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                               //oppure no
                               if (quesito['risposta'] == 'Immagine 2') {
                                 //ho indovinato
-                                mappaRisposte[quesito['quesitoID']] = true;
-
                                 showDialog(
-                                    //barrierDismissible: false,
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) {
                                       return const CustomDialogCorretta();
                                     });
                                 setState(() {
+                                  mappaRisposte[quesito['quesitoID']] = true;
                                   indexQuesito += 1;
                                 });
                               } else {
                                 //ho sbagliato
-                                var risposta = await showDialog(
-                                    //barrierDismissible: false,
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return const CustomDialogSbagliata();
-                                    });
+                                if (countTentativi == 1) {
+                                  //verifico se ci sono tentativi
+                                  var risposta = await showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const CustomDialogSbagliata();
+                                      });
 
-                                //se dico che non voglio riporvare allora vado
-                                //avanti con la domanda
-                                if (!risposta) {
+                                  //se dico che non voglio riporvare allora vado
+                                  //avanti con la domanda
+                                  if (!risposta) {
+                                    setState(() {
+                                      mappaRisposte[quesito['quesitoID']] =
+                                          false;
+                                      indexQuesito += 1;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      countTentativi = 0;
+                                    });
+                                  }
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          'Risposta sbagliata! Hai già provato, quindi va avanti');
+
                                   setState(() {
                                     mappaRisposte[quesito['quesitoID']] = false;
                                     indexQuesito += 1;
+                                    countTentativi = 1;
                                   });
                                 }
                               }
@@ -285,31 +337,48 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                               //oppure no
                               if (quesito['risposta'] == 'Immagine 3') {
                                 //ho indovinato
-                                mappaRisposte[quesito['quesitoID']] = true;
                                 showDialog(
-                                    //barrierDismissible: false,
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) {
                                       return const CustomDialogCorretta();
                                     });
                                 setState(() {
+                                  mappaRisposte[quesito['quesitoID']] = true;
                                   indexQuesito += 1;
                                 });
                               } else {
                                 //ho sbagliato
-                                var risposta = await showDialog(
-                                    //barrierDismissible: false,
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return const CustomDialogSbagliata();
-                                    });
+                                if (countTentativi == 1) {
+                                  var risposta = await showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const CustomDialogSbagliata();
+                                      });
 
-                                //se dico che non voglio riporvare allora vado
-                                //avanti con la domanda
-                                if (!risposta) {
+                                  //se dico che non voglio riporvare allora vado
+                                  //avanti con la domanda
+                                  if (!risposta) {
+                                    setState(() {
+                                      mappaRisposte[quesito['quesitoID']] =
+                                          false;
+                                      indexQuesito += 1;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      countTentativi = 0;
+                                    });
+                                  }
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          'Risposta sbagliata! Hai già provato, quindi va avanti');
+
                                   setState(() {
                                     mappaRisposte[quesito['quesitoID']] = false;
                                     indexQuesito += 1;
+                                    countTentativi = 1;
                                   });
                                 }
                               }
@@ -330,31 +399,48 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                               //oppure no
                               if (quesito['risposta'] == 'Immagine 4') {
                                 //ho indovinato
-                                mappaRisposte[quesito['quesitoID']] = true;
                                 showDialog(
-                                    //barrierDismissible: false,
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) {
                                       return const CustomDialogCorretta();
                                     });
                                 setState(() {
+                                  mappaRisposte[quesito['quesitoID']] = true;
                                   indexQuesito += 1;
                                 });
                               } else {
                                 //ho sbagliato
-                                var risposta = await showDialog(
-                                    //barrierDismissible: false,
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return const CustomDialogSbagliata();
-                                    });
+                                if (countTentativi == 1) {
+                                  var risposta = await showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const CustomDialogSbagliata();
+                                      });
 
-                                //se dico che non voglio riporvare allora vado
-                                //avanti con la domanda
-                                if (!risposta) {
+                                  //se dico che non voglio riporvare allora vado
+                                  //avanti con la domanda
+                                  if (!risposta) {
+                                    setState(() {
+                                      mappaRisposte[quesito['quesitoID']] =
+                                          false;
+                                      indexQuesito += 1;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      countTentativi = 0;
+                                    });
+                                  }
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          'Risposta sbagliata! Hai già provato, quindi va avanti');
+
                                   setState(() {
                                     mappaRisposte[quesito['quesitoID']] = false;
                                     indexQuesito += 1;
+                                    countTentativi = 1;
                                   });
                                 }
                               }

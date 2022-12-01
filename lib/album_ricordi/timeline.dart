@@ -1,4 +1,4 @@
-import 'dart:io';
+// ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +45,7 @@ class _TimelinePageState extends State<TimelinePage> {
               Map<String, dynamic>? memory = doc.data();
               if (memory!['tipoRicordo'] == 'Video') {
                 final String path = (await getTemporaryDirectory()).path;
+                // ignore: unnecessary_null_comparison
                 if (path == null) {
                   throw MissingPlatformDirectoryException(
                       'Unable to get temporary directory');
@@ -61,7 +62,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 print(fileName.runtimeType);
               }
               doodles.add(Ricordo(
-                  titolo: memory!['titolo'],
+                  titolo: memory['titolo'],
                   annoRicordo: memory['annoRicordo'],
                   descrizione: memory['descrizione'],
                   filePath: memory['filePath'],
@@ -70,7 +71,7 @@ class _TimelinePageState extends State<TimelinePage> {
             });
             return timelineModel(TimelinePosition.Left);
           } else {
-            return Text('');
+            return const Text('');
           }
         });
   }
@@ -110,7 +111,7 @@ class _TimelinePageState extends State<TimelinePage> {
                           height: 120,
                           fit: BoxFit.cover,
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                   const SizedBox(
                     height: 8.0,
                   ),
@@ -147,7 +148,7 @@ class _TimelinePageState extends State<TimelinePage> {
         isFirst: i == 0,
         isLast: i == doodles.length,
         iconBackground: Colors.transparent,
-        icon: Icon(
+        icon: const Icon(
           FontAwesomeIcons.circle,
           color: Color(0xFF36383C),
           size: 15,
