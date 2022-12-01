@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mindcare/album_ricordi/ricordo_widget.dart';
+import 'package:mindcare/auth.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timeline_list/timeline.dart';
 // ignore: depend_on_referenced_packages
@@ -7,19 +11,68 @@ import 'package:timeline_list/timeline_model.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 // ignore: unused_import
 import '../flutter_flow/flutter_flow_util.dart';
-import 'data.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:path_provider/path_provider.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
+import '../gestione_ricordi/ricordo.dart';
 
 class TimelinePage extends StatefulWidget {
-  const TimelinePage({Key? key}) : super(key: key);
-
+  final String caregiverUID;
+  const TimelinePage({Key? key, required this.caregiverUID}) : super(key: key);
   @override
   _TimelinePageState createState() => _TimelinePageState();
 }
 
 class _TimelinePageState extends State<TimelinePage> {
+  List<Ricordo> doodles = [];
+  String? fileName;
   @override
   Widget build(BuildContext context) {
-    return timelineModel(TimelinePosition.Left);
+    print(widget.caregiverUID);
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('user')
+            .doc(widget.caregiverUID)
+            .collection('Pazienti')
+            .doc(Auth().currentUser!.uid)
+            .collection('Ricordi')
+            .snapshots(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            doodles = [];
+            snapshot.data?.docs.forEach((doc) async {
+              Map<String, dynamic>? memory = doc.data();
+              if (memory!['tipoRicordo'] == 'Video') {
+                final String path = (await getTemporaryDirectory()).path;
+                if (path == null) {
+                  throw MissingPlatformDirectoryException(
+                      'Unable to get temporary directory');
+                }
+                print(path);
+                var fileName = await VideoThumbnail.thumbnailFile(
+                  video: memory['filePath'],
+                  thumbnailPath: (await getTemporaryDirectory()).path,
+                  imageFormat: ImageFormat.WEBP,
+                  maxHeight:
+                      64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+                  quality: 75,
+                );
+                print(fileName.runtimeType);
+              }
+              doodles.add(Ricordo(
+                  titolo: memory!['titolo'],
+                  annoRicordo: memory['annoRicordo'],
+                  descrizione: memory['descrizione'],
+                  filePath: memory['filePath'],
+                  ricordoID: memory['ricordoID'],
+                  tipoRicordo: memory['tipoRicordo']));
+            });
+            return timelineModel(TimelinePosition.Left);
+          } else {
+            return Text('');
+          }
+        });
   }
 
   timelineModel(TimelinePosition position) => Timeline.builder(
@@ -41,24 +94,28 @@ class _TimelinePageState extends State<TimelinePage> {
           child: InkWell(
             onTap: () async {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const RicordoWidget()));
+                  builder: (context) => RicordoWidget(
+                        ricordo: doodle,
+                      )));
             },
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Image.network(
-                    doodle.doodle,
-                    width: MediaQuery.of(context).size.width * 1,
-                    height: 120,
-                    fit: BoxFit.cover,
-                  ),
+                  doodle.tipoRicordo == 'Immagine'
+                      ? Image.network(
+                          doodle.filePath,
+                          width: MediaQuery.of(context).size.width * 1,
+                          height: 120,
+                          fit: BoxFit.cover,
+                        )
+                      : SizedBox.shrink(),
                   const SizedBox(
                     height: 8.0,
                   ),
                   Text(
-                    doodle.time,
+                    doodle.annoRicordo.toString(),
                     style: FlutterFlowTheme.of(context).bodyText2.override(
                           fontFamily: 'IBM Plex Sans',
                           color: FlutterFlowTheme.of(context).primaryText,
@@ -70,7 +127,7 @@ class _TimelinePageState extends State<TimelinePage> {
                     height: 8.0,
                   ),
                   Text(
-                    doodle.name,
+                    doodle.titolo,
                     style: FlutterFlowTheme.of(context).subtitle2.override(
                           fontFamily: 'IBM Plex Sans',
                           color: FlutterFlowTheme.of(context).primaryText,
@@ -89,7 +146,11 @@ class _TimelinePageState extends State<TimelinePage> {
             i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
         isFirst: i == 0,
         isLast: i == doodles.length,
-        iconBackground: doodle.iconBackground,
-        icon: doodle.icon);
+        iconBackground: Colors.transparent,
+        icon: Icon(
+          FontAwesomeIcons.circle,
+          color: Color(0xFF36383C),
+          size: 15,
+        ));
   }
 }

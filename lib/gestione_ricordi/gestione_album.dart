@@ -210,27 +210,33 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 Container(
-                                                  width: 50,
-                                                  height: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryBackground,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Text(
-                                                    i.toString(),
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .title2,
-                                                  ),
-                                                ),
+                                                    width: 80,
+                                                    height: 50,
+                                                    decoration: BoxDecoration(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .primaryBackground,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            0, 0),
+                                                    child: Text(
+                                                      data[i]['tipoRicordo'],
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                fontSize: 12,
+                                                              ),
+                                                    )),
                                                 Expanded(
                                                   child: Padding(
                                                     padding:

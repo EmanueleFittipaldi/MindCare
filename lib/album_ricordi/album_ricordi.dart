@@ -1,10 +1,13 @@
 import 'package:mindcare/album_ricordi/timeline.dart';
 import 'package:mindcare/appbar/appbar_paziente.dart';
+import 'package:mindcare/utente.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
 class AlbumRicordiWidget extends StatefulWidget {
-  const AlbumRicordiWidget({Key? key}) : super(key: key);
+  final String caregiverUID;
+  const AlbumRicordiWidget({Key? key, required this.caregiverUID})
+      : super(key: key);
 
   @override
   _AlbumRicordiWidgetState createState() => _AlbumRicordiWidgetState();
@@ -103,7 +106,7 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 250, 250, 250),
                     ),
-                    child: const TimelinePage(),
+                    child: TimelinePage(caregiverUID: widget.caregiverUID),
                   ),
                 ),
               ],
