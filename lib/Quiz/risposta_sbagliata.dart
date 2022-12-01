@@ -82,8 +82,7 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
                   children: [
                     FFButtonWidget(
                       onPressed: () async {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const HomePazienteWidget()));
+                        Navigator.of(context).pop(false);
                       },
                       text: 'No',
                       options: FFButtonOptions(
@@ -106,7 +105,7 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
                     ),
                     FFButtonWidget(
                       onPressed: () async {
-                        //context.goNamed('ImmagineANome2Th');
+                        Navigator.of(context).pop(true);
                       },
                       text: 'Si',
                       options: FFButtonOptions(

@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/gestione_quiz/quesito.dart';
 import 'package:mindcare/quiz/quiz_img_a_nome.dart';
 
@@ -46,10 +47,10 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
         .where('categoria', isEqualTo: categoria)
         .get();
 
-    /*Creo una Mappa a partire dai documenti che ho prelevato i cui elementi hanno
-    per chiave l'ID del quesito e per valore il documento del quesito.
-    */
-    var result = {for (var v in QueryCategoria.docs) v['quesitoID']: v.data()};
+    var result = [];
+    for (var v in QueryCategoria.docs) {
+      (result.add(v.data()));
+    }
     return result;
   }
 
@@ -207,17 +208,27 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
 
                                   /*Qui parte il quiz di tipologia associa l'immagine al nome*/
                                   onPressed: () async {
-                                    var quesiti = await getQuesiti(
+                                    List<dynamic> quesiti = await getQuesiti(
                                         widget.categoria,
-                                        'Associa il nome all\'immagine',
+                                        'Associa l\'immagine al nome',
                                         widget.user.userID,
                                         widget.caregiverID);
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ImmagineANomeWidget(
-                                                    quesiti: quesiti,
-                                                    user: widget.user)));
+                                    if (quesiti.isEmpty) {
+                                      Fluttertoast.showToast(
+                                          msg: 'Non ci sono domande!');
+                                    } else {
+                                      //faccio partire il timer quando clicco sulla tipologia
+                                      //del quiz che voglio iniziare
+                                      DateTime inizioTempo = DateTime.now();
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ImmagineANomeWidget(
+                                                      quesiti: quesiti,
+                                                      user: widget.user,
+                                                      inizioTempo:
+                                                          inizioTempo)));
+                                    }
                                   },
                                 ),
                                 Padding(
