@@ -6,9 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../login.dart';
+import '../utente.dart';
 
 class SelezionaCategoriaWidget extends StatefulWidget {
-  const SelezionaCategoriaWidget({Key? key}) : super(key: key);
+  final Utente user;
+  final String caregiverID;
+  const SelezionaCategoriaWidget(
+      {Key? key, required this.user, required this.caregiverID})
+      : super(key: key);
 
   @override
   _SelezionaCategoriaWidgetState createState() =>
@@ -107,10 +112,10 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                     child: Stack(
                       children: [
                         Image.asset(
-                          'assets/images/Opera_senza_titolo.png',
+                          'assets/images/add_photo.png',
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                         ),
                         Align(
                           alignment: const AlignmentDirectional(0.98, -0.88),
@@ -170,9 +175,14 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                     size: 90,
                                   ),
                                   onPressed: () async {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SelezionaTipologiaWidget()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelezionaTipologiaWidget(
+                                                    user: widget.user,
+                                                    categoria: 'Persone',
+                                                    caregiverID:
+                                                        widget.caregiverID)));
                                     //context
                                     //.pushNamed('SelezionaTipologiaPersone');
                                   },
@@ -226,9 +236,14 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                     size: 90,
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SelezionaTipologiaWidget()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelezionaTipologiaWidget(
+                                                    user: widget.user,
+                                                    categoria: 'Animali',
+                                                    caregiverID:
+                                                        widget.caregiverID)));
                                     //print('IconButton pressed ...');
                                   },
                                 ),
@@ -290,9 +305,14 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                     size: 90,
                                   ),
                                   onPressed: () async {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SelezionaTipologiaWidget()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelezionaTipologiaWidget(
+                                                    user: widget.user,
+                                                    categoria: 'Oggetti',
+                                                    caregiverID:
+                                                        widget.caregiverID)));
                                     //context
                                     //.pushNamed('SelezionaTipologiaOggetti');
                                   },
@@ -346,9 +366,14 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                     size: 90,
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SelezionaTipologiaWidget()));
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelezionaTipologiaWidget(
+                                                    user: widget.user,
+                                                    categoria: 'Altro',
+                                                    caregiverID:
+                                                        widget.caregiverID)));
                                     //print('IconButton pressed ...');
                                   },
                                 ),

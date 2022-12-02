@@ -6,14 +6,15 @@ import 'package:flutter/material.dart';
 import '../paziente/home_paziente.dart';
 import '../login.dart';
 
-class CustomDialogSbagliata extends StatefulWidget {
-  const CustomDialogSbagliata({Key? key}) : super(key: key);
+class CustomDialogNoTentativi extends StatefulWidget {
+  const CustomDialogNoTentativi({Key? key}) : super(key: key);
 
   @override
-  _CustomDialogSbagliataState createState() => _CustomDialogSbagliataState();
+  _CustomDialogNoTentativiState createState() =>
+      _CustomDialogNoTentativiState();
 }
 
-class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
+class _CustomDialogNoTentativiState extends State<CustomDialogNoTentativi> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -45,7 +46,7 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
                 child: Text(
-                  'Oh no! la risposta non è giusta',
+                  'Risposta sbagliata, non hai più tentativi disponibili',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyText1.override(
                         fontFamily: 'IBM Plex Sans',
@@ -64,17 +65,6 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(15, 50, 15, 0),
-                child: Text(
-                  'Vuoi riprovare?',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'IBM Plex Sans',
-                        color: Colors.black,
-                        fontSize: 35,
-                      ),
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
@@ -82,32 +72,9 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
                   children: [
                     FFButtonWidget(
                       onPressed: () async {
-                        Navigator.of(context).pop(false);
-                      },
-                      text: 'No',
-                      options: FFButtonOptions(
-                        width: 140,
-                        height: 60,
-                        color: const Color(0xFFDA1E28),
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'IBM Plex Sans',
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        borderRadius: 8,
-                      ),
-                    ),
-                    FFButtonWidget(
-                      onPressed: () async {
                         Navigator.of(context).pop(true);
                       },
-                      text: 'Si',
+                      text: 'Torna al quiz',
                       options: FFButtonOptions(
                         width: 140,
                         height: 60,

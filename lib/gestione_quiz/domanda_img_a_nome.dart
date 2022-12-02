@@ -701,9 +701,10 @@ passata come parametro */
                                 widget.user, quesitoIDGenerato);
 
                             //Una volta creato il quesito ritorno a GestioneQuiz
-                            Navigator.of(context).push(MaterialPageRoute(
+                            /*Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
-                                    GestionQuizWidget(user: widget.user)));
+                                    GestionQuizWidget(user: widget.user)));*/
+                            Navigator.of(context).pop();
                           }
                         } //fine if
                       },
