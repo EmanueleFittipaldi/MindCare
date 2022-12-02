@@ -351,6 +351,10 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                               builder: (context) =>
                                                   NomeAImmagineWidget(
                                                       quesiti: quesiti,
+                                                      categoria:
+                                                          widget.categoria,
+                                                      caregiverID:
+                                                          widget.caregiverID,
                                                       user: widget.user,
                                                       inizioTempo:
                                                           inizioTempo)));
