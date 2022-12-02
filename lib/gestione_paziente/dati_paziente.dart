@@ -7,16 +7,12 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
-
-
 import '../auth.dart';
 import '../utente.dart';
 
 class DatiPazienteWidget extends StatefulWidget {
   final Utente user;
-  const DatiPazienteWidget({Key? key, required this.user})
-      : super(key: key);
+  const DatiPazienteWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   _DatiPazienteWidgetState createState() => _DatiPazienteWidgetState();
@@ -31,8 +27,6 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
 
   late bool passwordVisibility2;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
- 
 
   @override
   void initState() {
@@ -54,10 +48,9 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
 
   Future<void> forgottenPassword() async {
     showDialog(
-      context: context, 
-      barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator())
-    );
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(child: CircularProgressIndicator()));
     try {
       await Auth().forgottenPassword(email: widget.user.email);
       Navigator.of(context).popUntil((route) => route.isFirst);
@@ -72,17 +65,13 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
     DateTime now = new DateTime.now();
     int age = now.year - widget.user.date.year;
 
-    if(now.month <  widget.user.date.month){
-      age --; 
-    }
-    else if(now.month == widget.user.date.month){
-      if(now.day < widget.user.date.day){
-        age --; 
+    if (now.month < widget.user.date.month) {
+      age--;
+    } else if (now.month == widget.user.date.month) {
+      if (now.day < widget.user.date.day) {
+        age--;
       }
-
     }
-   
-   
 
     return Scaffold(
       key: scaffoldKey,
@@ -110,7 +99,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                   children: [
                     Card(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: FlutterFlowTheme.of(context).primaryColor,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -118,21 +107,26 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          width: 70,
+                          height: 70,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
                           child: widget.user.profileImgPath != ''
-
-                          ?Image.network(
-                            widget.user.profileImgPath,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          )
-                          :Image.asset('assets/images/add_photo.png', 
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,),
-
+                              ? Image.network(
+                                  widget.user.profileImgPath,
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.asset(
+                                  'assets/images/add_photo.png',
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                     ),
@@ -146,10 +140,10 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                               widget.user.name + ' ' + widget.user.lastname,
+                              widget.user.name + ' ' + widget.user.lastname,
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
-                                        fontFamily: 'Lexend Deca',
+                                        fontFamily: 'IBM Plex Sans',
                                         color: Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -167,7 +161,10 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
               child: Container(
                 width: double.infinity,
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
                 child: ExpandableNotifier(
                   initialExpanded: false,
                   child: ExpandablePanel(
@@ -179,13 +176,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: Text(
-                      'empty',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                          ),
-                    ),
+                    collapsed: SizedBox.shrink(),
                     expanded: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
@@ -258,7 +249,8 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                                     ),
                               ),
                               Text(
-                                DateFormat("yyyy-MM-dd").format(widget.user.date), 
+                                DateFormat("yyyy-MM-dd")
+                                    .format(widget.user.date),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -312,7 +304,10 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
               child: Container(
                 width: double.infinity,
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
                 child: ExpandableNotifier(
                   initialExpanded: false,
                   child: ExpandablePanel(
@@ -324,13 +319,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: Text(
-                      'empty',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                          ),
-                    ),
+                    collapsed: SizedBox.shrink(),
                     expanded: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
