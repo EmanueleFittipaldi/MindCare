@@ -15,18 +15,18 @@ import '../login.dart';
 
 import '../utente.dart';
 
-class OpzioniWidget extends StatefulWidget {
+class OpzioniPazienteWidget extends StatefulWidget {
   final Utente user;
-  const OpzioniWidget({Key? key, required this.user})
+  const OpzioniPazienteWidget({Key? key, required this.user})
     : super(key: key);
    
 
 
   @override
-  _OpzioniWidgetState createState() => _OpzioniWidgetState();
+  _OpzioniPazienteWidgetState createState() => _OpzioniPazienteWidgetState();
 }
 
-class _OpzioniWidgetState extends State<OpzioniWidget> {
+class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
   DateTime? datePicked;
   TextEditingController? textController1;
   TextEditingController? textController2;
@@ -45,7 +45,6 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
 
   @override
   void initState() {
-    super.initState();
     super.initState();
     textController1 = TextEditingController(text: widget.user.name);
     textController2 = TextEditingController(text: widget.user.lastname);
@@ -93,6 +92,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
       'lastname': textController2?.text.toString(),
       'dateOfBirth': textcontrollerData?.text.toString(),
       'email': textController3?.text.toString(),});
+    
 
   }
 
@@ -267,7 +267,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 15, 0, 5),
                             child: TextFormField(
-                              validator: (value) {
+                               validator: (value) {
                                       String val = value!.replaceAll(' ', '');
                                       if (value.isEmpty || val.isEmpty) {
                                         return 'Inserisci un nome!';
@@ -325,7 +325,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 15, 0, 5),
                             child: TextFormField(
-                              validator: (value) {
+                               validator: (value) {
                                       String val = value!.replaceAll(' ', '');
                                       if (value.isEmpty || val.isEmpty) {
                                         return 'Inserisci un cognome!';
@@ -379,7 +379,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   ),
                             ),
                           ),
-                         Padding(
+                          Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 15, 0, 5),
                             child: Container(
@@ -678,7 +678,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   0, 0, 0, 15),
                               child: Text(
                                 "L'utilizzo dei Servizi avviene a rischio dell'utente ed è soggetto alle seguenti esclusioni di responsabilità. I nostri Servizi sono forniti nello stato in cui si trovano, senza garanzie esplicite o implicite, ivi comprese, a titolo esemplificativo e non esaustivo, garanzie relative a commerciabilità, idoneità per scopo specifico, proprietà o non violazione di diritti di terzi e assenza di virus o altri codici informatici dannosi. Non forniamo alcuna garanzia in merito all'esattezza, alla completezza e all'utilità delle informazioni, al funzionamento, alla mancanza di errori, alla sicurezza o alla protezione dei nostri Servizi o al funzionamento dei nostri Servizi senza interruzioni, ritardi o difetti. Non deteniamo il controllo e non siamo responsabili del controllo della modalità o del momento di utilizzo dei Servizi o delle funzioni, dei servizi e delle interfacce fornite dai nostri Servizi. Non siamo responsabili e non abbiamo l'obbligo di controllare le azioni o le informazioni dei nostri utenti o di altri terzi. L'utente esenta noi, le nostre società controllate e affiliate e i rispettivi dirigenti, amministratori, dipendenti, partner e agenti da ogni reclamo, ricorso, azione legale, controversia, contenzioso o danno, noti e non noti, relativi a, derivanti da o collegati in qualsiasi modo a reclami che l'utente possa avere contro terzi. I diritti dell'utente non vengono modificati dalle presenti esclusioni di responsabilità se le leggi in vigore nel Paese o nel territorio in cui risiede, applicabili come conseguenza dell'utilizzo dei nostri Servizi, non lo permettono.",
-                                textAlign: TextAlign.start,
+                                 textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
