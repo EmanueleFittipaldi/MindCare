@@ -60,8 +60,10 @@ class _CustomDialogTerminatoState extends State<CustomDialogTerminato> {
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const HomePazienteWidget()));
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const HomePazienteWidget()),
+                        (Route<dynamic> route) => false);
                   },
                   text: 'Fine!',
                   options: FFButtonOptions(

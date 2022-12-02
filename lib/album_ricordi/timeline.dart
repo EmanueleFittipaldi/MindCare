@@ -40,7 +40,7 @@ class _TimelinePageState extends State<TimelinePage> {
             snapshot.data?.docs.forEach((doc) async {
               Map<String, dynamic>? memory = doc.data();
               doodles.add(Ricordo(
-                  titolo: memory['titolo'],
+                  titolo: memory!['titolo'],
                   annoRicordo: memory['annoRicordo'],
                   descrizione: memory['descrizione'],
                   filePath: memory['filePath'],

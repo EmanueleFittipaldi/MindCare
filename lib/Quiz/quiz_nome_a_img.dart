@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/Quiz/fine_quiz.dart';
 import 'package:mindcare/login.dart';
+import 'package:mindcare/quiz/no_piu_tentativi.dart';
 import 'package:mindcare/quiz/report.dart';
 import 'package:mindcare/quiz/risposta_corretta.dart';
 import 'package:mindcare/quiz/risposta_sbagliata.dart';
@@ -39,11 +40,24 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
   Map<String, bool> mappaRisposte = <String, bool>{};
 
   checkRisposta(var quesito, var opzioneSelezionata) async {
-    //controllo se ho risposto corretto
-    //oppure no
+    /*
+   Controllo se ho selezionato la risposta corretta:
+
+   Se ho risposto correttamente
+   1. Se ho indovinato mostro un dialog di risposta corretta
+   2. Avanzo al quesito successivo e marco con true all'interno della mappa
+      delle risposte che la domanda corrente è stata risposta correttamente
+   3. Vado avanti con indexQuesito in modo da prelevare la prossima domanda
+
+   Se ho risposto sbagliato
+   1. Verifico se ho ancora un tentativo disponibile. In tal caso mostro un dialog
+      di risposta sbagliata dove chiedo all'utente se vuole riprovare.
+   2. Se l'utente seleziona "no" allora marco la domanda corrente come sbagliata e
+      incremento il indexQuesito per passare alla domanda successiva.
+   3. Se l'utente seleziona "si", azzero il countTentativi
+   */
     if (quesito['risposta'] == opzioneSelezionata) {
-      //ho indovinato
-      showDialog(
+      await showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
@@ -73,18 +87,26 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
             indexQuesito += 1;
           });
         } else {
+          //se dico che voglio riprovare
           setState(() {
             countTentativi = 0;
           });
         }
       } else {
-        Fluttertoast.showToast(
-            msg: 'Risposta sbagliata! Hai già provato, quindi va avanti');
+        //se non ho più tentativi mostro un dialog che avvisa l'utente
+        //che non ha più tentativi e che può ritornare al quiz
+        await showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return const CustomDialogNoTentativi();
+            });
 
         setState(() {
           mappaRisposte[quesito['quesitoID']] = false;
           indexQuesito += 1;
-          countTentativi = 1;
+          countTentativi =
+              1; //aggiorno il countTentativi in modo che anche la prossima domanda abbia 1 tentativo
         });
       }
     }
