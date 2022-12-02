@@ -1,10 +1,15 @@
 import 'package:mindcare/album_ricordi/timeline.dart';
 import 'package:mindcare/appbar/appbar_paziente.dart';
+import 'package:mindcare/utente.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
 class AlbumRicordiWidget extends StatefulWidget {
-  const AlbumRicordiWidget({Key? key}) : super(key: key);
+  final String caregiverUID;
+  final Utente user;
+  const AlbumRicordiWidget(
+      {Key? key, required this.caregiverUID, required this.user})
+      : super(key: key);
 
   @override
   _AlbumRicordiWidgetState createState() => _AlbumRicordiWidgetState();
@@ -81,7 +86,7 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                               const EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                           child: SelectionArea(
                               child: Text(
-                            'Ciao Giuseppe, qui trovi una selezione di foto che ritraggono eventi importanti che hai vissuto.\nRilassati e goditi quei momenti!',
+                            'Ciao ${widget.user.name}, qui trovi una selezione di foto che ritraggono eventi importanti che hai vissuto.\nRilassati e goditi quei momenti!',
                             textAlign: TextAlign.center,
                             style:
                                 FlutterFlowTheme.of(context).bodyText1.override(
@@ -103,7 +108,7 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 250, 250, 250),
                     ),
-                    child: const TimelinePage(),
+                    child: TimelinePage(caregiverUID: widget.caregiverUID),
                   ),
                 ),
               ],

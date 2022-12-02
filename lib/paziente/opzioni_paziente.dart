@@ -15,15 +15,18 @@ import '../login.dart';
 
 import '../utente.dart';
 
-class OpzioniWidget extends StatefulWidget {
+class OpzioniPazienteWidget extends StatefulWidget {
   final Utente user;
-  const OpzioniWidget({Key? key, required this.user}) : super(key: key);
+  final String caregiverUID;
+  const OpzioniPazienteWidget(
+      {Key? key, required this.user, required this.caregiverUID})
+      : super(key: key);
 
   @override
-  _OpzioniWidgetState createState() => _OpzioniWidgetState();
+  _OpzioniPazienteWidgetState createState() => _OpzioniPazienteWidgetState();
 }
 
-class _OpzioniWidgetState extends State<OpzioniWidget> {
+class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
   DateTime? datePicked;
   TextEditingController? textController1;
   TextEditingController? textController2;
@@ -42,7 +45,6 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
 
   @override
   void initState() {
-    super.initState();
     super.initState();
     textController1 = TextEditingController(text: widget.user.name);
     textController2 = TextEditingController(text: widget.user.lastname);
@@ -85,7 +87,11 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
 
   Future<void> modificaDati() async {
     var collection = FirebaseFirestore.instance.collection("user");
-    collection.doc(Auth().currentUser?.uid).update({
+    collection
+        .doc(widget.caregiverUID)
+        .collection('Pazienti')
+        .doc(Auth().currentUser?.uid)
+        .update({
       'name': textController1?.text.toString(),
       'lastname': textController2?.text.toString(),
       'dateOfBirth': textcontrollerData?.text.toString(),
@@ -583,7 +589,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(16, 0, 4, 0),
                       child: Text(
-                        'Cambia password',
+                        'Modifica account',
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
@@ -591,8 +597,9 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                     expanded: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
-                      child: Column(
+                      child: Row(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
@@ -605,6 +612,32 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 height: 40,
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'IBM Plex Sans',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: 8,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 15),
+                            child: FFButtonWidget(
+                              onPressed: () => {forgottenPassword()},
+                              text: 'Elimina account',
+                              options: FFButtonOptions(
+                                width: 130,
+                                height: 40,
+                                color: FlutterFlowTheme.of(context)
+                                    .borderErrorColor,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .subtitle2
                                     .override(

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../paziente/home_paziente.dart';
 
-class CustomDialogCorretta extends StatefulWidget {
-  const CustomDialogCorretta({Key? key}) : super(key: key);
+class CustomDialogTerminato extends StatefulWidget {
+  const CustomDialogTerminato({Key? key}) : super(key: key);
 
   @override
-  _CustomDialogCorrettaState createState() => _CustomDialogCorrettaState();
+  _CustomDialogTerminatoState createState() => _CustomDialogTerminatoState();
 }
 
-class _CustomDialogCorrettaState extends State<CustomDialogCorretta> {
+class _CustomDialogTerminatoState extends State<CustomDialogTerminato> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -39,7 +40,7 @@ class _CustomDialogCorrettaState extends State<CustomDialogCorretta> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Risposta corretta!',
+                'Quiz terminato!',
                 style: FlutterFlowTheme.of(context).bodyText1.override(
                       fontFamily: 'IBM Plex Sans',
                       color: Colors.black,
@@ -59,9 +60,12 @@ class _CustomDialogCorrettaState extends State<CustomDialogCorretta> {
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const HomePazienteWidget()),
+                        (Route<dynamic> route) => false);
                   },
-                  text: 'Continua',
+                  text: 'Fine!',
                   options: FFButtonOptions(
                     width: 140,
                     height: 60,

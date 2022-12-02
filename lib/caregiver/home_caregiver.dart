@@ -126,15 +126,15 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => OpzioniWidget(
                                 user: Utente(
-                                    userID: data?['userID'],
-                                    name: data?['name'],
-                                    lastname: data?['lastname'],
-                                    email: data?['email'],
-                                    type: data?['type'],
-                                    date: (data?['dateOfBirth'] as Timestamp)
+                                    userID: data!['userID'],
+                                    name: data!['name'],
+                                    lastname: data!['lastname'],
+                                    email: data!['email'],
+                                    type: data!['type'],
+                                    date: (data!['dateOfBirth'] as Timestamp)
                                         .toDate(),
                                     profileImgPath:
-                                        data?['profileImagePath']))));
+                                        data!['profileImagePath']))));
                       },
                     ),
                     FlutterFlowIconButton(
@@ -187,58 +187,67 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                         topRight: Radius.circular(0),
                       ),
                     ),
-                    child: FutureBuilder(
-                      //FutureBuilder per caricare i dati del caregiver
-                      future: getCaregiverData(), //funzione per ottenere i dati
-                      builder: (context, snapshot) {
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('user')
+                          .snapshots(), //funzione per ottenere i dati
+                      builder: (context, AsyncSnapshot snapshot) {
                         //costruzione degli widget dopo che la funzione si è eseguita
                         if (snapshot.hasData) {
-                          //verifica se in snapshot ci sono dati da mostrare
-                          var data = (snapshot.data as Map<String, dynamic>);
-                          return Column(
-                            //Widget che viene ritornato con i dati caricati
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 15, 0, 0),
-                                child: Container(
-                                  width: 150,
-                                  height: 150,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
+                          var data;
+                          snapshot.data?.docs.forEach((doc) {
+                            //iterazione sui singoli documenti
+                            Map<String, dynamic>? cmap = doc.data();
+                            if (cmap!['userID'] == Auth().currentUser!.uid) {
+                              data = cmap;
+                            } //mappatura dei dati
+                          });
+                          if (data != null) {
+                            return Column(
+                              //Widget che viene ritornato con i dati caricati
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 15, 0, 0),
+                                  child: Container(
+                                    width: 150,
+                                    height: 150,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: data['profileImagePath'] != ''
+                                        ? Image.network(
+                                            data['profileImagePath'],
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.asset(
+                                            'assets/images/add_photo.png',
+                                            fit: BoxFit.cover,
+                                          ),
                                   ),
-                                  child: data['profileImagePath'] != ''
-                                      ? Image.network(
-                                          data['profileImagePath'],
-                                          fit: BoxFit.cover,
-                                        )
-                                      : Image.asset(
-                                          'assets/images/add_photo.png',
-                                          fit: BoxFit.cover,
-                                        ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    15, 10, 0, 0),
-                                child: SelectionArea(
-                                    child: Text(
-                                  '${'Salve, ' + data['name']}!',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        fontSize: 30,
-                                      ),
-                                )),
-                              ),
-                            ],
-                          );
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      15, 10, 0, 0),
+                                  child: SelectionArea(
+                                      child: Text(
+                                    '${'Salve, ' + data['name']}!',
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'IBM Plex Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                          fontSize: 30,
+                                        ),
+                                  )),
+                                ),
+                              ],
+                            );
+                          }
                         }
                         return Text(
                             ''); //se non ci sono ancora dati, mostra un testo di caricamento.

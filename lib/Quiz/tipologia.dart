@@ -1,11 +1,29 @@
+import 'dart:collection';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/gestione_quiz/quesito.dart';
+import 'package:mindcare/quiz/quiz_img_a_nome.dart';
+import 'package:mindcare/quiz/quiz_nome_a_img.dart';
+
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../gestione_quiz/domanda_nome_a_img.dart';
 import '../login.dart';
+import '../utente.dart';
 
 class SelezionaTipologiaWidget extends StatefulWidget {
-  const SelezionaTipologiaWidget({Key? key}) : super(key: key);
+  final String categoria;
+  final Utente user;
+  final String caregiverID;
+  const SelezionaTipologiaWidget(
+      {Key? key,
+      required this.categoria,
+      required this.user,
+      required this.caregiverID})
+      : super(key: key);
 
   @override
   _SelezionaTipologiaWidgetState createState() =>
@@ -14,6 +32,35 @@ class SelezionaTipologiaWidget extends StatefulWidget {
 
 class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  /*
+  Funzione che permette di reperire tutti i quesiti di un determinato paziente
+  specificando una categoria ed una tipologia. 
+  */
+  getQuesiti(String categoria, String tipologia, String userID,
+      String caregiverID) async {
+    CollectionReference _collectionRef = FirebaseFirestore.instance
+        .collection('user')
+        .doc(caregiverID)
+        .collection('Pazienti')
+        .doc(userID)
+        .collection('Quesiti');
+
+    QuerySnapshot QueryCategoria = await _collectionRef
+        .where('tipologia', isEqualTo: tipologia)
+        .where('categoria', isEqualTo: categoria)
+        .get();
+
+    /*
+    Quello che viene ritornato è una lista di documenti, dove ogni documento
+    è una domanda della categoria e tipologia selezionata.
+    */
+    var result = [];
+    for (var v in QueryCategoria.docs) {
+      (result.add(v.data()));
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +151,10 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                     child: Stack(
                       children: [
                         Image.asset(
-                          'assets/images/Opera_senza_titolo.png',
+                          'assets/images/add_photo.png',
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                         ),
                         Align(
                           alignment: const AlignmentDirectional(0.94, -0.92),
@@ -166,8 +213,43 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                         .tertiaryColor,
                                     size: 90,
                                   ),
+
+                                  /*
+                                  Qui parte il quiz di tipologia associa l'immagine al nome:
+                                  1. Vengono prelevati tutti i quesiti della categoria e tipologia selezionata.
+                                  2. Se non ci sono domande viene mostrato un Toast che avvisa l'utente.
+                                  3. Prendo la data corrente(compreso ora,minuti e secondi) al momento del 
+                                     Tap sulla tipologia selezionata. Questo mi servirà insieme al tempo in cui
+                                     completo il quiz per stabilire quanto tempo ci ho impiegato.
+                                  4. Passo alla pagina del quiz associa immagine al nome i quesiti che dovrò svolgere
+                                     l'utente corrente e il "timestamp" di inizio quiz.
+                                  */
                                   onPressed: () async {
-                                    //context.pushNamed('ImmagineANome');
+                                    List<dynamic> quesiti = await getQuesiti(
+                                        widget.categoria,
+                                        'Associa l\'immagine al nome',
+                                        widget.user.userID,
+                                        widget.caregiverID);
+                                    if (quesiti.isEmpty) {
+                                      Fluttertoast.showToast(
+                                          msg: 'Non ci sono domande!');
+                                    } else {
+                                      //faccio partire il timer quando clicco sulla tipologia
+                                      //del quiz che voglio iniziare
+                                      DateTime inizioTempo = DateTime.now();
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ImmagineANomeWidget(
+                                                      quesiti: quesiti,
+                                                      categoria:
+                                                          widget.categoria,
+                                                      caregiverID:
+                                                          widget.caregiverID,
+                                                      user: widget.user,
+                                                      inizioTempo:
+                                                          inizioTempo)));
+                                    }
                                   },
                                 ),
                                 Padding(
@@ -244,8 +326,43 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                         .tertiaryColor,
                                     size: 115,
                                   ),
+
+                                  /*
+                                   Qui parte il quiz di tipologia associa l'immagine al nome:
+                                   1. Vengono prelevati tutti i quesiti della categoria e tipologia selezionata.
+                                   2. Se non ci sono domande viene mostrato un Toast che avvisa l'utente.
+                                   3. Prendo la data corrente(compreso ora,minuti e secondi) al momento del 
+                                     Tap sulla tipologia selezionata. Questo mi servirà insieme al tempo in cui
+                                     completo il quiz per stabilire quanto tempo ci ho impiegato.
+                                   4. Passo alla pagina del quiz associa immagine al nome i quesiti che dovrò svolgere
+                                     l'utente corrente e il "timestamp" di inizio quiz.
+                                  */
                                   onPressed: () async {
-                                    //context.pushNamed('NomeAImmagine');
+                                    List<dynamic> quesiti = await getQuesiti(
+                                        widget.categoria,
+                                        'Associa il nome all\'immagine',
+                                        widget.user.userID,
+                                        widget.caregiverID);
+                                    if (quesiti.isEmpty) {
+                                      Fluttertoast.showToast(
+                                          msg: 'Non ci sono domande!');
+                                    } else {
+                                      //faccio partire il timer quando clicco sulla tipologia
+                                      //del quiz che voglio iniziare
+                                      DateTime inizioTempo = DateTime.now();
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  NomeAImmagineWidget(
+                                                      quesiti: quesiti,
+                                                      categoria:
+                                                          widget.categoria,
+                                                      caregiverID:
+                                                          widget.caregiverID,
+                                                      user: widget.user,
+                                                      inizioTempo:
+                                                          inizioTempo)));
+                                    }
                                   },
                                 ),
                                 Padding(

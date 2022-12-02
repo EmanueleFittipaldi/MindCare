@@ -1,13 +1,17 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/appbar/appbar_paziente.dart';
+import 'package:mindcare/gestione_ricordi/ricordo.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_video_player.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:text_to_speech/text_to_speech.dart';
 
 class RicordoWidget extends StatefulWidget {
-  const RicordoWidget({Key? key}) : super(key: key);
+  final Ricordo ricordo;
+  const RicordoWidget({Key? key, required this.ricordo}) : super(key: key);
 
   @override
   _RicordoWidgetState createState() => _RicordoWidgetState();
@@ -15,7 +19,7 @@ class RicordoWidget extends StatefulWidget {
 
 class _RicordoWidgetState extends State<RicordoWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextToSpeech tts = TextToSpeech();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,10 +48,9 @@ class _RicordoWidgetState extends State<RicordoWidget> {
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                      child: 1 + 1 == 2
-                          ? const FlutterFlowVideoPlayer(
-                              path:
-                                  'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+                      child: widget.ricordo.tipoRicordo == 'Video'
+                          ? FlutterFlowVideoPlayer(
+                              path: widget.ricordo.filePath,
                               videoType: VideoType.network,
                               autoPlay: false,
                               looping: true,
@@ -58,7 +61,7 @@ class _RicordoWidgetState extends State<RicordoWidget> {
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.network(
-                                'https://live.staticflickr.com/79/240021215_d3027cde81_b.jpg',
+                                widget.ricordo.filePath,
                                 width: 100,
                                 height: 250,
                                 fit: BoxFit.cover,
@@ -70,7 +73,7 @@ class _RicordoWidgetState extends State<RicordoWidget> {
                           const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 5),
                       child: SelectionArea(
                           child: Text(
-                        'Vacanze in montagna',
+                        widget.ricordo.titolo,
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context).bodyText2.override(
                               fontFamily: 'IBM Plex Sans',
@@ -90,7 +93,7 @@ class _RicordoWidgetState extends State<RicordoWidget> {
                               15, 0, 0, 10),
                           child: SelectionArea(
                               child: Text(
-                            '2000',
+                            widget.ricordo.annoRicordo.toString(),
                             textAlign: TextAlign.start,
                             style: FlutterFlowTheme.of(context)
                                 .bodyText2
@@ -116,7 +119,19 @@ class _RicordoWidgetState extends State<RicordoWidget> {
                               color: FlutterFlowTheme.of(context).primaryText,
                               size: 20,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              if (widget.ricordo.descrizione == '') {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        'Non è presente una descrizione da leggere!');
+                              } else {
+                                String language = 'it-IT';
+                                tts.setLanguage(language);
+                                tts.setPitch(1.1);
+                                tts.setRate(0.8);
+                                tts.speak(widget.ricordo.descrizione);
+                              }
+                            },
                           ),
                         ),
                       ],
@@ -126,7 +141,7 @@ class _RicordoWidgetState extends State<RicordoWidget> {
                           const EdgeInsetsDirectional.fromSTEB(15, 5, 15, 10),
                       child: SelectionArea(
                           child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                        widget.ricordo.descrizione,
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context).bodyText2.override(
                               fontFamily: 'IBM Plex Sans',
