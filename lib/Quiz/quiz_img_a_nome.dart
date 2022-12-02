@@ -4,6 +4,7 @@ import 'package:mindcare/Quiz/fine_quiz.dart';
 import 'package:mindcare/gestione_quiz/quesito.dart';
 import 'package:mindcare/paziente/home_paziente.dart';
 import 'package:mindcare/quiz/quiz_nome_a_img.dart';
+import 'package:mindcare/quiz/report.dart';
 import 'package:mindcare/quiz/risposta_corretta.dart';
 import 'package:mindcare/quiz/risposta_sbagliata.dart';
 import 'package:mindcare/quiz/tipologia.dart';
@@ -19,14 +20,18 @@ import '../login.dart';
 
 class ImmagineANomeWidget extends StatefulWidget {
   final Utente user;
+  final String categoria;
   final List<dynamic> quesiti;
   final DateTime inizioTempo;
+  final String caregiverID;
 
   const ImmagineANomeWidget(
       {Key? key,
       required this.user,
       required this.quesiti,
-      required this.inizioTempo})
+      required this.inizioTempo,
+      required this.categoria,
+      required this.caregiverID})
       : super(key: key);
 
   @override
@@ -91,6 +96,27 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
     }
   }
 
+  /*Funzione che conta quante risposte sono corrette e quante sbagliate */
+  statisticheQuiz() {
+    int corrette = 0;
+    int sbagliate = 0;
+    mappaRisposte.forEach((key, value) {
+      if (value) {
+        corrette++;
+      } else {
+        sbagliate++;
+      }
+    });
+    var precisione = (corrette + sbagliate) / corrette;
+    //create a map with key integers and corrette,sbagliate and precision as values
+    Map<String, dynamic> statistiche = {
+      'corrette': corrette,
+      'sbagliate': sbagliate,
+      'precisione': precisione
+    };
+    return statistiche;
+  }
+
   @override
   Widget build(BuildContext context) {
     var quesito;
@@ -101,6 +127,21 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       DateTime fineTempo = DateTime.now();
       int tempoImpiegato = fineTempo.difference(widget.inizioTempo).inSeconds;
 
+      //creo il report
+      var reportID = Report.reportIDGenerator(28);
+      var risposteCorretteESbagliate = statisticheQuiz();
+      Report report = Report(
+          mappaRisposte: mappaRisposte,
+          tempoImpiegato: tempoImpiegato,
+          dataInizio: widget.inizioTempo,
+          risposteCorrette: statisticheQuiz()['corrette'],
+          risposteErrate: statisticheQuiz()['sbagliate'],
+          precisione: statisticheQuiz()['precisione'],
+          reportID: reportID,
+          tipologia: 'Associa l\'immagine al nome',
+          categoria: widget.categoria);
+
+      report.createReport(widget.caregiverID, widget.user.userID, reportID);
       Future.microtask(() => showDialog(
           //dialog del quiz terminato
           //ritarda l'esecuzione, in modo da attendere che buil si costruisca
