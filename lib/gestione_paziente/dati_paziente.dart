@@ -304,7 +304,10 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
               child: Container(
                 width: double.infinity,
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
                 child: ExpandableNotifier(
                   initialExpanded: false,
                   child: ExpandablePanel(
@@ -316,13 +319,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: Text(
-                      'empty',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                          ),
-                    ),
+                    collapsed: SizedBox.shrink(),
                     expanded: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
