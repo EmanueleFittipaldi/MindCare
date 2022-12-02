@@ -12,6 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../auth.dart';
 import '../quiz/categoria.dart';
 import '../login.dart';
+import 'opzioni_paziente.dart';
 
 class HomePazienteWidget extends StatefulWidget {
   const HomePazienteWidget({Key? key}) : super(key: key);
@@ -57,6 +58,16 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    var docSnaphot;
+    Map<String, dynamic>? data;
+
+    Future<void> datiPaziente() async {
+      docSnaphot = await FirebaseFirestore.instance.collection("user")
+      .doc(caregiverID).collection('Pazienti').doc(Auth().currentUser?.uid).get();
+      data = docSnaphot.data();
+    }
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -82,6 +93,45 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                         ),
                   ),
                 ),
+                
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                FlutterFlowIconButton(
+                  
+                      borderColor: Colors.transparent,
+                      borderRadius: 30,
+                      borderWidth: 1,
+                      buttonSize: 60,
+                      icon: Icon(
+                      
+                  
+                        Icons.settings,
+                        color: FlutterFlowTheme.of(context).tertiaryColor,
+                        
+                        size: 30,
+                        
+                      ),
+                      onPressed: () async {
+
+                        await datiPaziente();
+
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => OpzioniPazienteWidget (
+                              user: Utente(
+                                    userID: data!['userID'],
+                                    name: data!['name'],
+                                    lastname: data!['lastname'],
+                                    email: data!['email'],
+                                    type: data!['type'],
+                                    date: (data!['dateOfBirth'] as Timestamp)
+                                        .toDate(),
+                                    profileImgPath:
+                                        data!['profileImagePath']))));
+                            //OpzioniPazienteWidget
+                      },
+                    ),
+
                 FlutterFlowIconButton(
                   borderColor: Colors.transparent,
                   borderRadius: 30,
@@ -98,6 +148,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                         builder: (context) => const WidgetTree()));
                   },
                 ),
+              ],
+            ),
               ],
             ),
             centerTitle: true,
