@@ -17,10 +17,7 @@ import '../utente.dart';
 
 class OpzioniWidget extends StatefulWidget {
   final Utente user;
-  const OpzioniWidget({Key? key, required this.user})
-    : super(key: key);
-   
-
+  const OpzioniWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   _OpzioniWidgetState createState() => _OpzioniWidgetState();
@@ -51,7 +48,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
     textController2 = TextEditingController(text: widget.user.lastname);
     textController3 = TextEditingController(text: widget.user.email);
     textController4 = TextEditingController();
-    textcontrollerData = TextEditingController(text: DateFormat("yyyy-MM-dd").format(widget.user.date));
+    textcontrollerData = TextEditingController(
+        text: DateFormat("yyyy-MM-dd").format(widget.user.date));
     passwordVisibility1 = false;
     textController5 = TextEditingController();
     passwordVisibility2 = false;
@@ -73,10 +71,9 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
 
   Future<void> forgottenPassword() async {
     showDialog(
-      context: context, 
-      barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator())
-    );
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(child: CircularProgressIndicator()));
     try {
       await Auth().forgottenPassword(email: widget.user.email);
       Navigator.of(context).popUntil((route) => route.isFirst);
@@ -86,14 +83,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
     }
   }
 
-  Future<void> modificaDati() async{
-     var collection = FirebaseFirestore.instance.collection("user");
-     collection.doc(Auth().currentUser?.uid).update({
-      'name': textController1?.text.toString(), 
+  Future<void> modificaDati() async {
+    var collection = FirebaseFirestore.instance.collection("user");
+    collection.doc(Auth().currentUser?.uid).update({
+      'name': textController1?.text.toString(),
       'lastname': textController2?.text.toString(),
       'dateOfBirth': textcontrollerData?.text.toString(),
-      'email': textController3?.text.toString(),});
-
+      'email': textController3?.text.toString(),
+    });
   }
 
   @override
@@ -167,7 +164,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                   children: [
                     Card(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: FlutterFlowTheme.of(context).primaryColor,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -175,20 +172,26 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                       child: Padding(
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          width: 70,
+                          height: 70,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
                           child: widget.user.profileImgPath != ''
-                          
-                          ?Image.network(
-                          widget.user.profileImgPath, 
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                          )
-                          :Image.asset('assets/images/add_photo.png', 
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,),
+                              ? Image.network(
+                                  widget.user.profileImgPath,
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.asset(
+                                  'assets/images/add_photo.png',
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                     ),
@@ -205,7 +208,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                               '${widget.user.name} ${widget.user.lastname}',
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
-                                        fontFamily: 'Lexend Deca',
+                                        fontFamily: 'IBM Plex Sans',
                                         color: Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -219,7 +222,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
-                                      fontFamily: 'Lexend Deca',
+                                      fontFamily: 'IBM Plex Sans',
                                       color: const Color(0xB4FFFFFF),
                                       fontSize: 14,
                                       fontWeight: FontWeight.normal,
@@ -238,7 +241,10 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
               child: Container(
                 width: double.infinity,
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
                 child: ExpandableNotifier(
                   initialExpanded: false,
                   child: ExpandablePanel(
@@ -250,13 +256,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: Text(
-                      'empty',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                          ),
-                    ),
+                    collapsed: SizedBox.shrink(),
                     expanded: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
@@ -268,12 +268,12 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 0, 15, 0, 5),
                             child: TextFormField(
                               validator: (value) {
-                                      String val = value!.replaceAll(' ', '');
-                                      if (value.isEmpty || val.isEmpty) {
-                                        return 'Inserisci un nome!';
-                                      }
-                                      return null;
-                                    },
+                                String val = value!.replaceAll(' ', '');
+                                if (value.isEmpty || val.isEmpty) {
+                                  return 'Inserisci un nome!';
+                                }
+                                return null;
+                              },
                               controller: textController1,
                               autofocus: true,
                               obscureText: false,
@@ -326,12 +326,12 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 0, 15, 0, 5),
                             child: TextFormField(
                               validator: (value) {
-                                      String val = value!.replaceAll(' ', '');
-                                      if (value.isEmpty || val.isEmpty) {
-                                        return 'Inserisci un cognome!';
-                                      }
-                                      return null;
-                                    },
+                                String val = value!.replaceAll(' ', '');
+                                if (value.isEmpty || val.isEmpty) {
+                                  return 'Inserisci un cognome!';
+                                }
+                                return null;
+                              },
                               controller: textController2,
                               autofocus: true,
                               obscureText: false,
@@ -379,7 +379,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   ),
                             ),
                           ),
-                         Padding(
+                          Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 15, 0, 5),
                             child: Container(
@@ -401,13 +401,12 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                      
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10, 0, 12, 0),
-                                  child: TextFormField(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(10, 0, 12, 0),
+                                        child: TextFormField(
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -419,25 +418,25 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                           autofocus: true,
                                           readOnly: true,
                                           obscureText: false,
-                                          
                                           style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'IBM Plex Sans',
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'IBM Plex Sans',
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.normal,
+                                              ),
                                         ),
-                                      
+                                      ),
                                     ),
-                                    ),
-                                     InkWell(onTap: () async {
+                                    InkWell(
+                                      onTap: () async {
                                         await DatePicker.showDatePicker(context,
                                             showTitleActions: true,
                                             onConfirm: (date) {
                                           setState(() {
                                             datePicked = date;
-                                            textcontrollerData!.text = datePicked ==
+                                            textcontrollerData!
+                                                .text = datePicked ==
                                                     null
                                                 ? 'Data di nascita'
                                                 : DateFormat('yyyy-MM-dd')
@@ -453,20 +452,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                               DateTime.now().day,
                                             ));
                                       },
-                                      
-                                    
-                                    child: const Icon(
+                                      child: const Icon(
                                         Icons.date_range_outlined,
                                         color: Color(0xFF57636C),
                                         size: 30,
                                       ),
                                     ),
                                   ],
-                                  
                                 ),
-                                
                               ),
-                              
                             ),
                           ),
                           Padding(
@@ -474,17 +468,17 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 0, 15, 0, 5),
                             child: TextFormField(
                               validator: (value) {
-                                      String val = value!.replaceAll(' ', '');
-                                      if (value.isEmpty || val.isEmpty) {
-                                        return 'Inserisci l\'email!';
-                                      }
-                                      RegExp regex = RegExp(
-                                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                                      if (!regex.hasMatch(value)) {
-                                        return 'Inserisci un\'email valida!';
-                                      }
-                                      return null;
-                                    },
+                                String val = value!.replaceAll(' ', '');
+                                if (value.isEmpty || val.isEmpty) {
+                                  return 'Inserisci l\'email!';
+                                }
+                                RegExp regex =
+                                    RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                                if (!regex.hasMatch(value)) {
+                                  return 'Inserisci un\'email valida!';
+                                }
+                                return null;
+                              },
                               controller: textController3,
                               autofocus: true,
                               obscureText: false,
@@ -536,7 +530,9 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 5, 0, 15),
                             child: FFButtonWidget(
-                              onPressed: () {modificaDati();},
+                              onPressed: () {
+                                modificaDati();
+                              },
                               text: 'Salva',
                               options: FFButtonOptions(
                                 width: 130,
@@ -576,7 +572,10 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 0),
               child: Container(
                 width: double.infinity,
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
                 child: ExpandableNotifier(
                   initialExpanded: false,
                   child: ExpandablePanel(
@@ -588,13 +587,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: Text(
-                      'empty',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                          ),
-                    ),
+                    collapsed: SizedBox.shrink(),
                     expanded: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
@@ -645,7 +638,10 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(15, 20, 15, 20),
               child: Container(
                 width: double.infinity,
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
                 child: ExpandableNotifier(
                   initialExpanded: false,
                   child: ExpandablePanel(
@@ -657,13 +653,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: Text(
-                      'empty',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                          ),
-                    ),
+                    collapsed: SizedBox.shrink(),
                     expanded: Align(
                       alignment: const AlignmentDirectional(-1, 0),
                       child: Padding(

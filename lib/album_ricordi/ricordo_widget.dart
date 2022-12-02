@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/appbar/appbar_paziente.dart';
 import 'package:mindcare/gestione_ricordi/ricordo.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -48,9 +49,8 @@ class _RicordoWidgetState extends State<RicordoWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
                       child: widget.ricordo.tipoRicordo == 'Video'
-                          ? const FlutterFlowVideoPlayer(
-                              path:
-                                  'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+                          ? FlutterFlowVideoPlayer(
+                              path: widget.ricordo.filePath,
                               videoType: VideoType.network,
                               autoPlay: false,
                               looping: true,
@@ -120,11 +120,17 @@ class _RicordoWidgetState extends State<RicordoWidget> {
                               size: 20,
                             ),
                             onPressed: () {
-                              String language = 'it-IT';
-                              tts.setLanguage(language);
-                              tts.setPitch(1.1);
-                              tts.setRate(0.8);
-                              tts.speak(widget.ricordo.descrizione);
+                              if (widget.ricordo.descrizione == '') {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        'Non è presente una descrizione da leggere!');
+                              } else {
+                                String language = 'it-IT';
+                                tts.setLanguage(language);
+                                tts.setPitch(1.1);
+                                tts.setRate(0.8);
+                                tts.speak(widget.ricordo.descrizione);
+                              }
                             },
                           ),
                         ),
