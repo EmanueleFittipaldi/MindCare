@@ -72,17 +72,18 @@ class AppbarcaregiverWidget extends StatelessWidget {
                     size: 30,
                   ),
                   onPressed: () async {
+                    await datiCaregiver();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => OpzioniWidget(
                            user: Utente(
                                   userID:
-                                        data?['userID'],
-                                        name: data?['name'],
-                                        lastname: data?['lastname'],
-                                        email: data?['email'],
-                                        type: data?['type'],
-                                        date: (data?['dateOfBirth'] as Timestamp).toDate(),
-                                        profileImgPath: data?['profileImagePath']))));
+                                        data!['userID'],
+                                        name: data!['name'],
+                                        lastname: data!['lastname'],
+                                        email: data!['email'],
+                                        type: data!['type'],
+                                        date: (data!['dateOfBirth'] as Timestamp).toDate(),
+                                        profileImgPath: data!['profileImagePath']))));
                   },
                 ),
                 FlutterFlowIconButton(
