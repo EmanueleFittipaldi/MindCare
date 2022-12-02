@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
+import 'package:mindcare/confirm_dialog.dart';
 import 'package:mindcare/gestione_quiz/domanda_img_a_nome.dart';
 import 'package:mindcare/gestione_quiz/domanda_nome_a_img.dart';
 import 'package:mindcare/gestione_quiz/quesito.dart';
@@ -352,7 +353,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText2
                                                         .override(
-                                                          fontFamily: 'Outfit',
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
                                                           color: const Color(
                                                               0xFF57636C),
                                                           fontSize: 18,
@@ -529,22 +531,45 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                       /*Icona per cancellare un quesito.
                                                       Alla pressione di questa icona viene cancellata
                                                       la domanda corrispondete da Firebase. */
-                                                      onPressed: () {
-                                                        FirebaseFirestore
-                                                            .instance
-                                                            .collection('user')
-                                                            .doc(Auth()
-                                                                .currentUser
-                                                                ?.uid)
-                                                            .collection(
-                                                                'Pazienti')
-                                                            .doc(widget
-                                                                .user.userID)
-                                                            .collection(
-                                                                'Quesiti')
-                                                            .doc(item[
-                                                                'quesitoID'])
-                                                            .delete();
+                                                      onPressed: () async {
+                                                        var confirmDialogResponse =
+                                                            await showDialog(
+                                                                barrierDismissible:
+                                                                    false,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                                  return const ConfirmDialog(
+                                                                    title:
+                                                                        'Eliminazione domanda',
+                                                                    description:
+                                                                        'Vuoi davvero eliminare la domanda?',
+                                                                    textOptionConfirm:
+                                                                        'Conferma',
+                                                                    textOptionDelete:
+                                                                        'Annulla',
+                                                                  );
+                                                                });
+                                                        if (confirmDialogResponse) {
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'user')
+                                                              .doc(Auth()
+                                                                  .currentUser
+                                                                  ?.uid)
+                                                              .collection(
+                                                                  'Pazienti')
+                                                              .doc(widget
+                                                                  .user.userID)
+                                                              .collection(
+                                                                  'Quesiti')
+                                                              .doc(item[
+                                                                  'quesitoID'])
+                                                              .delete();
+                                                        }
                                                       },
                                                     ),
                                                   ],

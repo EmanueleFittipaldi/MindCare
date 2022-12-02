@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mindcare/album_ricordi/ricordo_widget.dart';
@@ -13,8 +11,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:path_provider/path_provider.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 import '../gestione_ricordi/ricordo.dart';
 
 class TimelinePage extends StatefulWidget {
@@ -43,23 +39,6 @@ class _TimelinePageState extends State<TimelinePage> {
             doodles = [];
             snapshot.data?.docs.forEach((doc) async {
               Map<String, dynamic>? memory = doc.data();
-              if (memory!['tipoRicordo'] == 'Video') {
-                final String path = (await getTemporaryDirectory()).path;
-                if (path == null) {
-                  throw MissingPlatformDirectoryException(
-                      'Unable to get temporary directory');
-                }
-                print(path);
-                var fileName = await VideoThumbnail.thumbnailFile(
-                  video: memory['filePath'],
-                  thumbnailPath: (await getTemporaryDirectory()).path,
-                  imageFormat: ImageFormat.WEBP,
-                  maxHeight:
-                      64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-                  quality: 75,
-                );
-                print(fileName.runtimeType);
-              }
               doodles.add(Ricordo(
                   titolo: memory!['titolo'],
                   annoRicordo: memory['annoRicordo'],
@@ -70,7 +49,7 @@ class _TimelinePageState extends State<TimelinePage> {
             });
             return timelineModel(TimelinePosition.Left);
           } else {
-            return Text('');
+            return const Text('');
           }
         });
   }
@@ -110,7 +89,12 @@ class _TimelinePageState extends State<TimelinePage> {
                           height: 120,
                           fit: BoxFit.cover,
                         )
-                      : SizedBox.shrink(),
+                      : Image.asset(
+                          "assets/images/add_photo.png",
+                          width: MediaQuery.of(context).size.width * 1,
+                          height: 120,
+                          fit: BoxFit.cover,
+                        ),
                   const SizedBox(
                     height: 8.0,
                   ),
@@ -147,7 +131,7 @@ class _TimelinePageState extends State<TimelinePage> {
         isFirst: i == 0,
         isLast: i == doodles.length,
         iconBackground: Colors.transparent,
-        icon: Icon(
+        icon: const Icon(
           FontAwesomeIcons.circle,
           color: Color(0xFF36383C),
           size: 15,

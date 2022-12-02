@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 
 class AlbumRicordiWidget extends StatefulWidget {
   final String caregiverUID;
-  const AlbumRicordiWidget({Key? key, required this.caregiverUID})
+  final Utente user;
+  const AlbumRicordiWidget(
+      {Key? key, required this.caregiverUID, required this.user})
       : super(key: key);
 
   @override
@@ -84,7 +86,7 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                               const EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                           child: SelectionArea(
                               child: Text(
-                            'Ciao Giuseppe, qui trovi una selezione di foto che ritraggono eventi importanti che hai vissuto.\nRilassati e goditi quei momenti!',
+                            'Ciao ${widget.user.name}, qui trovi una selezione di foto che ritraggono eventi importanti che hai vissuto.\nRilassati e goditi quei momenti!',
                             textAlign: TextAlign.center,
                             style:
                                 FlutterFlowTheme.of(context).bodyText1.override(

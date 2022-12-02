@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/auth.dart';
+import 'package:mindcare/confirm_dialog.dart';
+import 'package:mindcare/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mindcare/gestione_ricordi/creazione_ricordo.dart';
 import 'package:mindcare/gestione_ricordi/ricordo.dart';
 import 'package:mindcare/utente.dart';
@@ -333,10 +336,31 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                                     color: Color(0xFF8E8E8E),
                                                     size: 25,
                                                   ),
-                                                  onPressed: () {
-                                                    deleteMemory(
-                                                        data[i]['ricordoID'],
-                                                        data[i]['filePath']);
+                                                  onPressed: () async {
+                                                    var confirmDialogResponse =
+                                                        await showDialog(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return const ConfirmDialog(
+                                                                title:
+                                                                    'Eliminazione ricordo',
+                                                                description:
+                                                                    'Vuoi davvero eliminare il ricordo?',
+                                                                textOptionConfirm:
+                                                                    'Conferma',
+                                                                textOptionDelete:
+                                                                    'Annulla',
+                                                              );
+                                                            });
+                                                    if (confirmDialogResponse) {
+                                                      deleteMemory(
+                                                          data[i]['ricordoID'],
+                                                          data[i]['filePath']);
+                                                    }
                                                   },
                                                 ),
                                               ],
@@ -361,7 +385,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2
                                                 .override(
-                                                  fontFamily: 'Outfit',
+                                                  fontFamily: 'IBM Plex Sans',
                                                   color:
                                                       const Color(0xFF57636C),
                                                   fontSize: 18,

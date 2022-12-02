@@ -58,13 +58,16 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     var docSnaphot;
     Map<String, dynamic>? data;
 
     Future<void> datiPaziente() async {
-      docSnaphot = await FirebaseFirestore.instance.collection("user")
-      .doc(caregiverID).collection('Pazienti').doc(Auth().currentUser?.uid).get();
+      docSnaphot = await FirebaseFirestore.instance
+          .collection("user")
+          .doc(caregiverID)
+          .collection('Pazienti')
+          .doc(Auth().currentUser?.uid)
+          .get();
       data = docSnaphot.data();
     }
 
@@ -93,63 +96,57 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                         ),
                   ),
                 ),
-                
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                FlutterFlowIconButton(
-                  
+                    FlutterFlowIconButton(
                       borderColor: Colors.transparent,
                       borderRadius: 30,
                       borderWidth: 1,
                       buttonSize: 60,
                       icon: Icon(
-                      
-                  
                         Icons.settings,
                         color: FlutterFlowTheme.of(context).tertiaryColor,
-                        
                         size: 30,
-                        
                       ),
                       onPressed: () async {
-
                         await datiPaziente();
 
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => OpzioniPazienteWidget (
-                              user: Utente(
-                                    userID: data!['userID'],
-                                    name: data!['name'],
-                                    lastname: data!['lastname'],
-                                    email: data!['email'],
-                                    type: data!['type'],
-                                    date: (data!['dateOfBirth'] as Timestamp)
-                                        .toDate(),
-                                    profileImgPath:
-                                        data!['profileImagePath']))));
-                            //OpzioniPazienteWidget
+                            builder: (context) => OpzioniPazienteWidget(
+                                  user: Utente(
+                                      userID: data!['userID'],
+                                      name: data!['name'],
+                                      lastname: data!['lastname'],
+                                      email: data!['email'],
+                                      type: data!['type'],
+                                      date: (data!['dateOfBirth'] as Timestamp)
+                                          .toDate(),
+                                      profileImgPath:
+                                          data!['profileImagePath']),
+                                  caregiverUID: caregiverID,
+                                )));
+                        //OpzioniPazienteWidget
                       },
                     ),
-
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: Icon(
-                    Icons.logout,
-                    color: FlutterFlowTheme.of(context).tertiaryColor,
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    Auth().signOut();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const WidgetTree()));
-                  },
+                    FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 30,
+                      borderWidth: 1,
+                      buttonSize: 60,
+                      icon: Icon(
+                        Icons.logout,
+                        color: FlutterFlowTheme.of(context).tertiaryColor,
+                        size: 30,
+                      ),
+                      onPressed: () async {
+                        Auth().signOut();
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const WidgetTree()));
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
               ],
             ),
             centerTitle: true,
@@ -372,8 +369,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 AlbumRicordiWidget(
-                                                    caregiverUID:
-                                                        caregiverID)));
+                                                    caregiverUID: caregiverID,
+                                                    user: user!)));
                                   },
                                 ),
                                 Padding(
