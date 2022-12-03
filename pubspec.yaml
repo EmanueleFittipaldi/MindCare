@@ -46,6 +46,7 @@ dependencies:
   video_thumbnail: ^0.5.3
   path_provider: ^2.0.11
   text_to_speech: ^0.2.3
+  syncfusion_flutter_charts: ^20.3.59
   
 dev_dependencies:
   flutter_test:
