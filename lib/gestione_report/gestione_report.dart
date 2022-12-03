@@ -669,890 +669,256 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16, 0, 16, 15),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 4,
-                                            color: Color(0x55000000),
-                                            offset: Offset(0, 2),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(10, 16, 10, 16),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Categoria',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Persone',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Data',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '13/10/2022',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      '#Corrette',
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '7/10',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Tempo',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '12 min',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                  for (var item in data)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 15),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              blurRadius: 4,
+                                              color: Color(0x55000000),
+                                              offset: Offset(0, 2),
+                                            )
                                           ],
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(10, 16, 10, 16),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 4, 0, 0),
+                                                      child: Text(
+                                                        'Categoria',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  color: const Color(
+                                                                      0xFF101213),
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      item.categoria,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                color: const Color(
+                                                                    0xFF101213),
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 4, 0, 0),
+                                                      child: Text(
+                                                        'Data',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  color: const Color(
+                                                                      0xFF101213),
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      DateFormat(
+                                                              'dd-MM-yyyy hh:mm aaa')
+                                                          .format(
+                                                              item.dataInizio)
+                                                          .toString(),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                color: const Color(
+                                                                    0xFF101213),
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 4, 0, 0),
+                                                      child: Text(
+                                                        '#Corrette',
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  color: const Color(
+                                                                      0xFF101213),
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '${item.risposteCorrette}/${item.risposteCorrette + item.risposteErrate}',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                color: const Color(
+                                                                    0xFF101213),
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 4, 0, 0),
+                                                      child: Text(
+                                                        'Tempo',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  color: const Color(
+                                                                      0xFF101213),
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '${(Duration(seconds: item.tempoImpiegato))}'
+                                                          .split('.')[0]
+                                                          .padLeft(8, '0'),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                color: const Color(
+                                                                    0xFF101213),
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16, 0, 16, 15),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 4,
-                                            color: Color(0x55000000),
-                                            offset: Offset(0, 2),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(10, 16, 10, 16),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Categoria',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Aimali',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Data',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '11/10/2022',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      '#Corrette',
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '7/12',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Tempo',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '17 min',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16, 0, 16, 15),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 4,
-                                            color: Color(0x55000000),
-                                            offset: Offset(0, 2),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(10, 16, 10, 16),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Categoria',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Persone',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Data',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '07/10/2022',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      '#Domande',
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '13/16',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Tempo',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '25 min',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16, 0, 16, 15),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurRadius: 4,
-                                            color: Color(0x55000000),
-                                            offset: Offset(0, 2),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(10, 16, 10, 16),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Categoria',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Oggetti',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Data',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '02/10/2022',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      '#Domande',
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '8/10',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      'Tempo',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText2
-                                                          .override(
-                                                            fontFamily:
-                                                                'IBM Plex Sans',
-                                                            color: const Color(
-                                                                0xFF101213),
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '14 min',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: const Color(
-                                                              0xFF101213),
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
