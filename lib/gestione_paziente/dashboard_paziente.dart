@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../gestione_report/gestione_report.dart';
 import '../gestione_ricordi/gestione_album.dart';
 import 'dati_paziente.dart';
 
@@ -248,7 +249,11 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     size: 50,
                                   ),
                                   onPressed: () async {
-                                    //context.pushNamed('ReportQuiz');
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ReportStatsWidget(
+                                                    user: widget.user)));
                                   },
                                 ),
                                 Padding(
@@ -302,7 +307,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                DatiPazienteWidget( user: widget.user)));
+                                                DatiPazienteWidget(
+                                                    user: widget.user)));
                                   },
                                 ),
                                 Padding(
