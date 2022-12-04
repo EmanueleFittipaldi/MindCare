@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/Quiz/fine_quiz.dart';
 import 'package:mindcare/gestione_quiz/quesito.dart';
 import 'package:mindcare/paziente/home_paziente.dart';
+import 'package:mindcare/quiz/alert_hint.dart';
+import 'package:mindcare/quiz/alert_risposta.dart';
 import 'package:mindcare/quiz/no_piu_tentativi.dart';
 import 'package:mindcare/quiz/quiz_nome_a_img.dart';
 import 'package:mindcare/quiz/report.dart';
@@ -43,6 +47,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int indexQuesito = 0;
   int countTentativi = 1; //contatore dei tentativi
+  Timer? timer; //timer che si avvia ad ogni quesito. Allo scadere mostra la
+  //possibilità di vedere la risposta
   Map<String, bool> mappaRisposte = <String, bool>{};
 
   checkRisposta(var quesito, var opzioneSelezionata) async {
@@ -56,7 +62,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
           builder: (BuildContext context) {
             return const CustomDialogCorretta();
           });
-
+      timer!.cancel();
       setState(() {
         mappaRisposte[quesito['quesitoID']] = true;
         indexQuesito += 1;
@@ -75,11 +81,13 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
         //se dico che non voglio riporvare allora vado
         //avanti con la domanda
         if (!risposta) {
+          timer!.cancel();
           setState(() {
             mappaRisposte[quesito['quesitoID']] = false;
             indexQuesito += 1;
           });
         } else {
+          timer!.cancel();
           setState(() {
             countTentativi = 0;
           });
@@ -91,7 +99,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
             builder: (BuildContext context) {
               return const CustomDialogNoTentativi();
             });
-
+        timer!.cancel();
         setState(() {
           mappaRisposte[quesito['quesitoID']] = false;
           indexQuesito += 1;
@@ -112,7 +120,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
         sbagliate++;
       }
     });
-    var precisione = (corrette + sbagliate) / corrette;
+    var precisione = corrette / (corrette + sbagliate);
     //create a map with key integers and corrette,sbagliate and precision as values
     Map<String, dynamic> statistiche = {
       'corrette': corrette,
@@ -126,6 +134,12 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
   Widget build(BuildContext context) {
     var quesito;
     if (indexQuesito >= widget.quesiti.length) {
+      //controllo di sicurezza per evitare che ci sia qualche istanza
+      //di timer ancora attiva in background. Questo causerebbe delle eccezioni
+      //uscendo dalla pagina del quiz.
+      if (timer!.isActive) {
+        timer!.cancel();
+      }
       quesito = widget.quesiti[
           indexQuesito - 1]; //carica lo stesso il quesito per non avere errori
       //stoppo il timer
@@ -157,6 +171,37 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
           }));
     } else {
       quesito = widget.quesiti[indexQuesito];
+      /*Quando prelevo il quesito faccio partire il timer. Mostro un AlertDialog
+      che mi domanda se voglio vedere la risposta oppure no. Attende con un await
+      la mia risposta. Se ho risposto si, attendo con un'altra await che venga chiamata
+      l'altra AlertDialog che mi mostra la risposta, e alla fine chiamo setState in modo
+      che possa ripartire il timer e mostrarmi dinuovo dopo 10 secondi se voglio vedere dinuovo
+      la risposta.
+      Se invece ho risposto no che non voglio vedere la risposta allora semplicemente resetto il timer
+      ribuildando il widget con setstate.  */
+
+      timer = Timer(const Duration(seconds: 10), () async {
+        var risposta = await showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return AlertHint();
+            });
+
+        if (risposta) {
+          await showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) {
+                return AlertRisposta(quesito['risposta']);
+              });
+          timer!.cancel();
+          setState(() {});
+        } else {
+          timer!.cancel();
+          setState(() {});
+        }
+      });
     }
     return Scaffold(
       key: scaffoldKey,
@@ -183,6 +228,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                     size: 30,
                   ),
                   onPressed: () async {
+                    timer!.cancel();
                     Navigator.of(context).pop();
                   },
                 ),
@@ -208,6 +254,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                     size: 30,
                   ),
                   onPressed: () async {
+                    timer!.cancel();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const LoginWidget()));
                   },

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/Quiz/fine_quiz.dart';
 import 'package:mindcare/login.dart';
@@ -14,8 +16,12 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'alert_hint.dart';
+import 'alert_risposta.dart';
+
 class NomeAImmagineWidget extends StatefulWidget {
   final Utente user;
+
   final String categoria;
   final List<dynamic> quesiti;
   final DateTime inizioTempo;
@@ -37,14 +43,16 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int indexQuesito = 0;
   int countTentativi = 1; //contatore dei tentativi
+  Timer? timer; //timer che si avvia ad ogni quesito. Allo scadere mostra la
+  //possibilità di vedere la risposta
+
   Map<String, bool> mappaRisposte = <String, bool>{};
 
   checkRisposta(var quesito, var opzioneSelezionata) async {
     /*
    Controllo se ho selezionato la risposta corretta:
-
    Se ho risposto correttamente
-   1. Se ho indovinato mostro un dialog di risposta corretta
+   1. Mostro un dialog di risposta corretta
    2. Avanzo al quesito successivo e marco con true all'interno della mappa
       delle risposte che la domanda corrente è stata risposta correttamente
    3. Vado avanti con indexQuesito in modo da prelevare la prossima domanda
@@ -54,22 +62,24 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
       di risposta sbagliata dove chiedo all'utente se vuole riprovare.
    2. Se l'utente seleziona "no" allora marco la domanda corrente come sbagliata e
       incremento il indexQuesito per passare alla domanda successiva.
-   3. Se l'utente seleziona "si", azzero il countTentativi
+   3. Se l'utente seleziona "si", azzero il countTentativi. In questo modo se sbaglia
+      di nuovo, verrà mostrato che non ha più tentativi disponibili.
    */
     if (quesito['risposta'] == opzioneSelezionata) {
+      //CASO RISPOSTA GIUSTA
       await showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
             return const CustomDialogCorretta();
           });
-
+      timer!.cancel();
       setState(() {
         mappaRisposte[quesito['quesitoID']] = true;
         indexQuesito += 1;
       });
     } else {
-      //ho sbagliato
+      //CASO RISPOSTA SBAGLIATA, PROPOSTA TENTATIVO
       if (countTentativi == 1) {
         //verifico se ci sono tentativi
         var risposta = await showDialog(
@@ -79,29 +89,29 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
               return const CustomDialogSbagliata();
             });
 
-        //se dico che non voglio riporvare allora vado
-        //avanti con la domanda
+        //CASO NON VOGLIO RIPROVARE
         if (!risposta) {
+          timer!.cancel();
           setState(() {
             mappaRisposte[quesito['quesitoID']] = false;
             indexQuesito += 1;
           });
         } else {
-          //se dico che voglio riprovare
+          //CASO VOGLIO RIPROVARE
+          timer!.cancel();
           setState(() {
             countTentativi = 0;
           });
         }
       } else {
-        //se non ho più tentativi mostro un dialog che avvisa l'utente
-        //che non ha più tentativi e che può ritornare al quiz
+        //CASO NON HO PIU' TENTATIVI
         await showDialog(
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               return const CustomDialogNoTentativi();
             });
-
+        timer!.cancel();
         setState(() {
           mappaRisposte[quesito['quesitoID']] = false;
           indexQuesito += 1;
@@ -123,7 +133,8 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
         sbagliate++;
       }
     });
-    var precisione = (corrette + sbagliate) / corrette;
+    var precisione = corrette / (corrette + sbagliate);
+
     //create a map with key integers and corrette,sbagliate and precision as values
     Map<String, dynamic> statistiche = {
       'corrette': corrette,
@@ -136,9 +147,24 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
   @override
   Widget build(BuildContext context) {
     var quesito;
+    /*
+     Se ho esaurito i quesiti da proporre:
+    - Carico lo stesso l'ultimo quesito per non avere errori.
+    - Prendo il tempo corrente in modo da poter ricavare quanto tempo ho impiegato
+      per completare il quiz.
+    - A questo punto ho tutti il necessario per poter generare un report. 
+    - Una volta generato lo inserisco all'interno della collezion "Report" del paziente.
+     */
     if (indexQuesito >= widget.quesiti.length) {
+      //controllo di sicurezza per evitare che ci sia qualche istanza
+      //di timer ancora attiva in background. Questo causerebbe delle eccezioni
+      //uscendo dalla pagina del quiz.
+      if (timer!.isActive) {
+        timer!.cancel();
+      }
       quesito = widget.quesiti[
           indexQuesito - 1]; //carica lo stesso il quesito per non avere errori
+
       //stoppo il timer
       DateTime fineTempo = DateTime.now();
       int tempoImpiegato = fineTempo.difference(widget.inizioTempo).inSeconds;
@@ -150,26 +176,59 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
           mappaRisposte: mappaRisposte,
           tempoImpiegato: tempoImpiegato,
           dataInizio: widget.inizioTempo,
-          risposteCorrette: statisticheQuiz()['corrette'],
-          risposteErrate: statisticheQuiz()['sbagliate'],
-          precisione: statisticheQuiz()['precisione'],
+          risposteCorrette: risposteCorretteESbagliate['corrette'],
+          risposteErrate: risposteCorretteESbagliate['sbagliate'],
+          precisione: risposteCorretteESbagliate['precisione'],
           reportID: reportID,
           tipologia: 'Associa il nome all\'immagine',
           categoria: widget.categoria);
 
       report.createReport(widget.caregiverID, widget.user.userID, reportID);
 
+      /*Dopo che il build ha terminato la costruzione dell'UI, mostro la dialog 
+      del quiz terminato*/
       Future.microtask(() => showDialog(
-          //dialog del quiz terminato
-          //ritarda l'esecuzione, in modo da attendere che buil si costruisca
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
             return const CustomDialogTerminato();
           }));
     } else {
+      /*Prelevo il quesito che devo mostrare al video */
       quesito = widget.quesiti[indexQuesito];
-    }
+
+      /*Quando prelevo il quesito faccio partire il timer. Mostro un AlertDialog
+      che mi domanda se voglio vedere la risposta oppure no. Attende con un await
+      la mia risposta. Se ho risposto si, attendo con un'altra await che venga chiamata
+      l'altra AlertDialog che mi mostra la risposta, e alla fine chiamo setState in modo
+      che possa ripartire il timer e mostrarmi dinuovo dopo 10 secondi se voglio vedere dinuovo
+      la risposta.
+      Se invece ho risposto no che non voglio vedere la risposta allora semplicemente resetto il timer
+      ribuildando il widget con setstate.  */
+
+      timer = Timer(const Duration(seconds: 10), () async {
+        var risposta = await showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return AlertHint();
+            });
+
+        if (risposta) {
+          await showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) {
+                return AlertRisposta(quesito['risposta']);
+              });
+          timer!.cancel();
+          setState(() {});
+        } else {
+          timer!.cancel();
+          setState(() {});
+        }
+      });
+    } //non toccare questa parentesi
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
@@ -195,6 +254,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                     size: 30,
                   ),
                   onPressed: () async {
+                    timer!.cancel();
                     Navigator.of(context).pop();
                   },
                 ),
@@ -220,6 +280,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                     size: 30,
                   ),
                   onPressed: () async {
+                    timer!.cancel();
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const LoginWidget()));
                   },
