@@ -1,27 +1,18 @@
 import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:io';
 import 'package:mindcare/Quiz/fine_quiz.dart';
-import 'package:mindcare/gestione_quiz/quesito.dart';
-import 'package:mindcare/paziente/home_paziente.dart';
 import 'package:mindcare/quiz/alert_hint.dart';
 import 'package:mindcare/quiz/alert_risposta.dart';
 import 'package:mindcare/quiz/no_piu_tentativi.dart';
-import 'package:mindcare/quiz/quiz_nome_a_img.dart';
 import 'package:mindcare/quiz/report.dart';
 import 'package:mindcare/quiz/risposta_corretta.dart';
 import 'package:mindcare/quiz/risposta_sbagliata.dart';
-import 'package:mindcare/quiz/tipologia.dart';
 import 'package:mindcare/utente.dart';
-
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../login.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ImmagineANomeWidget extends StatefulWidget {
   final Utente user;
@@ -46,10 +37,64 @@ class ImmagineANomeWidget extends StatefulWidget {
 class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int indexQuesito = 0;
-  int countTentativi = 1; //contatore dei tentativi
-  Timer? timer; //timer che si avvia ad ogni quesito. Allo scadere mostra la
-  //possibilità di vedere la risposta
+  int countTentativi = 1;
+  Timer? timer;
   Map<String, bool> mappaRisposte = <String, bool>{};
+  var box;
+  var quesito;
+  int tempoImpiegato = 0;
+
+  /*Funzione che vede se in locale c'è salvato un quiz per questa categoria e 
+  tipologia. Se è così, significa che l'utente non ha completato un quiz e quindi
+  gli permette di continuarlo andando a caricare:
+  - indexQuesito: in questo modo riprendo a rispondere da dove avevo interrotto
+  - mappaRisposte: in questo modo ricordo quali sono state le mie risposte passate e posso
+    registrare quelle nuove. */
+
+  getStatoQuiz() async {
+    //inizializzazione di Hive
+    await Hive.initFlutter();
+    //Apre il box. Se non c'è lo crea
+    box = await Hive.openBox('quiz');
+
+    /*
+    Preleva 'statoCorrente' dal box. Se non è nullo, inizializza: indexQuesito, countTentativi e mappaRisposte
+    */
+    if (box.get('statoCorrente') != null) {
+      var categoria = box.get('statoCorrente')['categoria'];
+      var tipologia = box.get('statoCorrente')['tipologia'];
+
+      //devo ripristinare lo stato del quiz solo se lo stato memorizzato
+      //è relativo a questa categoria e a questa tipologia
+      if (categoria == widget.categoria &&
+          tipologia == 'Associa l\'immagine al nome') {
+        indexQuesito = box.get('statoCorrente')['indexQuesito'];
+        countTentativi = box.get('statoCorrente')['countTentativi'];
+        //cast to Map<String, bool>
+        mappaRisposte = Map<String, bool>.from(
+            box.get('statoCorrente')['mappaRisposte'] as Map);
+
+        print('indexQuesito: $indexQuesito');
+        print('countTentativi: $countTentativi');
+        print('mappaRisposte: $mappaRisposte');
+      }
+    }
+  }
+
+  /*Funzione che mi permette di cancellare uno stato. Utile quando ho completato
+  il quiz. */
+  deleteStatoQuiz() async {
+    await box.delete('statoCorrente');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //controllo se c'è salvato uno stato di quiz relativo a questa categoria e tipologia
+    //se si allora lo devo caricare in quanto significa
+    //che l'utente non ha completato il quiz
+    getStatoQuiz();
+  }
 
   checkRisposta(var quesito, var opzioneSelezionata) async {
     //controllo se ho risposto corretto
@@ -132,7 +177,6 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var quesito;
     if (indexQuesito >= widget.quesiti.length) {
       //controllo di sicurezza per evitare che ci sia qualche istanza
       //di timer ancora attiva in background. Questo causerebbe delle eccezioni
@@ -140,11 +184,30 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       if (timer!.isActive) {
         timer!.cancel();
       }
+
       quesito = widget.quesiti[
           indexQuesito - 1]; //carica lo stesso il quesito per non avere errori
+
       //stoppo il timer
       DateTime fineTempo = DateTime.now();
-      int tempoImpiegato = fineTempo.difference(widget.inizioTempo).inSeconds;
+
+      /*Se c'era uno stato corrente significa che per ricavare il tempo impiegato
+      devo utilizzare l'inizioTempo memorizzato nel momento in cui ho abbandonato il quiz
+      e non quello corrente. Solo in questo modo posso ottenere quanto tempo ho impiegato
+      per completare il quiz.*/
+
+      if (box.get('statoCorrente') != null) {
+        if (box.get('statoCorrente')['tipologia'] ==
+                'Associa l\'immagine al nome' &&
+            box.get('statoCorrente')['categoria'] == widget.categoria) {
+          var tempoInizioMemorizzato = box.get('statoCorrente')['inizioTempo'];
+          tempoImpiegato =
+              fineTempo.difference(tempoInizioMemorizzato).inSeconds;
+          deleteStatoQuiz();
+        }
+      } else {
+        tempoImpiegato = fineTempo.difference(widget.inizioTempo).inSeconds;
+      }
 
       //creo il report
       var reportID = Report.reportIDGenerator(28);
@@ -203,6 +266,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
         }
       });
     }
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
@@ -229,6 +293,17 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   ),
                   onPressed: () async {
                     timer!.cancel();
+                    //Salvo lo stato corrente del quiz perché significa che non
+                    //l'ho portato a termine. In questo modo potrò riprenderlo
+                    Map<String, dynamic> statoCorrente = {
+                      'categoria': widget.categoria,
+                      'tipologia': 'Associa l\'immagine al nome',
+                      'indexQuesito': indexQuesito,
+                      'mappaRisposte': mappaRisposte,
+                      'countTentativi': countTentativi,
+                      'inizioTempo': widget.inizioTempo
+                    };
+                    box.put('statoCorrente', statoCorrente);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -255,6 +330,15 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   ),
                   onPressed: () async {
                     timer!.cancel();
+                    Map<String, dynamic> statoCorrente = {
+                      'categoria': widget.categoria,
+                      'tipologia': 'Associa l\'immagine al nome',
+                      'indexQuesito': indexQuesito,
+                      'mappaRisposte': mappaRisposte,
+                      'countTentativi': countTentativi,
+                      'inizioTempo': widget.inizioTempo
+                    };
+                    box.put('statoCorrente', statoCorrente);
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const LoginWidget()));
                   },
