@@ -14,6 +14,7 @@ import '../auth.dart';
 import '../login.dart';
 
 import '../utente.dart';
+import '../widget_tree.dart';
 
 class OpzioniPazienteWidget extends StatefulWidget {
   final Utente user;
@@ -99,8 +100,53 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
     });
   }
 
+
+
+String caregiverID = '';
+Utente? user;
+  Future<Object?> getData() async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('user')
+        .get(); //ottenimento di tutti i documenti nella collezione user
+
+    for (var i = 0; i < snapshot.docs.length; i++) {
+      var caregiverMap = snapshot.docs[i].data() as Map<String, dynamic>?;
+      //ciclo sui pazienti del caregiver
+      QuerySnapshot snapshotPat = await FirebaseFirestore.instance
+          .collection('user')
+          .doc(caregiverMap!['userID'])
+          .collection('Pazienti')
+          .get(); //ottengo la collezione del caregiver dato dall'UID salvato nel campo
+      for (var j = 0; j < snapshotPat.docs.length; j++) {
+        var patientMap = snapshotPat.docs[j].data() as Map<String, dynamic>?;
+        if (patientMap!['userID'] == Auth().currentUser!.uid) {
+          //se l'userID nel documento dei pazienti è uguale a quello loggato
+          //creazione di UTENTE inserendo i dati
+          caregiverID = caregiverMap['userID'];
+          return caregiverID;
+        }
+      }
+      
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    var docSnaphot;
+  Map<String, dynamic>? data;
+  Future<void> EliminaPaziente() async {
+    await getData();
+      docSnaphot = FirebaseFirestore.instance
+          .collection("user")
+          .doc(caregiverID)
+          .collection('Pazienti')
+          .doc(Auth().currentUser?.uid)
+          .delete();
+      data = docSnaphot.data();
+  }
+    
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -631,7 +677,13 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 5, 0, 15),
                             child: FFButtonWidget(
-                              onPressed: () => {forgottenPassword()},
+                              onPressed: () async {
+                                FirebaseAuth.instance.currentUser!.delete();
+                                EliminaPaziente();
+                              
+                                Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const WidgetTree()));
+                              },
                               text: 'Elimina account',
                               options: FFButtonOptions(
                                 width: 130,
