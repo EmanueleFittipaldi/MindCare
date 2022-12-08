@@ -83,12 +83,17 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
     }
   }
 
-  Future<void> modificaDati() async {
-    var collection = FirebaseFirestore.instance.collection("user");
+
+ Future<void> modificaDati() async {
+  
+    DateTime convertedDateTime = DateTime.parse(textcontrollerData!.text);
+  Timestamp convertedDateTimeStamp = Timestamp.fromDate(convertedDateTime);
+
+var collection = FirebaseFirestore.instance.collection("user");
     collection.doc(Auth().currentUser?.uid).update({
       'name': textController1?.text.toString(),
       'lastname': textController2?.text.toString(),
-      'dateOfBirth': textcontrollerData?.text.toString(),
+      'dateOfBirth': convertedDateTimeStamp,
       'email': textController3?.text.toString(),
     });
   }
@@ -435,8 +440,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             onConfirm: (date) {
                                           setState(() {
                                             datePicked = date;
-                                            textcontrollerData!
-                                                .text = datePicked ==
+                                            textcontrollerData!.text = datePicked ==
                                                     null
                                                 ? 'Data di nascita'
                                                 : DateFormat('yyyy-MM-dd')
@@ -530,8 +534,9 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 5, 0, 15),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                modificaDati();
+                            
+                              onPressed: () async {
+                                await modificaDati();
                               },
                               text: 'Salva',
                               options: FFButtonOptions(
