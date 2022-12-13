@@ -2,17 +2,17 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mindcare/gestione_quiz/quesito.dart';
+import 'package:mindcare/model/quesito.dart';
 
-import '../auth.dart';
+import '../controller/auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../image_upload.dart';
-import '../utente.dart';
+import '../controller/image_upload.dart';
+import '../model/utente.dart';
 import 'gestione_quiz.dart';
 
 class CreazioneDomandaImmagineANomeWidget extends StatefulWidget {

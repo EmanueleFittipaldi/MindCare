@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mindcare/auth.dart';
+import 'package:mindcare/controller/auth.dart';
 
 class Ricordo {
   final String titolo;

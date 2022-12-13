@@ -1,10 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:mindcare/auth.dart';
-import 'package:mindcare/utente.dart';
-import 'package:mindcare/widget_tree.dart';
-
-import '../../flutter_flow/flutter_flow_icon_button.dart';
+import 'package:mindcare/controller/auth.dart';
+import 'package:mindcare/model/utente.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 // ignore: unused_import
 import '../../flutter_flow/flutter_flow_util.dart';
@@ -12,8 +8,6 @@ import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import '../gestione_paziente/aggiunta_paziente.dart';
 import '../gestione_paziente/dashboard_paziente.dart';
-import '../login.dart';
-import 'opzioni.dart';
 
 class HomeCaregiverWidget extends StatefulWidget {
   const HomeCaregiverWidget({Key? key}) : super(key: key);
@@ -35,134 +29,11 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
     super.dispose();
   }
 
-  //funzione che permette di ottenere i dati dal database.
-  //invocata in FutureBuilder, per caricare dapprima i dati del caregiver
-  Future<Object?> getCaregiverData() async {
-    //ottenimento della collezione 'user'
-    var user = FirebaseFirestore.instance.collection('user');
-    var userSnap = await user.doc(Auth().currentUser?.uid).get();
-    //documento del caregiver -> userID autenticato
-    if (userSnap.exists) {
-      Map<String, dynamic>? userMap =
-          userSnap.data(); //mappatura dei dati prelevati
-
-      //user.doc(Auth().currentUser?.uid).snapshots().listen((event) {
-      //setState(() {});
-      //});
-      return userMap;
-    }
-  }
-
-  //funzione per eliminare un paziente e la sua immagine salvate nello storage
-  Future<void> deletePatient(patientUID, imgPath) async {
-    var user = FirebaseFirestore.instance.collection('user');
-    var docSnapshot = user
-        .doc(Auth().currentUser?.uid)
-        .collection('Pazienti')
-        .doc(patientUID); //riferimento al documento da eliminare
-    await FirebaseFirestore.instance
-        .runTransaction((Transaction deleteTransaction) async {
-      deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione
-    });
-    if (imgPath != '') {
-      await FirebaseStorage.instance
-          .refFromURL(imgPath)
-          .delete(); //eliminazione immagine
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    var docSnaphot;
-    Map<String, dynamic>? data;
-
-    Future<void> datiCaregiver() async {
-      var collection = FirebaseFirestore.instance.collection("user");
-      docSnaphot = await collection.doc(Auth().currentUser?.uid).get();
-      data = docSnaphot.data();
-    }
-
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          actions: const [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                  child: Text(
-                    'MindCare',
-                    style: FlutterFlowTheme.of(context).title2.override(
-                          fontFamily: 'IBM Plex Sans',
-                          color: Colors.white,
-                          fontSize: 22,
-                        ),
-                  ),
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.settings,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        size: 30,
-                      ),
-                      onPressed: () async {
-                        await datiCaregiver();
-
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => OpzioniWidget(
-                                user: Utente(
-                                    userID: data!['userID'],
-                                    name: data!['name'],
-                                    lastname: data!['lastname'],
-                                    email: data!['email'],
-                                    type: data!['type'],
-                                    date: (data!['dateOfBirth'] as Timestamp)
-                                        .toDate(),
-                                    profileImgPath:
-                                        data!['profileImagePath']))));
-                      },
-                    ),
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      icon: Icon(
-                        Icons.logout,
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        size: 30,
-                      ),
-                      onPressed: () async {
-                        Auth().signOut();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const WidgetTree()));
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 2,
-        ),
-      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -170,16 +41,23 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).secondaryBackground,
+              color: FlutterFlowTheme.of(context).backgroundPrimaryColor,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                     width: double.infinity,
-                    height: 250,
+                    height: 200,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryColor,
+                      color: FlutterFlowTheme.of(context).tertiaryColor,
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 12,
+                          color: Color(0x14000000),
+                          offset: Offset(0, 5),
+                        )
+                      ],
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(155),
                         bottomRight: Radius.circular(0),
@@ -203,54 +81,129 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                             } //mappatura dei dati
                           });
                           if (data != null) {
-                            return Column(
-                              //Widget che viene ritornato con i dati caricati
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 15, 0, 0),
-                                  child: Container(
-                                    width: 150,
-                                    height: 150,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: data['profileImagePath'] != ''
-                                        ? Image.network(
-                                            data['profileImagePath'],
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Image.asset(
-                                            'assets/images/add_photo.png',
-                                            fit: BoxFit.cover,
-                                          ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      15, 10, 0, 0),
-                                  child: SelectionArea(
-                                      child: Text(
-                                    '${'Salve, ' + data['name']}!',
-                                    textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'IBM Plex Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          fontSize: 30,
+                            return Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    70, 0, 0, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 20, 0, 0),
+                                      child: Container(
+                                        width: 150,
+                                        height: 150,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
                                         ),
-                                  )),
-                                ),
-                              ],
-                            );
+                                        child: data['profileImagePath'] != ''
+                                            ? Image.network(
+                                                data['profileImagePath'],
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/add_photo.png',
+                                                fit: BoxFit.cover,
+                                              ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                        child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(20, 40, 5, 10),
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            0, 0, 5, 0),
+                                                    child: SelectionArea(
+                                                        child: Text(
+                                                      data['name'] +
+                                                          ' ' +
+                                                          data['lastname'],
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .title2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    )),
+                                                  ),
+                                                  SelectionArea(
+                                                      child: Text(
+                                                    'Caregiver',
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w200,
+                                                        ),
+                                                  )),
+                                                  Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 0, 5, 0),
+                                                      child: SelectionArea(
+                                                          child: Text(
+                                                        data['email'],
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w200,
+                                                                ),
+                                                      ))),
+                                                ],
+                                              ),
+                                            ))),
+                                  ],
+                                ));
                           }
                         }
-                        return Text(
-                            ''); //se non ci sono ancora dati, mostra un testo di caricamento.
+                        return const Scaffold(
+                            body: Center(
+                                child:
+                                    CircularProgressIndicator())); //se non ci sono ancora dati, mostra un testo di caricamento.
                       },
                     )),
                 Expanded(
@@ -263,21 +216,23 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                10, 5, 0, 0),
+                                20, 20, 0, 0),
                             child: SelectionArea(
                                 child: Text(
-                              'Pazienti:',
+                              'Pazienti',
+                              textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
-                                  .bodyText1
+                                  .bodyText2
                                   .override(
                                     fontFamily: 'IBM Plex Sans',
-                                    fontWeight: FontWeight.normal,
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.w300,
                                   ),
                             )),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 10, 0, 0),
+                                20, 10, 20, 0),
                             child: StreamBuilder(
                                 stream: FirebaseFirestore.instance
                                     .collection('user')
@@ -331,21 +286,21 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                             in data) //iterazione sui pazienti della lista per creare i diversi widget
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(10, 0, 10, 10),
+                                                .fromSTEB(0, 0, 0, 15),
                                             child: Container(
                                               width: double.infinity,
-                                              height: 80,
+                                              height: 130,
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 boxShadow: const [
                                                   BoxShadow(
-                                                    blurRadius: 4,
-                                                    color: Color(0x76000000),
-                                                    offset: Offset(0, 2),
+                                                    blurRadius: 12,
+                                                    color: Color(0x14000000),
+                                                    offset: Offset(0, 5),
                                                   )
                                                 ],
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(30),
                                               ),
                                               child: Padding(
                                                 padding:
@@ -406,7 +361,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                         padding:
                                                             const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                12, 0, 0, 0),
+                                                                25, 30, 0, 0),
                                                         child: Column(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -440,9 +395,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                           color:
                                                                               const Color(0xFF101213),
                                                                           fontSize:
-                                                                              18,
+                                                                              25,
                                                                           fontWeight:
-                                                                              FontWeight.w500,
+                                                                              FontWeight.w300,
                                                                         ),
                                                                   ),
                                                                 ),
@@ -465,16 +420,14 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                       .toString())),
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyText2
+                                                                      .bodyText1
                                                                       .override(
                                                                         fontFamily:
-                                                                            'Outfit',
-                                                                        color: const Color(
-                                                                            0xFF57636C),
+                                                                            'IBM Plex Sans',
                                                                         fontSize:
-                                                                            14,
+                                                                            18,
                                                                         fontWeight:
-                                                                            FontWeight.normal,
+                                                                            FontWeight.w300,
                                                                       ),
                                                                 ),
                                                               ),
@@ -491,7 +444,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                       ],
                                     );
                                   }
-                                  return Text('');
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
                                 }),
                           )
                         ],
@@ -502,7 +457,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                 Align(
                   alignment: const AlignmentDirectional(-0.35, 0),
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -533,7 +488,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                 color: Color(0x00101213),
                                 width: 1,
                               ),
-                              borderRadius: 8,
+                              borderRadius: 30,
                             ),
                           ),
                         ),

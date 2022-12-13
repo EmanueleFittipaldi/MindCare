@@ -3,9 +3,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../paziente/home_paziente.dart';
-import '../login.dart';
-
 class CustomDialogNoTentativi extends StatefulWidget {
   const CustomDialogNoTentativi({Key? key}) : super(key: key);
 

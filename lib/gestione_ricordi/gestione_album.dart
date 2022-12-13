@@ -1,13 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
-import 'package:mindcare/auth.dart';
-import 'package:mindcare/confirm_dialog.dart';
-import 'package:mindcare/flutter_flow/flutter_flow_widgets.dart';
+import 'package:mindcare/controller/album_controller.dart';
+import 'package:mindcare/controller/auth.dart';
+import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/gestione_ricordi/creazione_ricordo.dart';
-import 'package:mindcare/gestione_ricordi/ricordo.dart';
-import 'package:mindcare/utente.dart';
+import 'package:mindcare/model/ricordo.dart';
+import 'package:mindcare/model/utente.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
@@ -23,26 +21,6 @@ class GestioneAlbumWidget extends StatefulWidget {
 class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  //funzione per eliminare un paziente e la sua immagine salvate nello storage
-  Future<void> deleteMemory(memoryID, filePath) async {
-    var user = FirebaseFirestore.instance.collection('user');
-    var docSnapshot = user
-        .doc(Auth().currentUser?.uid)
-        .collection('Pazienti')
-        .doc(widget.user.userID)
-        .collection('Ricordi')
-        .doc(memoryID); //riferimento al documento da eliminare
-    await FirebaseFirestore.instance
-        .runTransaction((Transaction deleteTransaction) async {
-      deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione
-    });
-    if (filePath != '') {
-      await FirebaseStorage.instance
-          .refFromURL(filePath)
-          .delete(); //eliminazione immagine
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +28,9 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
-        child: AppbarcaregiverWidget(),
+        child: AppbarWidget(
+          title: 'Album ricordi',
+        ),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -173,7 +153,6 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                           builder: (context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
                               var data = [];
-                              var count = 0;
                               snapshot.data?.docs.forEach((doc) {
                                 //iterazione sui singoli documenti
                                 Map<String, dynamic>? memoryMap =
@@ -357,9 +336,17 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                                               );
                                                             });
                                                     if (confirmDialogResponse) {
-                                                      deleteMemory(
-                                                          data[i]['ricordoID'],
-                                                          data[i]['filePath']);
+                                                      AlbumController()
+                                                          .deleteMemory(
+                                                              widget
+                                                                  .user.userID,
+                                                              Auth()
+                                                                  .currentUser
+                                                                  ?.uid,
+                                                              data[i]
+                                                                  ['ricordoID'],
+                                                              data[i]
+                                                                  ['filePath']);
                                                     }
                                                   },
                                                 ),
@@ -395,7 +382,8 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                         ]));
                               }
                             }
-                            return Text('Loading...');
+                            return const Center(
+                                child: CircularProgressIndicator());
                           },
                         )),
                   ],

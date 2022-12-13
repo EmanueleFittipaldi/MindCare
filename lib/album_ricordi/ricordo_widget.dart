@@ -1,6 +1,6 @@
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mindcare/appbar/appbar_paziente.dart';
-import 'package:mindcare/gestione_ricordi/ricordo.dart';
+import 'package:mindcare/appbar/appbar_caregiver.dart';
+import 'package:mindcare/model/ricordo.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_video_player.dart';
@@ -27,7 +27,7 @@ class _RicordoWidgetState extends State<RicordoWidget> {
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
-        child: AppbarWidget(),
+        child: AppbarWidget(title: 'Ricordo'),
       ),
       body: SafeArea(
         child: GestureDetector(

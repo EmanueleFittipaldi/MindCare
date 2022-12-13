@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mindcare/album_ricordi/ricordo_widget.dart';
-import 'package:mindcare/auth.dart';
+import 'package:mindcare/controller/auth.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timeline_list/timeline.dart';
 // ignore: depend_on_referenced_packages
@@ -11,7 +11,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../gestione_ricordi/ricordo.dart';
+import '../model/ricordo.dart';
 
 class TimelinePage extends StatefulWidget {
   final String caregiverUID;

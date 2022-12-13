@@ -7,8 +7,8 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../auth.dart';
-import '../utente.dart';
+import '../controller/auth.dart';
+import '../model/utente.dart';
 
 class DatiPazienteWidget extends StatefulWidget {
   final Utente user;
@@ -78,7 +78,9 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
-        child: AppbarcaregiverWidget(),
+        child: AppbarWidget(
+          title: 'Informazioni',
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

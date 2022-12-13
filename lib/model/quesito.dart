@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../auth.dart';
-import '../utente.dart';
+import '../controller/auth.dart';
+import 'utente.dart';
 
 class Quesito {
   final String quesitoID;
