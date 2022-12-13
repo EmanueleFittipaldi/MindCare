@@ -86,6 +86,10 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
   }
 
   Future<void> modificaDati() async {
+
+    DateTime convertedDateTime = DateTime.parse(textcontrollerData!.text);
+    Timestamp convertedDateTimeStamp = Timestamp.fromDate(convertedDateTime);
+
     var collection = FirebaseFirestore.instance.collection("user");
     collection
         .doc(widget.caregiverUID)
@@ -94,7 +98,7 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
         .update({
       'name': textController1?.text.toString(),
       'lastname': textController2?.text.toString(),
-      'dateOfBirth': textcontrollerData?.text.toString(),
+      'dateOfBirth': convertedDateTimeStamp,
       'email': textController3?.text.toString(),
     });
   }
