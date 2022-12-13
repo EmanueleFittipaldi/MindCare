@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/caregiver/home_caregiver.dart';
+import 'package:mindcare/init_homepage.dart';
 import 'package:mindcare/paziente/home_paziente.dart';
+import 'package:mindcare/model/utente.dart';
 
-import 'auth.dart';
-import 'login.dart';
+import 'controller/auth.dart';
+import '../autenticazione/login.dart';
 import 'package:flutter/material.dart';
 
 class WidgetTree extends StatefulWidget {
@@ -15,6 +17,8 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
+  Utente? userLogged;
+  String? caregiverUID;
   Future<String> checkUser() async {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('user')
@@ -23,9 +27,18 @@ class _WidgetTreeState extends State<WidgetTree> {
     for (var i = 0; i < snapshot.docs.length; i++) {
       var caregiverMap = snapshot.docs[i].data() as Map<String, dynamic>?;
       if (caregiverMap!['userID'] == Auth().currentUser!.uid) {
+        userLogged = Utente(
+            userID: caregiverMap['userID'],
+            name: caregiverMap['name'],
+            lastname: caregiverMap['lastname'],
+            email: caregiverMap['email'],
+            type: caregiverMap['type'],
+            date: (caregiverMap['dateOfBirth'] as Timestamp).toDate(),
+            profileImgPath: caregiverMap['profileImagePath']);
         //verifico se il campo userID è uguale a quello loggato
         return caregiverMap['type']; //allora è il caregiver
       } else {
+        print('Sto in paziente');
         //altrimenti ciclo sui pazienti del caregiver
         QuerySnapshot snapshotPat = await FirebaseFirestore.instance
             .collection('user')
@@ -35,6 +48,16 @@ class _WidgetTreeState extends State<WidgetTree> {
         for (var j = 0; j < snapshotPat.docs.length; j++) {
           var patientMap = snapshotPat.docs[j].data() as Map<String, dynamic>?;
           if (patientMap!['userID'] == Auth().currentUser!.uid) {
+            caregiverUID = caregiverMap['userID'];
+            userLogged = Utente(
+                userID: patientMap['userID'],
+                name: patientMap['name'],
+                lastname: patientMap['lastname'],
+                email: patientMap['email'],
+                type: patientMap['type'],
+                date: (patientMap['dateOfBirth'] as Timestamp).toDate(),
+                profileImgPath: patientMap['profileImagePath']);
+
             //se l'userID nel documento dei pazienti è uguale a quello loggato
             return patientMap['type']; //è il paziente e ritorna il tipo
           }
@@ -99,12 +122,12 @@ class _WidgetTreeState extends State<WidgetTree> {
                   var type = snapshot.data;
                   if (type == 'Caregiver') {
                     if (Auth().currentUser!.emailVerified) {
-                      return const HomeCaregiverWidget();
+                      return InitHomepage(user: userLogged!, carUID: null);
                     } else {
                       DateTime? date =
                           Auth().currentUser!.metadata.creationTime;
                       DateTime dateNow = DateTime.now();
-                      if (dateNow.difference(date!).inMicroseconds > 2) {
+                      if (dateNow.difference(date!).inHours > 24) {
                         Fluttertoast.showToast(
                             msg: 'Verifica scaduta, account cancellato!');
                         deleteUserDB(type!);
@@ -118,12 +141,13 @@ class _WidgetTreeState extends State<WidgetTree> {
                   } else if (type == 'Paziente') {
                     // DA NON ELIMINARE -> server per verificare che il paziente ha verifica l'email, ma da limare alcuni dettagli
                     if (Auth().currentUser!.emailVerified) {
-                      return const HomePazienteWidget();
+                      return InitHomepage(
+                          user: userLogged!, carUID: caregiverUID!);
                     } else {
                       DateTime? date =
                           Auth().currentUser!.metadata.creationTime;
                       DateTime dateNow = DateTime.now();
-                      if (dateNow.difference(date!).inMicroseconds > 2) {
+                      if (dateNow.difference(date!).inHours > 24) {
                         Fluttertoast.showToast(
                             msg: 'Verifica scaduta, account cancellato!');
                         deleteUserDB(type!);
@@ -139,6 +163,7 @@ class _WidgetTreeState extends State<WidgetTree> {
                     return const LoginWidget();
                   }
                 } else {
+                  print('sto aspettando i dati');
                   return const Scaffold(
                       body: Center(child: CircularProgressIndicator()));
                 }

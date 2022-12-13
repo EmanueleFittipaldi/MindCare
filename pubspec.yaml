@@ -46,8 +46,10 @@ dependencies:
   video_thumbnail: ^0.5.3
   path_provider: ^2.0.11
   text_to_speech: ^0.2.3
+  syncfusion_flutter_charts: ^20.3.59
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  percent_indicator: 4.2.2
   
 dev_dependencies:
   flutter_test:

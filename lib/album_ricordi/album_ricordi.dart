@@ -1,6 +1,6 @@
 import 'package:mindcare/album_ricordi/timeline.dart';
-import 'package:mindcare/appbar/appbar_paziente.dart';
-import 'package:mindcare/utente.dart';
+import 'package:mindcare/appbar/appbar_caregiver.dart';
+import 'package:mindcare/model/utente.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -24,9 +24,8 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
       key: scaffoldKey,
       backgroundColor: const Color.fromARGB(255, 250, 250, 250),
       appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: AppbarWidget(),
-      ),
+          preferredSize: Size.fromHeight(70),
+          child: AppbarWidget(title: 'I miei ricordi')),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),

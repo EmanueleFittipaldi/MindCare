@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/widget_tree.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -10,10 +11,10 @@ import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import '../auth.dart';
-import '../login.dart';
+import '../controller/auth.dart';
+import '../autenticazione/login.dart';
 
-import '../utente.dart';
+import '../model/utente.dart';
 
 class OpzioniPazienteWidget extends StatefulWidget {
   final Utente user;
@@ -86,7 +87,6 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
   }
 
   Future<void> modificaDati() async {
-
     DateTime convertedDateTime = DateTime.parse(textcontrollerData!.text);
     Timestamp convertedDateTimeStamp = Timestamp.fromDate(convertedDateTime);
 
@@ -733,8 +733,9 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
               child: FFButtonWidget(
                 onPressed: () async {
+                  Auth().signOut();
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LoginWidget()));
+                      builder: (context) => const WidgetTree()));
                 },
                 text: 'Esci',
                 options: FFButtonOptions(

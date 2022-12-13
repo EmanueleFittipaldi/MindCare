@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mindcare/init_homepage.dart';
+import 'package:mindcare/widget_tree.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../paziente/home_paziente.dart';
@@ -62,7 +64,7 @@ class _CustomDialogTerminatoState extends State<CustomDialogTerminato> {
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                            builder: (context) => const HomePazienteWidget()),
+                            builder: (context) => const WidgetTree()),
                         (Route<dynamic> route) => false);
                   },
                   text: 'Fine!',
