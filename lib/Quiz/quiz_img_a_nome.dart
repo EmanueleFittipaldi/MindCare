@@ -1,19 +1,22 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:mindcare/Quiz/fine_quiz.dart';
+import 'package:mindcare/autenticazione/login.dart';
 import 'package:mindcare/dialog/confirm_dialog.dart';
+import 'package:mindcare/model/report.dart';
+
+import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/quiz/alert_hint.dart';
 import 'package:mindcare/quiz/alert_risposta.dart';
 import 'package:mindcare/quiz/no_piu_tentativi.dart';
-import 'package:mindcare/model/report.dart';
+
 import 'package:mindcare/quiz/risposta_corretta.dart';
 import 'package:mindcare/quiz/risposta_sbagliata.dart';
-import '../model/utente.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import '../autenticazione/login.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ImmagineANomeWidget extends StatefulWidget {
@@ -274,16 +277,18 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       Se invece ho risposto no che non voglio vedere la risposta allora semplicemente resetto il timer
       ribuildando il widget con setstate.  */
 
-      timer = Timer(const Duration(seconds: 10), () async {
+      timer = Timer(
+          Duration(seconds: widget.quesiti[indexQuesito]['tempoRisposta']),
+          () async {
         var risposta = await showDialog(
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               //return AlertHint(); //suggerimento
-              return const ConfirmDialog(
-                  title: 'Visualizza risposta',
+              return ConfirmDialog(
+                  title: 'Mmm',
                   description:
-                      'Mmm sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?',
+                      'sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?',
                   textOptionDelete: 'No',
                   textOptionConfirm: 'Si');
             });
@@ -308,7 +313,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
+        preferredSize: Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
@@ -323,7 +328,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   borderRadius: 30,
                   borderWidth: 1,
                   buttonSize: 60,
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.keyboard_arrow_left,
                     color: Color(0xFFEBF9FF),
                     size: 30,
@@ -345,7 +350,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                   child: Text(
                     'MindCare',
                     style: FlutterFlowTheme.of(context).title2.override(
@@ -392,7 +397,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
             child: Container(
               width: double.infinity,
               height: double.infinity,
@@ -405,14 +410,14 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
                     child: Container(
                       width: 100,
                       height: 200,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
                         boxShadow: [
-                          const BoxShadow(
+                          BoxShadow(
                             blurRadius: 4,
                             color: Color(0x76000000),
                             offset: Offset(0, 2),
@@ -426,8 +431,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                10, 2, 10, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 2, 10, 0),
                             child: SelectionArea(
                                 child: Text(
                               quesito['domanda'],
@@ -449,12 +454,10 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
                       child: GridView(
                         padding: EdgeInsets.zero,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
@@ -472,7 +475,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                 quesito['opzione1'],
                                 width: 100,
                                 height: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -488,7 +491,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                 quesito['opzione2'],
                                 width: 100,
                                 height: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -502,7 +505,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                 quesito['opzione3'],
                                 width: 100,
                                 height: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -516,7 +519,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                 quesito['opzione4'],
                                 width: 100,
                                 height: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),

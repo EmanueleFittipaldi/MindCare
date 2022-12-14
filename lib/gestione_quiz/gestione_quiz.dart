@@ -485,7 +485,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                                                 domandaImmagine: item['domandaImmagine'],
                                                                                 risposta: item['risposta'],
                                                                                 categoria: item['categoria'],
-                                                                                tipologia: item['tipologia']),
+                                                                                tipologia: item['tipologia'],
+                                                                                tempoRisposta: item['tempoRisposta']),
                                                                           )));
                                                         } else {
                                                           Navigator.of(context).push(
@@ -509,7 +510,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                                                 domandaImmagine: item['domandaImmagine'],
                                                                                 risposta: item['risposta'],
                                                                                 categoria: item['categoria'],
-                                                                                tipologia: item['tipologia']),
+                                                                                tipologia: item['tipologia'],
+                                                                                tempoRisposta: item['tempoRisposta']),
                                                                           )));
                                                         }
                                                       },

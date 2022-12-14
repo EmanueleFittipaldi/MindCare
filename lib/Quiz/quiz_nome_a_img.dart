@@ -274,13 +274,15 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
       Se invece ho risposto no che non voglio vedere la risposta allora semplicemente resetto il timer
       ribuildando il widget con setstate.  */
 
-      timer = Timer(const Duration(seconds: 10), () async {
+      timer = Timer(
+          Duration(seconds: widget.quesiti[indexQuesito]['tempoRisposta']),
+          () async {
         var risposta = await showDialog(
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               //return AlertHint(); //suggerimento
-              return ConfirmDialog(
+              return const ConfirmDialog(
                   title: 'Mmm',
                   description:
                       'sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?',
