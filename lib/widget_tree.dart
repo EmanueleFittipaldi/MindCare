@@ -24,11 +24,10 @@ class _WidgetTreeState extends State<WidgetTree> {
 
   Future<String> checkUser() async {
     print("Controllo l'user");
-    bool isLoggedWithBiometrics = await checkBiometrics();
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('user')
         .get(); //ottenimento di tutti i documenti nella collezione user
-
+    bool isLoggedWithBiometrics = await checkBiometrics();
     for (var i = 0; i < snapshot.docs.length; i++) {
       var caregiverMap = snapshot.docs[i].data() as Map<String, dynamic>?;
       if (caregiverMap!['userID'] == Auth().currentUser!.uid) {
@@ -59,20 +58,6 @@ class _WidgetTreeState extends State<WidgetTree> {
       bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
       bool isAuthenticated = false;
       final List<BiometricType> availableBiometrics = await _localAuthentication.getAvailableBiometrics();
-      if (availableBiometrics.isEmpty)
-        print("la lista di biometria è vuota");
-      else
-        print("la lista è piena" + availableBiometrics.toString());
-      if (availableBiometrics.contains(BiometricType.weak))
-        print("face disponibile [weak]");
-        else
-        print("non trovo face");
-      if (availableBiometrics.contains(BiometricType.strong))
-        print("fingerprint disponibile [strong]");
-      else
-        print("non trovo fingerprint");
-      print("isAuthenticated " + isAuthenticated.toString());
-      print("cancheckBiometrics " + canCheckBiometrics.toString());
       if (isBiometricSupported && canCheckBiometrics) {
       try {
         isAuthenticated = await _localAuthentication.authenticate(
@@ -81,7 +66,6 @@ class _WidgetTreeState extends State<WidgetTree> {
             useErrorDialogs: true,
             biometricOnly: true,
             stickyAuth: true));
-        print("ho finito isAuthenticated");
       } on PlatformException catch (e) {
         print("stampo l'errore " +  e.toString());
       }
