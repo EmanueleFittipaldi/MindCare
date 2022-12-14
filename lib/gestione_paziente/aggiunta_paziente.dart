@@ -3,11 +3,12 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mindcare/auth.dart';
+import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/caregiver/home_caregiver.dart';
+import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_util.dart';
-import 'package:mindcare/image_upload.dart';
-import 'package:mindcare/utente.dart';
+import 'package:mindcare/controller/image_upload.dart';
+import 'package:mindcare/model/utente.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -81,22 +82,6 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
       }
     }
     return password;
-  }
-
-  String generateRandomString(int len) {
-    var r = Random();
-    const _chars = '1234567890';
-    return List.generate(len, (index) => _chars[r.nextInt(_chars.length)])
-        .join();
-  }
-
-  Future<String?> createNewPatientAccount() async {
-    try {
-      return await Auth().createNewPatientAccount(
-          email: controllerUsername!.text, password: controllerPassword!.text);
-    } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: "Problema con la creazione dell'account!");
-    }
   }
 
   @override
@@ -630,7 +615,12 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                                         imagePickedPath);
                                               }
                                               final patientUID =
-                                                  await createNewPatientAccount();
+                                                  await UserController()
+                                                      .createNewPatientAccount(
+                                                          controllerUsername!
+                                                              .text,
+                                                          controllerPassword!
+                                                              .text);
                                               if (patientUID != null) {
                                                 final user = Utente(
                                                     userID: patientUID,

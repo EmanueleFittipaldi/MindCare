@@ -35,7 +35,7 @@ class Report {
         'categoria': categoria
       };
 
-  static fromJson(Map<String, dynamic> json) => Report(
+  static Report fromJson(Map<String, dynamic> json) => Report(
       mappaRisposte: json['mappaRisposte'],
       tempoImpiegato: json['tempoImpiegato'],
       dataInizio: json['dataInizio'],

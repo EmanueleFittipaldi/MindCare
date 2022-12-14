@@ -1,9 +1,9 @@
-import 'package:mindcare/login.dart';
+import '../autenticazione/login.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
-import '../auth.dart';
+import '../controller/auth.dart';
 import '../widget_tree.dart';
 
 class AppbarWidget extends StatelessWidget {
@@ -56,8 +56,8 @@ class AppbarWidget extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () async {
-                 Auth().signOut();
-                  Navigator.of(context).push(MaterialPageRoute(
+                Auth().signOut();
+                Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const WidgetTree()));
               },
             ),

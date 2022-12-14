@@ -1,12 +1,12 @@
-import 'package:mindcare/password_dimenticata.dart';
-import 'package:mindcare/registrazione.dart';
+import 'package:mindcare/autenticazione/password_dimenticata.dart';
+import 'package:mindcare/autenticazione/registrazione.dart';
 import 'package:mindcare/widget_tree.dart';
 
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'auth.dart';
+import '../controller/auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -77,7 +77,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+      backgroundColor: FlutterFlowTheme.of(context).backgroundPrimaryColor,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -85,7 +85,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).tertiaryColor,
+              color: FlutterFlowTheme.of(context).backgroundPrimaryColor,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -132,7 +132,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                     width: 100,
                     height: 320,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).tertiaryColor,
+                      color:
+                          FlutterFlowTheme.of(context).backgroundPrimaryColor,
                       image: DecorationImage(
                         fit: BoxFit.contain,
                         image: Image.asset(
@@ -153,7 +154,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(30, 0, 30, 0),
                           child: TextFormField(
                             controller: _controllerEmail,
                             autofocus: true,
@@ -203,8 +204,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               filled: true,
-                              fillColor:
-                                  FlutterFlowTheme.of(context).tertiaryColor,
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .backgroundPrimaryColor,
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -219,7 +220,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
+                              EdgeInsetsDirectional.fromSTEB(30, 30, 30, 0),
                           child: TextFormField(
                             controller: _controllerPassword,
                             autofocus: true,
@@ -313,9 +314,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                             },
                             text: 'Password dimenticata?',
                             options: FFButtonOptions(
+                              elevation: 0,
                               width: 270,
                               height: 40,
-                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              color: FlutterFlowTheme.of(context)
+                                  .backgroundPrimaryColor,
                               textStyle: FlutterFlowTheme.of(context)
                                   .subtitle2
                                   .override(
@@ -325,8 +328,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     fontWeight: FontWeight.w200,
                                   ),
                               borderSide: BorderSide(
-                                color: Color.fromARGB(255, 255, 254, 254),
-                                width: 1,
+                                color: Color.fromARGB(0, 255, 255, 255),
+                                width: 0,
                               ),
                               borderRadius: 8,
                             ),
@@ -334,7 +337,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 15, 15, 0),
+                              EdgeInsetsDirectional.fromSTEB(30, 15, 30, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -362,7 +365,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             .primaryBackground,
                                         width: 0,
                                       ),
-                                      borderRadius: 8,
+                                      borderRadius: 30,
                                     ),
                                   ),
                                 ),
@@ -396,7 +399,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             .primaryBackground,
                                         width: 0,
                                       ),
-                                      borderRadius: 8,
+                                      borderRadius: 30,
                                     ),
                                   ),
                                 ),

@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
-import 'package:mindcare/confirm_dialog.dart';
+import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/gestione_quiz/domanda_img_a_nome.dart';
 import 'package:mindcare/gestione_quiz/domanda_nome_a_img.dart';
-import 'package:mindcare/gestione_quiz/quesito.dart';
-import '../auth.dart';
+import 'package:mindcare/model/quesito.dart';
+import '../controller/auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
-import '../utente.dart';
+import '../model/utente.dart';
 
 class GestionQuizWidget extends StatefulWidget {
   final Utente user;
@@ -32,7 +32,9 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
-        child: AppbarcaregiverWidget(),
+        child: AppbarWidget(
+          title: 'Quiz',
+        ),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),

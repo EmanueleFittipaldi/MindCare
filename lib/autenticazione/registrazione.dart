@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mindcare/image_upload.dart';
-import 'package:mindcare/utente.dart';
+import 'package:mindcare/controller/image_upload.dart';
+import 'package:mindcare/controller/user_controller.dart';
+import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/widget_tree.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import '../../flutter_flow/flutter_flow_icon_button.dart';
+import '../../flutter_flow/flutter_flow_theme.dart';
+import '../../flutter_flow/flutter_flow_util.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'auth.dart';
-import 'main.dart';
+import '../controller/auth.dart';
+import '../main.dart';
 
 class RegistrazioneWidget extends StatefulWidget {
   const RegistrazioneWidget({Key? key}) : super(key: key);
@@ -41,15 +42,6 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
   final TextEditingController _controllerNome = new TextEditingController();
   final TextEditingController _controllerCognome = new TextEditingController();
   final TextEditingController _controllerDate = new TextEditingController();
-
-  Future<void> createNewAccount() async {
-    try {
-      await Auth().createNewAccount(
-          email: _controllerEmail.text, password: _controllerPassword.text);
-    } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: "qualcosa è andato storto");
-    }
-  }
 
   @override
   void initState() {
@@ -773,7 +765,10 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                             datePicked != null) {
                                           //qui dentro ci va il codice di dopo
                                           //significa che tutti i campi sono stati compilati e corretti
-                                          await createNewAccount();
+                                          await UserController()
+                                              .createNewAccount(
+                                                  _controllerEmail.text,
+                                                  _controllerPassword.text);
                                           final currentUser =
                                               Auth().currentUser;
                                           var imageUrl;

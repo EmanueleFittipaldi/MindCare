@@ -1,18 +1,18 @@
-import 'dart:collection';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mindcare/gestione_quiz/quesito.dart';
+import 'package:mindcare/controller/quiz_controller.dart';
+import 'package:mindcare/model/quesito.dart';
 import 'package:mindcare/quiz/quiz_img_a_nome.dart';
 import 'package:mindcare/quiz/quiz_nome_a_img.dart';
 
+import '../appbar/appbar_caregiver.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../gestione_quiz/domanda_nome_a_img.dart';
-import '../login.dart';
-import '../utente.dart';
+import '../autenticazione/login.dart';
+import '../model/utente.dart';
 
 class SelezionaTipologiaWidget extends StatefulWidget {
   final String categoria;
@@ -33,99 +33,16 @@ class SelezionaTipologiaWidget extends StatefulWidget {
 class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  /*
-  Funzione che permette di reperire tutti i quesiti di un determinato paziente
-  specificando una categoria ed una tipologia. 
-  */
-  getQuesiti(String categoria, String tipologia, String userID,
-      String caregiverID) async {
-    CollectionReference _collectionRef = FirebaseFirestore.instance
-        .collection('user')
-        .doc(caregiverID)
-        .collection('Pazienti')
-        .doc(userID)
-        .collection('Quesiti');
-
-    QuerySnapshot QueryCategoria = await _collectionRef
-        .where('tipologia', isEqualTo: tipologia)
-        .where('categoria', isEqualTo: categoria)
-        .get();
-
-    /*
-    Quello che viene ritornato è una lista di documenti, dove ogni documento
-    è una domanda della categoria e tipologia selezionata.
-    */
-    var result = [];
-    for (var v in QueryCategoria.docs) {
-      (result.add(v.data()));
-    }
-    return result;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: const Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Color(0xFFEBF9FF),
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                  child: Text(
-                    'MindCare',
-                    style: FlutterFlowTheme.of(context).title2.override(
-                          fontFamily: 'IBM Plex Sans',
-                          color: Colors.white,
-                          fontSize: 22,
-                        ),
-                  ),
-                ),
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: Icon(
-                    Icons.logout,
-                    color: FlutterFlowTheme.of(context).tertiaryColor,
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const LoginWidget()));
-                  },
-                ),
-              ],
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 2,
-        ),
-      ),
+      appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: AppbarWidget(
+            title: 'Seleziona tipologia',
+          )),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -225,11 +142,12 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                      l'utente corrente e il "timestamp" di inizio quiz.
                                   */
                                   onPressed: () async {
-                                    List<dynamic> quesiti = await getQuesiti(
-                                        widget.categoria,
-                                        'Associa l\'immagine al nome',
-                                        widget.user.userID,
-                                        widget.caregiverID);
+                                    List<dynamic> quesiti =
+                                        await QuizController().getQuesiti(
+                                            widget.categoria,
+                                            'Associa l\'immagine al nome',
+                                            widget.user.userID,
+                                            widget.caregiverID);
                                     if (quesiti.isEmpty) {
                                       Fluttertoast.showToast(
                                           msg: 'Non ci sono domande!');
@@ -338,11 +256,12 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                      l'utente corrente e il "timestamp" di inizio quiz.
                                   */
                                   onPressed: () async {
-                                    List<dynamic> quesiti = await getQuesiti(
-                                        widget.categoria,
-                                        'Associa il nome all\'immagine',
-                                        widget.user.userID,
-                                        widget.caregiverID);
+                                    List<dynamic> quesiti =
+                                        await QuizController().getQuesiti(
+                                            widget.categoria,
+                                            'Associa il nome all\'immagine',
+                                            widget.user.userID,
+                                            widget.caregiverID);
                                     if (quesiti.isEmpty) {
                                       Fluttertoast.showToast(
                                           msg: 'Non ci sono domande!');

@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/fine_quiz.dart';
-import 'package:mindcare/confirm_dialog.dart';
-import 'package:mindcare/login.dart';
+import 'package:mindcare/dialog/confirm_dialog.dart';
+import '../autenticazione/login.dart';
 import 'package:mindcare/quiz/no_piu_tentativi.dart';
-import 'package:mindcare/quiz/report.dart';
+import 'package:mindcare/model/report.dart';
 import 'package:mindcare/quiz/risposta_corretta.dart';
 import 'package:mindcare/quiz/risposta_sbagliata.dart';
-import 'package:mindcare/utente.dart';
+import '../model/utente.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';

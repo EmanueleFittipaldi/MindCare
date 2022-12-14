@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mindcare/auth.dart';
+import 'package:mindcare/controller/auth.dart';
 
 class Utente {
   final String userID;
@@ -41,7 +39,9 @@ class Utente {
       );
 
   Future<void> createNewUser() async {
-    final docUser = FirebaseFirestore.instance.collection('user').doc(Auth().currentUser?.uid);
+    final docUser = FirebaseFirestore.instance
+        .collection('user')
+        .doc(Auth().currentUser?.uid);
     final json = toJson();
     await docUser.set(json);
   }
@@ -55,5 +55,4 @@ class Utente {
         .doc(json['userID']);
     await docUser.set(json);
   }
-
 }
