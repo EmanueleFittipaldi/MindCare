@@ -28,7 +28,7 @@ class _WidgetTreeState extends State<WidgetTree> {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('user')
         .get(); //ottenimento di tutti i documenti nella collezione user
-    bool isLoggedWithBiometrics = await checkBiometrics();
+    bool isLoggedWithBiometrics;
     for (var i = 0; i < snapshot.docs.length; i++) {
       var caregiverMap = snapshot.docs[i].data() as Map<String, dynamic>?;
       if (caregiverMap!['userID'] == Auth().currentUser!.uid) {
@@ -39,8 +39,18 @@ class _WidgetTreeState extends State<WidgetTree> {
             email: caregiverMap['email'],
             type: caregiverMap['type'],
             date: (caregiverMap['dateOfBirth'] as Timestamp).toDate(),
-            profileImgPath: caregiverMap['profileImagePath']);
+            profileImgPath: caregiverMap['profileImagePath'],
+            checkBiometric: caregiverMap['checkBiometric']);
         //verifico se il campo userID è uguale a quello loggato
+        print("caregiverMap[checkBiometric] " + caregiverMap['checkBiometric'].toString());
+        if(caregiverMap['checkBiometric'] == true){
+          isLoggedWithBiometrics = await checkBiometrics();
+          if(!isLoggedWithBiometrics) {
+                Fluttertoast.showToast(msg: "Identità non riconosciuta");
+                Auth().signOut();
+                return '';
+              }
+        }
         return caregiverMap['type']; //allora è il caregiver
       } else {
         print('Sto in paziente');
@@ -61,9 +71,18 @@ class _WidgetTreeState extends State<WidgetTree> {
                 email: patientMap['email'],
                 type: patientMap['type'],
                 date: (patientMap['dateOfBirth'] as Timestamp).toDate(),
-                profileImgPath: patientMap['profileImagePath']);
+                profileImgPath: patientMap['profileImagePath'],
+                checkBiometric: patientMap['checkBiometric']);
 
             //se l'userID nel documento dei pazienti è uguale a quello loggato
+            if(patientMap['checkBiometric'] == true){
+              isLoggedWithBiometrics = await checkBiometrics();
+              if(!isLoggedWithBiometrics) {
+                Fluttertoast.showToast(msg: "Identità non riconosciuta");
+                Auth().signOut();
+                return '';
+              }
+            }
             return patientMap['type']; //è il paziente e ritorna il tipo
           }
         }

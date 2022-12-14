@@ -103,7 +103,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                       email: data['email'],
                       type: data['type'],
                       date: (data?['dateOfBirth'] as Timestamp).toDate(),
-                      profileImgPath: data['profileImagePath']);
+                      profileImgPath: data['profileImagePath'],
+                      checkBiometric: data['checkBiometric']);
 
                   return Column(
                     mainAxisSize: MainAxisSize.max,
