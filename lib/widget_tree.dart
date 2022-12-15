@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_ios/local_auth_ios.dart';
 import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/init_homepage.dart';
 import 'package:mindcare/paziente/home_paziente.dart';
@@ -9,7 +13,7 @@ import 'controller/auth.dart';
 import '../autenticazione/login.dart';
 import 'package:flutter/material.dart';
 
-class WidgetTree extends StatefulWidget {
+class WidgetTree extends StatefulWidget{
   const WidgetTree({Key? key}) : super(key: key);
 
   @override
@@ -20,10 +24,11 @@ class _WidgetTreeState extends State<WidgetTree> {
   Utente? userLogged;
   String? caregiverUID;
   Future<String> checkUser() async {
+    print("Controllo l'user");
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('user')
         .get(); //ottenimento di tutti i documenti nella collezione user
-
+    bool isLoggedWithBiometrics;
     for (var i = 0; i < snapshot.docs.length; i++) {
       var caregiverMap = snapshot.docs[i].data() as Map<String, dynamic>?;
       if (caregiverMap!['userID'] == Auth().currentUser!.uid) {
@@ -34,8 +39,18 @@ class _WidgetTreeState extends State<WidgetTree> {
             email: caregiverMap['email'],
             type: caregiverMap['type'],
             date: (caregiverMap['dateOfBirth'] as Timestamp).toDate(),
-            profileImgPath: caregiverMap['profileImagePath']);
+            profileImgPath: caregiverMap['profileImagePath'],
+            checkBiometric: caregiverMap['checkBiometric']);
         //verifico se il campo userID è uguale a quello loggato
+        print("caregiverMap[checkBiometric] " + caregiverMap['checkBiometric'].toString());
+        if(caregiverMap['checkBiometric'] == true){
+          isLoggedWithBiometrics = await checkBiometrics();
+          if(!isLoggedWithBiometrics) {
+                Fluttertoast.showToast(msg: "Identità non riconosciuta");
+                Auth().signOut();
+                return '';
+              }
+        }
         return caregiverMap['type']; //allora è il caregiver
       } else {
         print('Sto in paziente');
@@ -56,15 +71,46 @@ class _WidgetTreeState extends State<WidgetTree> {
                 email: patientMap['email'],
                 type: patientMap['type'],
                 date: (patientMap['dateOfBirth'] as Timestamp).toDate(),
-                profileImgPath: patientMap['profileImagePath']);
+                profileImgPath: patientMap['profileImagePath'],
+                checkBiometric: patientMap['checkBiometric']);
 
             //se l'userID nel documento dei pazienti è uguale a quello loggato
+            if(patientMap['checkBiometric'] == true){
+              isLoggedWithBiometrics = await checkBiometrics();
+              if(!isLoggedWithBiometrics) {
+                Fluttertoast.showToast(msg: "Identità non riconosciuta");
+                Auth().signOut();
+                return '';
+              }
+            }
             return patientMap['type']; //è il paziente e ritorna il tipo
           }
         }
       }
     }
     return '';
+  }
+
+  Future <bool> checkBiometrics() async {
+      final LocalAuthentication _localAuthentication = LocalAuthentication();
+      bool isBiometricSupported = await _localAuthentication.isDeviceSupported();
+      bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
+      bool isAuthenticated = false;
+      final List<BiometricType> availableBiometrics = await _localAuthentication.getAvailableBiometrics();
+      if (isBiometricSupported && canCheckBiometrics) {
+      try {
+        isAuthenticated = await _localAuthentication.authenticate(
+          localizedReason: 'Per favore procedi con l\'autentificazione prima di utilizzare l\'applicazione',
+          options: const AuthenticationOptions(
+            useErrorDialogs: true,
+            biometricOnly: true,
+            stickyAuth: true));
+      } on PlatformException catch (e) {
+        print("stampo l'errore " +  e.toString());
+      }
+    }
+    print("isAuthenticated#2 " + isAuthenticated.toString());
+     return isAuthenticated;
   }
 
   Future<void> deleteUserDB(String type) async {

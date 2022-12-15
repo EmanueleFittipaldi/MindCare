@@ -1,11 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mindcare">
 
-     <!-- Permissions options for the `storage` group -->
+    <!-- Permissions options for the `storage` group -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    <!-- Permissions options for the `biometric` group -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 
    <application
         android:label="mindcare"

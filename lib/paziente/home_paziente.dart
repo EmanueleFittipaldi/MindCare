@@ -104,7 +104,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                             (data?['dateOfBirth'] as Timestamp)
                                                 .toDate(),
                                         profileImgPath:
-                                            data['profileImagePath']);
+                                            data['profileImagePath'],
+                                        checkBiometric: data['checkBiometric']);
 
                                     return Padding(
                                       padding:

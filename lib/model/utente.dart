@@ -9,6 +9,7 @@ class Utente {
   final String type;
   final DateTime date;
   final String profileImgPath;
+  bool checkBiometric;
   Utente(
       {required this.userID,
       required this.name,
@@ -16,7 +17,9 @@ class Utente {
       required this.email,
       required this.type,
       required this.date,
-      required this.profileImgPath});
+      required this.profileImgPath,
+      required this.checkBiometric
+      });
 
   Map<String, dynamic> toJson() => {
         'userID': userID,
@@ -25,7 +28,8 @@ class Utente {
         'email': email,
         'type': type,
         'dateOfBirth': date,
-        'profileImagePath': profileImgPath
+        'profileImagePath': profileImgPath,
+        'checkBiometric': checkBiometric
       };
 
   static Utente fromJson(Map<String, dynamic> json) => Utente(
@@ -36,6 +40,7 @@ class Utente {
         type: json['type'],
         date: json['dateOfBirth'],
         profileImgPath: json['profileImagePath'],
+        checkBiometric: json['checkBiometric']
       );
 
   Future<void> createNewUser() async {
