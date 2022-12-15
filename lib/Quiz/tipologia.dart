@@ -4,15 +4,14 @@ import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/quesito.dart';
 import 'package:mindcare/quiz/quiz_img_a_nome.dart';
 import 'package:mindcare/quiz/quiz_nome_a_img.dart';
-
 import '../appbar/appbar_caregiver.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-
 import '../gestione_quiz/domanda_nome_a_img.dart';
 import '../autenticazione/login.dart';
 import '../model/utente.dart';
+import 'dart:math';
 
 class SelezionaTipologiaWidget extends StatefulWidget {
   final String categoria;
@@ -143,7 +142,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   */
                                   onPressed: () async {
                                     List<dynamic> quesiti =
-                                        await QuizController().getQuesiti(
+                                        await QuizController().getRandomQuesiti(
                                             widget.categoria,
                                             'Associa l\'immagine al nome',
                                             widget.user.userID,
@@ -257,7 +256,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   */
                                   onPressed: () async {
                                     List<dynamic> quesiti =
-                                        await QuizController().getQuesiti(
+                                        await QuizController().getRandomQuesiti(
                                             widget.categoria,
                                             'Associa il nome all\'immagine',
                                             widget.user.userID,

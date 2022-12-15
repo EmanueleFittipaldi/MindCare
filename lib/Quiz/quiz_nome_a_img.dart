@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/fine_quiz.dart';
 import 'package:mindcare/dialog/confirm_dialog.dart';
+import 'package:mindcare/model/quesito.dart';
+import 'package:mindcare/quiz/quiz_terminato.dart';
 import '../autenticazione/login.dart';
 import 'package:mindcare/quiz/no_piu_tentativi.dart';
 import 'package:mindcare/model/report.dart';
@@ -249,18 +251,17 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
           precisione: risposteCorretteESbagliate['precisione'],
           reportID: reportID,
           tipologia: 'Associa il nome all\'immagine',
-          categoria: widget.categoria);
+          categoria: widget.categoria,
+          umore: 3);
 
-      report.createReport(widget.caregiverID, widget.user.userID, reportID);
-
-      /*Dopo che il build ha terminato la costruzione dell'UI, mostro la dialog 
-      del quiz terminato*/
-      Future.microtask(() => showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return const CustomDialogTerminato();
-          }));
+      Future.microtask(() => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => QuizTerminatoWidget(
+                  caregiverID: widget.caregiverID,
+                  userID: widget.user.userID,
+                  reportID: reportID,
+                  report: report))));
     } else {
       /*Prelevo il quesito che devo mostrare al video */
       quesito = widget.quesiti[indexQuesito];
@@ -295,10 +296,14 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
               barrierDismissible: false,
               context: context,
               builder: (BuildContext context) {
-                return AlertRisposta(quesito['risposta']);
+                return AlertRisposta(quesito);
               });
           timer!.cancel();
-          setState(() {});
+          setState(() {
+            mappaRisposte[quesito['quesitoID']] = false;
+            indexQuesito += 1;
+            countTentativi = 1;
+          });
         } else {
           timer!.cancel();
           setState(() {});

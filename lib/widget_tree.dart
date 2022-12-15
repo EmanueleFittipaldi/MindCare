@@ -13,7 +13,7 @@ import 'controller/auth.dart';
 import '../autenticazione/login.dart';
 import 'package:flutter/material.dart';
 
-class WidgetTree extends StatefulWidget{
+class WidgetTree extends StatefulWidget {
   const WidgetTree({Key? key}) : super(key: key);
 
   @override
@@ -42,15 +42,16 @@ class _WidgetTreeState extends State<WidgetTree> {
             profileImgPath: caregiverMap['profileImagePath'],
             checkBiometric: caregiverMap['checkBiometric']);
         //verifico se il campo userID è uguale a quello loggato
-        print("caregiverMap[checkBiometric] " + caregiverMap['checkBiometric'].toString());
-        if(caregiverMap['checkBiometric'] == true){
+        print("caregiverMap[checkBiometric] " +
+            caregiverMap['checkBiometric'].toString());
+        /*if(caregiverMap['checkBiometric'] == true){
           isLoggedWithBiometrics = await checkBiometrics();
           if(!isLoggedWithBiometrics) {
                 Fluttertoast.showToast(msg: "Identità non riconosciuta");
                 Auth().signOut();
                 return '';
               }
-        }
+        }*/ //da togliere. Senno non mi fa entrare nell'app
         return caregiverMap['type']; //allora è il caregiver
       } else {
         print('Sto in paziente');
@@ -75,14 +76,14 @@ class _WidgetTreeState extends State<WidgetTree> {
                 checkBiometric: patientMap['checkBiometric']);
 
             //se l'userID nel documento dei pazienti è uguale a quello loggato
-            if(patientMap['checkBiometric'] == true){
+            /*if (patientMap['checkBiometric'] == true) {
               isLoggedWithBiometrics = await checkBiometrics();
-              if(!isLoggedWithBiometrics) {
+              if (!isLoggedWithBiometrics) {
                 Fluttertoast.showToast(msg: "Identità non riconosciuta");
                 Auth().signOut();
                 return '';
               }
-            }
+            }*/ //commento da togliere
             return patientMap['type']; //è il paziente e ritorna il tipo
           }
         }
@@ -91,26 +92,26 @@ class _WidgetTreeState extends State<WidgetTree> {
     return '';
   }
 
-  Future <bool> checkBiometrics() async {
-      final LocalAuthentication _localAuthentication = LocalAuthentication();
-      bool isBiometricSupported = await _localAuthentication.isDeviceSupported();
-      bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
-      bool isAuthenticated = false;
-      final List<BiometricType> availableBiometrics = await _localAuthentication.getAvailableBiometrics();
-      if (isBiometricSupported && canCheckBiometrics) {
+  Future<bool> checkBiometrics() async {
+    final LocalAuthentication _localAuthentication = LocalAuthentication();
+    bool isBiometricSupported = await _localAuthentication.isDeviceSupported();
+    bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
+    bool isAuthenticated = false;
+    final List<BiometricType> availableBiometrics =
+        await _localAuthentication.getAvailableBiometrics();
+    if (isBiometricSupported && canCheckBiometrics) {
       try {
         isAuthenticated = await _localAuthentication.authenticate(
-          localizedReason: 'Per favore procedi con l\'autentificazione prima di utilizzare l\'applicazione',
-          options: const AuthenticationOptions(
-            useErrorDialogs: true,
-            biometricOnly: true,
-            stickyAuth: true));
+            localizedReason:
+                'Per favore procedi con l\'autentificazione prima di utilizzare l\'applicazione',
+            options: const AuthenticationOptions(
+                useErrorDialogs: true, biometricOnly: true, stickyAuth: true));
       } on PlatformException catch (e) {
-        print("stampo l'errore " +  e.toString());
+        print("stampo l'errore " + e.toString());
       }
     }
     print("isAuthenticated#2 " + isAuthenticated.toString());
-     return isAuthenticated;
+    return isAuthenticated;
   }
 
   Future<void> deleteUserDB(String type) async {

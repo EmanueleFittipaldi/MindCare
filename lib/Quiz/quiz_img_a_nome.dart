@@ -4,19 +4,16 @@ import 'package:mindcare/Quiz/fine_quiz.dart';
 import 'package:mindcare/autenticazione/login.dart';
 import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/model/report.dart';
-
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/quiz/alert_hint.dart';
 import 'package:mindcare/quiz/alert_risposta.dart';
 import 'package:mindcare/quiz/no_piu_tentativi.dart';
-
+import 'package:mindcare/quiz/quiz_terminato.dart';
 import 'package:mindcare/quiz/risposta_corretta.dart';
 import 'package:mindcare/quiz/risposta_sbagliata.dart';
-
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ImmagineANomeWidget extends StatefulWidget {
@@ -248,22 +245,22 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
           mappaRisposte: mappaRisposte,
           tempoImpiegato: tempoImpiegato,
           dataInizio: widget.inizioTempo,
-          risposteCorrette: statisticheQuiz()['corrette'],
-          risposteErrate: statisticheQuiz()['sbagliate'],
-          precisione: statisticheQuiz()['precisione'],
+          risposteCorrette: risposteCorretteESbagliate['corrette'],
+          risposteErrate: risposteCorretteESbagliate['sbagliate'],
+          precisione: risposteCorretteESbagliate['precisione'],
           reportID: reportID,
           tipologia: 'Associa l\'immagine al nome',
-          categoria: widget.categoria);
+          categoria: widget.categoria,
+          umore: 3); //da reimpostare quando l'utente farà tap sull'umore
 
-      report.createReport(widget.caregiverID, widget.user.userID, reportID);
-      Future.microtask(() => showDialog(
-          //dialog del quiz terminato
-          //ritarda l'esecuzione, in modo da attendere che buil si costruisca
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return const CustomDialogTerminato();
-          }));
+      Future.microtask(() => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => QuizTerminatoWidget(
+                  report: report,
+                  caregiverID: widget.caregiverID,
+                  userID: widget.user.userID,
+                  reportID: reportID))));
     } else {
       /*Prelevo il quesito che devo mostrare al video */
       quesito = widget.quesiti[indexQuesito];
@@ -284,8 +281,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
-              //return AlertHint(); //suggerimento
-              return ConfirmDialog(
+              return const ConfirmDialog(
                   title: 'Mmm',
                   description:
                       'sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?',
@@ -298,10 +294,14 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
               barrierDismissible: false,
               context: context,
               builder: (BuildContext context) {
-                return AlertRisposta(quesito['risposta']); //per la risposta
+                return AlertRisposta(quesito); //per la risposta
               });
           timer!.cancel();
-          setState(() {});
+          setState(() {
+            mappaRisposte[quesito['quesitoID']] = false;
+            indexQuesito += 1;
+            countTentativi = 1; //per sicurezza
+          }); // devo andare alla domanda successiva e considerare questa sbagliata
         } else {
           timer!.cancel();
           setState(() {});
@@ -313,11 +313,11 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
-          actions: [],
+          actions: const [],
           flexibleSpace: FlexibleSpaceBar(
             title: Row(
               mainAxisSize: MainAxisSize.max,
@@ -328,7 +328,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   borderRadius: 30,
                   borderWidth: 1,
                   buttonSize: 60,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.keyboard_arrow_left,
                     color: Color(0xFFEBF9FF),
                     size: 30,
@@ -350,7 +350,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   },
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                   child: Text(
                     'MindCare',
                     style: FlutterFlowTheme.of(context).title2.override(
@@ -397,7 +397,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
             child: Container(
               width: double.infinity,
               height: double.infinity,
@@ -410,13 +410,13 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
                     child: Container(
                       width: 100,
                       height: 200,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             blurRadius: 4,
                             color: Color(0x76000000),
@@ -431,8 +431,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 2, 10, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10, 2, 10, 0),
                             child: SelectionArea(
                                 child: Text(
                               quesito['domanda'],
@@ -454,10 +454,12 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(15, 30, 15, 0),
                       child: GridView(
                         padding: EdgeInsets.zero,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,

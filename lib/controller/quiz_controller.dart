@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/controller/image_upload.dart';
@@ -33,6 +35,32 @@ class QuizController {
       (result.add(v.data()));
     }
     return result;
+  }
+
+/*Questa funzione preleva tutti i quesiti per una specifica categoria e tipologia.
+Se sono più di 10, allora ne sceglie in maniera casuale esattamente 10 quesiti,
+altrimenti restituisce tutti i quesiti prelevati. */
+  getRandomQuesiti(String categoria, String tipologia, String userID,
+      String caregiverID) async {
+    List<dynamic> quesiti =
+        await getQuesiti(categoria, tipologia, userID, caregiverID);
+    if (quesiti.length > 10) {
+      Set quesitiEstratti = <int>{};
+      List<dynamic> quesitiScelti = [];
+
+      final random = new Random();
+      int numeroQuesito = 0;
+      while (quesitiScelti.length < 10) {
+        numeroQuesito = random.nextInt(quesiti.length);
+        if (!quesitiEstratti.contains(numeroQuesito)) {
+          quesitiEstratti.add(numeroQuesito);
+          quesitiScelti.add(quesiti[numeroQuesito]);
+        }
+      }
+      return quesitiScelti;
+    } else {
+      return quesiti;
+    }
   }
 
   /*Questa funzione elimina l'immagine che c'era prima e carica quella
@@ -171,10 +199,10 @@ passata come parametro */
     final quesitoIDGenerato = Quesito.quesitoIdGenerator(28);
     final quesito = Quesito(
       quesitoID: quesitoIDGenerato,
-      opzione1: imageUrlOp1 ?? '',
-      opzione2: imageUrlOp2 ?? '',
-      opzione3: imageUrlOp3 ?? '',
-      opzione4: imageUrlOp4 ?? '',
+      opzione1: imageUrlOp1,
+      opzione2: imageUrlOp2,
+      opzione3: imageUrlOp3,
+      opzione4: imageUrlOp4,
       domanda: domanda, //Titolo della domanda
       domandaImmagine: '',
       risposta: risposta, //Immagine 1, Immagine 2,...
