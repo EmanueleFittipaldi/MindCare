@@ -65,6 +65,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                 widget.description,
                 style: FlutterFlowTheme.of(context).bodyText2.override(
                       fontFamily: 'IBM Plex Sans',
+                      fontWeight: FontWeight.w300,
                       fontSize: 18,
                     ),
               ),
