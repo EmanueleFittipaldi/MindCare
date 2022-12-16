@@ -77,7 +77,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).backgroundPrimaryColor,
+      backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -85,7 +85,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).backgroundPrimaryColor,
+              color: FlutterFlowTheme.of(context).tertiaryColor,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -132,8 +132,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     width: 100,
                     height: 320,
                     decoration: BoxDecoration(
-                      color:
-                          FlutterFlowTheme.of(context).backgroundPrimaryColor,
+                      color: FlutterFlowTheme.of(context).tertiaryColor,
                       image: DecorationImage(
                         fit: BoxFit.contain,
                         image: Image.asset(
@@ -204,8 +203,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               filled: true,
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .backgroundPrimaryColor,
+                              fillColor:
+                                  FlutterFlowTheme.of(context).tertiaryColor,
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -317,8 +316,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               elevation: 0,
                               width: 270,
                               height: 40,
-                              color: FlutterFlowTheme.of(context)
-                                  .backgroundPrimaryColor,
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
                               textStyle: FlutterFlowTheme.of(context)
                                   .subtitle2
                                   .override(

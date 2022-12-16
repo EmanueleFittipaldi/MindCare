@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/image_upload.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/model/utente.dart';
@@ -35,6 +36,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String imagePickedPath = '';
   String? errorMessage = 'Qualcosa è andato storto';
+  bool biometria = false;
   final TextEditingController _controllerEmail = new TextEditingController();
   final TextEditingController _controllerPassword = new TextEditingController();
   final TextEditingController _controllerRepeatPassword =
@@ -71,52 +73,9 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: const Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Color(0xFFEBF9FF),
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 40, 0),
-                    child: Text(
-                      'MindCare',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).title2.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: Colors.white,
-                            fontSize: 22,
-                          ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 2,
-        ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: AppbarWidget(title: 'Crea un nuovo account'),
       ),
       body: SafeArea(
         child: GestureDetector(
@@ -133,29 +92,6 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Align(
-                    alignment: const AlignmentDirectional(0, 0.99),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Registrazione',
-                            style: FlutterFlowTheme.of(context).title1.override(
-                                  fontFamily: 'IBM Plex Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                     child: Form(
@@ -166,7 +102,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 4, 0, 0),
+                                0, 4, 0, 30),
                             child: InkWell(
                               onTap: () async {},
                               child: Container(
@@ -715,6 +651,41 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                             ),
                           ),
                           Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                            child: SwitchListTile.adaptive(
+                              value: biometria,
+                              onChanged: (newValue) async {
+                                setState(() => biometria = newValue);
+                              },
+                              title: Text(
+                                'Utilizza biometria',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText2
+                                    .override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18),
+                              ),
+                              subtitle: Text(
+                                'Accedere all\'applicazione utilizzando la biometria del cellulare.',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText2
+                                    .override(
+                                      fontFamily: 'IBM Plex Sans',
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                              ),
+                              activeColor:
+                                  FlutterFlowTheme.of(context).primaryColor,
+                              activeTrackColor: Color(0x8A4B39EF),
+                              dense: false,
+                              controlAffinity: ListTileControlAffinity.trailing,
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                  24, 12, 24, 12),
+                            ),
+                          ),
+                          Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 15, 35, 15, 0),
                             child: Row(
@@ -749,7 +720,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                               .tertiaryColor,
                                           width: 0,
                                         ),
-                                        borderRadius: 8,
+                                        borderRadius: 30,
                                       ),
                                     ),
                                   ),
@@ -816,7 +787,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                               .tertiaryColor,
                                           width: 0,
                                         ),
-                                        borderRadius: 8,
+                                        borderRadius: 30,
                                       ),
                                     ),
                                   ),
