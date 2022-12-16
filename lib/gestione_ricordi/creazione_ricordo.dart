@@ -9,6 +9,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:video_player/video_player.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 
 class RicordoImmagineWidget extends StatefulWidget {
   final String userID;
@@ -32,18 +33,22 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
   TextEditingController? controllerTitolo;
   TextEditingController? controllerAnno;
   TextEditingController? controllerDescrizione;
+  TextEditingController controllerTag = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<TagsState> _globalKey = GlobalKey<TagsState>();
   late VideoPlayerController _videoPlayerController;
   bool? switchDescritpionValue = true;
   bool isNetworkImage = false;
   bool isMediaChanged = false;
+  List tags = [];
   @override
   void initState() {
     super.initState();
     controllerTitolo = TextEditingController();
     controllerAnno = TextEditingController();
     controllerDescrizione = TextEditingController();
+
     if (widget.memoryItem != null) {
       controllerTitolo!.text = widget.memoryItem!.titolo;
       controllerAnno!.text = widget.memoryItem!.annoRicordo.toString();
@@ -61,6 +66,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
             _videoPlayerController.play();
           });
       }
+      tags = widget.memoryItem!.tags;
     }
   }
 
@@ -549,6 +555,135 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                               ),
                             )
                           : Text(''),
+                      Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(15, 15, 15, 10),
+                          child: Tags(
+                            key: _globalKey,
+                            columns: 3,
+                            itemCount: tags.length,
+                            itemBuilder: (index) {
+                              final String currentItem = tags[index];
+                              return ItemTags(
+                                color: FlutterFlowTheme.of(context)
+                                    .backgroundPrimaryColor,
+                                textColor:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
+                                index: index,
+                                title: currentItem,
+                                textStyle: TextStyle(fontSize: 14),
+                                combine: ItemTagsCombine.withTextBefore,
+                                onPressed: (i) => print(i),
+                                onLongPressed: (i) => print(i),
+                                removeButton: ItemTagsRemoveButton(
+                                  onRemoved: () {
+                                    setState(() {
+                                      tags.removeAt(index);
+                                    });
+                                    return true;
+                                  },
+                                ),
+                              );
+                            },
+                          )),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
+                                child: TextFormField(
+                                  controller: controllerTag,
+                                  autofocus: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    hintText: 'Aggiungi tag:',
+                                    hintStyle:
+                                        FlutterFlowTheme.of(context).bodyText2,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .borderColor,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .borderColor,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .borderErrorColor,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .borderErrorColor,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
+                              ),
+                            ),
+                            FlutterFlowIconButton(
+                              borderColor: Color(0xFFE0E3E7),
+                              borderRadius: 20,
+                              borderWidth: 1,
+                              buttonSize: 60,
+                              icon: Icon(
+                                Icons.add,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 25,
+                              ),
+                              onPressed: () {
+                                var string = controllerTag.text;
+                                if (tags.length > 2) {
+                                  Fluttertoast.showToast(
+                                      msg: 'Massimo tre tag puoi aggiungere!');
+                                } else {
+                                  var checkChar = string.replaceAll(' ', '');
+                                  if (string.isEmpty || checkChar == '') {
+                                    Fluttertoast.showToast(
+                                        msg: 'Caratteri tag non validi!');
+                                  } else {
+                                    String newItem =
+                                        string.trim().toLowerCase();
+                                    setState(() {
+                                      controllerTag.clear();
+                                      if (!tags.contains(newItem)) {
+                                        tags.add(newItem);
+                                      }
+                                    });
+                                  }
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   Padding(
@@ -580,7 +715,8 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                 filePath:
                                     filePath ?? widget.memoryItem!.filePath,
                                 ricordoID: widget.memoryItem!.ricordoID,
-                                tipoRicordo: dropDownType!);
+                                tipoRicordo: dropDownType!,
+                                tags: tags);
                             ricordo.createMemory(widget.userID);
                           } else {
                             var filePath;
@@ -597,7 +733,8 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                 descrizione: controllerDescrizione!.text,
                                 filePath: filePath ?? '',
                                 ricordoID: ricordoIdGenerator(28),
-                                tipoRicordo: dropDownType!);
+                                tipoRicordo: dropDownType!,
+                                tags: tags);
                             ricordo.createMemory(widget.userID);
                           }
                           Navigator.of(context).pop();
@@ -610,6 +747,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                       options: FFButtonOptions(
                         width: 200,
                         height: 50,
+                        borderRadius: 30,
                         color: FlutterFlowTheme.of(context).primaryColor,
                         textStyle:
                             FlutterFlowTheme.of(context).subtitle1.override(

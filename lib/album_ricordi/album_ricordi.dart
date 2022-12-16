@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/album_ricordi/timeline.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
+import 'package:mindcare/controller/auth.dart';
+import 'package:mindcare/model/ricordo.dart';
 import 'package:mindcare/model/utente.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 
 class AlbumRicordiWidget extends StatefulWidget {
   final String caregiverUID;
@@ -17,12 +22,13 @@ class AlbumRicordiWidget extends StatefulWidget {
 
 class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final tagsController = TextEditingController();
+  String? tagSelected;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: const Color.fromARGB(255, 250, 250, 250),
+      backgroundColor: FlutterFlowTheme.of(context).backgroundPrimaryColor,
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(70),
           child: AppbarWidget(title: 'I miei ricordi')),
@@ -32,86 +38,99 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 250, 250, 250),
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).backgroundPrimaryColor,
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                  child: Container(
-                    width: 100,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      boxShadow: const [
-                        BoxShadow(
-                          blurRadius: 4,
-                          color: Color(0x33000000),
-                          offset: Offset(0, 2),
-                        )
-                      ],
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(165),
-                        bottomRight: Radius.circular(0),
-                        topLeft: Radius.circular(0),
-                        topRight: Radius.circular(0),
-                      ),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: Column(
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('user')
+                    .doc(widget.caregiverUID)
+                    .collection('Pazienti')
+                    .doc(Auth().currentUser!.uid)
+                    .collection('Ricordi')
+                    .snapshots(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    List<Ricordo> doodles = [];
+                    List<String> tags = ['Tutti i ricordi'];
+                    snapshot.data?.docs.forEach((doc) async {
+                      Map<String, dynamic>? memory = doc.data();
+                      if (tagSelected == null ||
+                          memory!['tags']
+                              .contains(tagSelected!.toLowerCase())) {
+                        doodles.add(Ricordo(
+                            titolo: memory!['titolo'],
+                            annoRicordo: memory['annoRicordo'],
+                            descrizione: memory['descrizione'],
+                            filePath: memory['filePath'],
+                            ricordoID: memory['ricordoID'],
+                            tipoRicordo: memory['tipoRicordo'],
+                            tags: memory['tags']));
+                      }
+                      memory['tags'].forEach((e) {
+                        if (!tags.contains(e)) {
+                          tags.add(e.toString()[0].toUpperCase() +
+                              e.toString().substring(1).toLowerCase());
+                        }
+                      });
+                    });
+                    return Column(
                       mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              15, 10, 0, 0),
-                          child: SelectionArea(
-                              child: Text(
-                            'I miei ricordi',
-                            textAlign: TextAlign.start,
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      fontSize: 30,
-                                    ),
-                          )),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                          child: SelectionArea(
-                              child: Text(
-                            'Ciao ${widget.user.name}, qui trovi una selezione di foto che ritraggono eventi importanti che hai vissuto.\nRilassati e goditi quei momenti!',
-                            textAlign: TextAlign.center,
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      fontWeight: FontWeight.w200,
-                                    ),
-                          )),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 30, 20, 0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 12,
+                                      color: Color(0x14000000),
+                                      offset: Offset(0, 5),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: CustomDropdown.search(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context)
+                                        .borderColor,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                  hintText: 'Cosa vuoi vedere?',
+                                  items: tags,
+                                  controller: tagsController,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      if (value == 'Tutti i ricordi') {
+                                        tagSelected = null;
+                                      } else {
+                                        tagSelected = value;
+                                      }
+                                    });
+                                  },
+                                ))),
+                        Expanded(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 1,
+                            child: TimelinePage(
+                                caregiverUID: widget.caregiverUID,
+                                doodles: doodles),
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 1,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 250, 250, 250),
-                    ),
-                    child: TimelinePage(caregiverUID: widget.caregiverUID),
-                  ),
-                ),
-              ],
-            ),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
           ),
         ),
       ),
