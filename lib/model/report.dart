@@ -12,6 +12,7 @@ class Report {
   final String reportID;
   final String tipologia;
   final String categoria;
+  int umore;
   Report(
       {required this.mappaRisposte,
       required this.tempoImpiegato,
@@ -21,7 +22,8 @@ class Report {
       required this.precisione,
       required this.reportID,
       required this.tipologia,
-      required this.categoria});
+      required this.categoria,
+      required this.umore});
 
   Map<String, dynamic> toJson() => {
         'mappaRisposte': mappaRisposte,
@@ -32,7 +34,8 @@ class Report {
         'precisione': precisione,
         'reportID': reportID,
         'tipologia': tipologia,
-        'categoria': categoria
+        'categoria': categoria,
+        'umore': umore
       };
 
   static Report fromJson(Map<String, dynamic> json) => Report(
@@ -44,7 +47,8 @@ class Report {
       precisione: json['precisione'],
       reportID: json['reportID'],
       tipologia: json['tipologia'],
-      categoria: json['categoria']);
+      categoria: json['categoria'],
+      umore: json['umore']);
 
   Future<void> createReport(
       String caregiverID, String user, String reportIDGenerato) async {

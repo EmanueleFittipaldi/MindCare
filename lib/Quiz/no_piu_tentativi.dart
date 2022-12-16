@@ -58,7 +58,7 @@ class _CustomDialogNoTentativiState extends State<CustomDialogNoTentativi> {
                   'assets/images/employees-giving-hands-helping-colleagues-walk-upstairs_74855-5236.jpg.webp',
                   width: 300,
                   height: 250,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
               Padding(

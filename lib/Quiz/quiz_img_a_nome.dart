@@ -1,19 +1,19 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:mindcare/Quiz/fine_quiz.dart';
+import 'package:mindcare/autenticazione/login.dart';
 import 'package:mindcare/dialog/confirm_dialog.dart';
+import 'package:mindcare/model/report.dart';
+import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/quiz/alert_hint.dart';
 import 'package:mindcare/quiz/alert_risposta.dart';
 import 'package:mindcare/quiz/no_piu_tentativi.dart';
-import 'package:mindcare/model/report.dart';
+import 'package:mindcare/quiz/quiz_terminato.dart';
 import 'package:mindcare/quiz/risposta_corretta.dart';
 import 'package:mindcare/quiz/risposta_sbagliata.dart';
-import '../model/utente.dart';
-
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import '../autenticazione/login.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ImmagineANomeWidget extends StatefulWidget {
@@ -245,22 +245,22 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
           mappaRisposte: mappaRisposte,
           tempoImpiegato: tempoImpiegato,
           dataInizio: widget.inizioTempo,
-          risposteCorrette: statisticheQuiz()['corrette'],
-          risposteErrate: statisticheQuiz()['sbagliate'],
-          precisione: statisticheQuiz()['precisione'],
+          risposteCorrette: risposteCorretteESbagliate['corrette'],
+          risposteErrate: risposteCorretteESbagliate['sbagliate'],
+          precisione: risposteCorretteESbagliate['precisione'],
           reportID: reportID,
           tipologia: 'Associa l\'immagine al nome',
-          categoria: widget.categoria);
+          categoria: widget.categoria,
+          umore: 3); //da reimpostare quando l'utente farà tap sull'umore
 
-      report.createReport(widget.caregiverID, widget.user.userID, reportID);
-      Future.microtask(() => showDialog(
-          //dialog del quiz terminato
-          //ritarda l'esecuzione, in modo da attendere che buil si costruisca
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return const CustomDialogTerminato();
-          }));
+      Future.microtask(() => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => QuizTerminatoWidget(
+                  report: report,
+                  caregiverID: widget.caregiverID,
+                  userID: widget.user.userID,
+                  reportID: reportID))));
     } else {
       /*Prelevo il quesito che devo mostrare al video */
       quesito = widget.quesiti[indexQuesito];
@@ -274,16 +274,17 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       Se invece ho risposto no che non voglio vedere la risposta allora semplicemente resetto il timer
       ribuildando il widget con setstate.  */
 
-      timer = Timer(const Duration(seconds: 10), () async {
+      timer = Timer(
+          Duration(seconds: widget.quesiti[indexQuesito]['tempoRisposta']),
+          () async {
         var risposta = await showDialog(
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
-              //return AlertHint(); //suggerimento
               return const ConfirmDialog(
-                  title: 'Visualizza risposta',
+                  title: 'Mmm',
                   description:
-                      'Mmm sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?',
+                      'sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?',
                   textOptionDelete: 'No',
                   textOptionConfirm: 'Si');
             });
@@ -293,10 +294,14 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
               barrierDismissible: false,
               context: context,
               builder: (BuildContext context) {
-                return AlertRisposta(quesito['risposta']); //per la risposta
+                return AlertRisposta(quesito); //per la risposta
               });
           timer!.cancel();
-          setState(() {});
+          setState(() {
+            mappaRisposte[quesito['quesitoID']] = false;
+            indexQuesito += 1;
+            countTentativi = 1; //per sicurezza
+          }); // devo andare alla domanda successiva e considerare questa sbagliata
         } else {
           timer!.cancel();
           setState(() {});
@@ -312,7 +317,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
-          actions: [],
+          actions: const [],
           flexibleSpace: FlexibleSpaceBar(
             title: Row(
               mainAxisSize: MainAxisSize.max,
@@ -411,8 +416,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                       height: 200,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
-                        boxShadow: [
-                          const BoxShadow(
+                        boxShadow: const [
+                          BoxShadow(
                             blurRadius: 4,
                             color: Color(0x76000000),
                             offset: Offset(0, 2),
@@ -472,7 +477,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                 quesito['opzione1'],
                                 width: 100,
                                 height: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -488,7 +493,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                 quesito['opzione2'],
                                 width: 100,
                                 height: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -502,7 +507,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                 quesito['opzione3'],
                                 width: 100,
                                 height: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -516,7 +521,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                 quesito['opzione4'],
                                 width: 100,
                                 height: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
