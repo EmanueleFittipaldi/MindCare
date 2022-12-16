@@ -80,35 +80,34 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SingleChildScrollView(
-        child: StreamBuilder(
-            stream: widget.user.type == 'Paziente'
-                ? FirebaseFirestore.instance
-                    .collection('user')
-                    .doc(widget.caregiverUID)
-                    .collection('Pazienti')
-                    .snapshots()
-                : FirebaseFirestore.instance.collection('user').snapshots(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                var data;
-                snapshot.data?.docs.forEach((doc) {
-                  //iterazione sui singoli documenti
-                  Map<String, dynamic>? cmap = doc.data();
-                  if (cmap!['userID'] == Auth().currentUser!.uid) {
-                    data = cmap;
-                  } //mappatura dei dati
-                });
-                if (data != null) {
-                  widget.user = Utente(
-                      userID: data['userID'],
-                      name: data['name'],
-                      lastname: data['lastname'],
-                      email: data['email'],
-                      type: data['type'],
-                      date: (data?['dateOfBirth'] as Timestamp).toDate(),
-                      profileImgPath: data['profileImagePath'],
-                      checkBiometric: data['checkBiometric']);
+      body: StreamBuilder(
+          stream: widget.user.type == 'Paziente'
+              ? FirebaseFirestore.instance
+                  .collection('user')
+                  .doc(widget.caregiverUID)
+                  .collection('Pazienti')
+                  .snapshots()
+              : FirebaseFirestore.instance.collection('user').snapshots(),
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              var data;
+              snapshot.data?.docs.forEach((doc) {
+                //iterazione sui singoli documenti
+                Map<String, dynamic>? cmap = doc.data();
+                if (cmap!['userID'] == Auth().currentUser!.uid) {
+                  data = cmap;
+                } //mappatura dei dati
+              });
+              if (data != null) {
+                widget.user = Utente(
+                    userID: data['userID'],
+                    name: data['name'],
+                    lastname: data['lastname'],
+                    email: data['email'],
+                    type: data['type'],
+                    date: (data?['dateOfBirth'] as Timestamp).toDate(),
+                    profileImgPath: data['profileImagePath'],
+                    checkBiometric: data['checkBiometric']);
 
                 return Column(
                   mainAxisSize: MainAxisSize.max,
