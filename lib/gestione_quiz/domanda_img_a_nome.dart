@@ -723,6 +723,7 @@ passata come parametro */
                           color: Colors.transparent,
                           width: 1,
                         ),
+                        borderRadius: 30,
                       ),
                     ),
                   ),

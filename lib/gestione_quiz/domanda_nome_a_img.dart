@@ -831,20 +831,20 @@ passata come parametro */
                       },
                       text: 'Salva',
                       options: FFButtonOptions(
-                        width: 200,
-                        height: 50,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle1.override(
-                                  fontFamily: 'IBM Plex Sans',
-                                  color: Colors.white,
-                                ),
-                        elevation: 3,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                      ),
+                          width: 200,
+                          height: 50,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle1.override(
+                                    fontFamily: 'IBM Plex Sans',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3,
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: 30),
                     ),
                   ),
                 ],
