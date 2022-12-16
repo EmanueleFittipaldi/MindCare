@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/quesito.dart';
 
 import '../controller/auth.dart';
@@ -43,6 +44,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
 
   TextEditingController? textController;
   String? dropDownValue;
+  String dropDownValueTime = '10';
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -55,6 +57,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
     if (widget.item != null) {
       textController!.text = widget.item!.domanda!;
       dropDownValue = widget.item!.risposta!;
+      dropDownValueTime = widget.item!.tempoRisposta!.toString();
     }
   }
 
@@ -62,13 +65,6 @@ class _CreazioneDomandaImmagineANomeWidgetState
   void dispose() {
     textController?.dispose();
     super.dispose();
-  }
-
-  /*Questa funzione elimina l'immagine che c'era prima e carica quella
-passata come parametro */
-  Future<String> updateImage(String imagDomanda, String imagPrecedente) async {
-    ImageUpload().deleteFile(imagPrecedente);
-    return await ImageUpload().uploadImage(imagDomanda);
   }
 
   @override
@@ -591,6 +587,51 @@ passata come parametro */
                                 hidesUnderline: true,
                               ),
                             ),
+                            SelectionArea(
+                                child: Text(
+                              'Tempo per vedere la risposta (in secondi)',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'IBM Plex Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            )),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 5, 0, 5),
+                              child: FlutterFlowDropDown(
+                                initialOption: '10',
+                                options: const ['5', '10', '30', '60'],
+                                onChanged: (val) async {
+                                  setState(() {
+                                    dropDownValueTime = val!;
+                                  });
+                                },
+                                width: 180,
+                                height: 50,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'IBM Plex Sans',
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w200,
+                                    ),
+                                fillColor: Colors.white,
+                                elevation: 2,
+                                borderColor:
+                                    FlutterFlowTheme.of(context).borderColor,
+                                borderWidth: 0,
+                                borderRadius: 10,
+                                margin: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 4, 12, 4),
+                                hidesUnderline: true,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -601,7 +642,7 @@ passata come parametro */
                     child: FFButtonWidget(
                       onPressed: () async {
                         /* Quando clicco su Salva devo andare a creare un nuovo
-                        Quesito ed aggiungerlo alla colezione "Quesiti" del 
+                        Quesito ed aggiungerlo alla collezione "Quesiti" del 
                         paziente. Se essa non esiste allora viene creata. */
 
                         //Controlli sui campi riempiti
@@ -610,38 +651,29 @@ passata come parametro */
                           return;
                         }
 
+                        /*Caso in cui sto modificando un quesito già
+                        esistente */
+
                         if (widget.item != null) {
-                          FirebaseFirestore.instance
-                              .collection('user')
-                              .doc(Auth().currentUser?.uid)
-                              .collection('Pazienti')
-                              .doc(widget.user.userID)
-                              .collection('Quesiti')
-                              .doc(widget.item?.quesitoID)
-                              .update({
-                            'quesitoID': widget.item?.quesitoID,
-                            'opzione1': imagOp1 != ''
-                                ? await updateImage(
-                                    imagOp1, widget.item!.opzione1!)
-                                : widget.item?.opzione1,
-                            'opzione2': imagOp2 != ''
-                                ? await updateImage(
-                                    imagOp2, widget.item!.opzione2!)
-                                : widget.item?.opzione2,
-                            'opzione3': imagOp3 != ''
-                                ? await updateImage(
-                                    imagOp3, widget.item!.opzione3!)
-                                : widget.item?.opzione3,
-                            'opzione4': imagOp4 != ''
-                                ? await updateImage(
-                                    imagOp4, widget.item!.opzione4!)
-                                : widget.item?.opzione4,
-                            'domanda': textController?.text,
-                            'domandaImmagine': '',
-                            'risposta': dropDownValue,
-                            'categoria': widget.categoria,
-                            'tipologia': widget.tipologia,
-                          });
+                          QuizController().updateQuesitoImgNome(
+                            widget.user.userID,
+                            widget.item,
+                            widget.categoria,
+                            widget.tipologia,
+                            imagOp1,
+                            imagOp2,
+                            imagOp3,
+                            imagOp4,
+                            textController?.text,
+                            dropDownValue!,
+                            dropDownValueTime,
+                          );
+
+                          //Una volta modificato il quesito ritorno a GestioneQuiz
+                          /*Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  GestionQuizWidget(user: widget.user)));*/
+                          Navigator.of(context).pop();
                         } else {
                           //caricamento immagine 1 su firebase
                           var imageUrlOp1;
@@ -682,23 +714,17 @@ passata come parametro */
                             Fluttertoast.showToast(msg: 'Caricare le immagini');
                           } else {
                             //Creazione del quesito
-                            final quesitoIDGenerato =
-                                Quesito.quesitoIdGenerator(28);
-                            final quesito = Quesito(
-                                quesitoID: quesitoIDGenerato,
-                                opzione1: imageUrlOp1 ?? '',
-                                opzione2: imageUrlOp2 ?? '',
-                                opzione3: imageUrlOp3 ?? '',
-                                opzione4: imageUrlOp4 ?? '',
-                                domanda:
-                                    textController?.text, //Titolo della domanda
-                                domandaImmagine: '',
-                                risposta:
-                                    dropDownValue, //Immagine 1, Immagine 2,...
-                                categoria: widget.categoria,
-                                tipologia: widget.tipologia);
-                            quesito.createNewQuestion(
-                                widget.user, quesitoIDGenerato);
+                            QuizController().createQuesitoImgNome(
+                                widget.user,
+                                imageUrlOp1,
+                                imageUrlOp2,
+                                imageUrlOp3,
+                                imageUrlOp4,
+                                textController?.text,
+                                dropDownValue,
+                                widget.categoria,
+                                widget.tipologia,
+                                dropDownValueTime);
 
                             //Una volta creato il quesito ritorno a GestioneQuiz
                             /*Navigator.of(context).push(MaterialPageRoute(

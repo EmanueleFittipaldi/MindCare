@@ -632,7 +632,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                                     type: 'Paziente',
                                                     date: datePicked!,
                                                     profileImgPath:
-                                                        imageUrl ?? '');
+                                                        imageUrl ?? '',
+                                                    checkBiometric: false);
                                                 user.createPatient();
                                                 Navigator.of(context).push(
                                                     MaterialPageRoute(

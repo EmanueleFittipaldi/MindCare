@@ -30,7 +30,8 @@ class ReportController {
           precisione: report['precisione'],
           reportID: report['reportID'],
           tipologia: report['tipologia'],
-          categoria: report['categoria']));
+          categoria: report['categoria'],
+          umore: report['umore']));
     }
 
     if (reportData.isEmpty) {

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/quesito.dart';
 
 import '../controller/auth.dart';
@@ -41,6 +42,7 @@ class _CreazioneDomandaNomeAImmagineWidgetState
   TextEditingController? textController4;
   TextEditingController? textController5;
   String? dropDownValue; //valore del dropdown
+  String dropDownValueTime = '10';
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -60,6 +62,7 @@ class _CreazioneDomandaNomeAImmagineWidgetState
       textController4!.text = widget.item!.opzione3!;
       textController5!.text = widget.item!.opzione4!;
       dropDownValue = widget.item!.risposta!;
+      dropDownValueTime = widget.item!.tempoRisposta!.toString();
     }
   }
 
@@ -732,6 +735,51 @@ passata come parametro */
                                 hidesUnderline: true,
                               ),
                             ),
+                            SelectionArea(
+                                child: Text(
+                              'Tempo per vedere la risposta (in secondi)',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'IBM Plex Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            )),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 5, 0, 5),
+                              child: FlutterFlowDropDown(
+                                initialOption: '10',
+                                options: const ['5', '10', '30', '60'],
+                                onChanged: (val) async {
+                                  setState(() {
+                                    dropDownValueTime = val!;
+                                  });
+                                },
+                                width: 180,
+                                height: 50,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'IBM Plex Sans',
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w200,
+                                    ),
+                                fillColor: Colors.white,
+                                elevation: 2,
+                                borderColor:
+                                    FlutterFlowTheme.of(context).borderColor,
+                                borderWidth: 0,
+                                borderRadius: 10,
+                                margin: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 4, 12, 4),
+                                hidesUnderline: true,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -758,38 +806,25 @@ passata come parametro */
                         oppure no */
 
                         if (widget.item != null) {
-                          FirebaseFirestore.instance
-                              .collection('user')
-                              .doc(Auth().currentUser?.uid)
-                              .collection('Pazienti')
-                              .doc(widget.user.userID)
-                              .collection('Quesiti')
-                              .doc(widget.item?.quesitoID)
-                              .update({
-                            'quesitoID': widget.item?.quesitoID,
-                            'opzione1': textController2?.text,
-                            'opzione2': textController3?.text,
-                            'opzione3': textController4?.text,
-                            'opzione4': textController5?.text,
-                            'domanda': textController1?.text,
-                            /*Se imagDomanda non è vuota allora significa che ho
-                            cliccato sull'immagine e ne ho scelto una nuova. Altrimenti
-                            Significa che devo riassegnare l'immagine che già c'era, e questa
-                            la posso reperire dall'oggetto Quesito che ho passato in precedenza
-                            a questo widget. */
-                            'domandaImmagine': imagDomanda != ''
-                                ? await updateImage(
-                                    imagDomanda, widget.item!.domandaImmagine!)
-                                : widget.item?.domandaImmagine,
-                            'risposta': dropDownValue,
-                            'categoria': widget.categoria,
-                            'tipologia': widget.tipologia,
-                          });
+                          QuizController().updateQuesitoNomeImg(
+                              widget.user.userID,
+                              widget.item,
+                              textController2?.text,
+                              textController3?.text,
+                              textController4?.text,
+                              textController5?.text,
+                              textController1?.text,
+                              imagDomanda,
+                              dropDownValue,
+                              widget.categoria,
+                              widget.tipologia,
+                              dropDownValueTime);
 
                           //Una volta modificato il quesito ritorno a GestioneQuiz
-                          Navigator.of(context).push(MaterialPageRoute(
+                          /*Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  GestionQuizWidget(user: widget.user)));
+                                  GestionQuizWidget(user: widget.user)));*/
+                          Navigator.of(context).pop();
                         } else {
                           // Caricamento dell'immagine oggetto
                           // della domanda su firebase
@@ -803,23 +838,18 @@ passata come parametro */
                                 msg: 'Caricara un\'immagine');
                           } else {
                             //Creazione del quesito
-                            final quesitoIDGenerato =
-                                Quesito.quesitoIdGenerator(28);
-                            final quesito = Quesito(
-                                quesitoID: quesitoIDGenerato,
-                                opzione1: textController2?.text,
-                                opzione2: textController3?.text,
-                                opzione3: textController4?.text,
-                                opzione4: textController5?.text,
-                                domanda: textController1?.text,
-                                domandaImmagine: imageUrlDomanda ??
-                                    '', //Titolo della domanda
-                                risposta:
-                                    dropDownValue, //Immagine 1, Immagine 2,...
-                                categoria: widget.categoria,
-                                tipologia: widget.tipologia);
-                            quesito.createNewQuestion(
-                                widget.user, quesitoIDGenerato);
+                            QuizController().creazioneQuesitoNomeImg(
+                                widget.user,
+                                textController2?.text,
+                                textController3?.text,
+                                textController4?.text,
+                                textController5?.text,
+                                textController1?.text,
+                                imageUrlDomanda,
+                                dropDownValue,
+                                widget.categoria,
+                                widget.tipologia,
+                                dropDownValueTime);
 
                             //Una volta creato il quesito ritorno a GestioneQuiz
                             /*Navigator.of(context).push(MaterialPageRoute(

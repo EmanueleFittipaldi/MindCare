@@ -321,14 +321,16 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                         //Dashboard del paziente creando un oggetto utente
                                                                         //e riempiendolo con i dati presi dall'item corrente
                                                                         user: Utente(
-                                                                            userID:
-                                                                                item['userID'],
+                                                                            userID: item['userID'],
                                                                             name: item['name'],
                                                                             lastname: item['lastname'],
                                                                             email: item['email'],
                                                                             type: item['type'],
                                                                             date: (item['dateOfBirth'] as Timestamp).toDate(),
-                                                                            profileImgPath: item['profileImagePath']))));
+                                                                            profileImgPath: item['profileImagePath'],
+                                                                            checkBiometric: item['checkBiometric']
+                                                                        )
+                                                                      )));
                                                       },
                                                       child: Container(
                                                         width: 80,

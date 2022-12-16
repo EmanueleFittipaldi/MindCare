@@ -463,7 +463,10 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                                             item[
                                                                                 'categoria'],
                                                                         tipologia:
-                                                                            item['tipologia']),
+                                                                            item[
+                                                                                'tipologia'],
+                                                                        tempoRisposta:
+                                                                            item['tempoRisposta']),
                                                                   )));
                                                     } else {
                                                       Navigator.of(context).push(
@@ -505,7 +508,10 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                                             item[
                                                                                 'categoria'],
                                                                         tipologia:
-                                                                            item['tipologia']),
+                                                                            item[
+                                                                                'tipologia'],
+                                                                        tempoRisposta:
+                                                                            item['tempoRisposta']),
                                                                   )));
                                                     }
                                                   },
@@ -517,8 +523,7 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                   borderWidth: 1,
                                                   buttonSize: 45,
                                                   icon: const Icon(
-                                                    Icons
-                                                        .delete_forever_outlined,
+                                                    Icons.cancel,
                                                     color: Color(0xFF8E8E8E),
                                                     size: 25,
                                                   ),

@@ -756,7 +756,8 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                                 email: _controllerEmail.text,
                                                 date: datePicked!,
                                                 type: 'Caregiver',
-                                                profileImgPath: imageUrl ?? '');
+                                                profileImgPath: imageUrl ?? '',
+                                                checkBiometric: false);
                                             user.createNewUser();
 
                                             Navigator.of(context).push(
