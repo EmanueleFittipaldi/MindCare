@@ -88,6 +88,7 @@ class _InitHomepageState extends State<InitHomepage> {
                         .elementAt(_selectedIndex)[widget.user.type],
               ))),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

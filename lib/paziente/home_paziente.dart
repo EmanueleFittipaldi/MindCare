@@ -139,7 +139,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                     ),
                                             ),
                                           ),
-                                          Padding(
+                                          Expanded(
+                                              child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(15, 2, 2, 12),
                                             child: Container(
@@ -212,7 +213,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                           MainAxisSize.max,
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .spaceBetween,
+                                                              .start,
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .end,
@@ -240,7 +241,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                           padding:
                                                               const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                  0, 4, 0, 0),
+                                                                  20, 4, 0, 0),
                                                           child: Text(
                                                             '2/8',
                                                             style: FlutterFlowTheme
@@ -289,7 +290,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                          )),
                                         ],
                                       ),
                                     );
