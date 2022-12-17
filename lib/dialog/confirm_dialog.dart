@@ -65,7 +65,6 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                 widget.description,
                 style: FlutterFlowTheme.of(context).bodyText2.override(
                       fontFamily: 'IBM Plex Sans',
-                      fontWeight: FontWeight.w300,
                       fontSize: 18,
                     ),
               ),
@@ -103,7 +102,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
-                                borderRadius: 8,
+                                borderRadius: 30,
                               ),
                             ),
                           ),
@@ -130,7 +129,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
-                                borderRadius: 8,
+                                borderRadius: 30,
                               ),
                             ),
                           )

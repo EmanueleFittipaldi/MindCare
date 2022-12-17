@@ -75,6 +75,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
         setState(() {
           indexQuesito = box.get('statoCorrente')['indexQuesito'];
           countTentativi = box.get('statoCorrente')['countTentativi'];
+          percentualeBarra = box.get('statoCorrente')['percentualeBarra'];
           //cast to Map<String, bool>
           mappaRisposte = Map<String, bool>.from(
               box.get('statoCorrente')['mappaRisposte'] as Map);
@@ -353,7 +354,8 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                   'indexQuesito': indexQuesito,
                   'mappaRisposte': mappaRisposte,
                   'countTentativi': countTentativi,
-                  'inizioTempo': widget.inizioTempo
+                  'inizioTempo': widget.inizioTempo,
+                  'percentualeBarra': percentualeBarra,
                 };
                 box.put('statoCorrente', statoCorrente);
                 Navigator.of(context).pop();
