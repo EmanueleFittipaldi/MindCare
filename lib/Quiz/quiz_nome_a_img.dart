@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/fine_quiz.dart';
@@ -12,20 +11,20 @@ import 'package:mindcare/model/report.dart';
 import 'package:mindcare/quiz/risposta_corretta.dart';
 import 'package:mindcare/quiz/risposta_sbagliata.dart';
 import '../model/utente.dart';
-
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'alert_hint.dart';
 import 'alert_risposta.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class NomeAImmagineWidget extends StatefulWidget {
   final Utente user;
-
   final String categoria;
   final List<dynamic> quesiti;
   final DateTime inizioTempo;
@@ -51,6 +50,8 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
   Map<String, bool> mappaRisposte = <String, bool>{};
   var quesito;
   var box;
+  var percentualeBarra = 0.0;
+  var incrementoBarra = 0.0;
   int tempoImpiegato = 0;
 
   getStatoQuiz() async {
@@ -74,6 +75,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
         setState(() {
           indexQuesito = box.get('statoCorrente')['indexQuesito'];
           countTentativi = box.get('statoCorrente')['countTentativi'];
+          percentualeBarra = box.get('statoCorrente')['percentualeBarra'];
           //cast to Map<String, bool>
           mappaRisposte = Map<String, bool>.from(
               box.get('statoCorrente')['mappaRisposte'] as Map);
@@ -99,6 +101,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
     //se si allora lo devo caricare in quanto significa
     //che l'utente non ha completato il quiz
     getStatoQuiz();
+    incrementoBarra = 1.0 / widget.quesiti.length;
   }
 
   /*
@@ -130,6 +133,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
       setState(() {
         mappaRisposte[quesito['quesitoID']] = true;
         indexQuesito += 1;
+        percentualeBarra += incrementoBarra;
         countTentativi = 1;
       });
     } else {
@@ -149,6 +153,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
           setState(() {
             mappaRisposte[quesito['quesitoID']] = false;
             indexQuesito += 1;
+            percentualeBarra += incrementoBarra;
             countTentativi = 1; //per sicurezza
           });
         } else {
@@ -170,6 +175,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
         setState(() {
           mappaRisposte[quesito['quesitoID']] = false;
           indexQuesito += 1;
+          percentualeBarra += incrementoBarra;
           countTentativi = 1;
         });
       }
@@ -302,6 +308,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
           setState(() {
             mappaRisposte[quesito['quesitoID']] = false;
             indexQuesito += 1;
+            percentualeBarra += incrementoBarra;
             countTentativi = 1;
           });
         } else {
@@ -312,276 +319,542 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
     } //non toccare questa parentesi
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Color(0xFFEBF9FF),
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    timer!.cancel();
-                    //Salvo lo stato corrente del quiz perché significa che non
-                    //l'ho portato a termine. In questo modo potrò riprenderlo
-                    Map<String, dynamic> statoCorrente = {
-                      'categoria': widget.categoria,
-                      'tipologia': 'Associa l\'immagine al nome',
-                      'indexQuesito': indexQuesito,
-                      'mappaRisposte': mappaRisposte,
-                      'countTentativi': countTentativi,
-                      'inizioTempo': widget.inizioTempo
-                    };
-                    box.put('statoCorrente', statoCorrente);
-                    Navigator.of(context).pop();
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                  child: Text(
-                    'MindCare',
-                    style: FlutterFlowTheme.of(context).title2.override(
-                          fontFamily: 'IBM Plex Sans',
-                          color: Colors.white,
-                          fontSize: 22,
-                        ),
-                  ),
-                ),
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: Icon(
-                    Icons.logout,
-                    color: FlutterFlowTheme.of(context).tertiaryColor,
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    timer!.cancel();
-                    Map<String, dynamic> statoCorrente = {
-                      'categoria': widget.categoria,
-                      'tipologia': 'Associa l\'immagine al nome',
-                      'indexQuesito': indexQuesito,
-                      'mappaRisposte': mappaRisposte,
-                      'countTentativi': countTentativi,
-                      'inizioTempo': widget.inizioTempo
-                    };
-                    box.put('statoCorrente', statoCorrente);
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const LoginWidget()));
-                  },
-                ),
-              ],
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 2,
+      backgroundColor: const Color(0xFFF0F6FF),
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        automaticallyImplyLeading: false,
+        title: Text(
+          'Quiz',
+          style: FlutterFlowTheme.of(context).bodyText2.override(
+                fontFamily: 'IBM Plex Sans',
+                fontSize: 30,
+              ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+            child: FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30,
+              borderWidth: 1,
+              buttonSize: 50,
+              fillColor: FlutterFlowTheme.of(context).primaryBackground,
+              icon: Icon(
+                Icons.close_rounded,
+                color: FlutterFlowTheme.of(context).secondaryText,
+                size: 30,
+              ),
+              onPressed: () async {
+                timer!.cancel();
+                //Salvo lo stato corrente del quiz perché significa che non
+                //l'ho portato a termine. In questo modo potrò riprenderlo
+                Map<String, dynamic> statoCorrente = {
+                  'categoria': widget.categoria,
+                  'tipologia': 'Associa l\'immagine al nome',
+                  'indexQuesito': indexQuesito,
+                  'mappaRisposte': mappaRisposte,
+                  'countTentativi': countTentativi,
+                  'inizioTempo': widget.inizioTempo,
+                  'percentualeBarra': percentualeBarra,
+                };
+                box.put('statoCorrente', statoCorrente);
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ],
+        centerTitle: false,
+        elevation: 0,
       ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).tertiaryColor,
-              ),
-              child: Column(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Column(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
-                      child: Container(
-                        width: 100,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).tertiaryColor,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: Color(0x76000000),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(10, 2, 10, 0),
-                              child: SelectionArea(
-                                  child: Text(
-                                quesito['domanda'],
-                                textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                              )),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 10, 20, 20),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.network(
-                                    quesito['domandaImmagine'],
-                                    width: double.infinity,
-                                    height: 150,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(20, 12, 20, 0),
+                    child: LinearPercentIndicator(
+                      animateFromLastPercent: true,
+                      percent: percentualeBarra,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      lineHeight: 12,
+                      animation: true,
+                      progressColor: FlutterFlowTheme.of(context).primaryColor,
+                      backgroundColor: FlutterFlowTheme.of(context).lineColor,
+                      barRadius: const Radius.circular(24),
+                      padding: EdgeInsets.zero,
                     ),
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
+                ],
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 30, 20, 0),
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).tertiaryColor,
+                      boxShadow: const [
+                        BoxShadow(
+                          blurRadius: 12,
+                          color: Color(0x14000000),
+                          offset: Offset(0, 5),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(15, 15, 15, 5),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                checkRisposta(quesito, 'Opzione 1');
-                              },
-                              text: quesito['opzione1'],
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 50,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                          Align(
+                            alignment: const AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 12, 0, 0),
+                              child: Text(
+                                'Domanda ${indexQuesito + 1}',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText2
                                     .override(
                                       fontFamily: 'IBM Plex Sans',
-                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: 20,
                               ),
                             ),
                           ),
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(15, 5, 15, 5),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                checkRisposta(quesito, 'Opzione 2');
-                              },
-                              text: quesito['opzione2'],
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 50,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: Colors.white,
-                                    ),
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
+                                EdgeInsetsDirectional.fromSTEB(0, 2, 10, 0),
+                            child: SelectionArea(
+                                child: Text(
+                              quesito['domanda'],
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'IBM Plex Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                            )),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 20, 20, 20),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.network(
+                                  quesito['domandaImmagine'],
+                                  width: double.infinity,
+                                  height: 150,
+                                  fit: BoxFit.contain,
                                 ),
-                                borderRadius: 20,
                               ),
                             ),
                           ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(15, 5, 15, 5),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                checkRisposta(quesito, 'Opzione 3');
-                              },
-                              text: quesito['opzione3'],
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 50,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: Colors.white,
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 50, 0, 0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 10, 0),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                checkRisposta(
+                                                    quesito, 'Opzione 1');
+                                              },
+                                              child: Container(
+                                                width: 60,
+                                                height: 80,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  border: Border.all(
+                                                    color: Color(0xFFA0A0A0),
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  15, 0, 10, 0),
+                                                      child: Container(
+                                                        width: 30,
+                                                        height: 30,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              Color(0xB6F4F4F4),
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        child: Text(
+                                                          '1',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: AutoSizeText(
+                                                        quesito['opzione1'],
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w300,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 10, 0),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                checkRisposta(
+                                                    quesito, 'Opzione 2');
+                                              },
+                                              child: Container(
+                                                width: 60,
+                                                height: 80,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  border: Border.all(
+                                                    color: Color(0xFFA0A0A0),
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  15, 0, 10, 0),
+                                                      child: Container(
+                                                        width: 30,
+                                                        height: 30,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              Color(0xB6F4F4F4),
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        child: Text(
+                                                          '2',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: AutoSizeText(
+                                                        quesito['opzione2'],
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w300,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: 20,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(15, 5, 15, 15),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                checkRisposta(quesito, 'Opzione 4');
-                              },
-                              text: quesito['opzione4'],
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 50,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: Colors.white,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 20, 0, 0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 10, 0),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                checkRisposta(
+                                                    quesito, 'Opzione 3');
+                                              },
+                                              child: Container(
+                                                width: 60,
+                                                height: 80,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  border: Border.all(
+                                                    color: Color(0xFFA0A0A0),
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  15, 0, 10, 0),
+                                                      child: Container(
+                                                        width: 30,
+                                                        height: 30,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              Color(0xB6F4F4F4),
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        child: Text(
+                                                          '3',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: AutoSizeText(
+                                                        quesito['opzione3'],
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w300,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 10, 0),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                checkRisposta(
+                                                    quesito, 'Opzione 4');
+                                              },
+                                              child: Container(
+                                                width: 60,
+                                                height: 80,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  border: Border.all(
+                                                    color: Color(0xFFA0A0A0),
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  15, 0, 10, 0),
+                                                      child: Container(
+                                                        width: 30,
+                                                        height: 30,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              Color(0xB6F4F4F4),
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        child: Text(
+                                                          '4',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: AutoSizeText(
+                                                        quesito['opzione4'],
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w300,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: 20,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -589,9 +862,9 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

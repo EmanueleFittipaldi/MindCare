@@ -27,7 +27,7 @@ class _CustomDialogNoTentativiState extends State<CustomDialogNoTentativi> {
   contentBox(context) {
     return Container(
       width: 500,
-      height: 600,
+      height: 200,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -47,18 +47,9 @@ class _CustomDialogNoTentativiState extends State<CustomDialogNoTentativi> {
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyText1.override(
                         fontFamily: 'IBM Plex Sans',
-                        color: Colors.black,
-                        fontSize: 30,
+                        color: Color.fromARGB(255, 39, 39, 39),
+                        fontSize: 25,
                       ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-                child: Image.asset(
-                  'assets/images/employees-giving-hands-helping-colleagues-walk-upstairs_74855-5236.jpg.webp',
-                  width: 300,
-                  height: 250,
-                  fit: BoxFit.contain,
                 ),
               ),
               Padding(
@@ -87,7 +78,7 @@ class _CustomDialogNoTentativiState extends State<CustomDialogNoTentativi> {
                           color: Colors.transparent,
                           width: 1,
                         ),
-                        borderRadius: 8,
+                        borderRadius: 30,
                       ),
                     ),
                   ],

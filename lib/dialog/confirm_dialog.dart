@@ -102,7 +102,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
-                                borderRadius: 8,
+                                borderRadius: 30,
                               ),
                             ),
                           ),
@@ -129,7 +129,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
-                                borderRadius: 8,
+                                borderRadius: 30,
                               ),
                             ),
                           )

@@ -29,7 +29,7 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
   contentBox(context) {
     return Container(
       width: 500,
-      height: 600,
+      height: 250,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -42,37 +42,17 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
-                child: Text(
-                  'Oh no! la risposta non è giusta',
-                  textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'IBM Plex Sans',
-                        color: Colors.black,
-                        fontSize: 30,
-                      ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-                child: Image.asset(
-                  'assets/images/employees-giving-hands-helping-colleagues-walk-upstairs_74855-5236.jpg.webp',
-                  width: 300,
-                  height: 250,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(15, 50, 15, 0),
-                child: Text(
-                  'Vuoi riprovare?',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'IBM Plex Sans',
-                        color: Colors.black,
-                        fontSize: 35,
-                      ),
-                ),
+              const Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+                  child: Text('Oh no! la risposta non è giusta',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 20))),
+              const Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(15, 50, 15, 0),
+                child: Text('Vuoi riprovare?',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
@@ -100,7 +80,7 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
                           color: Colors.transparent,
                           width: 1,
                         ),
-                        borderRadius: 8,
+                        borderRadius: 30,
                       ),
                     ),
                     FFButtonWidget(
@@ -123,7 +103,7 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
                           color: Colors.transparent,
                           width: 1,
                         ),
-                        borderRadius: 8,
+                        borderRadius: 30,
                       ),
                     ),
                   ],

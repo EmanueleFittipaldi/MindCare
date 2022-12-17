@@ -7,11 +7,14 @@ import 'package:mindcare/quiz/quiz_nome_a_img.dart';
 import '../appbar/appbar_caregiver.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../gestione_quiz/domanda_nome_a_img.dart';
 import '../autenticazione/login.dart';
 import '../model/utente.dart';
 import 'dart:math';
+import '../flutter_flow/flutter_flow_util.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SelezionaTipologiaWidget extends StatefulWidget {
   final String categoria;
@@ -36,7 +39,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFF0F6FF),
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(70),
           child: AppbarWidget(
@@ -48,89 +51,89 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   width: double.infinity,
-                  height: 230,
+                  height: 200,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryColor,
-                    borderRadius: const BorderRadius.only(
+                    color: FlutterFlowTheme.of(context).tertiaryColor,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: Image.asset('assets/images/tipologia.jpg').image,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 12,
+                        color: Color(0x14000000),
+                        offset: Offset(0, 5),
+                      )
+                    ],
+                    borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(155),
                       bottomRight: Radius.circular(0),
                       topLeft: Radius.circular(0),
                       topRight: Radius.circular(0),
                     ),
                   ),
-                  child: Container(
-                    width: double.infinity,
-                    height: 100,
-                    child: Stack(
-                      children: [
-                        Image.asset(
-                          'assets/images/add_photo.png',
-                          width: double.infinity,
-                          height: double.infinity,
-                          fit: BoxFit.contain,
-                        ),
-                        Align(
-                          alignment: const AlignmentDirectional(0.94, -0.92),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 10, 0),
-                            child: SelectionArea(
-                                child: Text(
-                              'Seleziona una \ntipologia',
-                              textAlign: TextAlign.end,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                            )),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 15, 0),
+                  child: SelectionArea(
+                      child: Text(
+                    'Seleziona una tipologia:',
+                    textAlign: TextAlign.start,
+                    style: FlutterFlowTheme.of(context).bodyText2.override(
+                          fontFamily: 'IBM Plex Sans',
+                          fontSize: 19,
+                          fontWeight: FontWeight.w300,
+                        ),
+                  )),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
-                        child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                        child: Container(
+                          width: 100,
+                          height: 190,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 12,
+                                color: Color(0x14000000),
+                                offset: Offset(0, 5),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(3),
+                          ),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: const Color(0xFFFA4D56),
+                            color: Color(0xFF4589FF),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(30),
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                FlutterFlowIconButton(
-                                  borderColor: const Color(0x00FFFFFF),
-                                  borderRadius: 0,
-                                  borderWidth: 0,
-                                  buttonSize: 150,
-                                  icon: Icon(
-                                    Icons.image,
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    size: 90,
-                                  ),
-
-                                  /*
+                                Expanded(
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Color(0x00FFFFFF),
+                                    borderRadius: 0,
+                                    borderWidth: 0,
+                                    buttonSize: 140,
+                                    icon: Icon(
+                                      Icons.image_outlined,
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      size: 60,
+                                    ),
+                                    /*
                                   Qui parte il quiz di tipologia associa l'immagine al nome:
                                   1. Vengono prelevati tutti i quesiti della categoria e tipologia selezionata.
                                   2. Se non ci sono domande viene mostrato un Toast che avvisa l'utente.
@@ -140,38 +143,40 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   4. Passo alla pagina del quiz associa immagine al nome i quesiti che dovrò svolgere
                                      l'utente corrente e il "timestamp" di inizio quiz.
                                   */
-                                  onPressed: () async {
-                                    List<dynamic> quesiti =
-                                        await QuizController().getRandomQuesiti(
-                                            widget.categoria,
-                                            'Associa l\'immagine al nome',
-                                            widget.user.userID,
-                                            widget.caregiverID);
-                                    if (quesiti.isEmpty) {
-                                      Fluttertoast.showToast(
-                                          msg: 'Non ci sono domande!');
-                                    } else {
-                                      //faccio partire il timer quando clicco sulla tipologia
-                                      //del quiz che voglio iniziare
-                                      DateTime inizioTempo = DateTime.now();
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ImmagineANomeWidget(
-                                                      quesiti: quesiti,
-                                                      categoria:
-                                                          widget.categoria,
-                                                      caregiverID:
-                                                          widget.caregiverID,
-                                                      user: widget.user,
-                                                      inizioTempo:
-                                                          inizioTempo)));
-                                    }
-                                  },
+                                    onPressed: () async {
+                                      List<dynamic> quesiti =
+                                          await QuizController()
+                                              .getRandomQuesiti(
+                                                  widget.categoria,
+                                                  'Associa l\'immagine al nome',
+                                                  widget.user.userID,
+                                                  widget.caregiverID);
+                                      if (quesiti.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg: 'Non ci sono domande!');
+                                      } else {
+                                        //faccio partire il timer quando clicco sulla tipologia
+                                        //del quiz che voglio iniziare
+                                        DateTime inizioTempo = DateTime.now();
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ImmagineANomeWidget(
+                                                        quesiti: quesiti,
+                                                        categoria:
+                                                            widget.categoria,
+                                                        caregiverID:
+                                                            widget.caregiverID,
+                                                        user: widget.user,
+                                                        inizioTempo:
+                                                            inizioTempo)));
+                                      }
+                                    },
+                                  ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 5),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20, 0, 0, 5),
                                   child: SelectionArea(
                                       child: Text(
                                     'Associa l\'immagine al nome',
@@ -187,18 +192,19 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   )),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 25),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(
                                     'Selezionare l\'immagine in base al nome mostrato nella domanda.',
                                     textAlign: TextAlign.start,
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText2
+                                        .bodyText1
                                         .override(
                                           fontFamily: 'IBM Plex Sans',
                                           color: FlutterFlowTheme.of(context)
                                               .tertiaryColor,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.w200,
                                         ),
                                   )),
@@ -212,39 +218,49 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(20, 5, 20, 10),
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 5, 20, 10),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
-                        child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                        child: Container(
+                          width: 100,
+                          height: 190,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 12,
+                                color: Color(0x14000000),
+                                offset: Offset(0, 5),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(3),
+                          ),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: const Color(0xFFA56EFF),
+                            color: Color(0xFFA56EFF),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(30),
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                FlutterFlowIconButton(
-                                  borderColor: const Color(0x00FFFFFF),
-                                  borderRadius: 0,
-                                  borderWidth: 0,
-                                  buttonSize: 150,
-                                  icon: Icon(
-                                    Icons.toc,
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    size: 115,
-                                  ),
-
-                                  /*
+                                Expanded(
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Color(0x00FFFFFF),
+                                    borderRadius: 0,
+                                    borderWidth: 0,
+                                    buttonSize: 140,
+                                    icon: Icon(
+                                      Icons.list,
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      size: 60,
+                                    ),
+                                    /*
                                    Qui parte il quiz di tipologia associa l'immagine al nome:
                                    1. Vengono prelevati tutti i quesiti della categoria e tipologia selezionata.
                                    2. Se non ci sono domande viene mostrato un Toast che avvisa l'utente.
@@ -254,38 +270,39 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                    4. Passo alla pagina del quiz associa immagine al nome i quesiti che dovrò svolgere
                                      l'utente corrente e il "timestamp" di inizio quiz.
                                   */
-                                  onPressed: () async {
-                                    List<dynamic> quesiti =
-                                        await QuizController().getRandomQuesiti(
-                                            widget.categoria,
-                                            'Associa il nome all\'immagine',
-                                            widget.user.userID,
-                                            widget.caregiverID);
-                                    if (quesiti.isEmpty) {
-                                      Fluttertoast.showToast(
-                                          msg: 'Non ci sono domande!');
-                                    } else {
-                                      //faccio partire il timer quando clicco sulla tipologia
-                                      //del quiz che voglio iniziare
-                                      DateTime inizioTempo = DateTime.now();
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  NomeAImmagineWidget(
-                                                      quesiti: quesiti,
-                                                      categoria:
-                                                          widget.categoria,
-                                                      caregiverID:
-                                                          widget.caregiverID,
-                                                      user: widget.user,
-                                                      inizioTempo:
-                                                          inizioTempo)));
-                                    }
-                                  },
+                                    onPressed: () async {
+                                      List<dynamic> quesiti =
+                                          await QuizController().getRandomQuesiti(
+                                              widget.categoria,
+                                              'Associa il nome all\'immagine',
+                                              widget.user.userID,
+                                              widget.caregiverID);
+                                      if (quesiti.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg: 'Non ci sono domande!');
+                                      } else {
+                                        //faccio partire il timer quando clicco sulla tipologia
+                                        //del quiz che voglio iniziare
+                                        DateTime inizioTempo = DateTime.now();
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NomeAImmagineWidget(
+                                                        quesiti: quesiti,
+                                                        categoria:
+                                                            widget.categoria,
+                                                        caregiverID:
+                                                            widget.caregiverID,
+                                                        user: widget.user,
+                                                        inizioTempo:
+                                                            inizioTempo)));
+                                      }
+                                    },
+                                  ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 5),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20, 0, 0, 5),
                                   child: SelectionArea(
                                       child: Text(
                                     'Associa il nome all\'immagine',
@@ -301,18 +318,19 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   )),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 25),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(
                                     'Selezionare la risposta esatta in base all\'immagine mostrata nella domanda.',
                                     textAlign: TextAlign.start,
                                     style: FlutterFlowTheme.of(context)
-                                        .bodyText2
+                                        .bodyText1
                                         .override(
                                           fontFamily: 'IBM Plex Sans',
                                           color: FlutterFlowTheme.of(context)
                                               .tertiaryColor,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.w200,
                                         ),
                                   )),
