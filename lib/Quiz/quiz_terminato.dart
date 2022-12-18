@@ -138,6 +138,24 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                   onTap: () {
                                     umoreSelezionato = 0;
                                     print(umoreSelezionato);
+                                    //in base all'emoticon selezionata devo andare a modificare
+                                    //il valore di umore nel report. Se non è stato selezionata
+                                    //nessuna emoticon, l'umore di default vale 3 su una scala da 0 a 4
+                                    //altrimenti prelevo il valore dell'emoticon selezionata e lo
+                                    //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
+                                    //alla home
+                                    widget.report.umore = umoreSelezionato;
+
+                                    widget.report.createReport(
+                                        widget.caregiverID,
+                                        widget.userID,
+                                        widget.reportID);
+
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const WidgetTree()),
+                                        (Route<dynamic> route) => false);
                                   },
                                   child: Image.network(
                                     'https://cdn-icons-png.flaticon.com/512/6637/6637186.png',
@@ -150,6 +168,24 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                   onTap: () {
                                     umoreSelezionato = 1;
                                     print(umoreSelezionato);
+                                    //in base all'emoticon selezionata devo andare a modificare
+                                    //il valore di umore nel report. Se non è stato selezionata
+                                    //nessuna emoticon, l'umore di default vale 3 su una scala da 0 a 4
+                                    //altrimenti prelevo il valore dell'emoticon selezionata e lo
+                                    //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
+                                    //alla home
+                                    widget.report.umore = umoreSelezionato;
+
+                                    widget.report.createReport(
+                                        widget.caregiverID,
+                                        widget.userID,
+                                        widget.reportID);
+
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const WidgetTree()),
+                                        (Route<dynamic> route) => false);
                                   },
                                   child: Image.network(
                                     'https://cdn-icons-png.flaticon.com/512/6637/6637163.png',
@@ -162,6 +198,24 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                   onTap: () {
                                     umoreSelezionato = 2;
                                     print(umoreSelezionato);
+                                    //in base all'emoticon selezionata devo andare a modificare
+                                    //il valore di umore nel report. Se non è stato selezionata
+                                    //nessuna emoticon, l'umore di default vale 3 su una scala da 0 a 4
+                                    //altrimenti prelevo il valore dell'emoticon selezionata e lo
+                                    //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
+                                    //alla home
+                                    widget.report.umore = umoreSelezionato;
+
+                                    widget.report.createReport(
+                                        widget.caregiverID,
+                                        widget.userID,
+                                        widget.reportID);
+
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const WidgetTree()),
+                                        (Route<dynamic> route) => false);
                                   },
                                   child: Image.network(
                                     'https://cdn-icons-png.flaticon.com/512/6637/6637207.png',
@@ -174,6 +228,24 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                   onTap: () {
                                     umoreSelezionato = 3;
                                     print(umoreSelezionato);
+                                    //in base all'emoticon selezionata devo andare a modificare
+                                    //il valore di umore nel report. Se non è stato selezionata
+                                    //nessuna emoticon, l'umore di default vale 3 su una scala da 0 a 4
+                                    //altrimenti prelevo il valore dell'emoticon selezionata e lo
+                                    //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
+                                    //alla home
+                                    widget.report.umore = umoreSelezionato;
+
+                                    widget.report.createReport(
+                                        widget.caregiverID,
+                                        widget.userID,
+                                        widget.reportID);
+
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const WidgetTree()),
+                                        (Route<dynamic> route) => false);
                                   },
                                   child: Image.network(
                                     'https://cdn-icons-png.flaticon.com/512/6637/6637188.png',
@@ -186,6 +258,25 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                   onTap: () {
                                     umoreSelezionato = 4;
                                     print(umoreSelezionato);
+
+                                    //in base all'emoticon selezionata devo andare a modificare
+                                    //il valore di umore nel report. Se non è stato selezionata
+                                    //nessuna emoticon, l'umore di default vale 3 su una scala da 0 a 4
+                                    //altrimenti prelevo il valore dell'emoticon selezionata e lo
+                                    //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
+                                    //alla home
+                                    widget.report.umore = umoreSelezionato;
+
+                                    widget.report.createReport(
+                                        widget.caregiverID,
+                                        widget.userID,
+                                        widget.reportID);
+
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const WidgetTree()),
+                                        (Route<dynamic> route) => false);
                                   },
                                   child: Image.network(
                                     'https://cdn-icons-png.flaticon.com/512/6637/6637197.png',
@@ -195,50 +286,6 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                   ),
                                 ),
                               ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 40, 10, 0),
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                //in base all'emoticon selezionata devo andare a modificare
-                                //il valore di umore nel report. Se non è stato selezionata
-                                //nessuna emorticon, l'umore di default vale 3 su una scala da 0 a 4
-                                //altrimenti prelevo il valore dell'emoticon selezionata e lo
-                                //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
-                                //alla home
-                                widget.report.umore = umoreSelezionato;
-
-                                widget.report.createReport(widget.caregiverID,
-                                    widget.userID, widget.reportID);
-
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const WidgetTree()),
-                                    (Route<dynamic> route) => false);
-                              },
-                              text: 'Home',
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 60,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      fontSize: 20,
-                                    ),
-                                borderSide: const BorderSide(
-                                  color: Color(0x00101213),
-                                  width: 1,
-                                ),
-                                borderRadius: 30,
-                              ),
                             ),
                           ),
                         ],

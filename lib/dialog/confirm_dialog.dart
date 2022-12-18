@@ -40,7 +40,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
       height: 180,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(30),
       ),
       child: Align(
         alignment: const AlignmentDirectional(0, -1),
@@ -64,6 +64,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
               child: Text(
                 widget.description,
                 style: FlutterFlowTheme.of(context).bodyText2.override(
+                      fontWeight: FontWeight.w300,
                       fontFamily: 'IBM Plex Sans',
                       fontSize: 18,
                     ),

@@ -459,7 +459,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   20, 20, 20, 20),
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(30),
                                 child: Image.network(
                                   quesito['domandaImmagine'],
                                   width: double.infinity,

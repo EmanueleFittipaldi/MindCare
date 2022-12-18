@@ -14,7 +14,7 @@ class _CustomDialogCorrettaState extends State<CustomDialogCorretta> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(30),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -28,7 +28,7 @@ class _CustomDialogCorrettaState extends State<CustomDialogCorretta> {
       height: 600,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(30),
       ),
       child: Align(
         alignment: const AlignmentDirectional(0.05, -0.3),
@@ -76,7 +76,7 @@ class _CustomDialogCorrettaState extends State<CustomDialogCorretta> {
                       color: Colors.transparent,
                       width: 1,
                     ),
-                    borderRadius: 8,
+                    borderRadius: 30,
                   ),
                 ),
               ),
