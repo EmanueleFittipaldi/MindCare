@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/album_ricordi/album_ricordi.dart';
 import 'package:mindcare/controller/user_controller.dart';
+import 'package:mindcare/gestione_SOS/sos_paziente.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/widget_tree.dart';
 
@@ -610,7 +611,13 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                               .tertiaryColor,
                                           size: 50,
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const SosWidget()));
+                                        },
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional

@@ -90,6 +90,9 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
         print('countTentativi: $countTentativi');
         print('mappaRisposte: $mappaRisposte');
       }
+    } else {
+      //cancel box content
+      await box.delete('statoCorrente');
     }
   }
 
@@ -128,13 +131,13 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
   checkRisposta(var quesito, var opzioneSelezionata) async {
     //CASO RISPOSTA GIUSTA
     if (quesito['risposta'] == opzioneSelezionata) {
+      timer!.cancel();
       await showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
             return const CustomDialogCorretta();
           });
-      timer!.cancel();
       setState(() {
         mappaRisposte[quesito['quesitoID']] = true;
         indexQuesito += 1;
@@ -144,6 +147,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
     } else {
       ///CASO RISPOSTA SBAGLIATA, PROPOSTA TENTATIVO
       if (countTentativi == 1) {
+        timer!.cancel();
         //verifico se ci sono tentativi
         var risposta = await showDialog(
             barrierDismissible: false,
@@ -154,7 +158,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
 
         //CASO NON VOGLIO RIPROVARE
         if (!risposta) {
-          timer!.cancel();
+          //timer!.cancel();
           setState(() {
             mappaRisposte[quesito['quesitoID']] = false;
             indexQuesito += 1;
@@ -162,20 +166,21 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
             countTentativi = 1; //per sicurezza
           });
         } else {
-          timer!.cancel();
+          //timer!.cancel();
           setState(() {
             countTentativi = 0;
           });
         }
       } else {
+        timer!.cancel();
         //CASO NON HO PIU' TENTATIVI
         await showDialog(
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
-              return const CustomDialogNoTentativi();
+              return CustomDialogNoTentativi(quesito: quesito);
             });
-        timer!.cancel();
+        //timer!.cancel();
         setState(() {
           mappaRisposte[quesito['quesitoID']] = false;
           indexQuesito += 1;
@@ -427,12 +432,12 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                               child: Text(
-                                'Domanda 2',
+                                'Domanda ${indexQuesito + 1}/${widget.quesiti.length}',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText2
                                     .override(
                                       fontFamily: 'IBM Plex Sans',
-                                      fontSize: 25,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.w500,
                                     ),
                               ),

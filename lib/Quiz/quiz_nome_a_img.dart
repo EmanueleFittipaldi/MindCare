@@ -70,7 +70,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
       //devo ripristinare lo stato del quiz solo se lo stato memorizzato
       //è relativo a questa categoria e a questa tipologia
       if (categoria == widget.categoria &&
-          tipologia == 'Associa l\'immagine al nome') {
+          tipologia == 'Associa il nome all\'immagine') {
         timer!.cancel();
         setState(() {
           indexQuesito = box.get('statoCorrente')['indexQuesito'];
@@ -85,6 +85,9 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
         print('countTentativi: $countTentativi');
         print('mappaRisposte: $mappaRisposte');
       }
+    } else {
+      //cancel box content
+      await box.delete('statoCorrente');
     }
   }
 
@@ -122,6 +125,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
    */
   checkRisposta(var quesito, var opzioneSelezionata) async {
     if (quesito['risposta'] == opzioneSelezionata) {
+      timer!.cancel();
       //CASO RISPOSTA GIUSTA
       await showDialog(
           barrierDismissible: false,
@@ -129,7 +133,6 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
           builder: (BuildContext context) {
             return const CustomDialogCorretta();
           });
-      timer!.cancel();
       setState(() {
         mappaRisposte[quesito['quesitoID']] = true;
         indexQuesito += 1;
@@ -139,6 +142,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
     } else {
       //CASO RISPOSTA SBAGLIATA, PROPOSTA TENTATIVO
       if (countTentativi == 1) {
+        timer!.cancel();
         //verifico se ci sono tentativi
         var risposta = await showDialog(
             barrierDismissible: false,
@@ -149,7 +153,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
 
         //CASO NON VOGLIO RIPROVARE
         if (!risposta) {
-          timer!.cancel();
+          //timer!.cancel();
           setState(() {
             mappaRisposte[quesito['quesitoID']] = false;
             indexQuesito += 1;
@@ -158,20 +162,21 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
           });
         } else {
           //CASO VOGLIO RIPROVARE
-          timer!.cancel();
+          //timer!.cancel();
           setState(() {
             countTentativi = 0;
           });
         }
       } else {
+        timer!.cancel();
         //CASO NON HO PIU' TENTATIVI
         await showDialog(
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
-              return const CustomDialogNoTentativi();
+              return CustomDialogNoTentativi(quesito: quesito);
             });
-        timer!.cancel();
+        //timer!.cancel();
         setState(() {
           mappaRisposte[quesito['quesitoID']] = false;
           indexQuesito += 1;
@@ -350,7 +355,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                 //l'ho portato a termine. In questo modo potrò riprenderlo
                 Map<String, dynamic> statoCorrente = {
                   'categoria': widget.categoria,
-                  'tipologia': 'Associa l\'immagine al nome',
+                  'tipologia': 'Associa il nome all\'immagine',
                   'indexQuesito': indexQuesito,
                   'mappaRisposte': mappaRisposte,
                   'countTentativi': countTentativi,
@@ -425,7 +430,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 12, 0, 0),
                               child: Text(
-                                'Domanda ${indexQuesito + 1}',
+                                'Domanda ${indexQuesito + 1}/${widget.quesiti.length}',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText2
                                     .override(
