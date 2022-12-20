@@ -6,6 +6,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/widget_tree.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -448,17 +449,26 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                 .fromSTEB(0, 0, 10, 0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
-                                                showDialog(
-                                                    context: context,
-                                                    barrierDismissible: false,
-                                                    builder: (context) => Center(
-                                                        child:
-                                                            CircularProgressIndicator()));
                                                 var success =
                                                     await UserController()
                                                         .forgottenPassword(
                                                             widget.user.email);
-                                                if (success) {}
+                                                if (success) {
+                                                  PanaraInfoDialog.show(
+                                                    context,
+                                                    title: "Modifica password",
+                                                    message:
+                                                        "Email per la modifica della password inviata!",
+                                                    buttonText: "Okay",
+                                                    onTapDismiss: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    panaraDialogType:
+                                                        PanaraDialogType.normal,
+                                                    barrierDismissible:
+                                                        false, // optional parameter (default is true)
+                                                  );
+                                                }
                                               },
                                               text: 'Modifica password',
                                               options: FFButtonOptions(
@@ -492,11 +502,36 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                 .fromSTEB(10, 0, 0, 0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
-                                                Auth().signOut();
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const WidgetTree()));
+                                                var confirmDialogResponse =
+                                                    await PanaraConfirmDialog
+                                                        .show(
+                                                  context,
+                                                  title: "Esci dall'account",
+                                                  message:
+                                                      "Vuoi davvero uscire dall'account?",
+                                                  confirmButtonText: "Esci",
+                                                  cancelButtonText: "Annulla",
+                                                  onTapCancel: () {
+                                                    Navigator.of(context)
+                                                        .pop(false);
+                                                  },
+                                                  onTapConfirm: () {
+                                                    Navigator.of(context)
+                                                        .pop(true);
+                                                  },
+                                                  panaraDialogType:
+                                                      PanaraDialogType.error,
+
+                                                  barrierDismissible:
+                                                      false, // optional parameter (default is true)
+                                                );
+                                                if (confirmDialogResponse) {
+                                                  Auth().signOut();
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const WidgetTree()));
+                                                }
                                               },
                                               text: 'Esci',
                                               options: FFButtonOptions(
@@ -1054,41 +1089,163 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                 .fromSTEB(0, 15, 0, 15),
                                             child: FFButtonWidget(
                                               onPressed: () async {
-                                                print('sto qui');
-                                                print(widget.caregiverUID);
-                                                print(widget.user.userID);
-                                                var success =
-                                                    await UserController()
-                                                        .modificaDati(
-                                                            textController1
-                                                                ?.text
-                                                                .toString(),
-                                                            textController2
-                                                                ?.text
-                                                                .toString(),
-                                                            textcontrollerData!
-                                                                .text,
-                                                            textController3
-                                                                ?.text
-                                                                .toString(),
-                                                            widget.user.type,
-                                                            widget.user.userID,
-                                                            widget
-                                                                .caregiverUID);
-                                                if (success) {
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                          'Modifica avvenuta!');
+                                                var confirmDialogResponse =
+                                                    await PanaraConfirmDialog
+                                                        .show(
+                                                  context,
+                                                  title: "Conferma modifica",
+                                                  message:
+                                                      "Vuoi confermare le modifiche effettuate?",
+                                                  confirmButtonText: "Conferma",
+                                                  cancelButtonText: "Annulla",
+                                                  onTapCancel: () {
+                                                    Navigator.of(context)
+                                                        .pop(false);
+                                                  },
+                                                  onTapConfirm: () {
+                                                    Navigator.of(context)
+                                                        .pop(true);
+                                                  },
+                                                  panaraDialogType:
+                                                      PanaraDialogType.normal,
+
+                                                  barrierDismissible:
+                                                      false, // optional parameter (default is true)
+                                                );
+                                                if (confirmDialogResponse) {
+                                                  var success =
+                                                      await UserController()
+                                                          .modificaDati(
+                                                              textController1?.text
+                                                                  .toString(),
+                                                              textController2
+                                                                  ?.text
+                                                                  .toString(),
+                                                              textcontrollerData!
+                                                                  .text,
+                                                              textController3
+                                                                  ?.text
+                                                                  .toString(),
+                                                              widget.user.type,
+                                                              widget
+                                                                  .user.userID,
+                                                              widget
+                                                                  .caregiverUID);
+                                                  if (success) {
+                                                    PanaraInfoDialog.show(
+                                                      context,
+                                                      title:
+                                                          "Salvataggio modifiche",
+                                                      message:
+                                                          "Modifiche avvenute con successo!",
+                                                      buttonText: "Okay",
+                                                      onTapDismiss: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      panaraDialogType:
+                                                          PanaraDialogType
+                                                              .success,
+                                                      barrierDismissible:
+                                                          false, // optional parameter (default is true)
+                                                    );
+                                                  } else {
+                                                    PanaraInfoDialog.show(
+                                                      context,
+                                                      title:
+                                                          "Salvataggio modifiche",
+                                                      message:
+                                                          "Ops! Qualcosa è andato storto!",
+                                                      buttonText: "Okay",
+                                                      onTapDismiss: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      panaraDialogType:
+                                                          PanaraDialogType
+                                                              .error,
+                                                      barrierDismissible:
+                                                          false, // optional parameter (default is true)
+                                                    );
+                                                  }
                                                 }
                                                 pageViewController!.jumpTo(0);
                                               },
                                               text: 'Salva',
                                               options: FFButtonOptions(
-                                                width: 130,
-                                                height: 40,
+                                                width: 150,
+                                                height: 60,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryColor,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                borderSide: const BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1,
+                                                ),
+                                                borderRadius: 30,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 30, 0, 15),
+                                            child: FFButtonWidget(
+                                              onPressed: () async {
+                                                var confirmDialogResponse =
+                                                    await PanaraConfirmDialog
+                                                        .show(
+                                                  context,
+                                                  title: "Eliminazione account",
+                                                  message:
+                                                      "Vuoi davvero eliminare l\'account? L'azione è irreversibile!",
+                                                  confirmButtonText: "Conferma",
+                                                  cancelButtonText: "Annulla",
+                                                  onTapCancel: () {
+                                                    Navigator.of(context)
+                                                        .pop(false);
+                                                  },
+                                                  onTapConfirm: () {
+                                                    Navigator.of(context)
+                                                        .pop(true);
+                                                  },
+                                                  panaraDialogType:
+                                                      PanaraDialogType.error,
+
+                                                  barrierDismissible:
+                                                      false, // optional parameter (default is true)
+                                                );
+                                                if (confirmDialogResponse) {
+                                                  var success =
+                                                      await UserController()
+                                                          .deleteAccount(
+                                                              widget
+                                                                  .caregiverUID,
+                                                              widget
+                                                                  .user.userID,
+                                                              widget.user.type,
+                                                              widget.user
+                                                                  .profileImgPath);
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const WidgetTree()));
+                                                }
+                                              },
+                                              text: 'Elimina account',
+                                              options: FFButtonOptions(
+                                                width: 150,
+                                                height: 60,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .borderErrorColor,
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .subtitle2
