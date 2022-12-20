@@ -88,15 +88,17 @@ class _InitHomepageState extends State<InitHomepage> {
                         .elementAt(_selectedIndex)[widget.user.type],
               ))),
       bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.home_outlined, size: 35),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Impostazioni',
+            icon: Icon(Icons.settings_outlined, size: 35),
+            label: '',
           ),
         ],
         currentIndex: _selectedIndex,
