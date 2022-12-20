@@ -7,7 +7,8 @@ class AlertHint extends StatelessWidget {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(32.0))),
       title: const Text(
-          "Mmm, sembra che questa domanda ti abbia messo un po' in difficoltà, vuoi vedere la risposta?"),
+          "Mmm, sembra che questa domanda ti abbia messo un po' in difficoltà, vuoi vedere la risposta?",
+          style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20)),
       actions: [
         TextButton(
           child: const Text("Si", style: TextStyle(fontSize: 20)),
