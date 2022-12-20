@@ -4,6 +4,7 @@ import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/gestione_quiz/domanda_img_a_nome.dart';
 import 'package:mindcare/gestione_quiz/domanda_nome_a_img.dart';
 import 'package:mindcare/model/quesito.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import '../controller/auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -523,7 +524,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                   borderWidth: 1,
                                                   buttonSize: 45,
                                                   icon: const Icon(
-                                                    Icons.cancel,
+                                                    Icons
+                                                        .delete_forever_outlined,
                                                     color: Color(0xFF8E8E8E),
                                                     size: 25,
                                                   ),
@@ -532,24 +534,32 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                       la domanda corrispondete da Firebase. */
                                                   onPressed: () async {
                                                     var confirmDialogResponse =
-                                                        await showDialog(
-                                                            barrierDismissible:
-                                                                false,
-                                                            context: context,
-                                                            builder:
-                                                                (BuildContext
-                                                                    context) {
-                                                              return const ConfirmDialog(
-                                                                title:
-                                                                    'Eliminazione domanda',
-                                                                description:
-                                                                    'Vuoi davvero eliminare la domanda?',
-                                                                textOptionConfirm:
-                                                                    'Conferma',
-                                                                textOptionDelete:
-                                                                    'Annulla',
-                                                              );
-                                                            });
+                                                        await PanaraConfirmDialog
+                                                            .show(
+                                                      context,
+                                                      title:
+                                                          "Eliminazione domanda",
+                                                      message:
+                                                          "Vuoi davvero eliminare la domanda? L'azione non è riversibile!",
+                                                      confirmButtonText:
+                                                          "Conferma",
+                                                      cancelButtonText:
+                                                          "Annulla",
+                                                      onTapCancel: () {
+                                                        Navigator.of(context)
+                                                            .pop(false);
+                                                      },
+                                                      onTapConfirm: () {
+                                                        Navigator.of(context)
+                                                            .pop(true);
+                                                      },
+                                                      panaraDialogType:
+                                                          PanaraDialogType
+                                                              .normal,
+
+                                                      barrierDismissible:
+                                                          false, // optional parameter (default is true)
+                                                    );
                                                     if (confirmDialogResponse) {
                                                       FirebaseFirestore.instance
                                                           .collection('user')

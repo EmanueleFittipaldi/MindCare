@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/quesito.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../controller/auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
@@ -108,7 +109,27 @@ passata come parametro */
                 size: 30,
               ),
               onPressed: () async {
-                Navigator.of(context).pop();
+                var confirmDialogResponse = await PanaraConfirmDialog.show(
+                  context,
+                  title: "Creazione domanda",
+                  message:
+                      "Vuoi davvero annullare la creazione? Tutti i dati verranno persi!",
+                  confirmButtonText: "Conferma",
+                  cancelButtonText: "Annulla",
+                  onTapCancel: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  onTapConfirm: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  panaraDialogType: PanaraDialogType.normal,
+
+                  barrierDismissible:
+                      false, // optional parameter (default is true)
+                );
+                if (confirmDialogResponse) {
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ),

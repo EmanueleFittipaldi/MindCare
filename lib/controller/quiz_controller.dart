@@ -212,4 +212,33 @@ passata come parametro */
     );
     quesito.createNewQuestion(user, quesitoIDGenerato);
   }
+
+  getQuesitiByID(String userID, String caregiverID, quesitiID) async {
+    var result = [];
+    for (var id in quesitiID) {
+      DocumentSnapshot _collectionRef = await FirebaseFirestore.instance
+          .collection('user')
+          .doc(caregiverID)
+          .collection('Pazienti')
+          .doc(userID)
+          .collection('Quesiti')
+          .doc(id)
+          .get();
+      var data = _collectionRef.get('risposta');
+      var nOp = data.replaceAll(new RegExp(r'[^0-9]'), '');
+      result.add(Quesito(
+          quesitoID: _collectionRef.get('quesitoID'),
+          opzione1: _collectionRef.get('opzione1'),
+          opzione2: _collectionRef.get('opzione2'),
+          opzione3: _collectionRef.get('opzione3'),
+          opzione4: _collectionRef.get('opzione4'),
+          domanda: _collectionRef.get('domanda'),
+          domandaImmagine: _collectionRef.get('domandaImmagine'),
+          risposta: _collectionRef.get('opzione' + nOp),
+          categoria: _collectionRef.get('categoria'),
+          tipologia: _collectionRef.get('tipologia'),
+          tempoRisposta: _collectionRef.get('tempoRisposta')));
+    }
+    return result;
+  }
 }
