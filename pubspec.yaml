@@ -54,6 +54,11 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_tags: ^0.4.9+1
   animated_custom_dropdown: 1.2.2
+  group_button: ^5.2.2
+  calendar_date_picker2: ^0.3.5
+  table_calendar: 3.0.6
+  panara_dialogs: ^0.1.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

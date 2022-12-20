@@ -57,6 +57,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  calendar_date_picker2:
+    dependency: "direct main"
+    description:
+      name: calendar_date_picker2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.5"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -324,6 +331,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  group_button:
+    dependency: "direct main"
+    description:
+      name: group_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.2.2"
   hive:
     dependency: "direct main"
     description:
@@ -499,6 +513,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
+  panara_dialogs:
+    dependency: "direct main"
+    description:
+      name: panara_dialogs
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.4"
   path:
     dependency: transitive
     description:
@@ -709,6 +730,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  simple_gesture_detector:
+    dependency: transitive
+    description:
+      name: simple_gesture_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -777,6 +805,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0+3"
+  table_calendar:
+    dependency: "direct main"
+    description:
+      name: table_calendar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.6"
   term_glyph:
     dependency: transitive
     description:
