@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/user_controller.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -170,24 +171,54 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  showDialog(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      builder: (context) => const Center(
-                                          child: CircularProgressIndicator()));
                                   if (_controllerEmail.text == '') {
-                                    Fluttertoast.showToast(
-                                        msg: 'Inserisci l\'email!');
-                                    Navigator.of(context).pop();
+                                    PanaraInfoDialog.show(
+                                      context,
+                                      title: "Accesso",
+                                      message: "Inserisci l\'email!",
+                                      buttonText: "Okay",
+                                      onTapDismiss: () {
+                                        Navigator.pop(context);
+                                      },
+                                      panaraDialogType:
+                                          PanaraDialogType.warning,
+                                      barrierDismissible:
+                                          false, // optional parameter (default is true)
+                                    );
                                   } else {
                                     var success = await UserController()
                                         .forgottenPassword(
                                             _controllerEmail.text);
                                     if (success) {
-                                      Navigator.of(context)
-                                          .popUntil((route) => route.isFirst);
+                                      PanaraInfoDialog.show(
+                                        context,
+                                        title: "Password dimenticata",
+                                        message: "Email inviata!",
+                                        buttonText: "Okay",
+                                        onTapDismiss: () {
+                                          Navigator.of(context).popUntil(
+                                              (route) => route.isFirst);
+                                        },
+                                        panaraDialogType:
+                                            PanaraDialogType.success,
+                                        barrierDismissible:
+                                            false, // optional parameter (default is true)
+                                      );
                                     } else {
-                                      Navigator.of(context).pop();
+                                      PanaraInfoDialog.show(
+                                        context,
+                                        title: "Password dimenticata",
+                                        message:
+                                            "Ops! Qualcosa è andato storto!",
+                                        buttonText: "Okay",
+                                        onTapDismiss: () {
+                                          Navigator.pop(context);
+                                        },
+                                        panaraDialogType:
+                                            PanaraDialogType.error,
+                                        barrierDismissible:
+                                            false, // optional parameter (default is true)
+                                      );
                                     }
                                   }
                                 },

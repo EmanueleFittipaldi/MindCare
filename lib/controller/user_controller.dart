@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/auth.dart';
 
@@ -90,6 +91,44 @@ class UserController {
       await Auth().createNewAccount(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: "qualcosa è andato storto");
+    }
+  }
+
+  Future<String> deleteAccount(
+      String caregiveruid, String useruid, String type, String imgPath) async {
+    var user = FirebaseFirestore.instance.collection('user');
+    if (type == 'Caregiver') {
+      var docSnapshot =
+          user.doc(caregiveruid); //riferimento al documento da eliminare
+      await FirebaseFirestore.instance
+          .runTransaction((Transaction deleteTransaction) async {
+        deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione
+      });
+      if (imgPath != '') {
+        await FirebaseStorage.instance
+            .refFromURL(imgPath)
+            .delete(); //eliminazione immagine
+      }
+    } else if (type == 'Paziente') {
+      var docSnapshot = user
+          .doc(caregiveruid)
+          .collection('Pazienti')
+          .doc(useruid); //riferimento al documento da eliminare
+      await FirebaseFirestore.instance
+          .runTransaction((Transaction deleteTransaction) async {
+        deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione
+      });
+      if (imgPath != '') {
+        await FirebaseStorage.instance
+            .refFromURL(imgPath)
+            .delete(); //eliminazione immagine
+      }
+    }
+    try {
+      await Auth().currentUser?.delete();
+      return 'success';
+    } on FirebaseAuthException catch (e) {
+      return e.toString();
     }
   }
 }
