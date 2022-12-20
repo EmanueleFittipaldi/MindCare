@@ -43,6 +43,7 @@ class Ricordo {
         .doc(user)
         .collection('Ricordi')
         .doc(ricordoID);
+
     await docUser.set(json);
   }
 }

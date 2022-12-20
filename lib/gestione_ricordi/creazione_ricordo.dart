@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:mindcare/model/ricordo.dart';
 import 'package:mindcare/controller/image_upload.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:video_player/video_player.dart';
@@ -109,7 +110,31 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                 size: 30,
               ),
               onPressed: () async {
-                Navigator.of(context).pop();
+                if (widget.memoryItem != null) {
+                  Navigator.of(context).pop();
+                } else {
+                  var confirmDialogResponse = await PanaraConfirmDialog.show(
+                    context,
+                    title: "Creazione ricordo",
+                    message:
+                        "Vuoi davvero annullare la creazione? Tutti i dati verranno persi!",
+                    confirmButtonText: "Conferma",
+                    cancelButtonText: "Annulla",
+                    onTapCancel: () {
+                      Navigator.of(context).pop(false);
+                    },
+                    onTapConfirm: () {
+                      Navigator.of(context).pop(true);
+                    },
+                    panaraDialogType: PanaraDialogType.normal,
+
+                    barrierDismissible:
+                        false, // optional parameter (default is true)
+                  );
+                  if (confirmDialogResponse) {
+                    Navigator.of(context).pop();
+                  }
+                }
               },
             ),
           ),
@@ -739,8 +764,18 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                           }
                           Navigator.of(context).pop();
                         } else {
-                          Fluttertoast.showToast(
-                              msg: 'Inserisci tutti i campi!');
+                          PanaraInfoDialog.show(
+                            context,
+                            title: "Creazione paziente",
+                            message: "Errore: inserisci tutti i campi!",
+                            buttonText: "Okay",
+                            onTapDismiss: () {
+                              Navigator.pop(context);
+                            },
+                            panaraDialogType: PanaraDialogType.error,
+                            barrierDismissible:
+                                false, // optional parameter (default is true)
+                          );
                         }
                       },
                       text: 'Salva',

@@ -68,9 +68,10 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                             tags: memory['tags']));
                       }
                       memory['tags'].forEach((e) {
-                        if (!tags.contains(e)) {
-                          tags.add(e.toString()[0].toUpperCase() +
-                              e.toString().substring(1).toLowerCase());
+                        var el = e.toString()[0].toUpperCase() +
+                            e.toString().substring(1).toLowerCase();
+                        if (!tags.contains(el)) {
+                          tags.add(el);
                         }
                       });
                     });

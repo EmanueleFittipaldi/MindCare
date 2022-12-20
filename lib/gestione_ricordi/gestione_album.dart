@@ -9,6 +9,7 @@ import 'package:mindcare/model/utente.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 class GestioneAlbumWidget extends StatefulWidget {
   final Utente user;
@@ -316,24 +317,33 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                                   ),
                                                   onPressed: () async {
                                                     var confirmDialogResponse =
-                                                        await showDialog(
-                                                            barrierDismissible:
-                                                                false,
-                                                            context: context,
-                                                            builder:
-                                                                (BuildContext
-                                                                    context) {
-                                                              return const ConfirmDialog(
-                                                                title:
-                                                                    'Eliminazione ricordo',
-                                                                description:
-                                                                    'Vuoi davvero eliminare il ricordo?',
-                                                                textOptionConfirm:
-                                                                    'Conferma',
-                                                                textOptionDelete:
-                                                                    'Annulla',
-                                                              );
-                                                            });
+                                                        await PanaraConfirmDialog
+                                                            .show(
+                                                      context,
+                                                      title:
+                                                          "Eliminazione ricordo",
+                                                      message:
+                                                          "Vuoi davvero eliminare il ricordo? L'azione non è riversibile!",
+                                                      confirmButtonText:
+                                                          "Conferma",
+                                                      cancelButtonText:
+                                                          "Annulla",
+                                                      onTapCancel: () {
+                                                        Navigator.of(context)
+                                                            .pop(false);
+                                                      },
+                                                      onTapConfirm: () {
+                                                        Navigator.of(context)
+                                                            .pop(true);
+                                                      },
+                                                      panaraDialogType:
+                                                          PanaraDialogType
+                                                              .normal,
+
+                                                      barrierDismissible:
+                                                          false, // optional parameter (default is true)
+                                                    );
+
                                                     if (confirmDialogResponse) {
                                                       AlbumController()
                                                           .deleteMemory(
