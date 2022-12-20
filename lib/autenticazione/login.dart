@@ -1,6 +1,7 @@
 import 'package:mindcare/autenticazione/password_dimenticata.dart';
 import 'package:mindcare/autenticazione/registrazione.dart';
 import 'package:mindcare/widget_tree.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
@@ -32,17 +33,57 @@ class _LoginWidgetState extends State<LoginWidget> {
     } on FirebaseAuthException catch (e) {
       String msg = '';
       if (e.toString().contains("Given String is empty or null")) {
-        msg = "Inserire Email e Password prima di procedere";
+        PanaraInfoDialog.show(
+          context,
+          title: "Accesso",
+          message: "Inserire email e password prima di procedere!",
+          buttonText: "Okay",
+          onTapDismiss: () {
+            Navigator.pop(context);
+          },
+          panaraDialogType: PanaraDialogType.warning,
+          barrierDismissible: false, // optional parameter (default is true)
+        );
       } else if (e
           .toString()
           .contains("The email address is badly formatted")) {
-        msg = "Inserire una Email valida prima di procedere";
+        PanaraInfoDialog.show(
+          context,
+          title: "Accesso",
+          message: "Inserire un\'email valida prima di procedere!",
+          buttonText: "Okay",
+          onTapDismiss: () {
+            Navigator.pop(context);
+          },
+          panaraDialogType: PanaraDialogType.warning,
+          barrierDismissible: false, // optional parameter (default is true)
+        );
       } else if (e.toString().contains("There is no user record")) {
-        msg = "Email o Password errati";
+        PanaraInfoDialog.show(
+          context,
+          title: "Accesso",
+          message: "Email o password errati!",
+          buttonText: "Okay",
+          onTapDismiss: () {
+            Navigator.pop(context);
+          },
+          panaraDialogType: PanaraDialogType.error,
+          barrierDismissible: false, // optional parameter (default is true)
+        );
       } else {
-        msg = "Errore sconosciuto";
+        PanaraInfoDialog.show(
+          context,
+          title: "Accesso",
+          message: "Ops! Qualcosa è andato storto!",
+          buttonText: "Okay",
+          onTapDismiss: () {
+            Navigator.pop(context);
+          },
+          panaraDialogType: PanaraDialogType.error,
+          barrierDismissible: false, // optional parameter (default is true)
+        );
       }
-      errorToast(msg);
+
       setState(() {
         errorMessage = e.message;
       });

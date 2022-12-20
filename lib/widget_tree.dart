@@ -8,6 +8,7 @@ import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/init_homepage.dart';
 import 'package:mindcare/paziente/home_paziente.dart';
 import 'package:mindcare/model/utente.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import 'controller/auth.dart';
 import '../autenticazione/login.dart';
@@ -168,22 +169,26 @@ class _WidgetTreeState extends State<WidgetTree> {
                 if (snapshot.hasData) {
                   var type = snapshot.data;
                   if (type == 'Caregiver') {
+                    var closed = false;
                     if (Auth().currentUser!.emailVerified) {
                       return InitHomepage(user: userLogged!, carUID: null);
                     } else {
                       DateTime? date =
                           Auth().currentUser!.metadata.creationTime;
                       DateTime dateNow = DateTime.now();
+
                       if (dateNow.difference(date!).inHours > 24) {
-                        Fluttertoast.showToast(
-                            msg: 'Verifica scaduta, account cancellato!');
+                        Fluttertoast.showToast(msg: 'Verifica scaduata!');
+
                         deleteUserDB(type!);
                         Auth().currentUser!.delete();
                       } else {
                         Fluttertoast.showToast(msg: 'Verifica email!');
+
                         Auth().signOut();
                       }
                     }
+
                     return const LoginWidget();
                   } else if (type == 'Paziente') {
                     // DA NON ELIMINARE -> server per verificare che il paziente ha verifica l'email, ma da limare alcuni dettagli
@@ -195,8 +200,7 @@ class _WidgetTreeState extends State<WidgetTree> {
                           Auth().currentUser!.metadata.creationTime;
                       DateTime dateNow = DateTime.now();
                       if (dateNow.difference(date!).inHours > 24) {
-                        Fluttertoast.showToast(
-                            msg: 'Verifica scaduta, account cancellato!');
+                        Fluttertoast.showToast(msg: 'Verifica scaduta!');
                         deleteUserDB(type!);
                         Auth().currentUser!.delete();
                       } else {
@@ -210,7 +214,6 @@ class _WidgetTreeState extends State<WidgetTree> {
                     return const LoginWidget();
                   }
                 } else {
-                  print('sto aspettando i dati');
                   return const Scaffold(
                       body: Center(child: CircularProgressIndicator()));
                 }
