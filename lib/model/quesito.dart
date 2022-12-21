@@ -21,6 +21,7 @@ class Quesito {
   final String? categoria;
   final String? tipologia;
   final int? tempoRisposta;
+  final int? numeroTentativi;
   Quesito(
       {required this.quesitoID,
       required this.opzione1,
@@ -32,7 +33,8 @@ class Quesito {
       required this.risposta,
       required this.categoria,
       required this.tipologia,
-      required this.tempoRisposta});
+      required this.tempoRisposta,
+      required this.numeroTentativi});
 
   Map<String, dynamic> toJson() => {
         'quesitoID': quesitoID,
@@ -46,6 +48,7 @@ class Quesito {
         'categoria': categoria,
         'tipologia': tipologia,
         'tempoRisposta': tempoRisposta,
+        'numeroTentativi': numeroTentativi,
       };
 
   static Quesito fromJson(Map<String, dynamic> json) => Quesito(
@@ -59,7 +62,8 @@ class Quesito {
       risposta: json['risposta'],
       categoria: json['categoria'],
       tipologia: json['tipologia'],
-      tempoRisposta: json['tempoRisposta']);
+      tempoRisposta: json['tempoRisposta'],
+      numeroTentativi: json['numeroTentativi']);
 
   Future<void> createNewQuestion(Utente user, String quesitoIDGenerato) async {
     final json = toJson();

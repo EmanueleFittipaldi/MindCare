@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mindcare/flutter_flow/flutter_flow_theme.dart';
 import 'package:mindcare/model/quesito.dart';
 
 class AlertRisposta extends StatelessWidget {
@@ -30,9 +31,19 @@ class AlertRisposta extends StatelessWidget {
     var risposta = getRisposta();
     return AlertDialog(
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          borderRadius: BorderRadius.all(Radius.circular(30.0))),
       title: quesito['tipologia'] == 'Associa il nome all\'immagine'
-          ? Text(risposta)
+          ? Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+              child: Text(
+                risposta,
+                textAlign: TextAlign.center,
+                style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'IBM Plex Sans',
+                      fontSize: 25,
+                    ),
+              ))
           : Image.network(risposta),
       actions: [
         TextButton(

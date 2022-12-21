@@ -486,7 +486,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                                                 risposta: item['risposta'],
                                                                                 categoria: item['categoria'],
                                                                                 tipologia: item['tipologia'],
-                                                                                tempoRisposta: item['tempoRisposta']),
+                                                                                tempoRisposta: item['tempoRisposta'],
+                                                                                numeroTentativi: item['numeroTentativi']),
                                                                           )));
                                                         } else {
                                                           Navigator.of(context).push(
@@ -511,7 +512,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                                                 risposta: item['risposta'],
                                                                                 categoria: item['categoria'],
                                                                                 tipologia: item['tipologia'],
-                                                                                tempoRisposta: item['tempoRisposta']),
+                                                                                tempoRisposta: item['tempoRisposta'],
+                                                                                numeroTentativi: item['numeroTentativi']),
                                                                           )));
                                                         }
                                                       },

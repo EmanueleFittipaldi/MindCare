@@ -32,7 +32,7 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
       height: 250,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(30),
       ),
       child: Align(
         alignment: const AlignmentDirectional(0.05, -0.3),
@@ -62,13 +62,13 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
                   children: [
                     FFButtonWidget(
                       onPressed: () async {
-                        Navigator.of(context).pop(false);
+                        Navigator.of(context).pop(true);
                       },
-                      text: 'No',
+                      text: 'Si',
                       options: FFButtonOptions(
                         width: 140,
                         height: 60,
-                        color: const Color(0xFFDA1E28),
+                        color: FlutterFlowTheme.of(context).primaryColor,
                         textStyle:
                             FlutterFlowTheme.of(context).subtitle2.override(
                                   fontFamily: 'IBM Plex Sans',
@@ -85,13 +85,13 @@ class _CustomDialogSbagliataState extends State<CustomDialogSbagliata> {
                     ),
                     FFButtonWidget(
                       onPressed: () async {
-                        Navigator.of(context).pop(true);
+                        Navigator.of(context).pop(false);
                       },
-                      text: 'Si',
+                      text: 'No',
                       options: FFButtonOptions(
                         width: 140,
                         height: 60,
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: const Color(0xFFDA1E28),
                         textStyle:
                             FlutterFlowTheme.of(context).subtitle2.override(
                                   fontFamily: 'IBM Plex Sans',
