@@ -1,5 +1,6 @@
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_util.dart';
+import 'package:mindcare/gestione_SOS/sos_caregiver.dart';
 import 'package:mindcare/gestione_quiz/gestione_quiz.dart';
 import 'package:mindcare/model/utente.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
@@ -804,7 +805,14 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                                 .tertiaryColor,
                                             size: 40,
                                           ),
-                                          onPressed: () async {},
+                                          onPressed: () async {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        SOSCaregiverWidget(
+                                                            user:
+                                                                widget.user)));
+                                          },
                                         ),
                                       ),
                                     ],

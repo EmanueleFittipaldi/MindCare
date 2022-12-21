@@ -82,7 +82,8 @@ passata come parametro */
       String imagOp4,
       String? domanda,
       String risposta,
-      String? tempo) async {
+      String? tempo,
+      int? numeroTentativi) async {
     FirebaseFirestore.instance
         .collection('user')
         .doc(Auth().currentUser?.uid)
@@ -109,7 +110,8 @@ passata come parametro */
       'risposta': risposta,
       'categoria': categoria,
       'tipologia': tipologia,
-      'tempoRisposta': int.parse(tempo!)
+      'tempoRisposta': int.parse(tempo!),
+      'numeroTentativi': numeroTentativi
     });
   }
 
@@ -125,7 +127,8 @@ passata come parametro */
       String? risposta,
       String? categoria,
       String? tipologia,
-      String? tempoRisposta) async {
+      String? tempoRisposta,
+      int? numeroTentativi) async {
     FirebaseFirestore.instance
         .collection('user')
         .doc(Auth().currentUser?.uid)
@@ -151,7 +154,8 @@ passata come parametro */
       'risposta': risposta,
       'categoria': categoria,
       'tipologia': tipologia,
-      'tempoRisposta': int.parse(tempoRisposta!)
+      'tempoRisposta': int.parse(tempoRisposta!),
+      'numeroTentativi': numeroTentativi
     });
   }
 
@@ -166,7 +170,8 @@ passata come parametro */
       String? risposta,
       String? categoria,
       String? tipologia,
-      String? tempoRisposta) {
+      String? tempoRisposta,
+      int? numeroTentativi) {
     final quesitoIDGenerato = Quesito.quesitoIdGenerator(28);
     final quesito = Quesito(
         quesitoID: quesitoIDGenerato,
@@ -179,7 +184,8 @@ passata come parametro */
         risposta: risposta, //Immagine 1, Immagine 2,...
         categoria: categoria,
         tipologia: tipologia,
-        tempoRisposta: int.parse(tempoRisposta!));
+        tempoRisposta: int.parse(tempoRisposta!),
+        numeroTentativi: numeroTentativi);
     quesito.createNewQuestion(user, quesitoIDGenerato);
   }
 
@@ -194,22 +200,23 @@ passata come parametro */
       String? risposta,
       String? categoria,
       String? tipologia,
-      String? tempo) {
+      String? tempo,
+      int? numeroTentativi) {
     //Creazione del quesito
     final quesitoIDGenerato = Quesito.quesitoIdGenerator(28);
     final quesito = Quesito(
-      quesitoID: quesitoIDGenerato,
-      opzione1: imageUrlOp1,
-      opzione2: imageUrlOp2,
-      opzione3: imageUrlOp3,
-      opzione4: imageUrlOp4,
-      domanda: domanda, //Titolo della domanda
-      domandaImmagine: '',
-      risposta: risposta, //Immagine 1, Immagine 2,...
-      categoria: categoria,
-      tipologia: tipologia,
-      tempoRisposta: int.parse(tempo!),
-    );
+        quesitoID: quesitoIDGenerato,
+        opzione1: imageUrlOp1,
+        opzione2: imageUrlOp2,
+        opzione3: imageUrlOp3,
+        opzione4: imageUrlOp4,
+        domanda: domanda, //Titolo della domanda
+        domandaImmagine: '',
+        risposta: risposta, //Immagine 1, Immagine 2,...
+        categoria: categoria,
+        tipologia: tipologia,
+        tempoRisposta: int.parse(tempo!),
+        numeroTentativi: numeroTentativi);
     quesito.createNewQuestion(user, quesitoIDGenerato);
   }
 

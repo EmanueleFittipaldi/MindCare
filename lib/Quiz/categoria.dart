@@ -46,17 +46,17 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
               children: [
                 Container(
                   width: double.infinity,
-                  height: 200,
+                  height: 210,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).tertiaryColor,
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         blurRadius: 12,
                         color: Color(0x14000000),
                         offset: Offset(0, 5),
                       )
                     ],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(155),
                       bottomRight: Radius.circular(0),
                       topLeft: Radius.circular(0),
@@ -69,7 +69,8 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(40, 35, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(40, 35, 0, 0),
                         child: SelectionArea(
                             child: Text(
                           'Ciao! Seleziona la\ncategoria di quiz che\nvorresti svolgere.\n',
@@ -84,12 +85,13 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                       ),
                       Expanded(
                           child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                         child: Container(
                           width: 220,
                           height: 220,
                           clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                           ),
                           child: Image.asset(
@@ -102,19 +104,20 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 70, 20, 5),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                           child: Container(
                             width: 100,
                             height: 190,
                             decoration: BoxDecoration(
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   blurRadius: 12,
                                   color: Color(0x14000000),
@@ -125,7 +128,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                             ),
                             child: Card(
                               clipBehavior: Clip.antiAliasWithSaveLayer,
-                              color: Color(0xFF4589FF),
+                              color: const Color(0xFF4589FF),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
@@ -136,7 +139,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                 children: [
                                   Expanded(
                                       child: FlutterFlowIconButton(
-                                    borderColor: Color(0x00FFFFFF),
+                                    borderColor: const Color(0x00FFFFFF),
                                     borderRadius: 0,
                                     borderWidth: 0,
                                     buttonSize: 140,
@@ -158,8 +161,9 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                     },
                                   )),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 0, 25),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 0, 25),
                                     child: SelectionArea(
                                         child: Text(
                                       'Persone',
@@ -181,162 +185,14 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          width: 100,
-                          height: 190,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 12,
-                                color: Color(0x14000000),
-                                offset: Offset(0, 5),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFF24A148),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Expanded(
-                                    child: FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
-                                  borderRadius: 0,
-                                  borderWidth: 0,
-                                  buttonSize: 140,
-                                  icon: FaIcon(
-                                    FontAwesomeIcons.dog,
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    size: 80,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SelezionaTipologiaWidget(
-                                                    user: widget.user,
-                                                    categoria: 'Animali',
-                                                    caregiverID:
-                                                        widget.caregiverID)));
-                                  },
-                                )),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 25),
-                                  child: SelectionArea(
-                                      child: Text(
-                                    'Animali',
-                                    textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'IBM Plex Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          fontSize: 20,
-                                        ),
-                                  )),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 5, 20, 10),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          width: 100,
-                          height: 190,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 12,
-                                color: Color(0x14000000),
-                                offset: Offset(0, 5),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFEE5396),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Expanded(
-                                    child: FlutterFlowIconButton(
-                                  borderColor: Color(0x00FFFFFF),
-                                  borderRadius: 0,
-                                  borderWidth: 0,
-                                  buttonSize: 140,
-                                  icon: Icon(
-                                    Icons.handyman,
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    size: 80,
-                                  ),
-                                  onPressed: () async {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SelezionaTipologiaWidget(
-                                                    user: widget.user,
-                                                    categoria: 'Oggetti',
-                                                    caregiverID:
-                                                        widget.caregiverID)));
-                                  },
-                                )),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 25),
-                                  child: SelectionArea(
-                                      child: Text(
-                                    'Oggetti',
-                                    textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'IBM Plex Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          fontSize: 20,
-                                        ),
-                                  )),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                           child: Container(
                             width: 100,
                             height: 190,
                             decoration: BoxDecoration(
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   blurRadius: 12,
                                   color: Color(0x14000000),
@@ -347,7 +203,7 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                             ),
                             child: Card(
                               clipBehavior: Clip.antiAliasWithSaveLayer,
-                              color: Color(0xFFA56EFF),
+                              color: const Color(0xFF24A148),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
@@ -358,7 +214,166 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                 children: [
                                   Expanded(
                                       child: FlutterFlowIconButton(
-                                    borderColor: Color(0x00FFFFFF),
+                                    borderColor: const Color(0x00FFFFFF),
+                                    borderRadius: 0,
+                                    borderWidth: 0,
+                                    buttonSize: 140,
+                                    icon: FaIcon(
+                                      FontAwesomeIcons.dog,
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      size: 80,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SelezionaTipologiaWidget(
+                                                      user: widget.user,
+                                                      categoria: 'Animali',
+                                                      caregiverID:
+                                                          widget.caregiverID)));
+                                    },
+                                  )),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 0, 25),
+                                    child: SelectionArea(
+                                        child: Text(
+                                      'Animali',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'IBM Plex Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            fontSize: 20,
+                                          ),
+                                    )),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 5, 20, 10),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                          child: Container(
+                            width: 100,
+                            height: 190,
+                            decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 12,
+                                  color: Color(0x14000000),
+                                  offset: Offset(0, 5),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Card(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              color: const Color(0xFFEE5396),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Expanded(
+                                      child: FlutterFlowIconButton(
+                                    borderColor: const Color(0x00FFFFFF),
+                                    borderRadius: 0,
+                                    borderWidth: 0,
+                                    buttonSize: 140,
+                                    icon: Icon(
+                                      Icons.handyman,
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      size: 80,
+                                    ),
+                                    onPressed: () async {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SelezionaTipologiaWidget(
+                                                      user: widget.user,
+                                                      categoria: 'Oggetti',
+                                                      caregiverID:
+                                                          widget.caregiverID)));
+                                    },
+                                  )),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 0, 25),
+                                    child: SelectionArea(
+                                        child: Text(
+                                      'Oggetti',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'IBM Plex Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            fontSize: 20,
+                                          ),
+                                    )),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          child: Container(
+                            width: 100,
+                            height: 190,
+                            decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 12,
+                                  color: Color(0x14000000),
+                                  offset: Offset(0, 5),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Card(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              color: const Color(0xFFA56EFF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Expanded(
+                                      child: FlutterFlowIconButton(
+                                    borderColor: const Color(0x00FFFFFF),
                                     borderRadius: 0,
                                     borderWidth: 0,
                                     buttonSize: 140,
@@ -380,8 +395,9 @@ class _SelezionaCategoriaWidgetState extends State<SelezionaCategoriaWidget> {
                                     },
                                   )),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10, 0, 0, 25),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            10, 0, 0, 25),
                                     child: SelectionArea(
                                         child: Text(
                                       'Altro',

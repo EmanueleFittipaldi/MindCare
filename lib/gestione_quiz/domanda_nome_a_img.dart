@@ -44,6 +44,7 @@ class _CreazioneDomandaNomeAImmagineWidgetState
   TextEditingController? textController5;
   String? dropDownValue; //valore del dropdown
   String dropDownValueTime = '10';
+  String dropDownValueTentativi = '1';
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -64,6 +65,7 @@ class _CreazioneDomandaNomeAImmagineWidgetState
       textController5!.text = widget.item!.opzione4!;
       dropDownValue = widget.item!.risposta!;
       dropDownValueTime = widget.item!.tempoRisposta!.toString();
+      dropDownValueTentativi = widget.item!.numeroTentativi!.toString();
     }
   }
 
@@ -801,6 +803,51 @@ passata come parametro */
                                 hidesUnderline: true,
                               ),
                             ),
+                            SelectionArea(
+                                child: Text(
+                              'Numero di tentativi',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'IBM Plex Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            )),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 5, 0, 5),
+                              child: FlutterFlowDropDown(
+                                initialOption: '1',
+                                options: const ['1', '2', '3', '4', '5'],
+                                onChanged: (val) async {
+                                  setState(() {
+                                    dropDownValueTentativi = val!;
+                                  });
+                                },
+                                width: 180,
+                                height: 50,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'IBM Plex Sans',
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w200,
+                                    ),
+                                fillColor: Colors.white,
+                                elevation: 2,
+                                borderColor:
+                                    FlutterFlowTheme.of(context).borderColor,
+                                borderWidth: 0,
+                                borderRadius: 10,
+                                margin: const EdgeInsetsDirectional.fromSTEB(
+                                    12, 4, 12, 4),
+                                hidesUnderline: true,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -839,7 +886,8 @@ passata come parametro */
                               dropDownValue,
                               widget.categoria,
                               widget.tipologia,
-                              dropDownValueTime);
+                              dropDownValueTime,
+                              int.parse(dropDownValueTentativi));
 
                           //Una volta modificato il quesito ritorno a GestioneQuiz
                           /*Navigator.of(context).push(MaterialPageRoute(
@@ -870,7 +918,8 @@ passata come parametro */
                                 dropDownValue,
                                 widget.categoria,
                                 widget.tipologia,
-                                dropDownValueTime);
+                                dropDownValueTime,
+                                int.parse(dropDownValueTentativi));
 
                             //Una volta creato il quesito ritorno a GestioneQuiz
                             /*Navigator.of(context).push(MaterialPageRoute(

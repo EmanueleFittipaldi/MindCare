@@ -81,7 +81,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(20, 20, 15, 0),
                   child: SelectionArea(
                       child: Text(
-                    'Seleziona una tipologia:',
+                    'In questa pagina è possibile scegliere tra due tipologie di quiz: "Associa immagine a nome" e "Associa nome ad immagine". Divertiti allenandoti!',
                     textAlign: TextAlign.start,
                     style: FlutterFlowTheme.of(context).bodyText2.override(
                           fontFamily: 'IBM Plex Sans',
