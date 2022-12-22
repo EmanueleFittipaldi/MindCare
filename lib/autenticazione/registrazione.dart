@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
@@ -133,8 +135,8 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                     }
                                   },
                                   child: imagePickedPath != ''
-                                      ? Image.asset(
-                                          imagePickedPath,
+                                      ? Image.file(
+                                          File(imagePickedPath),
                                           width: 100,
                                           height: 100,
                                           fit: BoxFit.cover,

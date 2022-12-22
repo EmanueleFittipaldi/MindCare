@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/quiz_controller.dart';
@@ -284,8 +286,8 @@ passata come parametro */
                                     - Tutto questo viene fatto usando l'operatore ternario in maniera nidificata.
                                      */
                                     child: imagDomanda != ''
-                                        ? Image.asset(
-                                            imagDomanda,
+                                        ? Image.file(
+                                            File(imagDomanda),
                                             width: 100,
                                             height: 100,
                                             fit: BoxFit.cover,

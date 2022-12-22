@@ -20,11 +20,7 @@ class ImageUpload {
     }
     if (permissionStatus.isGranted || permissionStatus.isLimited) {
       if (filetype.toLowerCase() == 'image') {
-        image = await _imagePicker.pickImage(
-            source: ImageSource.gallery,
-            requestFullMetadata: false,
-            maxHeight: 150,
-            maxWidth: 150);
+        image = await _imagePicker.pickImage(source: ImageSource.gallery);
       } else if (filetype.toLowerCase() == 'video') {
         image = await _imagePicker.pickVideo(source: ImageSource.gallery);
       } else {

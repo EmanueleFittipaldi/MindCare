@@ -4,6 +4,7 @@ import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/quesito.dart';
 import 'package:mindcare/quiz/quiz_img_a_nome.dart';
 import 'package:mindcare/quiz/quiz_nome_a_img.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import '../appbar/appbar_caregiver.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -151,9 +152,21 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                                   'Associa l\'immagine al nome',
                                                   widget.user.userID,
                                                   widget.caregiverID);
+
                                       if (quesiti.isEmpty) {
-                                        Fluttertoast.showToast(
-                                            msg: 'Non ci sono domande!');
+                                        PanaraInfoDialog.show(
+                                          context,
+                                          title: "Quiz",
+                                          message: "Non ci sono domande!",
+                                          buttonText: "Okay",
+                                          onTapDismiss: () {
+                                            Navigator.pop(context);
+                                          },
+                                          panaraDialogType:
+                                              PanaraDialogType.warning,
+                                          barrierDismissible:
+                                              false, // optional parameter (default is true)
+                                        );
                                       } else {
                                         //faccio partire il timer quando clicco sulla tipologia
                                         //del quiz che voglio iniziare
@@ -278,8 +291,19 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                               widget.user.userID,
                                               widget.caregiverID);
                                       if (quesiti.isEmpty) {
-                                        Fluttertoast.showToast(
-                                            msg: 'Non ci sono domande!');
+                                        PanaraInfoDialog.show(
+                                          context,
+                                          title: "Quiz",
+                                          message: "Non ci sono domande!",
+                                          buttonText: "Okay",
+                                          onTapDismiss: () {
+                                            Navigator.pop(context);
+                                          },
+                                          panaraDialogType:
+                                              PanaraDialogType.warning,
+                                          barrierDismissible:
+                                              false, // optional parameter (default is true)
+                                        );
                                       } else {
                                         //faccio partire il timer quando clicco sulla tipologia
                                         //del quiz che voglio iniziare

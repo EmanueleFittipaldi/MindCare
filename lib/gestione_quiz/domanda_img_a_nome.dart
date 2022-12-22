@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -269,8 +270,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                 }
                                               },
                                               child: imagOp1 != ''
-                                                  ? Image.asset(
-                                                      imagOp1,
+                                                  ? Image.file(
+                                                      File(imagOp1),
                                                       width: 100,
                                                       height: 100,
                                                       fit: BoxFit.cover,
@@ -345,8 +346,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                 }
                                               },
                                               child: imagOp2 != ''
-                                                  ? Image.asset(
-                                                      imagOp2,
+                                                  ? Image.file(
+                                                      File(imagOp2),
                                                       width: 100,
                                                       height: 100,
                                                       fit: BoxFit.cover,
@@ -432,8 +433,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                 }
                                               },
                                               child: imagOp3 != ''
-                                                  ? Image.asset(
-                                                      imagOp3,
+                                                  ? Image.file(
+                                                      File(imagOp3),
                                                       width: 100,
                                                       height: 100,
                                                       fit: BoxFit.cover,
@@ -508,8 +509,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                 }
                                               },
                                               child: imagOp4 != ''
-                                                  ? Image.asset(
-                                                      imagOp4,
+                                                  ? Image.file(
+                                                      File(imagOp4),
                                                       width: 100,
                                                       height: 100,
                                                       fit: BoxFit.cover,

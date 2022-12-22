@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/caregiver/opzioni.dart';
 import 'package:mindcare/controller/user_controller.dart';
@@ -37,8 +38,9 @@ class _InitHomepageState extends State<InitHomepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
+        preferredSize: Size.fromHeight(90),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
           automaticallyImplyLeading: false,

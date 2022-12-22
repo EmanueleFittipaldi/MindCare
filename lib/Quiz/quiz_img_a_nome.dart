@@ -1,16 +1,17 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:mindcare/Quiz/fine_quiz.dart';
+import 'package:mindcare/Quiz/no_piu_tentativi.dart';
 import 'package:mindcare/autenticazione/login.dart';
 import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/model/report.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/quiz/alert_hint.dart';
 import 'package:mindcare/quiz/alert_risposta.dart';
-import 'package:mindcare/quiz/no_piu_tentativi.dart';
 import 'package:mindcare/quiz/quiz_terminato.dart';
 import 'package:mindcare/quiz/risposta_corretta.dart';
 import 'package:mindcare/quiz/risposta_sbagliata.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
@@ -132,12 +133,25 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
     //CASO RISPOSTA GIUSTA
     if (quesito['risposta'] == opzioneSelezionata) {
       timer!.cancel();
-      await showDialog(
+      await PanaraInfoDialog.show(
+        context,
+        imagePath:
+            'assets/images/smart-guy-getting-award-winner-standing-pedestal-holding-golden-cup-cartoon-illustration_74855-14511.jpg.webp',
+        title: "Risposta corretta!",
+        message: "Complimenti! Hai indovinato la risposta!",
+        buttonText: "Quiz",
+        onTapDismiss: () {
+          Navigator.pop(context);
+        },
+        panaraDialogType: PanaraDialogType.success,
+        barrierDismissible: false, // optional parameter (default is true)
+      );
+      /*await showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
             return const CustomDialogCorretta();
-          });
+          });*/
       setState(() {
         mappaRisposte[quesito['quesitoID']] = true;
         indexQuesito += 1;
@@ -149,12 +163,27 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       if (countTentativi == 1) {
         timer!.cancel();
         //verifico se ci sono tentativi
-        var risposta = await showDialog(
+        /*var risposta = await showDialog(
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               return const CustomDialogSbagliata();
-            });
+            });*/
+        var risposta = await PanaraConfirmDialog.show(
+          context,
+          title: "Risposta sbagliata!",
+          message: "Vuoi riprovare?",
+          confirmButtonText: "Si",
+          cancelButtonText: "No",
+          onTapCancel: () {
+            Navigator.of(context).pop(false);
+          },
+          onTapConfirm: () {
+            Navigator.of(context).pop(true);
+          },
+          panaraDialogType: PanaraDialogType.error,
+          barrierDismissible: false, // optional parameter (default is true)
+        );
 
         //CASO NON VOGLIO RIPROVARE
         if (!risposta) {
@@ -178,7 +207,10 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
-              return CustomDialogNoTentativi(quesito: quesito);
+              return CustomDialogNoTentativi(
+                  quesito: quesito,
+                  title: 'Risposta sbagliata!',
+                  message: 'Non hai più tentativi! Ecco la risposta:');
             });
         //timer!.cancel();
         setState(() {
@@ -293,7 +325,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       timer = Timer(
           Duration(seconds: widget.quesiti[indexQuesito]['tempoRisposta']),
           () async {
-        var risposta = await showDialog(
+        /*var risposta = await showDialog(
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
@@ -303,14 +335,34 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                       'sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?',
                   textOptionDelete: 'No',
                   textOptionConfirm: 'Si');
-            });
+            });*/
+        var risposta = await PanaraConfirmDialog.show(
+          context,
+          title: "Hey",
+          message:
+              "Sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?",
+          confirmButtonText: "Si",
+          cancelButtonText: "No",
+          onTapCancel: () {
+            Navigator.of(context).pop(false);
+          },
+          onTapConfirm: () {
+            Navigator.of(context).pop(true);
+          },
+          panaraDialogType: PanaraDialogType.normal,
+          barrierDismissible: false, // optional parameter (default is true)
+        );
 
         if (risposta) {
           await showDialog(
               barrierDismissible: false,
               context: context,
               builder: (BuildContext context) {
-                return AlertRisposta(quesito); //per la risposta
+                return CustomDialogNoTentativi(
+                    quesito: quesito,
+                    title: 'Risposta',
+                    message: 'Hai scelto di vedere la risposta:');
+                //per la risposta
               });
           timer!.cancel();
           setState(() {
@@ -326,341 +378,409 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       });
     }
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: Color(0xFFF0F6FF),
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Quiz',
-          style: FlutterFlowTheme.of(context).bodyText2.override(
-                fontFamily: 'IBM Plex Sans',
-                fontSize: 30,
-              ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30,
-              borderWidth: 1,
-              buttonSize: 50,
-              fillColor: FlutterFlowTheme.of(context).primaryBackground,
-              icon: Icon(
-                Icons.close_rounded,
-                color: FlutterFlowTheme.of(context).secondaryText,
-                size: 30,
-              ),
-              onPressed: () async {
-                timer!.cancel();
+    return WillPopScope(
+      onWillPop: () async {
+        timer!.cancel();
+        var risposta = await PanaraConfirmDialog.show(
+          context,
+          title: "Esci dal quiz",
+          message:
+              "Vuoi davvero uscire dal quiz? Il quiz verrà messo in pausa!",
+          confirmButtonText: "Si",
+          cancelButtonText: "No",
+          onTapCancel: () {
+            Navigator.of(context).pop(false);
+          },
+          onTapConfirm: () {
+            Navigator.of(context).pop(true);
+          },
+          panaraDialogType: PanaraDialogType.normal,
+          barrierDismissible: false, // optional parameter (default is true)
+        );
+        if (risposta) {
+          timer!.cancel();
 //Salvo lo stato corrente del quiz perché significa che non
 //l'ho portato a termine. In questo modo potrò riprenderlo
-                Map<String, dynamic> statoCorrente = {
-                  'categoria': widget.categoria,
-                  'tipologia': 'Associa l\'immagine al nome',
-                  'indexQuesito': indexQuesito,
-                  'mappaRisposte': mappaRisposte,
-                  'countTentativi': countTentativi,
-                  'inizioTempo': widget.inizioTempo,
-                  'percentualeBarra': percentualeBarra,
-                };
-                box.put('statoCorrente', statoCorrente);
-                Navigator.of(context).pop();
-              },
-            ),
+          Map<String, dynamic> statoCorrente = {
+            'categoria': widget.categoria,
+            'tipologia': 'Associa l\'immagine al nome',
+            'indexQuesito': indexQuesito,
+            'mappaRisposte': mappaRisposte,
+            'countTentativi': countTentativi,
+            'inizioTempo': widget.inizioTempo,
+            'percentualeBarra': percentualeBarra,
+          };
+          box.put('statoCorrente', statoCorrente);
+          Navigator.of(context).pop();
+        } else {
+          setState(() {});
+        }
+        return false;
+      },
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: Color(0xFFF0F6FF),
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Quiz',
+            style: FlutterFlowTheme.of(context).bodyText2.override(
+                  fontFamily: 'IBM Plex Sans',
+                  fontSize: 30,
+                ),
           ),
-        ],
-        centerTitle: false,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 12, 20, 0),
-                    child: LinearPercentIndicator(
-                      animateFromLastPercent: true,
-                      percent: percentualeBarra,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      lineHeight: 12,
-                      animation: true,
-                      progressColor: FlutterFlowTheme.of(context).primaryColor,
-                      backgroundColor: FlutterFlowTheme.of(context).lineColor,
-                      barRadius: Radius.circular(24),
-                      padding: EdgeInsets.zero,
-                    ),
-                  ),
-                ],
+          actions: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+              child: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 30,
+                borderWidth: 1,
+                buttonSize: 50,
+                fillColor: FlutterFlowTheme.of(context).primaryBackground,
+                icon: Icon(
+                  Icons.close_rounded,
+                  color: FlutterFlowTheme.of(context).secondaryText,
+                  size: 30,
+                ),
+                onPressed: () async {
+                  timer!.cancel();
+                  var risposta = await PanaraConfirmDialog.show(
+                    context,
+                    title: "Esci dal quiz",
+                    message:
+                        "Vuoi davvero uscire dal quiz? Il quiz verrà messo in pausa!",
+                    confirmButtonText: "Si",
+                    cancelButtonText: "No",
+                    onTapCancel: () {
+                      Navigator.of(context).pop(false);
+                    },
+                    onTapConfirm: () {
+                      Navigator.of(context).pop(true);
+                    },
+                    panaraDialogType: PanaraDialogType.normal,
+                    barrierDismissible:
+                        false, // optional parameter (default is true)
+                  );
+                  if (risposta) {
+                    timer!.cancel();
+//Salvo lo stato corrente del quiz perché significa che non
+//l'ho portato a termine. In questo modo potrò riprenderlo
+                    Map<String, dynamic> statoCorrente = {
+                      'categoria': widget.categoria,
+                      'tipologia': 'Associa l\'immagine al nome',
+                      'indexQuesito': indexQuesito,
+                      'mappaRisposte': mappaRisposte,
+                      'countTentativi': countTentativi,
+                      'inizioTempo': widget.inizioTempo,
+                      'percentualeBarra': percentualeBarra,
+                    };
+                    box.put('statoCorrente', statoCorrente);
+                    Navigator.of(context).pop();
+                  } else {
+                    setState(() {});
+                  }
+                },
               ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 30, 20, 0),
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).tertiaryColor,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 12,
-                          color: Color(0x14000000),
-                          offset: Offset(0, 5),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(30),
+            ),
+          ],
+          centerTitle: false,
+          elevation: 0,
+        ),
+        body: SafeArea(
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(20, 12, 0, 0),
+                      child: LinearPercentIndicator(
+                        animateFromLastPercent: true,
+                        percent: percentualeBarra,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        lineHeight: 12,
+                        animation: true,
+                        progressColor:
+                            FlutterFlowTheme.of(context).primaryColor,
+                        backgroundColor: FlutterFlowTheme.of(context).lineColor,
+                        barRadius: Radius.circular(24),
+                        padding: EdgeInsets.zero,
+                      ),
                     ),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
+                  ],
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(20, 30, 20, 0),
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).tertiaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 12,
+                            color: Color(0x14000000),
+                            offset: Offset(0, 5),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-1, 0),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                child: Text(
+                                  'Domanda ${indexQuesito + 1}/${widget.quesiti.length}',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText2
+                                      .override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                              ),
+                            ),
+                            Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                              child: Text(
-                                'Domanda ${indexQuesito + 1}/${widget.quesiti.length}',
+                                  EdgeInsetsDirectional.fromSTEB(0, 20, 10, 0),
+                              child: SelectionArea(
+                                  child: Text(
+                                quesito['domanda'],
+                                textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText2
                                     .override(
                                       fontFamily: 'IBM Plex Sans',
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w300,
                                     ),
+                              )),
+                            ),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 70, 0, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 15, 0),
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  checkRisposta(
+                                                      quesito, 'Immagine 1');
+                                                },
+                                                child: Container(
+                                                  width: 60,
+                                                  height: 170,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiaryColor,
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: Image.network(
+                                                        quesito['opzione1'],
+                                                      ).image,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        blurRadius: 12,
+                                                        color:
+                                                            Color(0x14000000),
+                                                        offset: Offset(0, 2),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    border: Border.all(
+                                                      color: Color(0xFFA0A0A0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(15, 0, 10, 0),
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  checkRisposta(
+                                                      quesito, 'Immagine 2');
+                                                },
+                                                child: Container(
+                                                  width: 60,
+                                                  height: 170,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiaryColor,
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: Image.network(
+                                                        quesito['opzione2'],
+                                                      ).image,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        blurRadius: 12,
+                                                        color:
+                                                            Color(0x14000000),
+                                                        offset: Offset(0, 2),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    border: Border.all(
+                                                      color: Color(0xFFA0A0A0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 30, 0, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 15, 0),
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  checkRisposta(
+                                                      quesito, 'Immagine 3');
+                                                },
+                                                child: Container(
+                                                  width: 60,
+                                                  height: 170,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiaryColor,
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: Image.network(
+                                                        quesito['opzione3'],
+                                                      ).image,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        blurRadius: 12,
+                                                        color:
+                                                            Color(0x14000000),
+                                                        offset: Offset(0, 2),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    border: Border.all(
+                                                      color: Color(0xFFA0A0A0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(15, 0, 10, 0),
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  checkRisposta(
+                                                      quesito, 'Immagine 4');
+                                                },
+                                                child: Container(
+                                                  width: 60,
+                                                  height: 170,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .tertiaryColor,
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: Image.network(
+                                                        quesito['opzione4'],
+                                                      ).image,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        blurRadius: 12,
+                                                        color:
+                                                            Color(0x14000000),
+                                                        offset: Offset(0, 2),
+                                                      )
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    border: Border.all(
+                                                      color: Color(0xFFA0A0A0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 20, 10, 0),
-                            child: SelectionArea(
-                                child: Text(
-                              quesito['domanda'],
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                            )),
-                          ),
-                          Expanded(
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 70, 0, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 15, 0),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                checkRisposta(
-                                                    quesito, 'Immagine 1');
-                                              },
-                                              child: Container(
-                                                width: 60,
-                                                height: 170,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiaryColor,
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: Image.network(
-                                                      quesito['opzione1'],
-                                                    ).image,
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      blurRadius: 12,
-                                                      color: Color(0x14000000),
-                                                      offset: Offset(0, 2),
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                  border: Border.all(
-                                                    color: Color(0xFFA0A0A0),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15, 0, 10, 0),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                checkRisposta(
-                                                    quesito, 'Immagine 2');
-                                              },
-                                              child: Container(
-                                                width: 60,
-                                                height: 170,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiaryColor,
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: Image.network(
-                                                      quesito['opzione2'],
-                                                    ).image,
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      blurRadius: 12,
-                                                      color: Color(0x14000000),
-                                                      offset: Offset(0, 2),
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                  border: Border.all(
-                                                    color: Color(0xFFA0A0A0),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 30, 0, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 15, 0),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                checkRisposta(
-                                                    quesito, 'Immagine 3');
-                                              },
-                                              child: Container(
-                                                width: 60,
-                                                height: 170,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiaryColor,
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: Image.network(
-                                                      quesito['opzione3'],
-                                                    ).image,
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      blurRadius: 12,
-                                                      color: Color(0x14000000),
-                                                      offset: Offset(0, 2),
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                  border: Border.all(
-                                                    color: Color(0xFFA0A0A0),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15, 0, 10, 0),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                checkRisposta(
-                                                    quesito, 'Immagine 4');
-                                              },
-                                              child: Container(
-                                                width: 60,
-                                                height: 170,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiaryColor,
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: Image.network(
-                                                      quesito['opzione4'],
-                                                    ).image,
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      blurRadius: 12,
-                                                      color: Color(0x14000000),
-                                                      offset: Offset(0, 2),
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                  border: Border.all(
-                                                    color: Color(0xFFA0A0A0),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

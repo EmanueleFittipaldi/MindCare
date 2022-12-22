@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mindcare/autenticazione/password_dimenticata.dart';
 import 'package:mindcare/autenticazione/registrazione.dart';
 import 'package:mindcare/widget_tree.dart';
@@ -119,6 +120,13 @@ class _LoginWidgetState extends State<LoginWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+      appBar: AppBar(
+        systemOverlayStyle:
+            SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+        automaticallyImplyLeading: true,
+        backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+        elevation: 0,
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -137,7 +145,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   Align(
                     alignment: AlignmentDirectional(0, 0.99),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 10),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,

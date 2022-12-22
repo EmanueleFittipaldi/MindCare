@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -194,8 +195,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                           }
                                         },
                                         child: imagePickedPath != ''
-                                            ? Image.asset(
-                                                imagePickedPath,
+                                            ? Image.file(
+                                                File(imagePickedPath),
                                                 width: 100,
                                                 height: 100,
                                                 fit: BoxFit.cover,

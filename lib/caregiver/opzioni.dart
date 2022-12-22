@@ -648,9 +648,10 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                     ])),
                             Container(
                               color: Colors.white,
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
+                              child: SingleChildScrollView(
+                                  child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -690,584 +691,635 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               20, 0, 20, 15),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 15, 0, 5),
-                                            child: TextFormField(
-                                              validator: (value) {
-                                                String val =
-                                                    value!.replaceAll(' ', '');
-                                                if (value.isEmpty ||
-                                                    val.isEmpty) {
-                                                  return 'Inserisci un nome!';
-                                                }
-                                                return null;
-                                              },
-                                              controller: textController1,
-                                              autofocus: true,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                labelText: 'Nome:',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .borderColor,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .borderColor,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 15, 0, 5),
-                                            child: TextFormField(
-                                              validator: (value) {
-                                                String val =
-                                                    value!.replaceAll(' ', '');
-                                                if (value.isEmpty ||
-                                                    val.isEmpty) {
-                                                  return 'Inserisci un cognome!';
-                                                }
-                                                return null;
-                                              },
-                                              controller: textController2,
-                                              autofocus: true,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                labelText: 'Cognome:',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .borderColor,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .borderColor,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 15, 0, 0),
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 55,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(0, 0, 12, 0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                0, 0, 12, 0),
-                                                        child: TextFormField(
-                                                          validator: (value) {
-                                                            if (value == null ||
-                                                                value.isEmpty) {
-                                                              return 'Inserisci una data di nascita!';
-                                                            }
-                                                            return null;
-                                                          },
-                                                          controller:
-                                                              textcontrollerData,
-                                                          autofocus: true,
-                                                          readOnly: true,
-                                                          obscureText: false,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            labelText:
-                                                                'Data di nascita',
-                                                            hintStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText2,
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .borderColor,
-                                                                width: 1,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15),
-                                                            ),
-                                                            focusedBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .borderColor,
-                                                                width: 1,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15),
-                                                            ),
-                                                            errorBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .borderErrorColor,
-                                                                width: 1,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15),
-                                                            ),
-                                                            focusedErrorBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .borderErrorColor,
-                                                                width: 1,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15),
-                                                            ),
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'IBM Plex Sans',
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    InkWell(
-                                                      onTap: () async {
-                                                        await DatePicker
-                                                            .showDatePicker(
-                                                                context,
-                                                                showTitleActions:
-                                                                    true,
-                                                                onConfirm:
-                                                                    (date) {
-                                                          setState(() {
-                                                            datePicked = date;
-                                                            textcontrollerData!
-                                                                .text = datePicked ==
-                                                                    null
-                                                                ? 'Data di nascita'
-                                                                : DateFormat(
-                                                                        'yyyy-MM-dd')
-                                                                    .format(DateTime.parse(
-                                                                        datePicked
-                                                                            .toString()));
-                                                          });
-                                                        },
-                                                                currentTime:
-                                                                    widget.user
-                                                                        .date,
-                                                                minTime:
-                                                                    DateTime(0,
-                                                                        0, 0),
-                                                                maxTime:
-                                                                    DateTime(
-                                                                  DateTime.now()
-                                                                          .year -
-                                                                      18,
-                                                                  DateTime.now()
-                                                                      .month,
-                                                                  DateTime.now()
-                                                                      .day,
-                                                                ));
-                                                      },
-                                                      child: const Icon(
-                                                        Icons
-                                                            .date_range_outlined,
-                                                        color:
-                                                            Color(0xFF57636C),
-                                                        size: 30,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 15, 0, 5),
-                                            child: TextFormField(
-                                              validator: (value) {
-                                                String val =
-                                                    value!.replaceAll(' ', '');
-                                                if (value.isEmpty ||
-                                                    val.isEmpty) {
-                                                  return 'Inserisci l\'email!';
-                                                }
-                                                RegExp regex = RegExp(
-                                                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                                                if (!regex.hasMatch(value)) {
-                                                  return 'Inserisci un\'email valida!';
-                                                }
-                                                return null;
-                                              },
-                                              controller: textController3,
-                                              autofocus: true,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                labelText: 'Email',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText2,
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .borderColor,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .borderColor,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 15, 0, 15),
-                                            child: FFButtonWidget(
-                                              onPressed: () async {
-                                                var confirmDialogResponse =
-                                                    await PanaraConfirmDialog
-                                                        .show(
-                                                  context,
-                                                  title: "Conferma modifica",
-                                                  message:
-                                                      "Vuoi confermare le modifiche effettuate?",
-                                                  confirmButtonText: "Conferma",
-                                                  cancelButtonText: "Annulla",
-                                                  onTapCancel: () {
-                                                    Navigator.of(context)
-                                                        .pop(false);
-                                                  },
-                                                  onTapConfirm: () {
-                                                    Navigator.of(context)
-                                                        .pop(true);
-                                                  },
-                                                  panaraDialogType:
-                                                      PanaraDialogType.normal,
-
-                                                  barrierDismissible:
-                                                      false, // optional parameter (default is true)
-                                                );
-                                                if (confirmDialogResponse) {
-                                                  var success =
-                                                      await UserController()
-                                                          .modificaDati(
-                                                              textController1?.text
-                                                                  .toString(),
-                                                              textController2
-                                                                  ?.text
-                                                                  .toString(),
-                                                              textcontrollerData!
-                                                                  .text,
-                                                              textController3
-                                                                  ?.text
-                                                                  .toString(),
-                                                              widget.user.type,
-                                                              widget
-                                                                  .user.userID,
-                                                              widget
-                                                                  .caregiverUID);
-                                                  if (success) {
-                                                    PanaraInfoDialog.show(
-                                                      context,
-                                                      title:
-                                                          "Salvataggio modifiche",
-                                                      message:
-                                                          "Modifiche avvenute con successo!",
-                                                      buttonText: "Okay",
-                                                      onTapDismiss: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      panaraDialogType:
-                                                          PanaraDialogType
-                                                              .success,
-                                                      barrierDismissible:
-                                                          false, // optional parameter (default is true)
-                                                    );
-                                                  } else {
-                                                    PanaraInfoDialog.show(
-                                                      context,
-                                                      title:
-                                                          "Salvataggio modifiche",
-                                                      message:
-                                                          "Ops! Qualcosa è andato storto!",
-                                                      buttonText: "Okay",
-                                                      onTapDismiss: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      panaraDialogType:
-                                                          PanaraDialogType
-                                                              .error,
-                                                      barrierDismissible:
-                                                          false, // optional parameter (default is true)
-                                                    );
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 15, 0, 5),
+                                              child: TextFormField(
+                                                validator: (value) {
+                                                  String val = value!
+                                                      .replaceAll(' ', '');
+                                                  if (value.isEmpty ||
+                                                      val.isEmpty) {
+                                                    return 'Inserisci un nome!';
                                                   }
-                                                }
-                                                pageViewController!.jumpTo(0);
-                                              },
-                                              text: 'Salva',
-                                              options: FFButtonOptions(
-                                                width: 150,
-                                                height: 60,
-                                                color:
+                                                  return null;
+                                                },
+                                                controller: textController1,
+                                                autofocus: true,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Nome:',
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyText2,
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .borderColor,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .borderColor,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                ),
+                                                style:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle2
+                                                        .bodyText1
                                                         .override(
                                                           fontFamily:
                                                               'IBM Plex Sans',
-                                                          color: Colors.white,
+                                                          fontSize: 15,
                                                           fontWeight:
                                                               FontWeight.normal,
                                                         ),
-                                                borderSide: const BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1,
-                                                ),
-                                                borderRadius: 30,
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 30, 0, 15),
-                                            child: FFButtonWidget(
-                                              onPressed: () async {
-                                                var confirmDialogResponse =
-                                                    await PanaraConfirmDialog
-                                                        .show(
-                                                  context,
-                                                  title: "Eliminazione account",
-                                                  message:
-                                                      "Vuoi davvero eliminare l\'account? L'azione è irreversibile!",
-                                                  confirmButtonText: "Conferma",
-                                                  cancelButtonText: "Annulla",
-                                                  onTapCancel: () {
-                                                    Navigator.of(context)
-                                                        .pop(false);
-                                                  },
-                                                  onTapConfirm: () {
-                                                    Navigator.of(context)
-                                                        .pop(true);
-                                                  },
-                                                  panaraDialogType:
-                                                      PanaraDialogType.error,
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 15, 0, 5),
+                                              child: TextFormField(
+                                                validator: (value) {
+                                                  String val = value!
+                                                      .replaceAll(' ', '');
+                                                  if (value.isEmpty ||
+                                                      val.isEmpty) {
+                                                    return 'Inserisci un cognome!';
+                                                  }
+                                                  return null;
+                                                },
+                                                controller: textController2,
+                                                autofocus: true,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Cognome:',
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyText2,
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .borderColor,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .borderColor,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 15, 0, 0),
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: 55,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          0, 0, 12, 0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  0, 0, 12, 0),
+                                                          child: TextFormField(
+                                                            validator: (value) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
+                                                                return 'Inserisci una data di nascita!';
+                                                              }
+                                                              return null;
+                                                            },
+                                                            controller:
+                                                                textcontrollerData,
+                                                            autofocus: true,
+                                                            readOnly: true,
+                                                            obscureText: false,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelText:
+                                                                  'Data di nascita',
+                                                              hintStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText2,
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .borderColor,
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .borderColor,
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                              ),
+                                                              errorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .borderErrorColor,
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                              ),
+                                                              focusedErrorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .borderErrorColor,
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                              ),
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'IBM Plex Sans',
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () async {
+                                                          await DatePicker
+                                                              .showDatePicker(
+                                                                  context,
+                                                                  showTitleActions:
+                                                                      true,
+                                                                  onConfirm:
+                                                                      (date) {
+                                                            setState(() {
+                                                              datePicked = date;
+                                                              textcontrollerData!
+                                                                  .text = datePicked ==
+                                                                      null
+                                                                  ? 'Data di nascita'
+                                                                  : DateFormat(
+                                                                          'yyyy-MM-dd')
+                                                                      .format(DateTime.parse(
+                                                                          datePicked
+                                                                              .toString()));
+                                                            });
+                                                          },
+                                                                  currentTime: widget
+                                                                      .user
+                                                                      .date,
+                                                                  minTime:
+                                                                      DateTime(
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                                  maxTime:
+                                                                      DateTime(
+                                                                    DateTime.now()
+                                                                            .year -
+                                                                        18,
+                                                                    DateTime.now()
+                                                                        .month,
+                                                                    DateTime.now()
+                                                                        .day,
+                                                                  ));
+                                                        },
+                                                        child: const Icon(
+                                                          Icons
+                                                              .date_range_outlined,
+                                                          color:
+                                                              Color(0xFF57636C),
+                                                          size: 30,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 15, 0, 5),
+                                              child: TextFormField(
+                                                validator: (value) {
+                                                  String val = value!
+                                                      .replaceAll(' ', '');
+                                                  if (value.isEmpty ||
+                                                      val.isEmpty) {
+                                                    return 'Inserisci l\'email!';
+                                                  }
+                                                  RegExp regex = RegExp(
+                                                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                                                  if (!regex.hasMatch(value)) {
+                                                    return 'Inserisci un\'email valida!';
+                                                  }
+                                                  return null;
+                                                },
+                                                controller: textController3,
+                                                autofocus: true,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Email',
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyText2,
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .borderColor,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .borderColor,
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                  ),
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 15, 0, 15),
+                                              child: FFButtonWidget(
+                                                onPressed: () async {
+                                                  var confirmDialogResponse =
+                                                      await PanaraConfirmDialog
+                                                          .show(
+                                                    context,
+                                                    title: "Conferma modifica",
+                                                    message:
+                                                        "Vuoi confermare le modifiche effettuate?",
+                                                    confirmButtonText:
+                                                        "Conferma",
+                                                    cancelButtonText: "Annulla",
+                                                    onTapCancel: () {
+                                                      Navigator.of(context)
+                                                          .pop(false);
+                                                    },
+                                                    onTapConfirm: () {
+                                                      Navigator.of(context)
+                                                          .pop(true);
+                                                    },
+                                                    panaraDialogType:
+                                                        PanaraDialogType.normal,
 
-                                                  barrierDismissible:
-                                                      false, // optional parameter (default is true)
-                                                );
-                                                if (confirmDialogResponse) {
-                                                  var success =
-                                                      await UserController()
-                                                          .deleteAccount(
-                                                              widget
-                                                                  .caregiverUID,
-                                                              widget
-                                                                  .user.userID,
-                                                              widget.user.type,
-                                                              widget.user
-                                                                  .profileImgPath);
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const WidgetTree()));
-                                                }
-                                              },
-                                              text: 'Elimina account',
-                                              options: FFButtonOptions(
-                                                width: 150,
-                                                height: 60,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .borderErrorColor,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                borderSide: const BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1,
+                                                    barrierDismissible:
+                                                        false, // optional parameter (default is true)
+                                                  );
+                                                  if (confirmDialogResponse) {
+                                                    var success =
+                                                        await UserController()
+                                                            .modificaDati(
+                                                                textController1
+                                                                    ?.text
+                                                                    .toString(),
+                                                                textController2
+                                                                    ?.text
+                                                                    .toString(),
+                                                                textcontrollerData!
+                                                                    .text,
+                                                                textController3
+                                                                    ?.text
+                                                                    .toString(),
+                                                                widget
+                                                                    .user.type,
+                                                                widget.user
+                                                                    .userID,
+                                                                widget
+                                                                    .caregiverUID);
+                                                    if (success) {
+                                                      PanaraInfoDialog.show(
+                                                        context,
+                                                        title:
+                                                            "Salvataggio modifiche",
+                                                        message:
+                                                            "Modifiche avvenute con successo!",
+                                                        buttonText: "Okay",
+                                                        onTapDismiss: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        panaraDialogType:
+                                                            PanaraDialogType
+                                                                .success,
+                                                        barrierDismissible:
+                                                            false, // optional parameter (default is true)
+                                                      );
+                                                    } else {
+                                                      PanaraInfoDialog.show(
+                                                        context,
+                                                        title:
+                                                            "Salvataggio modifiche",
+                                                        message:
+                                                            "Ops! Qualcosa è andato storto!",
+                                                        buttonText: "Okay",
+                                                        onTapDismiss: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        panaraDialogType:
+                                                            PanaraDialogType
+                                                                .error,
+                                                        barrierDismissible:
+                                                            false, // optional parameter (default is true)
+                                                      );
+                                                    }
+                                                  }
+                                                  pageViewController!.jumpTo(0);
+                                                },
+                                                text: 'Salva',
+                                                options: FFButtonOptions(
+                                                  width: 150,
+                                                  height: 60,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily:
+                                                            'IBM Plex Sans',
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.transparent,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius: 30,
                                                 ),
-                                                borderRadius: 30,
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 30, 0, 15),
+                                              child: FFButtonWidget(
+                                                onPressed: () async {
+                                                  var confirmDialogResponse =
+                                                      await PanaraConfirmDialog
+                                                          .show(
+                                                    context,
+                                                    title:
+                                                        "Eliminazione account",
+                                                    message:
+                                                        "Vuoi davvero eliminare l\'account? L'azione è irreversibile!",
+                                                    confirmButtonText:
+                                                        "Conferma",
+                                                    cancelButtonText: "Annulla",
+                                                    onTapCancel: () {
+                                                      Navigator.of(context)
+                                                          .pop(false);
+                                                    },
+                                                    onTapConfirm: () {
+                                                      Navigator.of(context)
+                                                          .pop(true);
+                                                    },
+                                                    panaraDialogType:
+                                                        PanaraDialogType.error,
+
+                                                    barrierDismissible:
+                                                        false, // optional parameter (default is true)
+                                                  );
+                                                  if (confirmDialogResponse) {
+                                                    var success =
+                                                        await UserController()
+                                                            .deleteAccount(
+                                                                widget
+                                                                    .caregiverUID,
+                                                                widget.user
+                                                                    .userID,
+                                                                widget
+                                                                    .user.type,
+                                                                widget.user
+                                                                    .profileImgPath);
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const WidgetTree()));
+                                                  }
+                                                },
+                                                text: 'Elimina account',
+                                                options: FFButtonOptions(
+                                                  width: 150,
+                                                  height: 60,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .borderErrorColor,
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily:
+                                                            'IBM Plex Sans',
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.transparent,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius: 30,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ]),
+                                  ])),
                             ),
                             Container(
                                 color: Colors.white,

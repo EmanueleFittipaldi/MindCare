@@ -244,7 +244,8 @@ passata come parametro */
           risposta: _collectionRef.get('opzione' + nOp),
           categoria: _collectionRef.get('categoria'),
           tipologia: _collectionRef.get('tipologia'),
-          tempoRisposta: _collectionRef.get('tempoRisposta')));
+          tempoRisposta: _collectionRef.get('tempoRisposta'),
+          numeroTentativi: _collectionRef.get('numeroTentativi')));
     }
     return result;
   }

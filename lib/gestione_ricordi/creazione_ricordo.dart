@@ -372,6 +372,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                             if (imagePath != null) {
                                               setState(() {
                                                 imagePickedPath = imagePath;
+
                                                 isMediaChanged = true;
                                                 isNetworkImage = false;
                                               });
@@ -379,14 +380,19 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                           },
                                           child: (widget.memoryItem == null ||
                                                   isNetworkImage == false)
-                                              ? Image.asset(
-                                                  imagePickedPath != ''
-                                                      ? imagePickedPath
-                                                      : 'assets/images/add_photo_plus.png',
-                                                  width: 100,
-                                                  height: 100,
-                                                  fit: BoxFit.contain,
-                                                )
+                                              ? imagePickedPath != ''
+                                                  ? Image.file(
+                                                      File(imagePickedPath),
+                                                      width: 100,
+                                                      height: 100,
+                                                      fit: BoxFit.contain,
+                                                    )
+                                                  : Image.asset(
+                                                      'assets/images/add_photo_plus.png',
+                                                      width: 100,
+                                                      height: 100,
+                                                      fit: BoxFit.contain,
+                                                    )
                                               : Image.network(
                                                   imagePickedPath,
                                                   width: 100,

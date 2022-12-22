@@ -270,6 +270,18 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         List<Report> data = snapshot.data as List<Report>;
+                        if (data.isEmpty) {
+                          return Text(
+                            'Non ci sono dati!',
+                            style:
+                                FlutterFlowTheme.of(context).bodyText2.override(
+                                      fontFamily: 'IBM Plex Sans',
+                                      color: const Color(0xFF101213),
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                          );
+                        }
                         return Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -699,16 +711,7 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
                           ],
                         );
                       } else {
-                        return Text(
-                          'Non ci sono dati!',
-                          style:
-                              FlutterFlowTheme.of(context).bodyText2.override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    color: const Color(0xFF101213),
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                        );
+                        return Center(child: CircularProgressIndicator());
                       }
                     })
               ],
