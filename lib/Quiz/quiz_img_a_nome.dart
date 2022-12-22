@@ -44,7 +44,7 @@ class ImmagineANomeWidget extends StatefulWidget {
 class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int indexQuesito = 0;
-  int countTentativi = 1;
+  int? countTentativi;
   Timer? timer;
   Map<String, bool> mappaRisposte = <String, bool>{};
   var box;
@@ -146,21 +146,16 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
         panaraDialogType: PanaraDialogType.success,
         barrierDismissible: false, // optional parameter (default is true)
       );
-      /*await showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (BuildContext context) {
-            return const CustomDialogCorretta();
-          });*/
+
       setState(() {
         mappaRisposte[quesito['quesitoID']] = true;
         indexQuesito += 1;
         percentualeBarra += incrementoBarra;
-        countTentativi = 1;
+        countTentativi = null;
       });
     } else {
       ///CASO RISPOSTA SBAGLIATA, PROPOSTA TENTATIVO
-      if (countTentativi == 1) {
+      if (countTentativi! >= 1) {
         timer!.cancel();
         //verifico se ci sono tentativi
         /*var risposta = await showDialog(
@@ -192,12 +187,12 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
             mappaRisposte[quesito['quesitoID']] = false;
             indexQuesito += 1;
             percentualeBarra += incrementoBarra;
-            countTentativi = 1; //per sicurezza
+            countTentativi = null;
           });
         } else {
           //timer!.cancel();
           setState(() {
-            countTentativi = 0;
+            countTentativi = countTentativi! - 1;
           });
         }
       } else {
@@ -217,7 +212,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
           mappaRisposte[quesito['quesitoID']] = false;
           indexQuesito += 1;
           percentualeBarra += incrementoBarra;
-          countTentativi = 1;
+          countTentativi = null;
         });
       }
     }
@@ -267,7 +262,6 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
 
       //stoppo il timer
       DateTime fineTempo = DateTime.now();
-
       /*Se c'era uno stato corrente significa che per ricavare il tempo impiegato
       devo utilizzare l'inizioTempo memorizzato nel momento in cui ho abbandonato il quiz
       e non quello corrente. Solo in questo modo posso ottenere quanto tempo ho impiegato
@@ -282,7 +276,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
               fineTempo.difference(tempoInizioMemorizzato).inSeconds;
           deleteStatoQuiz();
         }
-      } else {
+      }
+      if (tempoImpiegato == 0) {
         tempoImpiegato = fineTempo.difference(widget.inizioTempo).inSeconds;
       }
 
@@ -312,6 +307,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
     } else {
       /*Prelevo il quesito che devo mostrare al video */
       quesito = widget.quesiti[indexQuesito];
+      countTentativi ??= quesito['numeroTentativi'];
 
       /*Quando prelevo il quesito faccio partire il timer. Mostro un AlertDialog
       che mi domanda se voglio vedere la risposta oppure no. Attende con un await
@@ -325,17 +321,6 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       timer = Timer(
           Duration(seconds: widget.quesiti[indexQuesito]['tempoRisposta']),
           () async {
-        /*var risposta = await showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return const ConfirmDialog(
-                  title: 'Mmm',
-                  description:
-                      'sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?',
-                  textOptionDelete: 'No',
-                  textOptionConfirm: 'Si');
-            });*/
         var risposta = await PanaraConfirmDialog.show(
           context,
           title: "Hey",
@@ -369,7 +354,6 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
             mappaRisposte[quesito['quesitoID']] = false;
             indexQuesito += 1;
             percentualeBarra += incrementoBarra;
-            countTentativi = 1; //per sicurezza
           }); // devo andare alla domanda successiva e considerare questa sbagliata
         } else {
           timer!.cancel();
