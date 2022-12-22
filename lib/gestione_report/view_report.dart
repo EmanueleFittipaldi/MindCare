@@ -24,6 +24,7 @@ class ViewReport extends StatefulWidget {
 
 class _ViewReportState extends State<ViewReport> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -34,8 +35,8 @@ class _ViewReportState extends State<ViewReport> {
         legend: Legend(
             isVisible: true,
             position: LegendPosition.bottom,
-            padding: 4,
-            itemPadding: 8,
+            padding: 2,
+            itemPadding: 10,
             orientation: LegendItemOrientation.horizontal),
         series: <CircularSeries>[
           PieSeries<ChartData, String>(
@@ -52,6 +53,28 @@ class _ViewReportState extends State<ViewReport> {
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       fontSize: 12)))
         ]);
+  }
+
+  getEmoticon(umore) {
+    String image = '';
+    switch (umore) {
+      case 0:
+        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637186.png';
+        break;
+      case 1:
+        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637163.png';
+        break;
+      case 2:
+        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637207.png';
+        break;
+      case 3:
+        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637188.png';
+        break;
+      case 4:
+        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637197.png';
+        break;
+    }
+    return image;
   }
 
   @override
@@ -292,13 +315,57 @@ class _ViewReportState extends State<ViewReport> {
                                       children: [
                                         Container(
                                             width: 200,
-                                            height: 190,
-                                            child: createChart([
-                                              ChartData('Corrette',
-                                                  item.risposteCorrette),
-                                              ChartData('Sbagliate',
-                                                  item.risposteErrate),
-                                            ])),
+                                            height: 50,
+                                            child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Expanded(
+                                                    child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(16, 5,
+                                                                    0, 0),
+                                                        child: Text(
+                                                          'Umore:',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .subtitle1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Outfit',
+                                                                color: Color(
+                                                                    0xFF101213),
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                              ),
+                                                        )),
+                                                  ),
+                                                  Expanded(
+                                                    child: Image.network(
+                                                      getEmoticon(item.umore),
+                                                      width: 40,
+                                                      height: 40,
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                  ),
+                                                ])),
+                                        Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 15, 0, 0),
+                                            child: Container(
+                                                width: 200,
+                                                height: 150,
+                                                child: createChart([
+                                                  ChartData('Corrette',
+                                                      item.risposteCorrette),
+                                                  ChartData('Sbagliate',
+                                                      item.risposteErrate),
+                                                ]))),
                                       ],
                                     ),
                                   ),

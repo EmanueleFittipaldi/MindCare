@@ -46,7 +46,7 @@ class NomeAImmagineWidget extends StatefulWidget {
 class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   int indexQuesito = 0;
-  int countTentativi = 1;
+  int? countTentativi;
   Timer? timer;
   Map<String, bool> mappaRisposte = <String, bool>{};
   var quesito;
@@ -145,11 +145,11 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
         mappaRisposte[quesito['quesitoID']] = true;
         indexQuesito += 1;
         percentualeBarra += incrementoBarra;
-        countTentativi = 1;
+        countTentativi = null;
       });
     } else {
       //CASO RISPOSTA SBAGLIATA, PROPOSTA TENTATIVO
-      if (countTentativi == 1) {
+      if (countTentativi! >= 1) {
         timer!.cancel();
         //verifico se ci sono tentativi
         var risposta = await PanaraConfirmDialog.show(
@@ -175,13 +175,13 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
             mappaRisposte[quesito['quesitoID']] = false;
             indexQuesito += 1;
             percentualeBarra += incrementoBarra;
-            countTentativi = 1; //per sicurezza
+            countTentativi = null; //per sicurezza
           });
         } else {
           //CASO VOGLIO RIPROVARE
           //timer!.cancel();
           setState(() {
-            countTentativi = 0;
+            countTentativi = countTentativi! - 1;
           });
         }
       } else {
@@ -201,7 +201,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
           mappaRisposte[quesito['quesitoID']] = false;
           indexQuesito += 1;
           percentualeBarra += incrementoBarra;
-          countTentativi = 1;
+          countTentativi = null;
         });
       }
     }
@@ -266,7 +266,9 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
               fineTempo.difference(tempoInizioMemorizzato).inSeconds;
           deleteStatoQuiz();
         }
-      } else {
+      }
+
+      if (tempoImpiegato == 0) {
         tempoImpiegato = fineTempo.difference(widget.inizioTempo).inSeconds;
       }
 
@@ -296,7 +298,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
     } else {
       /*Prelevo il quesito che devo mostrare al video */
       quesito = widget.quesiti[indexQuesito];
-
+      countTentativi ??= quesito['numeroTentativi'];
       /*Quando prelevo il quesito faccio partire il timer. Mostro un AlertDialog
       che mi domanda se voglio vedere la risposta oppure no. Attende con un await
       la mia risposta. Se ho risposto si, attendo con un'altra await che venga chiamata
@@ -342,7 +344,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
             mappaRisposte[quesito['quesitoID']] = false;
             indexQuesito += 1;
             percentualeBarra += incrementoBarra;
-            countTentativi = 1;
+            countTentativi = null;
           });
         } else {
           timer!.cancel();
