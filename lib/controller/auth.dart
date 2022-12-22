@@ -68,7 +68,5 @@ class Auth {
 
   Future<void> forgottenPassword({required String email}) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email.trim());
-
-    Fluttertoast.showToast(msg: "Email per il reset della password inviata");
   }
 }

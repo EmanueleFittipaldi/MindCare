@@ -141,7 +141,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                     ),
                                             ),
                                           ),
-                                          Padding(
+                                          Expanded(
+                                              child: Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(15, 2, 2, 12),
                                             child: Container(
@@ -214,7 +215,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                           MainAxisSize.max,
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .spaceBetween,
+                                                              .start,
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .end,
@@ -242,7 +243,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                           padding:
                                                               const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                  0, 4, 0, 0),
+                                                                  20, 4, 0, 0),
                                                           child: Text(
                                                             '2/8',
                                                             style: FlutterFlowTheme
@@ -291,7 +292,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                          )),
                                         ],
                                       ),
                                     );
@@ -318,7 +319,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                       textAlign: TextAlign.start,
                       style: FlutterFlowTheme.of(context).bodyText2.override(
                             fontFamily: 'IBM Plex Sans',
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.w300,
                           ),
                     )),
@@ -344,7 +345,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                               },
                               child: Container(
                                 width: 100,
-                                height: 190,
+                                height: 180,
                                 decoration: BoxDecoration(
                                   boxShadow: const [
                                     BoxShadow(
@@ -367,26 +368,28 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      FlutterFlowIconButton(
-                                        borderColor: const Color(0x00FFFFFF),
-                                        borderRadius: 0,
-                                        borderWidth: 0,
-                                        buttonSize: 100,
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.question,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          size: 50,
+                                      Expanded(
+                                        child: FlutterFlowIconButton(
+                                          borderColor: const Color(0x00FFFFFF),
+                                          borderRadius: 0,
+                                          borderWidth: 0,
+                                          buttonSize: 100,
+                                          icon: FaIcon(
+                                            FontAwesomeIcons.question,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            size: 50,
+                                          ),
+                                          onPressed: () async {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        SelezionaCategoriaWidget(
+                                                            user: user!,
+                                                            caregiverID:
+                                                                caregiverID)));
+                                          },
                                         ),
-                                        onPressed: () async {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SelezionaCategoriaWidget(
-                                                          user: user!,
-                                                          caregiverID:
-                                                              caregiverID)));
-                                        },
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
@@ -421,7 +424,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                             },
                             child: Container(
                               width: 100,
-                              height: 190,
+                              height: 180,
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
@@ -447,26 +450,28 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      FlutterFlowIconButton(
-                                        borderColor: const Color(0x00FFFFFF),
-                                        borderRadius: 0,
-                                        borderWidth: 0,
-                                        buttonSize: 100,
-                                        icon: Icon(
-                                          Icons.photo_camera,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          size: 50,
+                                      Expanded(
+                                        child: FlutterFlowIconButton(
+                                          borderColor: const Color(0x00FFFFFF),
+                                          borderRadius: 0,
+                                          borderWidth: 0,
+                                          buttonSize: 100,
+                                          icon: Icon(
+                                            Icons.photo_camera,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            size: 50,
+                                          ),
+                                          onPressed: () async {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AlbumRicordiWidget(
+                                                            caregiverUID:
+                                                                caregiverID,
+                                                            user: user!)));
+                                          },
                                         ),
-                                        onPressed: () async {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      AlbumRicordiWidget(
-                                                          caregiverUID:
-                                                              caregiverID,
-                                                          user: user!)));
-                                        },
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
@@ -509,7 +514,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                               onTap: () {},
                               child: Container(
                                 width: 100,
-                                height: 190,
+                                height: 180,
                                 decoration: BoxDecoration(
                                   boxShadow: const [
                                     BoxShadow(
@@ -532,18 +537,20 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      FlutterFlowIconButton(
-                                        borderColor: const Color(0x00FFFFFF),
-                                        borderRadius: 0,
-                                        borderWidth: 0,
-                                        buttonSize: 100,
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.penRuler,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          size: 50,
+                                      Expanded(
+                                        child: FlutterFlowIconButton(
+                                          borderColor: const Color(0x00FFFFFF),
+                                          borderRadius: 0,
+                                          borderWidth: 0,
+                                          buttonSize: 100,
+                                          icon: FaIcon(
+                                            FontAwesomeIcons.penRuler,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            size: 50,
+                                          ),
+                                          onPressed: () {},
                                         ),
-                                        onPressed: () {},
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional
@@ -574,7 +581,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                             onTap: () {},
                             child: Container(
                               width: 100,
-                              height: 190,
+                              height: 180,
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
@@ -600,24 +607,26 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      FlutterFlowIconButton(
-                                        borderColor: const Color(0x00FFFFFF),
-                                        borderRadius: 0,
-                                        borderWidth: 0,
-                                        buttonSize: 100,
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.handshakeAngle,
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          size: 50,
+                                      Expanded(
+                                        child: FlutterFlowIconButton(
+                                          borderColor: const Color(0x00FFFFFF),
+                                          borderRadius: 0,
+                                          borderWidth: 0,
+                                          buttonSize: 100,
+                                          icon: FaIcon(
+                                            FontAwesomeIcons.handshakeAngle,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            size: 50,
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const SosWidget()));
+                                          },
                                         ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const SosWidget()));
-                                        },
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional

@@ -11,7 +11,7 @@ class Ricordo {
   final String filePath;
   final String ricordoID;
   final String tipoRicordo;
-
+  final List tags;
   Ricordo({
     required this.titolo,
     required this.annoRicordo,
@@ -19,6 +19,7 @@ class Ricordo {
     required this.filePath,
     required this.ricordoID,
     required this.tipoRicordo,
+    required this.tags,
   });
 
   final docUser = FirebaseFirestore.instance.collection('user').doc();
@@ -30,6 +31,7 @@ class Ricordo {
         'filePath': filePath,
         'ricordoID': ricordoID,
         'tipoRicordo': tipoRicordo,
+        'tags': tags
       };
 
   Future<void> createMemory(String user) async {
@@ -41,6 +43,7 @@ class Ricordo {
         .doc(user)
         .collection('Ricordi')
         .doc(ricordoID);
+
     await docUser.set(json);
   }
 }

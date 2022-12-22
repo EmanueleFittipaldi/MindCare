@@ -1,7 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mindcare/album_ricordi/ricordo_widget.dart';
 import 'package:mindcare/controller/auth.dart';
+import '../flutter_flow/flutter_flow_video_player.dart';
 // ignore: depend_on_referenced_packages
 import 'package:timeline_list/timeline.dart';
 // ignore: depend_on_referenced_packages
@@ -15,126 +17,125 @@ import '../model/ricordo.dart';
 
 class TimelinePage extends StatefulWidget {
   final String caregiverUID;
-  const TimelinePage({Key? key, required this.caregiverUID}) : super(key: key);
+  final List<Ricordo> doodles;
+  const TimelinePage(
+      {Key? key, required this.caregiverUID, required this.doodles})
+      : super(key: key);
   @override
   _TimelinePageState createState() => _TimelinePageState();
 }
 
 class _TimelinePageState extends State<TimelinePage> {
-  List<Ricordo> doodles = [];
   String? fileName;
   @override
   Widget build(BuildContext context) {
-    print(widget.caregiverUID);
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('user')
-            .doc(widget.caregiverUID)
-            .collection('Pazienti')
-            .doc(Auth().currentUser!.uid)
-            .collection('Ricordi')
-            .snapshots(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            doodles = [];
-            snapshot.data?.docs.forEach((doc) async {
-              Map<String, dynamic>? memory = doc.data();
-              doodles.add(Ricordo(
-                  titolo: memory!['titolo'],
-                  annoRicordo: memory['annoRicordo'],
-                  descrizione: memory['descrizione'],
-                  filePath: memory['filePath'],
-                  ricordoID: memory['ricordoID'],
-                  tipoRicordo: memory['tipoRicordo']));
-            });
-            return timelineModel(TimelinePosition.Left);
-          } else {
-            return const Text('');
-          }
-        });
-  }
-
-  timelineModel(TimelinePosition position) => Timeline.builder(
-      itemBuilder: centerTimelineBuilder,
-      itemCount: doodles.length,
-      physics: const ClampingScrollPhysics(),
-      position: position);
-
-  TimelineModel centerTimelineBuilder(BuildContext context, int i) {
-    final doodle = doodles[i];
-    return TimelineModel(
-        Card(
-          margin: const EdgeInsets.symmetric(vertical: 16.0),
-          color: const Color(0xFFF5F5F5),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            onTap: () async {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => RicordoWidget(
-                        ricordo: doodle,
-                      )));
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  doodle.tipoRicordo == 'Immagine'
-                      ? Image.network(
-                          doodle.filePath,
-                          width: MediaQuery.of(context).size.width * 1,
-                          height: 120,
-                          fit: BoxFit.cover,
-                        )
-                      : Image.asset(
-                          "assets/images/add_photo.png",
-                          width: MediaQuery.of(context).size.width * 1,
-                          height: 120,
-                          fit: BoxFit.cover,
+    return CarouselSlider(
+        items: <Widget>[
+          for (var item in widget.doodles)
+            InkWell(
+              onTap: () async {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => RicordoWidget(
+                          ricordo: item,
+                        )));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).backgroundPrimaryColor,
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 12,
+                      color: Color(0x14000000),
+                      offset: Offset(0, 5),
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Stack(children: <Widget>[
+                  Align(
+                      alignment: AlignmentDirectional(0, 0),
+                      child: item.tipoRicordo == 'Immagine'
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Image.network(
+                                item.filePath,
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover,
+                              ))
+                          : Container(
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30)),
+                              clipBehavior: Clip.antiAlias,
+                              child: FittedBox(
+                                  fit: BoxFit.fill,
+                                  child: SizedBox(
+                                      width: 1,
+                                      height: 1,
+                                      child: FlutterFlowVideoPlayer(
+                                        path: item.filePath,
+                                        videoType: VideoType.network,
+                                        autoPlay: true,
+                                        looping: false,
+                                        showControls: false,
+                                        allowFullScreen: false,
+                                        allowPlaybackSpeedMenu: false,
+                                      ))))),
+                  Align(
+                    alignment: AlignmentDirectional(0, 0.9),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                            child: Text(
+                              item.titolo,
+                              textAlign: TextAlign.start,
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        fontSize: 30,
+                                      ),
+                            ),
+                          ),
                         ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  Text(
-                    doodle.annoRicordo.toString(),
-                    style: FlutterFlowTheme.of(context).bodyText2.override(
-                          fontFamily: 'IBM Plex Sans',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w200,
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                            child: Text(
+                              item.annoRicordo.toString(),
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'IBM Plex Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .tertiaryColor,
+                                    fontSize: 18,
+                                  ),
+                            ),
+                          ),
                         ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  Text(
-                    doodle.titolo,
-                    style: FlutterFlowTheme.of(context).subtitle2.override(
-                          fontFamily: 'IBM Plex Sans',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                        ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                ],
+                ]),
               ),
             ),
-          ),
-        ),
-        position:
-            i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
-        isFirst: i == 0,
-        isLast: i == doodles.length,
-        iconBackground: Colors.transparent,
-        icon: const Icon(
-          FontAwesomeIcons.circle,
-          color: Color(0xFF36383C),
-          size: 15,
+        ],
+        options: CarouselOptions(
+          height: 500,
+          enlargeCenterPage: true,
         ));
   }
 }

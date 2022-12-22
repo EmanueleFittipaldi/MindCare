@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/quesito.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../controller/auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
@@ -110,7 +113,27 @@ passata come parametro */
                 size: 30,
               ),
               onPressed: () async {
-                Navigator.of(context).pop();
+                var confirmDialogResponse = await PanaraConfirmDialog.show(
+                  context,
+                  title: "Creazione domanda",
+                  message:
+                      "Vuoi davvero annullare la creazione? Tutti i dati verranno persi!",
+                  confirmButtonText: "Conferma",
+                  cancelButtonText: "Annulla",
+                  onTapCancel: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  onTapConfirm: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  panaraDialogType: PanaraDialogType.normal,
+
+                  barrierDismissible:
+                      false, // optional parameter (default is true)
+                );
+                if (confirmDialogResponse) {
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ),
@@ -263,8 +286,8 @@ passata come parametro */
                                     - Tutto questo viene fatto usando l'operatore ternario in maniera nidificata.
                                      */
                                     child: imagDomanda != ''
-                                        ? Image.asset(
-                                            imagDomanda,
+                                        ? Image.file(
+                                            File(imagDomanda),
                                             width: 100,
                                             height: 100,
                                             fit: BoxFit.cover,
@@ -910,20 +933,20 @@ passata come parametro */
                       },
                       text: 'Salva',
                       options: FFButtonOptions(
-                        width: 200,
-                        height: 50,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle1.override(
-                                  fontFamily: 'IBM Plex Sans',
-                                  color: Colors.white,
-                                ),
-                        elevation: 3,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                      ),
+                          width: 200,
+                          height: 50,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle1.override(
+                                    fontFamily: 'IBM Plex Sans',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3,
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: 30),
                     ),
                   ),
                 ],

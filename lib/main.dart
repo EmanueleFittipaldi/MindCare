@@ -9,13 +9,14 @@ Future<void> main() async {
   runApp(const MindCare());
 }
 
-class MindCare extends StatelessWidget{
+class MindCare extends StatelessWidget {
   const MindCare({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'MindCare',
       theme: ThemeData(),
       home: const WidgetTree(),

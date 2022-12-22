@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:mindcare/controller/auth.dart';
 import '../autenticazione/login.dart';
 import 'package:mindcare/caregiver/opzioni.dart';
@@ -25,6 +26,8 @@ class AppbarWidget extends StatelessWidget {
     }
 
     return AppBar(
+      systemOverlayStyle:
+          SystemUiOverlayStyle(statusBarColor: Colors.transparent),
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       iconTheme:
           IconThemeData(color: FlutterFlowTheme.of(context).secondaryText),

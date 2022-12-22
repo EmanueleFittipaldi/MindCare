@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/image_upload.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/widget_tree.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
@@ -35,6 +39,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String imagePickedPath = '';
   String? errorMessage = 'Qualcosa è andato storto';
+  bool biometria = false;
   final TextEditingController _controllerEmail = new TextEditingController();
   final TextEditingController _controllerPassword = new TextEditingController();
   final TextEditingController _controllerRepeatPassword =
@@ -71,52 +76,9 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: const Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Color(0xFFEBF9FF),
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 40, 0),
-                    child: Text(
-                      'MindCare',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).title2.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: Colors.white,
-                            fontSize: 22,
-                          ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 2,
-        ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: AppbarWidget(title: 'Crea un nuovo account'),
       ),
       body: SafeArea(
         child: GestureDetector(
@@ -133,29 +95,6 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Align(
-                    alignment: const AlignmentDirectional(0, 0.99),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Registrazione',
-                            style: FlutterFlowTheme.of(context).title1.override(
-                                  fontFamily: 'IBM Plex Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                     child: Form(
@@ -166,7 +105,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 4, 0, 0),
+                                0, 4, 0, 30),
                             child: InkWell(
                               onTap: () async {},
                               child: Container(
@@ -196,8 +135,8 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                     }
                                   },
                                   child: imagePickedPath != ''
-                                      ? Image.asset(
-                                          imagePickedPath,
+                                      ? Image.file(
+                                          File(imagePickedPath),
                                           width: 100,
                                           height: 100,
                                           fit: BoxFit.cover,
@@ -724,40 +663,6 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   child: Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 5, 0),
-                                    child: FFButtonWidget(
-                                      onPressed: () async {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const WidgetTree()));
-                                      },
-                                      text: 'Annulla',
-                                      options: FFButtonOptions(
-                                        width: 130,
-                                        height: 60,
-                                        color: const Color(0xFFC11215),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'IBM Plex Sans',
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiaryColor,
-                                          width: 0,
-                                        ),
-                                        borderRadius: 8,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
                                             5, 0, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
@@ -788,15 +693,38 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                                 profileImgPath: imageUrl ?? '',
                                                 checkBiometric: false);
                                             user.createNewUser();
-
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const WidgetTree()));
+                                            PanaraInfoDialog.show(
+                                              context,
+                                              title: "Registrazione",
+                                              message:
+                                                  "Registrazione avvenuta! Verifica l\'account attraverso l\'email inviata!",
+                                              buttonText: "Okay",
+                                              onTapDismiss: () {
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const WidgetTree()));
+                                              },
+                                              panaraDialogType:
+                                                  PanaraDialogType.success,
+                                              barrierDismissible:
+                                                  false, // optional parameter (default is true)
+                                            );
                                           }
                                         } else {
-                                          Fluttertoast.showToast(
-                                              msg: 'Inserisci tutti i campi!');
+                                          PanaraInfoDialog.show(
+                                            context,
+                                            title: "Registrazione",
+                                            message: "Inserisci tutti i campi!",
+                                            buttonText: "Okay",
+                                            onTapDismiss: () {
+                                              Navigator.pop(context);
+                                            },
+                                            panaraDialogType:
+                                                PanaraDialogType.error,
+                                            barrierDismissible:
+                                                false, // optional parameter (default is true)
+                                          );
                                         }
                                       },
                                       text: 'Conferma',
@@ -817,7 +745,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                               .tertiaryColor,
                                           width: 0,
                                         ),
-                                        borderRadius: 8,
+                                        borderRadius: 30,
                                       ),
                                     ),
                                   ),

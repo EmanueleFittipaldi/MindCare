@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/caregiver/opzioni.dart';
 import 'package:mindcare/controller/user_controller.dart';
@@ -37,8 +38,9 @@ class _InitHomepageState extends State<InitHomepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
+        preferredSize: Size.fromHeight(90),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
           automaticallyImplyLeading: false,
@@ -88,14 +90,17 @@ class _InitHomepageState extends State<InitHomepage> {
                         .elementAt(_selectedIndex)[widget.user.type],
               ))),
       bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: Colors.white,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.home_outlined, size: 35),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Impostazioni',
+            icon: Icon(Icons.settings_outlined, size: 35),
+            label: '',
           ),
         ],
         currentIndex: _selectedIndex,

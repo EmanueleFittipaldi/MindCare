@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +9,9 @@ import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_util.dart';
 import 'package:mindcare/controller/image_upload.dart';
+import 'package:mindcare/init_homepage.dart';
 import 'package:mindcare/model/utente.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -109,7 +112,27 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                 size: 30,
               ),
               onPressed: () async {
-                Navigator.of(context).pop();
+                var confirmDialogResponse = await PanaraConfirmDialog.show(
+                  context,
+                  title: "Creazione paziente",
+                  message:
+                      "Vuoi davvero annullare la creazione? Tutti i dati verranno persi!",
+                  confirmButtonText: "Conferma",
+                  cancelButtonText: "Annulla",
+                  onTapCancel: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  onTapConfirm: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  panaraDialogType: PanaraDialogType.normal,
+
+                  barrierDismissible:
+                      false, // optional parameter (default is true)
+                );
+                if (confirmDialogResponse) {
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ),
@@ -172,8 +195,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                           }
                                         },
                                         child: imagePickedPath != ''
-                                            ? Image.asset(
-                                                imagePickedPath,
+                                            ? Image.file(
+                                                File(imagePickedPath),
                                                 width: 100,
                                                 height: 100,
                                                 fit: BoxFit.cover,
@@ -586,7 +609,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                         color: Colors.transparent,
                                         width: 1,
                                       ),
-                                      borderRadius: 8,
+                                      borderRadius: 30,
                                     ),
                                   ),
                                 ),
@@ -605,6 +628,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                           onPressed: () async {
                                             /* Quando clicco su Salva viene salvato
                                             il paziente*/
+
                                             if (formKey.currentState!
                                                     .validate() &&
                                                 datePicked != null) {
@@ -635,37 +659,46 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                                         imageUrl ?? '',
                                                     checkBiometric: false);
                                                 user.createPatient();
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const HomeCaregiverWidget()));
+                                                Navigator.of(context).pop();
                                               }
                                             } else {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      'Inserisci tutti i campi!');
+                                              PanaraInfoDialog.show(
+                                                context,
+                                                title: "Creazione paziente",
+                                                message:
+                                                    "Errore: inserisci tutti i campi!",
+                                                buttonText: "Okay",
+                                                onTapDismiss: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                panaraDialogType:
+                                                    PanaraDialogType.error,
+                                                barrierDismissible:
+                                                    false, // optional parameter (default is true)
+                                              );
                                             }
                                           },
                                           text: 'Salva',
                                           options: FFButtonOptions(
-                                            width: 200,
-                                            height: 50,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .subtitle1
-                                                    .override(
-                                                      fontFamily:
-                                                          'IBM Plex Sans',
-                                                      color: Colors.white,
-                                                    ),
-                                            elevation: 3,
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1,
-                                            ),
-                                          ),
+                                              width: 200,
+                                              height: 50,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1
+                                                      .override(
+                                                        fontFamily:
+                                                            'IBM Plex Sans',
+                                                        color: Colors.white,
+                                                      ),
+                                              elevation: 3,
+                                              borderSide: const BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius: 30),
                                         ),
                                       ),
                                     ],

@@ -34,9 +34,6 @@ class ReportController {
           umore: report['umore']));
     }
 
-    if (reportData.isEmpty) {
-      return null;
-    }
     return reportData;
   }
 }

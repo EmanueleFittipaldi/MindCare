@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/quesito.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../controller/auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
@@ -94,7 +96,27 @@ class _CreazioneDomandaImmagineANomeWidgetState
                 size: 30,
               ),
               onPressed: () async {
-                Navigator.of(context).pop();
+                var confirmDialogResponse = await PanaraConfirmDialog.show(
+                  context,
+                  title: "Creazione domanda",
+                  message:
+                      "Vuoi davvero annullare la creazione? Tutti i dati verranno persi!",
+                  confirmButtonText: "Conferma",
+                  cancelButtonText: "Annulla",
+                  onTapCancel: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  onTapConfirm: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  panaraDialogType: PanaraDialogType.normal,
+
+                  barrierDismissible:
+                      false, // optional parameter (default is true)
+                );
+                if (confirmDialogResponse) {
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ),
@@ -248,8 +270,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                 }
                                               },
                                               child: imagOp1 != ''
-                                                  ? Image.asset(
-                                                      imagOp1,
+                                                  ? Image.file(
+                                                      File(imagOp1),
                                                       width: 100,
                                                       height: 100,
                                                       fit: BoxFit.cover,
@@ -324,8 +346,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                 }
                                               },
                                               child: imagOp2 != ''
-                                                  ? Image.asset(
-                                                      imagOp2,
+                                                  ? Image.file(
+                                                      File(imagOp2),
                                                       width: 100,
                                                       height: 100,
                                                       fit: BoxFit.cover,
@@ -411,8 +433,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                 }
                                               },
                                               child: imagOp3 != ''
-                                                  ? Image.asset(
-                                                      imagOp3,
+                                                  ? Image.file(
+                                                      File(imagOp3),
                                                       width: 100,
                                                       height: 100,
                                                       fit: BoxFit.cover,
@@ -487,8 +509,8 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                                 }
                                               },
                                               child: imagOp4 != ''
-                                                  ? Image.asset(
-                                                      imagOp4,
+                                                  ? Image.file(
+                                                      File(imagOp4),
                                                       width: 100,
                                                       height: 100,
                                                       fit: BoxFit.cover,
@@ -797,6 +819,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                           color: Colors.transparent,
                           width: 1,
                         ),
+                        borderRadius: 30,
                       ),
                     ),
                   ),

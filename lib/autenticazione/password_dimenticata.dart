@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/user_controller.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -42,50 +44,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30,
-                  borderWidth: 1,
-                  buttonSize: 60,
-                  icon: const Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Color(0xFFEBF9FF),
-                    size: 30,
-                  ),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 40, 0),
-                    child: Text(
-                      'MindCare',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).title2.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: Colors.white,
-                            fontSize: 22,
-                          ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 2,
-        ),
+        child: AppbarWidget(title: 'Password dimenticata'),
       ),
       body: SafeArea(
         child: GestureDetector(
@@ -106,21 +65,22 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                     alignment: const AlignmentDirectional(0, 0.99),
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
+                          const EdgeInsetsDirectional.fromSTEB(20, 15, 20, 5),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            'Password dimenticata',
+                          Expanded(
+                              child: Text(
+                            'Inserisci l\'email per recuperare la password.',
                             style: FlutterFlowTheme.of(context).title1.override(
                                   fontFamily: 'IBM Plex Sans',
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
                                 ),
-                          ),
+                          )),
                         ],
                       ),
                     ),
@@ -161,7 +121,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -169,21 +129,23 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                      FlutterFlowTheme.of(context).borderColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context)
+                                      .borderErrorColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -209,18 +171,55 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  showDialog(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      builder: (context) => const Center(
-                                          child: CircularProgressIndicator()));
-                                  var success = await UserController()
-                                      .forgottenPassword(_controllerEmail.text);
-                                  if (success) {
-                                    Navigator.of(context)
-                                        .popUntil((route) => route.isFirst);
+                                  if (_controllerEmail.text == '') {
+                                    PanaraInfoDialog.show(
+                                      context,
+                                      title: "Accesso",
+                                      message: "Inserisci l\'email!",
+                                      buttonText: "Okay",
+                                      onTapDismiss: () {
+                                        Navigator.pop(context);
+                                      },
+                                      panaraDialogType:
+                                          PanaraDialogType.warning,
+                                      barrierDismissible:
+                                          false, // optional parameter (default is true)
+                                    );
                                   } else {
-                                    Navigator.of(context).pop();
+                                    var success = await UserController()
+                                        .forgottenPassword(
+                                            _controllerEmail.text);
+                                    if (success) {
+                                      PanaraInfoDialog.show(
+                                        context,
+                                        title: "Password dimenticata",
+                                        message: "Email inviata!",
+                                        buttonText: "Okay",
+                                        onTapDismiss: () {
+                                          Navigator.of(context).popUntil(
+                                              (route) => route.isFirst);
+                                        },
+                                        panaraDialogType:
+                                            PanaraDialogType.success,
+                                        barrierDismissible:
+                                            false, // optional parameter (default is true)
+                                      );
+                                    } else {
+                                      PanaraInfoDialog.show(
+                                        context,
+                                        title: "Password dimenticata",
+                                        message:
+                                            "Ops! Qualcosa è andato storto!",
+                                        buttonText: "Okay",
+                                        onTapDismiss: () {
+                                          Navigator.pop(context);
+                                        },
+                                        panaraDialogType:
+                                            PanaraDialogType.error,
+                                        barrierDismissible:
+                                            false, // optional parameter (default is true)
+                                      );
+                                    }
                                   }
                                 },
                                 text: 'Invia email',
@@ -237,11 +236,10 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                                         fontWeight: FontWeight.normal,
                                       ),
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
+                                    color: Colors.transparent,
                                     width: 1,
                                   ),
-                                  borderRadius: 8,
+                                  borderRadius: 30,
                                 ),
                               ),
                             ],

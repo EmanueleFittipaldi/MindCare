@@ -9,6 +9,7 @@ import 'package:mindcare/model/utente.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 class GestioneAlbumWidget extends StatefulWidget {
   final Utente user;
@@ -25,7 +26,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+      backgroundColor: FlutterFlowTheme.of(context).backgroundPrimaryColor,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
         child: AppbarWidget(
@@ -52,53 +53,42 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                             width: double.infinity,
                             height: 250,
                             decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(0),
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              image: DecorationImage(
+                                fit: BoxFit.contain,
+                                image: Image.asset(
+                                  'assets/images/infographic_gestione_album.png',
+                                ).image,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 12,
+                                  color: Color(0x14000000),
+                                  offset: Offset(0, 5),
+                                )
+                              ],
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(155),
+                                bottomRight: Radius.circular(0),
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
+                              ),
                             ),
                             alignment: const AlignmentDirectional(-0.0, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      16, 0, 16, 5),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 10, 0, 0),
-                                        child: Text(
-                                          'Gestione Album',
-                                          style: FlutterFlowTheme.of(context)
-                                              .title1
-                                              .override(
-                                                fontFamily: 'IBM Plex Sans',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Image.asset(
-                                    'assets/images/infographic_gestione_album.png',
-                                    width: double.infinity,
-                                    height: 100,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ],
-                            ),
                           ),
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 20, 0, 0),
+                      child: Text(
+                        'Aggiungi o elimina ricordi dall\'album del paziente.',
+                        style: FlutterFlowTheme.of(context).title1.override(
+                              fontFamily: 'IBM Plex Sans',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                            ),
                       ),
                     ),
                     Padding(
@@ -118,7 +108,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                           ),
                           FlutterFlowIconButton(
                             borderColor: Colors.transparent,
-                            borderRadius: 5,
+                            borderRadius: 30,
                             borderWidth: 1,
                             buttonSize: 40,
                             fillColor:
@@ -126,7 +116,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                             icon: Icon(
                               Icons.add,
                               color: FlutterFlowTheme.of(context).tertiaryColor,
-                              size: 25,
+                              size: 22,
                             ),
                             onPressed: () async {
                               Navigator.of(context).push(MaterialPageRoute(
@@ -141,7 +131,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                     ),
                     Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                            const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 20),
                         child: StreamBuilder(
                           stream: FirebaseFirestore.instance
                               .collection('user')
@@ -170,18 +160,23 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                     for (int i = 0; i < data.length; i++)
                                       Padding(
                                         padding: const EdgeInsetsDirectional
-                                            .fromSTEB(16, 0, 16, 8),
+                                            .fromSTEB(15, 0, 15, 8),
                                         child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 12,
+                                                color: Color(0x14000000),
+                                                offset: Offset(0, 5),
+                                              )
+                                            ],
                                             borderRadius:
-                                                BorderRadius.circular(12),
+                                                BorderRadius.circular(30),
                                             border: Border.all(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .lineColor,
+                                              color: Colors.transparent,
                                               width: 2,
                                             ),
                                           ),
@@ -200,7 +195,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                                           .primaryBackground,
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              10),
+                                                              30),
                                                     ),
                                                     alignment:
                                                         const AlignmentDirectional(
@@ -301,6 +296,10 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                                                           data[i]
                                                                               [
                                                                               'tipoRicordo'],
+                                                                      tags: data[
+                                                                              i]
+                                                                          [
+                                                                          'tags'],
                                                                     ))));
                                                   },
                                                 ),
@@ -311,30 +310,40 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                                   borderWidth: 1,
                                                   buttonSize: 45,
                                                   icon: const Icon(
-                                                    Icons.cancel,
+                                                    Icons
+                                                        .delete_forever_outlined,
                                                     color: Color(0xFF8E8E8E),
                                                     size: 25,
                                                   ),
                                                   onPressed: () async {
                                                     var confirmDialogResponse =
-                                                        await showDialog(
-                                                            barrierDismissible:
-                                                                false,
-                                                            context: context,
-                                                            builder:
-                                                                (BuildContext
-                                                                    context) {
-                                                              return const ConfirmDialog(
-                                                                title:
-                                                                    'Eliminazione ricordo',
-                                                                description:
-                                                                    'Vuoi davvero eliminare il ricordo?',
-                                                                textOptionConfirm:
-                                                                    'Conferma',
-                                                                textOptionDelete:
-                                                                    'Annulla',
-                                                              );
-                                                            });
+                                                        await PanaraConfirmDialog
+                                                            .show(
+                                                      context,
+                                                      title:
+                                                          "Eliminazione ricordo",
+                                                      message:
+                                                          "Vuoi davvero eliminare il ricordo? L'azione non è riversibile!",
+                                                      confirmButtonText:
+                                                          "Conferma",
+                                                      cancelButtonText:
+                                                          "Annulla",
+                                                      onTapCancel: () {
+                                                        Navigator.of(context)
+                                                            .pop(false);
+                                                      },
+                                                      onTapConfirm: () {
+                                                        Navigator.of(context)
+                                                            .pop(true);
+                                                      },
+                                                      panaraDialogType:
+                                                          PanaraDialogType
+                                                              .normal,
+
+                                                      barrierDismissible:
+                                                          false, // optional parameter (default is true)
+                                                    );
+
                                                     if (confirmDialogResponse) {
                                                       AlbumController()
                                                           .deleteMemory(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/model/ricordo.dart';
@@ -24,138 +25,225 @@ class _RicordoWidgetState extends State<RicordoWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: AppbarWidget(title: 'Ricordo'),
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).secondaryBackground,
-            ),
-            child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: Stack(
                   children: [
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                      child: widget.ricordo.tipoRicordo == 'Video'
-                          ? FlutterFlowVideoPlayer(
-                              path: widget.ricordo.filePath,
-                              videoType: VideoType.network,
-                              autoPlay: false,
-                              looping: true,
-                              showControls: true,
-                              allowFullScreen: true,
-                              allowPlaybackSpeedMenu: false,
-                            )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                widget.ricordo.filePath,
-                                width: 100,
-                                height: 250,
-                                fit: BoxFit.cover,
+                    Container(
+                      height: MediaQuery.of(context).size.height * 1,
+                      decoration: BoxDecoration(),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          widget.ricordo.tipoRicordo == 'Video'
+                              ? Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 100, 0, 0),
+                                  child: FlutterFlowVideoPlayer(
+                                    path: widget.ricordo.filePath,
+                                    videoType: VideoType.network,
+                                    autoPlay: true,
+                                    looping: true,
+                                    showControls: true,
+                                    allowFullScreen: true,
+                                    allowPlaybackSpeedMenu: false,
+                                  ))
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    widget.ricordo.filePath,
+                                    width: double.infinity,
+                                    height: 450,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                              child: Container(
+                                width: double.infinity,
+                                height: 600,
+                                decoration: BoxDecoration(),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 16, 16, 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(
+                                        widget.ricordo.titolo,
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                              fontFamily: 'IBM Plex Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 12, 0, 12),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  widget.ricordo.annoRicordo
+                                                      .toString(),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText2
+                                                      .override(
+                                                        fontFamily:
+                                                            'IBM Plex Sans',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 15, 0),
+                                              child: FlutterFlowIconButton(
+                                                borderColor: Colors.transparent,
+                                                borderRadius: 30,
+                                                borderWidth: 1,
+                                                buttonSize: 45,
+                                                icon: FaIcon(
+                                                  FontAwesomeIcons.volumeLow,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: 20,
+                                                ),
+                                                onPressed: () {
+                                                  if (widget.ricordo
+                                                          .descrizione ==
+                                                      '') {
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            'Non è presente una descrizione da leggere!');
+                                                  } else {
+                                                    String language = 'it-IT';
+                                                    tts.setLanguage(language);
+                                                    tts.setPitch(1.1);
+                                                    tts.setRate(0.8);
+                                                    tts.speak(widget
+                                                        .ricordo.descrizione);
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 0, 20),
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 0, 24),
+                                                  child: Text(
+                                                    widget.ricordo.descrizione,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontSize: 20,
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 5),
-                      child: SelectionArea(
-                          child: Text(
-                        widget.ricordo.titolo,
-                        textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).bodyText2.override(
-                              fontFamily: 'IBM Plex Sans',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 35,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      )),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              15, 0, 0, 10),
-                          child: SelectionArea(
-                              child: Text(
-                            widget.ricordo.annoRicordo.toString(),
-                            textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyText2
-                                .override(
-                                  fontFamily: 'IBM Plex Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w200,
-                                ),
-                          )),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
-                          child: FlutterFlowIconButton(
-                            borderColor: Colors.transparent,
-                            borderRadius: 30,
-                            borderWidth: 1,
-                            buttonSize: 45,
-                            icon: FaIcon(
-                              FontAwesomeIcons.volumeLow,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 20,
-                            ),
-                            onPressed: () {
-                              if (widget.ricordo.descrizione == '') {
-                                Fluttertoast.showToast(
-                                    msg:
-                                        'Non è presente una descrizione da leggere!');
-                              } else {
-                                String language = 'it-IT';
-                                tts.setLanguage(language);
-                                tts.setPitch(1.1);
-                                tts.setRate(0.8);
-                                tts.speak(widget.ricordo.descrizione);
-                              }
-                            },
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(15, 5, 15, 10),
-                      child: SelectionArea(
-                          child: Text(
-                        widget.ricordo.descrizione,
-                        textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).bodyText2.override(
-                              fontFamily: 'IBM Plex Sans',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w200,
-                            ),
-                      )),
+                      padding: EdgeInsetsDirectional.fromSTEB(16, 44, 16, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30,
+                                borderWidth: 1,
+                                buttonSize: 40,
+                                fillColor: Color(0x33090F13),
+                                icon: Icon(
+                                  Icons.close,
+                                  color: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
+                                  size: 20,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
