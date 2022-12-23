@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:text_to_speech/text_to_speech.dart';
+import 'package:dart_sentiment/dart_sentiment.dart';
 
 class RicordoWidget extends StatefulWidget {
   final Ricordo ricordo;

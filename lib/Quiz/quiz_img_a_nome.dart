@@ -6,7 +6,6 @@ import 'package:mindcare/autenticazione/login.dart';
 import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/model/report.dart';
 import 'package:mindcare/model/utente.dart';
-import 'package:mindcare/quiz/alert_hint.dart';
 import 'package:mindcare/quiz/alert_risposta.dart';
 import 'package:mindcare/quiz/quiz_terminato.dart';
 import 'package:mindcare/quiz/risposta_corretta.dart';
@@ -22,20 +21,8 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ImmagineANomeWidget extends StatefulWidget {
-  final Utente user;
-  final String categoria;
-  final List<dynamic> quesiti;
-  final DateTime inizioTempo;
-  final String caregiverID;
-
-  const ImmagineANomeWidget(
-      {Key? key,
-      required this.user,
-      required this.quesiti,
-      required this.inizioTempo,
-      required this.categoria,
-      required this.caregiverID})
-      : super(key: key);
+  final Box box;
+  const ImmagineANomeWidget({required this.box, Key? key}) : super(key: key);
 
   @override
   _ImmagineANomeWidgetState createState() => _ImmagineANomeWidgetState();
@@ -47,12 +34,12 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
   int? countTentativi;
   Timer? timer;
   Map<String, bool> mappaRisposte = <String, bool>{};
-  var box;
+
   var quesito;
   var percentualeBarra = 0.0;
   var incrementoBarra = 0.0;
   int tempoImpiegato = 0;
-
+  List<dynamic>? quesiti;
   /*Funzione che vede se in locale c'è salvato un quiz per questa categoria e 
   tipologia. Se è così, significa che l'utente non ha completato un quiz e quindi
   gli permette di continuarlo andando a caricare:
@@ -61,46 +48,15 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
     registrare quelle nuove. */
 
   getStatoQuiz() async {
-    //inizializzazione di Hive
-    await Hive.initFlutter();
     //Apre il box. Se non c'è lo crea
-    box = await Hive.openBox('quiz');
-
-    /*
-    Preleva 'statoCorrente' dal box. Se non è nullo, inizializza: indexQuesito, countTentativi e mappaRisposte
-    */
-    if (box.get('statoCorrente') != null) {
-      var categoria = box.get('statoCorrente')['categoria'];
-      var tipologia = box.get('statoCorrente')['tipologia'];
-
-      //devo ripristinare lo stato del quiz solo se lo stato memorizzato
-      //è relativo a questa categoria e a questa tipologia
-      if (categoria == widget.categoria &&
-          tipologia == 'Associa l\'immagine al nome') {
-        timer!.cancel();
-        setState(() {
-          indexQuesito = box.get('statoCorrente')['indexQuesito'];
-          countTentativi = box.get('statoCorrente')['countTentativi'];
-          percentualeBarra = box.get('statoCorrente')['percentualeBarra'];
-          //cast to Map<String, bool>
-          mappaRisposte = Map<String, bool>.from(
-              box.get('statoCorrente')['mappaRisposte'] as Map);
-        });
-
-        print('indexQuesito: $indexQuesito');
-        print('countTentativi: $countTentativi');
-        print('mappaRisposte: $mappaRisposte');
-      }
-    } else {
-      //cancel box content
-      await box.delete('statoCorrente');
-    }
-  }
-
-  /*Funzione che mi permette di cancellare uno stato. Utile quando ho completato
-  il quiz. */
-  deleteStatoQuiz() async {
-    await box.delete('statoCorrente');
+    indexQuesito = widget.box.get('statoCorrente')['indexQuesito'];
+    countTentativi = widget.box.get('statoCorrente')['countTentativi'];
+    percentualeBarra = widget.box.get('statoCorrente')['percentualeBarra'];
+    quesiti = widget.box.get('statoCorrente')['quesiti'];
+    incrementoBarra = 1.0 / quesiti!.length;
+    //cast to Map<String, bool>
+    mappaRisposte = Map<String, bool>.from(
+        widget.box.get('statoCorrente')['mappaRisposte'] as Map);
   }
 
   @override
@@ -109,8 +65,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
     //controllo se c'è salvato uno stato di quiz relativo a questa categoria e tipologia
     //se si allora lo devo caricare in quanto significa
     //che l'utente non ha completato il quiz
+    //Apre il box. Se non c'è lo crea
     getStatoQuiz();
-    incrementoBarra = 1.0 / widget.quesiti.length;
   }
 
   /*
@@ -249,7 +205,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
     - A questo punto ho tutti il necessario per poter generare un report. 
     - Una volta generato lo inserisco all'interno della collezion "Report" del paziente.
      */
-    if (indexQuesito >= widget.quesiti.length) {
+    if (indexQuesito >= quesiti!.length) {
       //controllo di sicurezza per evitare che ci sia qualche istanza
       //di timer ancora attiva in background. Questo causerebbe delle eccezioni
       //uscendo dalla pagina del quiz.
@@ -257,7 +213,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
         timer!.cancel();
       }
 
-      quesito = widget.quesiti[
+      quesito = quesiti![
           indexQuesito - 1]; //carica lo stesso il quesito per non avere errori
 
       //stoppo il timer
@@ -267,19 +223,9 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       e non quello corrente. Solo in questo modo posso ottenere quanto tempo ho impiegato
       per completare il quiz.*/
 
-      if (box.get('statoCorrente') != null) {
-        if (box.get('statoCorrente')['tipologia'] ==
-                'Associa l\'immagine al nome' &&
-            box.get('statoCorrente')['categoria'] == widget.categoria) {
-          var tempoInizioMemorizzato = box.get('statoCorrente')['inizioTempo'];
-          tempoImpiegato =
-              fineTempo.difference(tempoInizioMemorizzato).inSeconds;
-          deleteStatoQuiz();
-        }
-      }
-      if (tempoImpiegato == 0) {
-        tempoImpiegato = fineTempo.difference(widget.inizioTempo).inSeconds;
-      }
+      var tempoInizioMemorizzato =
+          widget.box.get('statoCorrente')['inizioTempo'];
+      tempoImpiegato = fineTempo.difference(tempoInizioMemorizzato).inSeconds;
 
       //creo il report
       var reportID = Report.reportIDGenerator(28);
@@ -287,13 +233,13 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       Report report = Report(
           mappaRisposte: mappaRisposte,
           tempoImpiegato: tempoImpiegato,
-          dataInizio: widget.inizioTempo,
+          dataInizio: tempoInizioMemorizzato,
           risposteCorrette: risposteCorretteESbagliate['corrette'],
           risposteErrate: risposteCorretteESbagliate['sbagliate'],
           precisione: risposteCorretteESbagliate['precisione'],
           reportID: reportID,
           tipologia: 'Associa l\'immagine al nome',
-          categoria: widget.categoria,
+          categoria: widget.box.get('statoCorrente')['categoria'],
           umore: 3); //da reimpostare quando l'utente farà tap sull'umore
 
       Future.microtask(() => Navigator.push(
@@ -301,12 +247,12 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
           MaterialPageRoute(
               builder: (context) => QuizTerminatoWidget(
                   report: report,
-                  caregiverID: widget.caregiverID,
-                  userID: widget.user.userID,
+                  caregiverID: widget.box.get('statoCorrente')['caregiverID'],
+                  userID: widget.box.get('statoCorrente')['userID'],
                   reportID: reportID))));
     } else {
       /*Prelevo il quesito che devo mostrare al video */
-      quesito = widget.quesiti[indexQuesito];
+      quesito = quesiti![indexQuesito];
       countTentativi ??= quesito['numeroTentativi'];
 
       /*Quando prelevo il quesito faccio partire il timer. Mostro un AlertDialog
@@ -318,8 +264,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       Se invece ho risposto no che non voglio vedere la risposta allora semplicemente resetto il timer
       ribuildando il widget con setstate.  */
 
-      timer = Timer(
-          Duration(seconds: widget.quesiti[indexQuesito]['tempoRisposta']),
+      timer = Timer(Duration(seconds: quesiti![indexQuesito]['tempoRisposta']),
           () async {
         var risposta = await PanaraConfirmDialog.show(
           context,
@@ -386,15 +331,19 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
 //Salvo lo stato corrente del quiz perché significa che non
 //l'ho portato a termine. In questo modo potrò riprenderlo
           Map<String, dynamic> statoCorrente = {
-            'categoria': widget.categoria,
+            'categoria': widget.box.get('statoCorrente')['categoria'],
             'tipologia': 'Associa l\'immagine al nome',
             'indexQuesito': indexQuesito,
             'mappaRisposte': mappaRisposte,
             'countTentativi': countTentativi,
-            'inizioTempo': widget.inizioTempo,
+            'inizioTempo': widget.box.get('statoCorrente')['inizioTempo'],
             'percentualeBarra': percentualeBarra,
+            'quesiti': quesiti,
+            'caregiverID': widget.box.get('statoCorrente')['caregiverID'],
+            'userID': widget.box.get('statoCorrente')['userID']
           };
-          box.put('statoCorrente', statoCorrente);
+          widget.box.put('statoCorrente', statoCorrente);
+
           Navigator.of(context).pop();
         } else {
           setState(() {});
@@ -452,15 +401,20 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
 //Salvo lo stato corrente del quiz perché significa che non
 //l'ho portato a termine. In questo modo potrò riprenderlo
                     Map<String, dynamic> statoCorrente = {
-                      'categoria': widget.categoria,
+                      'categoria': widget.box.get('statoCorrente')['categoria'],
                       'tipologia': 'Associa l\'immagine al nome',
                       'indexQuesito': indexQuesito,
                       'mappaRisposte': mappaRisposte,
                       'countTentativi': countTentativi,
-                      'inizioTempo': widget.inizioTempo,
+                      'inizioTempo':
+                          widget.box.get('statoCorrente')['inizioTempo'],
                       'percentualeBarra': percentualeBarra,
+                      'quesiti': quesiti,
+                      'caregiverID':
+                          widget.box.get('statoCorrente')['caregiverID'],
+                      'userID': widget.box.get('statoCorrente')['userID']
                     };
-                    box.put('statoCorrente', statoCorrente);
+                    widget.box.put('statoCorrente', statoCorrente);
                     Navigator.of(context).pop();
                   } else {
                     setState(() {});
@@ -530,7 +484,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                                 child: Text(
-                                  'Domanda ${indexQuesito + 1}/${widget.quesiti.length}',
+                                  'Domanda ${indexQuesito + 1}/${quesiti!.length}',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText2
                                       .override(

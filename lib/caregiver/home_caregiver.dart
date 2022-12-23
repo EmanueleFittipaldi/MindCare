@@ -8,6 +8,7 @@ import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import '../gestione_paziente/aggiunta_paziente.dart';
 import '../gestione_paziente/dashboard_paziente.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class HomeCaregiverWidget extends StatefulWidget {
   const HomeCaregiverWidget({Key? key}) : super(key: key);
@@ -171,9 +172,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                              0, 0, 5, 0),
+                                                              0, 0, 0, 0),
                                                       child: SelectionArea(
-                                                          child: Text(
+                                                          child: AutoSizeText(
                                                         data['email'],
                                                         textAlign:
                                                             TextAlign.start,
@@ -187,7 +188,6 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryText,
-                                                                  fontSize: 18,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w200,
@@ -321,16 +321,15 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                         //Dashboard del paziente creando un oggetto utente
                                                                         //e riempiendolo con i dati presi dall'item corrente
                                                                         user: Utente(
-                                                                            userID: item['userID'],
+                                                                            userID:
+                                                                                item['userID'],
                                                                             name: item['name'],
                                                                             lastname: item['lastname'],
                                                                             email: item['email'],
                                                                             type: item['type'],
                                                                             date: (item['dateOfBirth'] as Timestamp).toDate(),
                                                                             profileImgPath: item['profileImagePath'],
-                                                                            checkBiometric: item['checkBiometric']
-                                                                        )
-                                                                      )));
+                                                                            checkBiometric: item['checkBiometric']))));
                                                       },
                                                       child: Container(
                                                         width: 80,

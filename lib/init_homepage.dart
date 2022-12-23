@@ -27,10 +27,6 @@ class _InitHomepageState extends State<InitHomepage> {
         'Caregiver': const HomeCaregiverWidget(),
         'Paziente': const HomePazienteWidget()
       },
-      OpzioniWidget(
-        user: widget.user,
-        caregiverUID: widget.carUID ?? '',
-      )
     ];
     super.initState();
   }
@@ -83,11 +79,24 @@ class _InitHomepageState extends State<InitHomepage> {
       body: SafeArea(
           child: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
-              child: Center(
-                child: _selectedIndex == 1
-                    ? _widgetOptions.elementAt(_selectedIndex)
-                    : _widgetOptions
-                        .elementAt(_selectedIndex)[widget.user.type],
+              child: Stack(
+                children: [
+                  Offstage(
+                    offstage: _selectedIndex != 1,
+                    child: Center(
+                      child: OpzioniWidget(
+                        user: widget.user,
+                        caregiverUID: widget.carUID ?? '',
+                      ),
+                    ),
+                  ),
+                  Offstage(
+                    offstage: _selectedIndex != 0,
+                    child: Center(
+                      child: _widgetOptions.elementAt(0)[widget.user.type],
+                    ),
+                  ),
+                ],
               ))),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,

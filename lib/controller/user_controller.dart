@@ -44,7 +44,7 @@ class UserController {
   }
 
   Future<bool> modificaDati(name, lastname, dateOfBirth, email, type,
-      userLoggedID, caregiverUID) async {
+      userLoggedID, caregiverUID, pathImage) async {
     DateTime convertedDateTime = DateTime.parse(dateOfBirth);
     Timestamp convertedDateTimeStamp = Timestamp.fromDate(convertedDateTime);
     if (type == 'Paziente') {
@@ -58,6 +58,7 @@ class UserController {
         'lastname': lastname,
         'dateOfBirth': convertedDateTimeStamp,
         'email': email,
+        'profileImagePath': pathImage,
       });
       return true;
     } else if (type == 'Caregiver') {
@@ -68,6 +69,7 @@ class UserController {
           'lastname': lastname,
           'dateOfBirth': convertedDateTimeStamp,
           'email': email,
+          'profileImagePath': pathImage,
         });
         return true;
       } on FirebaseException catch (e) {
