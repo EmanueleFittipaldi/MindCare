@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mindcare/Quiz/quiz_img_a_nome.dart';
+import 'package:mindcare/Quiz/quiz_nome_a_img.dart';
 import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/quesito.dart';
-import 'package:mindcare/quiz/quiz_img_a_nome.dart';
-import 'package:mindcare/quiz/quiz_nome_a_img.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import '../appbar/appbar_caregiver.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -145,44 +146,68 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                      l'utente corrente e il "timestamp" di inizio quiz.
                                   */
                                     onPressed: () async {
-                                      List<dynamic> quesiti =
-                                          await QuizController()
-                                              .getRandomQuesiti(
-                                                  widget.categoria,
-                                                  'Associa l\'immagine al nome',
-                                                  widget.user.userID,
-                                                  widget.caregiverID);
+                                      await Hive.initFlutter();
+                                      var box = await Hive.openBox('quiz');
 
-                                      if (quesiti.isEmpty) {
-                                        PanaraInfoDialog.show(
-                                          context,
-                                          title: "Quiz",
-                                          message: "Non ci sono domande!",
-                                          buttonText: "Okay",
-                                          onTapDismiss: () {
-                                            Navigator.pop(context);
-                                          },
-                                          panaraDialogType:
-                                              PanaraDialogType.warning,
-                                          barrierDismissible:
-                                              false, // optional parameter (default is true)
-                                        );
+                                      if (box.get('statoCorrente') == null ||
+                                          (box.get('statoCorrente') != null &&
+                                                  (box.get('statoCorrente')[
+                                                          'categoria']) !=
+                                                      widget.categoria ||
+                                              box.get('statoCorrente')[
+                                                      'tipologia'] !=
+                                                  'Associa l\'immagine al nome')) {
+                                        var quesiti = await QuizController()
+                                            .getRandomQuesiti(
+                                                widget.categoria,
+                                                'Associa l\'immagine al nome',
+                                                widget.user.userID,
+                                                widget.caregiverID);
+
+                                        if (quesiti.isEmpty) {
+                                          // ignore: use_build_context_synchronously
+                                          PanaraInfoDialog.show(
+                                            context,
+                                            title: "Quiz",
+                                            message: "Non ci sono domande!",
+                                            buttonText: "Okay",
+                                            onTapDismiss: () {
+                                              Navigator.pop(context);
+                                            },
+                                            panaraDialogType:
+                                                PanaraDialogType.warning,
+                                            barrierDismissible:
+                                                false, // optional parameter (default is true)
+                                          );
+                                        } else {
+                                          Map<String, dynamic> statoCorrente = {
+                                            'categoria': widget.categoria,
+                                            'tipologia':
+                                                'Associa l\'immagine al nome',
+                                            'indexQuesito': 0,
+                                            'mappaRisposte': {},
+                                            'countTentativi': quesiti[0]
+                                                ['numeroTentativi'],
+                                            'inizioTempo': DateTime.now(),
+                                            'percentualeBarra': 0.0,
+                                            'quesiti': quesiti,
+                                            'caregiverID': widget.caregiverID,
+                                            'userID': widget.user.userID
+                                          };
+                                          box.put(
+                                              'statoCorrente', statoCorrente);
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ImmagineANomeWidget(
+                                                          box: box)));
+                                        }
                                       } else {
-                                        //faccio partire il timer quando clicco sulla tipologia
-                                        //del quiz che voglio iniziare
-                                        DateTime inizioTempo = DateTime.now();
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     ImmagineANomeWidget(
-                                                        quesiti: quesiti,
-                                                        categoria:
-                                                            widget.categoria,
-                                                        caregiverID:
-                                                            widget.caregiverID,
-                                                        user: widget.user,
-                                                        inizioTempo:
-                                                            inizioTempo)));
+                                                        box: box)));
                                       }
                                     },
                                   ),
@@ -284,42 +309,68 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                      l'utente corrente e il "timestamp" di inizio quiz.
                                   */
                                     onPressed: () async {
-                                      List<dynamic> quesiti =
-                                          await QuizController().getRandomQuesiti(
-                                              widget.categoria,
-                                              'Associa il nome all\'immagine',
-                                              widget.user.userID,
-                                              widget.caregiverID);
-                                      if (quesiti.isEmpty) {
-                                        PanaraInfoDialog.show(
-                                          context,
-                                          title: "Quiz",
-                                          message: "Non ci sono domande!",
-                                          buttonText: "Okay",
-                                          onTapDismiss: () {
-                                            Navigator.pop(context);
-                                          },
-                                          panaraDialogType:
-                                              PanaraDialogType.warning,
-                                          barrierDismissible:
-                                              false, // optional parameter (default is true)
-                                        );
+                                      await Hive.initFlutter();
+                                      var box = await Hive.openBox('quiz');
+
+                                      if (box.get('statoCorrente') == null ||
+                                          (box.get('statoCorrente') != null &&
+                                                  (box.get('statoCorrente')[
+                                                          'categoria']) !=
+                                                      widget.categoria ||
+                                              box.get('statoCorrente')[
+                                                      'tipologia'] !=
+                                                  'Associa il nome all\'immagine')) {
+                                        var quesiti = await QuizController()
+                                            .getRandomQuesiti(
+                                                widget.categoria,
+                                                'Associa il nome all\'immagine',
+                                                widget.user.userID,
+                                                widget.caregiverID);
+
+                                        if (quesiti.isEmpty) {
+                                          // ignore: use_build_context_synchronously
+                                          PanaraInfoDialog.show(
+                                            context,
+                                            title: "Quiz",
+                                            message: "Non ci sono domande!",
+                                            buttonText: "Okay",
+                                            onTapDismiss: () {
+                                              Navigator.pop(context);
+                                            },
+                                            panaraDialogType:
+                                                PanaraDialogType.warning,
+                                            barrierDismissible:
+                                                false, // optional parameter (default is true)
+                                          );
+                                        } else {
+                                          Map<String, dynamic> statoCorrente = {
+                                            'categoria': widget.categoria,
+                                            'tipologia':
+                                                'Associa il nome all\'immagine',
+                                            'indexQuesito': 0,
+                                            'mappaRisposte': {},
+                                            'countTentativi': quesiti[0]
+                                                ['numeroTentativi'],
+                                            'inizioTempo': DateTime.now(),
+                                            'percentualeBarra': 0.0,
+                                            'quesiti': quesiti,
+                                            'caregiverID': widget.caregiverID,
+                                            'userID': widget.user.userID
+                                          };
+                                          box.put(
+                                              'statoCorrente', statoCorrente);
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      NomeAImmagineWidget(
+                                                          box: box)));
+                                        }
                                       } else {
-                                        //faccio partire il timer quando clicco sulla tipologia
-                                        //del quiz che voglio iniziare
-                                        DateTime inizioTempo = DateTime.now();
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     NomeAImmagineWidget(
-                                                        quesiti: quesiti,
-                                                        categoria:
-                                                            widget.categoria,
-                                                        caregiverID:
-                                                            widget.caregiverID,
-                                                        user: widget.user,
-                                                        inizioTempo:
-                                                            inizioTempo)));
+                                                        box: box)));
                                       }
                                     },
                                   ),

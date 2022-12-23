@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/controller/image_upload.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/widget_tree.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
@@ -37,7 +39,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
   TextEditingController? textController3;
   TextEditingController? textController4;
   TextEditingController? textcontrollerData;
-
+  String imagePickedPath = '';
   late bool passwordVisibility1;
   TextEditingController? textController5;
 
@@ -130,133 +132,6 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 12,
-                                          color: Color(0x14000000),
-                                          offset: Offset(0, 5),
-                                        )
-                                      ],
-                                      borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(155),
-                                        bottomRight: Radius.circular(0),
-                                        topLeft: Radius.circular(0),
-                                        topRight: Radius.circular(0),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              70, 0, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Card(
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            elevation: 0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 20, 0, 0),
-                                              child: Container(
-                                                width: 150,
-                                                height: 150,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: widget.user
-                                                            .profileImgPath !=
-                                                        ''
-                                                    ? Image.network(
-                                                        widget.user
-                                                            .profileImgPath,
-                                                        fit: BoxFit.cover,
-                                                      )
-                                                    : Image.asset(
-                                                        'assets/images/add_photo.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(8, 0, 0, 0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    '${widget.user.name} ${widget.user.lastname}',
-                                                    textAlign: TextAlign.start,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .title2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 4, 0, 0),
-                                                    child: Text(
-                                                      "",
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'IBM Plex Sans',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                              ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         20, 30, 20, 0),
@@ -695,6 +570,93 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 5, 0, 0),
+                                              child: InkWell(
+                                                onTap: () async {},
+                                                child: Container(
+                                                  width: 100,
+                                                  height: 100,
+                                                  clipBehavior: Clip.antiAlias,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryBackground,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: InkWell(
+                                                    onTap: () async {
+                                                      var imagePath =
+                                                          await ImageUpload()
+                                                              .pickFile(
+                                                                  'image');
+                                                      if (imagePath != null) {
+                                                        setState(() {
+                                                          imagePickedPath =
+                                                              imagePath;
+                                                        });
+                                                      }
+                                                    },
+                                                    child: imagePickedPath != ''
+                                                        ? Image.file(
+                                                            File(
+                                                                imagePickedPath),
+                                                            width: 100,
+                                                            height: 100,
+                                                            fit: BoxFit.cover,
+                                                          )
+                                                        : Image.network(
+                                                            widget.user
+                                                                .profileImgPath,
+                                                            width: 100,
+                                                            height: 100,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 10),
+                                              child: FFButtonWidget(
+                                                onPressed: () async {
+                                                  setState(() {
+                                                    imagePickedPath = '';
+                                                  });
+                                                },
+                                                text: 'Ripristina foto',
+                                                options: FFButtonOptions(
+                                                  elevation: 0,
+                                                  width: 120,
+                                                  height: 40,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily:
+                                                            'IBM Plex Sans',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        fontWeight:
+                                                            FontWeight.w200,
+                                                      ),
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                        0, 255, 255, 255),
+                                                    width: 0,
+                                                  ),
+                                                  borderRadius: 8,
+                                                ),
+                                              ),
+                                            ),
                                             Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
@@ -1156,6 +1118,21 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                         false, // optional parameter (default is true)
                                                   );
                                                   if (confirmDialogResponse) {
+                                                    var image;
+
+                                                    if (imagePickedPath != '') {
+                                                      image = await ImageUpload()
+                                                          .uploadImage(
+                                                              imagePickedPath);
+                                                      await ImageUpload()
+                                                          .deleteFile(widget
+                                                              .user
+                                                              .profileImgPath);
+                                                    } else {
+                                                      image = widget
+                                                          .user.profileImgPath;
+                                                    }
+
                                                     var success =
                                                         await UserController()
                                                             .modificaDati(
@@ -1175,7 +1152,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                                 widget.user
                                                                     .userID,
                                                                 widget
-                                                                    .caregiverUID);
+                                                                    .caregiverUID,
+                                                                image);
                                                     if (success) {
                                                       PanaraInfoDialog.show(
                                                         context,
@@ -1214,6 +1192,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                       );
                                                     }
                                                   }
+                                                  imagePickedPath = '';
                                                   pageViewController!.jumpTo(0);
                                                 },
                                                 text: 'Salva',
@@ -1387,9 +1366,13 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                 );
               }
             } else {
-              return Text('...');
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
-            return Text('');
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }),
     );
   }

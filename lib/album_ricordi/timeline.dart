@@ -12,7 +12,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 // ignore: unused_import
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import '../model/ricordo.dart';
 
 class TimelinePage extends StatefulWidget {
@@ -83,50 +83,74 @@ class _TimelinePageState extends State<TimelinePage> {
                                         allowPlaybackSpeedMenu: false,
                                       ))))),
                   Align(
-                    alignment: AlignmentDirectional(0, 0.9),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional(-1, 0),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                            child: Text(
-                              item.titolo,
-                              textAlign: TextAlign.start,
-                              style:
-                                  FlutterFlowTheme.of(context).title1.override(
+                    alignment: AlignmentDirectional(0, 1),
+                    child: Container(
+                      width: double.infinity,
+                      height: 140,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(91, 9, 15, 19),
+                            Color(0x00F4F4F4)
+                          ],
+                          stops: [0.6, 1],
+                          begin: AlignmentDirectional(0, 1),
+                          end: AlignmentDirectional(0, -1),
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(16),
+                          bottomRight: Radius.circular(16),
+                          topLeft: Radius.circular(0),
+                          topRight: Radius.circular(0),
+                        ),
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional(0, 0.5),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-1, 0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 0, 20, 0),
+                                child: AutoSizeText(
+                                  item.titolo,
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .title1
+                                      .override(
                                         fontFamily: 'IBM Plex Sans',
                                         color: FlutterFlowTheme.of(context)
                                             .tertiaryColor,
-                                        fontSize: 30,
                                       ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(-1, 0),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                            child: Text(
-                              item.annoRicordo.toString(),
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    fontSize: 18,
-                                  ),
+                            Align(
+                              alignment: AlignmentDirectional(-1, 0),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                                child: Text(
+                                  item.annoRicordo.toString(),
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        fontSize: 18,
+                                      ),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ]),

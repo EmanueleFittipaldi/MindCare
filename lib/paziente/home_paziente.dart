@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dart_sentiment/dart_sentiment.dart';
+import 'package:mindcare/Quiz/dialog_umore.dart';
 import 'package:mindcare/album_ricordi/album_ricordi.dart';
 import 'package:mindcare/controller/report_controller.dart';
+import 'package:mindcare/controller/umore_controller.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/gestione_SOS/sos_paziente.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/widget_tree.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -109,6 +113,35 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                             data['profileImagePath'],
                                         checkBiometric: data['checkBiometric']);
 
+                                    /*QUANDO FUTURE BUILDER HA TERMINATO VERIFICA L'UMORE: */
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) async {
+                                      var bool = await UmoreController()
+                                          .checkUmore(caregiverID,
+                                              Auth().currentUser!.uid);
+                                      if (!bool) {
+                                        Future.delayed(
+                                            const Duration(seconds: 3),
+                                            () async {
+                                          var text = await showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return DialogUmore(
+                                                    title:
+                                                        'Ciao ${user!.name}!',
+                                                    message:
+                                                        'Come ti senti oggi?');
+                                              });
+                                          if (text != '') {
+                                            UmoreController().createUmore(
+                                                caregiverID,
+                                                Auth().currentUser!.uid,
+                                                text);
+                                          }
+                                        });
+                                      }
+                                    });
                                     return Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
