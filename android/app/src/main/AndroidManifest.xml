@@ -10,6 +10,12 @@
     <!-- Permissions options for the `biometric` group -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 
+    <!-- Permissions options for the `SMS` group -->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
+    <!-- Permissions options for the `Location` group -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
    <application
         android:label="mindcare"
         android:name="${applicationName}"
