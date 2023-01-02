@@ -59,6 +59,10 @@ dependencies:
   table_calendar: 3.0.6
   panara_dialogs: ^0.1.4
   dart_sentiment: ^0.0.9
+  url_launcher: ^6.1.7
+  telephony: ^0.2.0
+  geolocator: ^8.2.0
+  geocoding: ^2.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -77,7 +81,6 @@ dev_dependencies:
   sqflite: 2.2.0+2
   timeago: 3.2.2
   timeline_list: ^0.0.6
-  url_launcher: 6.1.5
   video_player: ^2.4.8
   video_player_android: 2.3.8
   video_player_avfoundation: ^2.3.7
