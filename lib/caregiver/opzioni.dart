@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/image_upload.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/widget_tree.dart';
@@ -114,11 +115,11 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
 
                 return Column(
                   mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: Container(
-                        color:
-                            FlutterFlowTheme.of(context).backgroundPrimaryColor,
+                        color: FlutterFlowTheme.of(context).tertiaryColor,
                         width: double.infinity,
                         height: 500,
                         child: PageView(
@@ -130,8 +131,24 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                             SingleChildScrollView(
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        25, 30, 15, 0),
+                                    child: SelectionArea(
+                                        child: Text(
+                                      'Impostazioni',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'IBM Plex Sans',
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    )),
+                                  ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         20, 30, 20, 0),
@@ -314,63 +331,10 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            40, 40, 40, 0),
+                                            80, 40, 80, 0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 0, 10, 0),
-                                            child: FFButtonWidget(
-                                              onPressed: () async {
-                                                var success =
-                                                    await UserController()
-                                                        .forgottenPassword(
-                                                            widget.user.email);
-                                                if (success) {
-                                                  PanaraInfoDialog.show(
-                                                    context,
-                                                    title: "Modifica password",
-                                                    message:
-                                                        "Email per la modifica della password inviata!",
-                                                    buttonText: "Okay",
-                                                    onTapDismiss: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    panaraDialogType:
-                                                        PanaraDialogType.normal,
-                                                    barrierDismissible:
-                                                        false, // optional parameter (default is true)
-                                                  );
-                                                }
-                                              },
-                                              text: 'Modifica password',
-                                              options: FFButtonOptions(
-                                                width: 130,
-                                                height: 60,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                borderSide: const BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1,
-                                                ),
-                                                borderRadius: 30,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
                                         Expanded(
                                           child: Padding(
                                             padding: const EdgeInsetsDirectional
@@ -410,7 +374,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                               },
                                               text: 'Esci',
                                               options: FFButtonOptions(
-                                                width: 100,
+                                                width: 80,
                                                 height: 60,
                                                 color: Color.fromARGB(
                                                     255, 224, 78, 78),
@@ -453,7 +417,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             borderWidth: 1,
                                             buttonSize: 50,
                                             icon: Icon(
-                                              Icons.arrow_back_rounded,
+                                              Icons.arrow_back_ios,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
@@ -536,7 +500,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                           borderWidth: 1,
                                           buttonSize: 50,
                                           icon: Icon(
-                                            Icons.arrow_back_rounded,
+                                            Icons.arrow_back_ios,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
                                             size: 25,
@@ -1223,6 +1187,61 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 20, 0, 0),
+                                              child: FFButtonWidget(
+                                                onPressed: () async {
+                                                  var success =
+                                                      await UserController()
+                                                          .forgottenPassword(
+                                                              widget
+                                                                  .user.email);
+                                                  if (success) {
+                                                    PanaraInfoDialog.show(
+                                                      context,
+                                                      title:
+                                                          "Modifica password",
+                                                      message:
+                                                          "Email per la modifica della password inviata!",
+                                                      buttonText: "Okay",
+                                                      onTapDismiss: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      panaraDialogType:
+                                                          PanaraDialogType
+                                                              .normal,
+                                                      barrierDismissible:
+                                                          false, // optional parameter (default is true)
+                                                    );
+                                                  }
+                                                },
+                                                text: 'Modifica password',
+                                                options: FFButtonOptions(
+                                                  width: 150,
+                                                  height: 60,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          fontSize: 18),
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.transparent,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius: 30,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
                                                       .fromSTEB(0, 30, 0, 15),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
@@ -1315,7 +1334,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             borderWidth: 1,
                                             buttonSize: 50,
                                             icon: Icon(
-                                              Icons.arrow_back_rounded,
+                                              Icons.arrow_back_ios,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,

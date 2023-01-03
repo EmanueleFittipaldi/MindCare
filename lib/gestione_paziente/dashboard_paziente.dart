@@ -84,7 +84,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                     ),
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(70, 0, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(50, 0, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -94,8 +94,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 20, 0, 0),
                             child: Container(
-                              width: 150,
-                              height: 150,
+                              width: 120,
+                              height: 120,
                               clipBehavior: Clip.antiAlias,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
@@ -127,10 +127,11 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .title2
                                           .override(
-                                            fontFamily: 'IBM Plex Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                          ),
+                                              fontFamily: 'IBM Plex Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontWeight: FontWeight.normal),
                                     )),
                                     SelectionArea(
                                         child: Text(
@@ -346,13 +347,12 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                   BoxShadow(
                                     blurRadius: 15,
                                     color: Color(0x14000000),
-                                    offset: Offset(0, 5),
+                                    offset: Offset(0, 2),
                                   )
                                 ],
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               child: Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
                                 color:
                                     FlutterFlowTheme.of(context).tertiaryColor,
                                 shape: RoundedRectangleBorder(

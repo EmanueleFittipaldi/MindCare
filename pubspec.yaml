@@ -59,6 +59,8 @@ dependencies:
   table_calendar: 3.0.6
   panara_dialogs: ^0.1.4
   dart_sentiment: ^0.0.9
+  csv: ^5.0.1
+  flutter_email_sender: ^5.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

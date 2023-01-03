@@ -35,47 +35,6 @@ class _InitHomepageState extends State<InitHomepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(90),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      'assets/images/Logo_MindCare.jpg',
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                  child: Text(
-                    'MindCare',
-                    style: FlutterFlowTheme.of(context).title2.override(
-                          fontFamily: 'IBM Plex Sans',
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          fontSize: 35,
-                        ),
-                  ),
-                ),
-              ],
-            ),
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 0,
-        ),
-      ),
       body: SafeArea(
           child: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),

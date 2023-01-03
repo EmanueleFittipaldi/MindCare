@@ -1,18 +1,23 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/report_controller.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mindcare/gestione_report/chart.dart';
+import 'package:mindcare/gestione_report/report_medico.dart';
 import 'package:mindcare/gestione_report/view_report.dart';
 import 'package:mindcare/model/report.dart';
-
+import 'package:csv/csv.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -364,6 +369,91 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
                                       ),
                                     ],
                                   )),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  List<List<dynamic>> csv = [];
+                                  csv.add([
+                                    'ReportID',
+                                    'Categoria',
+                                    'Tipologia',
+                                    'Risposte Corrette',
+                                    'Risposte Errate',
+                                    'Precisione',
+                                    'Tempo Impiegato',
+                                    'Umore',
+                                    'Data Completato',
+                                    'Mappa Risposte'
+                                  ]);
+                                  for (var item in data) {
+                                    csv.add([
+                                      item.reportID,
+                                      item.categoria,
+                                      item.tipologia,
+                                      item.risposteCorrette.toString(),
+                                      item.risposteErrate.toString(),
+                                      item.precisione.toString(),
+                                      item.tempoImpiegato.toString(),
+                                      item.umore,
+                                      item.dataInizio.toString(),
+                                      item.mappaRisposte.toString()
+                                    ]);
+                                  }
+
+                                  String csvS =
+                                      const ListToCsvConverter().convert(csv);
+
+                                  Directory? directory = Platform.isAndroid
+                                      ? await getExternalStorageDirectory() //FOR ANDROID
+                                      : await getApplicationSupportDirectory(); //FOR iOS
+                                  var fname =
+                                      'Report_${widget.user.name}_${widget.user.lastname}_P#_${widget.user.userID}_' +
+                                          DateTime.now().toString() +
+                                          '.csv';
+                                  File f = File(
+                                      directory!.absolute.path + "/" + fname);
+
+                                  f.writeAsString(csvS);
+
+                                  print(f.path);
+                                  var msg =
+                                      'Report quiz [${startDate} - ${endDate}]\nPaziente: ${widget.user.lastname} ${widget.user.name} \nID:#${widget.user.userID}\nCreato il: ${DateTime.now()}\n\nEmesso dal Caregiver:#${Auth().currentUser!.uid}';
+                                  var text = await showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return DialogSendReport(
+                                            msg: msg,
+                                            path: f.path,
+                                            subject:
+                                                'Report Paziente#${widget.user.userID} ${DateTime.now()}');
+                                      });
+                                },
+                                text: 'Invia report al medico',
+                                options: FFButtonOptions(
+                                  width: 170,
+                                  height: 40,
+                                  elevation: 0,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                          fontFamily: 'IBM Plex Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 0,
+                                  ),
+                                  borderRadius: 30,
+                                ),
+                              ),
                             ),
                             Padding(
                               padding:

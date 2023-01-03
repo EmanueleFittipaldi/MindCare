@@ -18,6 +18,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../widget_tree.dart';
 import 'dialog_umore.dart';
 import 'alert_risposta.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -38,16 +39,17 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
   int? countTentativi;
   Timer? timer;
   Map<String, bool> mappaRisposte = <String, bool>{};
+  String? categoria;
+  String? tipologia;
   var quesito;
   var percentualeBarra = 0.0;
   var incrementoBarra = 0.0;
   int tempoImpiegato = 0;
   List<dynamic>? quesiti;
   getStatoQuiz() async {
-    /*
-    Preleva 'statoCorrente' dal box. Se non è nullo, inizializza: indexQuesito, countTentativi e mappaRisposte
-    */
     //Apre il box. Se non c'è lo crea
+    categoria = widget.box.get('statoCorrente')['categoria'];
+    tipologia = widget.box.get('statoCorrente')['tipologia'];
     indexQuesito = widget.box.get('statoCorrente')['indexQuesito'];
     countTentativi = widget.box.get('statoCorrente')['countTentativi'];
     percentualeBarra = widget.box.get('statoCorrente')['percentualeBarra'];
@@ -83,9 +85,21 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
    3. Se l'utente seleziona "si", azzero il countTentativi. In questo modo se sbaglia
       di nuovo, verrà mostrato che non ha più tentativi disponibili.
    */
+
+  updateState(var quesito, bool boolRisposta, int indexQ, int? countTent) {
+    setState(() {
+      mappaRisposte[quesito['quesitoID']] = boolRisposta;
+      indexQuesito += indexQ;
+      percentualeBarra += incrementoBarra;
+      countTentativi = countTent;
+    });
+  }
+
   checkRisposta(var quesito, var opzioneSelezionata) async {
-    if (quesito['risposta'] == opzioneSelezionata) {
+    if (timer!.isActive) {
       timer!.cancel();
+    }
+    if (quesito['risposta'] == opzioneSelezionata) {
       //CASO RISPOSTA GIUSTA
       await PanaraInfoDialog.show(
         context,
@@ -100,16 +114,10 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
         panaraDialogType: PanaraDialogType.success,
         barrierDismissible: false, // optional parameter (default is true)
       );
-      setState(() {
-        mappaRisposte[quesito['quesitoID']] = true;
-        indexQuesito += 1;
-        percentualeBarra += incrementoBarra;
-        countTentativi = null;
-      });
+      updateState(quesito, true, 1, null);
     } else {
       //CASO RISPOSTA SBAGLIATA, PROPOSTA TENTATIVO
       if (countTentativi! >= 1) {
-        timer!.cancel();
         //verifico se ci sono tentativi
         var risposta = await PanaraConfirmDialog.show(
           context,
@@ -129,22 +137,14 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
 
         //CASO NON VOGLIO RIPROVARE
         if (!risposta) {
-          //timer!.cancel();
-          setState(() {
-            mappaRisposte[quesito['quesitoID']] = false;
-            indexQuesito += 1;
-            percentualeBarra += incrementoBarra;
-            countTentativi = null; //per sicurezza
-          });
+          updateState(quesito, false, 1, null);
         } else {
           //CASO VOGLIO RIPROVARE
-          //timer!.cancel();
           setState(() {
             countTentativi = countTentativi! - 1;
           });
         }
       } else {
-        timer!.cancel();
         //CASO NON HO PIU' TENTATIVI
         await showDialog(
             barrierDismissible: false,
@@ -155,13 +155,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                   title: 'Risposta sbagliata!',
                   message: 'Non hai più tentativi! Ecco la risposta:');
             });
-        //timer!.cancel();
-        setState(() {
-          mappaRisposte[quesito['quesitoID']] = false;
-          indexQuesito += 1;
-          percentualeBarra += incrementoBarra;
-          countTentativi = null;
-        });
+        updateState(quesito, false, 1, null);
       }
     }
   }
@@ -186,6 +180,90 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
       'precisione': precisione
     };
     return statistiche;
+  }
+
+  saveQuesito() async {
+    var risposta = await PanaraConfirmDialog.show(
+      context,
+      title: "Esci dal quiz",
+      message: "Vuoi davvero uscire dal quiz? Il quiz verrà messo in pausa!",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+      onTapCancel: () {
+        Navigator.of(context).pop(false);
+      },
+      onTapConfirm: () {
+        Navigator.of(context).pop(true);
+      },
+      panaraDialogType: PanaraDialogType.normal,
+      barrierDismissible: false, // optional parameter (default is true)
+    );
+    if (risposta) {
+      if (timer!.isActive) {
+        timer!.cancel();
+      }
+      //Salvo lo stato corrente del quiz perché significa che non
+      //l'ho portato a termine. In questo modo potrò riprenderlo
+      Map<String, dynamic> statoCorrente = {
+        'categoria': categoria,
+        'tipologia': tipologia,
+        'indexQuesito': indexQuesito,
+        'mappaRisposte': mappaRisposte,
+        'countTentativi': countTentativi,
+        'inizioTempo': widget.box.get('statoCorrente')['inizioTempo'],
+        'percentualeBarra': percentualeBarra,
+        'quesiti': quesiti,
+        'caregiverID': widget.box.get('statoCorrente')['caregiverID'],
+        'userID': widget.box.get('statoCorrente')['userID']
+      };
+      widget.box.put('statoCorrente', statoCorrente);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const WidgetTree()),
+          (Route<dynamic> route) => false);
+    } else {
+      setState(() {});
+    }
+  }
+
+  tempoScaduto() async {
+    var risposta = await PanaraConfirmDialog.show(
+      context,
+      title: "Hey",
+      message:
+          "Sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+      onTapCancel: () {
+        Navigator.of(context).pop(false);
+      },
+      onTapConfirm: () {
+        Navigator.of(context).pop(true);
+      },
+      panaraDialogType: PanaraDialogType.normal,
+      barrierDismissible: false, // optional parameter (default is true)
+    );
+
+    if (risposta) {
+      if (timer!.isActive) {
+        timer!.cancel();
+      }
+      await showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return CustomDialogNoTentativi(
+                quesito: quesito,
+                title: 'Risposta',
+                message: 'Hai scelto di vedere la risposta:');
+            //per la risposta
+          });
+      updateState(quesito, false, 1, null);
+    } else {
+      if (timer!.isActive) {
+        timer!.cancel();
+      }
+      setState(() {});
+    }
   }
 
   @override
@@ -231,18 +309,20 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
           risposteErrate: risposteCorretteESbagliate['sbagliate'],
           precisione: risposteCorretteESbagliate['precisione'],
           reportID: reportID,
-          tipologia: 'Associa il nome all\'immagine',
-          categoria: widget.box.get('statoCorrente')['categoria'],
+          tipologia: tipologia!,
+          categoria: categoria!,
           umore: 3);
 
-      Future.microtask(() => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => QuizTerminatoWidget(
-                  caregiverID: widget.box.get('statoCorrente')['caregiverID'],
-                  userID: widget.box.get('statoCorrente')['userID'],
-                  reportID: reportID,
-                  report: report))));
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => QuizTerminatoWidget(
+                    report: report,
+                    caregiverID: widget.box.get('statoCorrente')['caregiverID'],
+                    userID: widget.box.get('statoCorrente')['userID'],
+                    reportID: reportID)),
+            (Route<dynamic> route) => false);
+      });
     } else {
       /*Prelevo il quesito che devo mostrare al video */
       quesito = quesiti![indexQuesito];
@@ -256,88 +336,23 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
       Se invece ho risposto no che non voglio vedere la risposta allora semplicemente resetto il timer
       ribuildando il widget con setstate.  */
 
-      timer = Timer(Duration(seconds: quesiti![indexQuesito]['tempoRisposta']),
-          () async {
-        var risposta = await PanaraConfirmDialog.show(
-          context,
-          title: "Hey",
-          message:
-              "Sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?",
-          confirmButtonText: "Si",
-          cancelButtonText: "No",
-          onTapCancel: () {
-            Navigator.of(context).pop(false);
-          },
-          onTapConfirm: () {
-            Navigator.of(context).pop(true);
-          },
-          panaraDialogType: PanaraDialogType.normal,
-          barrierDismissible: false, // optional parameter (default is true)
-        );
-
-        if (risposta) {
-          await showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (BuildContext context) {
-                return CustomDialogNoTentativi(
-                    quesito: quesito,
-                    title: 'Risposta',
-                    message: 'Hai scelto di vedere la risposta:');
-                //per la risposta
-              });
-          timer!.cancel();
-          setState(() {
-            mappaRisposte[quesito['quesitoID']] = false;
-            indexQuesito += 1;
-            percentualeBarra += incrementoBarra;
-            countTentativi = null;
-          });
-        } else {
-          timer!.cancel();
-          setState(() {});
-        }
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        timer =
+            Timer(Duration(seconds: quesiti![indexQuesito]['tempoRisposta']),
+                () async {
+          if (mounted) {
+            tempoScaduto();
+          }
+        });
       });
-    } //non toccare questa parentesi
+    }
+
     return WillPopScope(
       onWillPop: () async {
-        timer!.cancel();
-        var risposta = await PanaraConfirmDialog.show(
-          context,
-          title: "Esci dal quiz",
-          message:
-              "Vuoi davvero uscire dal quiz? Il quiz verrà messo in pausa!",
-          confirmButtonText: "Si",
-          cancelButtonText: "No",
-          onTapCancel: () {
-            Navigator.of(context).pop(false);
-          },
-          onTapConfirm: () {
-            Navigator.of(context).pop(true);
-          },
-          panaraDialogType: PanaraDialogType.normal,
-          barrierDismissible: false, // optional parameter (default is true)
-        );
-        if (risposta) {
-          //Salvo lo stato corrente del quiz perché significa che non
-          //l'ho portato a termine. In questo modo potrò riprenderlo
-          Map<String, dynamic> statoCorrente = {
-            'categoria': widget.box.get('statoCorrente')['categoria'],
-            'tipologia': 'Associa il nome all\'immagine',
-            'indexQuesito': indexQuesito,
-            'mappaRisposte': mappaRisposte,
-            'countTentativi': countTentativi,
-            'inizioTempo': widget.box.get('statoCorrente')['inizioTempo'],
-            'percentualeBarra': percentualeBarra,
-            'quesiti': quesiti,
-            'caregiverID': widget.box.get('statoCorrente')['caregiverID'],
-            'userID': widget.box.get('statoCorrente')['userID']
-          };
-          widget.box.put('statoCorrente', statoCorrente);
-          Navigator.of(context).pop();
-        } else {
-          setState(() {});
+        if (timer!.isActive) {
+          timer!.cancel();
         }
+        saveQuesito();
         return false;
       },
       child: Scaffold(
@@ -368,46 +383,10 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                   size: 30,
                 ),
                 onPressed: () async {
-                  timer!.cancel();
-                  var risposta = await PanaraConfirmDialog.show(
-                    context,
-                    title: "Esci dal quiz",
-                    message:
-                        "Vuoi davvero uscire dal quiz? Il quiz verrà messo in pausa!",
-                    confirmButtonText: "Si",
-                    cancelButtonText: "No",
-                    onTapCancel: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    onTapConfirm: () {
-                      Navigator.of(context).pop(true);
-                    },
-                    panaraDialogType: PanaraDialogType.normal,
-                    barrierDismissible:
-                        false, // optional parameter (default is true)
-                  );
-                  if (risposta) {
-                    //Salvo lo stato corrente del quiz perché significa che non
-                    //l'ho portato a termine. In questo modo potrò riprenderlo
-                    Map<String, dynamic> statoCorrente = {
-                      'categoria': widget.box.get('statoCorrente')['categoria'],
-                      'tipologia': 'Associa il nome all\'immagine',
-                      'indexQuesito': indexQuesito,
-                      'mappaRisposte': mappaRisposte,
-                      'countTentativi': countTentativi,
-                      'inizioTempo':
-                          widget.box.get('statoCorrente')['inizioTempo'],
-                      'percentualeBarra': percentualeBarra,
-                      'quesiti': quesiti,
-                      'caregiverID':
-                          widget.box.get('statoCorrente')['caregiverID'],
-                      'userID': widget.box.get('statoCorrente')['userID']
-                    };
-                    widget.box.put('statoCorrente', statoCorrente);
-                    Navigator.of(context).pop();
-                  } else {
-                    setState(() {});
+                  if (timer!.isActive) {
+                    timer!.cancel();
                   }
+                  saveQuesito();
                 },
               ),
             ),
@@ -447,7 +426,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                 Expanded(
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 30, 20, 0),
+                        const EdgeInsetsDirectional.fromSTEB(20, 30, 20, 10),
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,

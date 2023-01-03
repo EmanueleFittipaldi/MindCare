@@ -7,6 +7,7 @@ import 'package:mindcare/controller/umore_controller.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/gestione_SOS/sos_paziente.dart';
 import 'package:mindcare/model/utente.dart';
+import 'package:mindcare/Quiz/seleziona_quiz.dart';
 import 'package:mindcare/widget_tree.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
@@ -32,9 +33,12 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String caregiverID = '';
   Utente? user;
-
+  bool checkHumor = false;
+  Future? futureCaregiverID;
   @override
   void initState() {
+    futureCaregiverID =
+        UserController().getCaregiverID(Auth().currentUser!.uid);
     super.initState();
   }
 
@@ -43,6 +47,39 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).backgroundPrimaryColor,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+          automaticallyImplyLeading: false,
+          actions: [],
+          leading: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                'assets/images/Logo_MindCare.jpg',
+                width: 30,
+                height: 30,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          titleSpacing: 0,
+          title: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+            child: Text(
+              'MindCare',
+              style: FlutterFlowTheme.of(context).title2.override(
+                    fontFamily: 'IBM Plex Sans',
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    fontSize: 28,
+                  ),
+            ),
+          ),
+          elevation: 0,
+        ),
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -77,8 +114,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                         ),
                       ),
                       child: FutureBuilder(
-                        future: UserController()
-                            .getCaregiverID(Auth().currentUser!.uid),
+                        future: futureCaregiverID,
                         builder: (context, AsyncSnapshot snapshot) {
                           if (snapshot.hasData) {
                             caregiverID = snapshot.data;
@@ -112,34 +148,37 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                         profileImgPath:
                                             data['profileImagePath'],
                                         checkBiometric: data['checkBiometric']);
-
                                     /*QUANDO FUTURE BUILDER HA TERMINATO VERIFICA L'UMORE: */
                                     WidgetsBinding.instance
                                         .addPostFrameCallback((_) async {
-                                      var bool = await UmoreController()
-                                          .checkUmore(caregiverID,
-                                              Auth().currentUser!.uid);
-                                      if (!bool) {
-                                        Future.delayed(
-                                            const Duration(seconds: 3),
-                                            () async {
-                                          var text = await showDialog(
-                                              barrierDismissible: false,
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return DialogUmore(
-                                                    title:
-                                                        'Ciao ${user!.name}!',
-                                                    message:
-                                                        'Come ti senti oggi?');
-                                              });
-                                          if (text != '') {
-                                            UmoreController().createUmore(
-                                                caregiverID,
-                                                Auth().currentUser!.uid,
-                                                text);
-                                          }
-                                        });
+                                      if (!checkHumor) {
+                                        checkHumor = true;
+                                        var bool = await UmoreController()
+                                            .checkUmore(caregiverID,
+                                                Auth().currentUser!.uid);
+                                        if (!bool) {
+                                          Future.delayed(
+                                              const Duration(seconds: 3),
+                                              () async {
+                                            var text = await showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return DialogUmore(
+                                                      title:
+                                                          'Ciao ${user!.name}!',
+                                                      message:
+                                                          'Come ti senti oggi?');
+                                                });
+                                            if (text != '') {
+                                              UmoreController().createUmore(
+                                                  caregiverID,
+                                                  Auth().currentUser!.uid,
+                                                  text);
+                                            }
+                                          });
+                                        }
                                       }
                                     });
                                     return Padding(
@@ -157,8 +196,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 20, 0, 0),
                                             child: Container(
-                                              width: 150,
-                                              height: 150,
+                                              width: 120,
+                                              height: 120,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: const BoxDecoration(
                                                 shape: BoxShape.circle,
@@ -401,10 +440,9 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                             child: InkWell(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        SelezionaCategoriaWidget(
-                                            user: user!,
-                                            caregiverID: caregiverID)));
+                                    builder: (context) => SelezionaQuizWidget(
+                                        user: user!,
+                                        caregiverID: caregiverID)));
                               },
                               child: Container(
                                 width: 100,
@@ -447,7 +485,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        SelezionaCategoriaWidget(
+                                                        SelezionaQuizWidget(
                                                             user: user!,
                                                             caregiverID:
                                                                 caregiverID)));

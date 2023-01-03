@@ -29,9 +29,16 @@ class QuizTerminatoWidget extends StatefulWidget {
 class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  createReport(umoreSelezionato) {
+    widget.report.umore = umoreSelezionato;
+
+    widget.report
+        .createReport(widget.caregiverID, widget.userID, widget.reportID);
+  }
+
   @override
   Widget build(BuildContext context) {
-    int umoreSelezionato = 3;
+    print('SI RIPRESENTA QUIZ TERMINATO!!');
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: const Color(0xFFF0F6FF),
@@ -57,7 +64,7 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
@@ -116,7 +123,7 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 16, 8, 0, 0),
                             child: Text(
-                              'Come ti senti dopo aver completato il quiz? seleziona l\'icona che più si avvicina al tuo umore corrente.',
+                              'Come ti senti dopo aver completato il quiz? \nSeleziona l\'icona che più si avvicina al tuo umore corrente.',
                               style: FlutterFlowTheme.of(context)
                                   .subtitle2
                                   .override(
@@ -136,20 +143,7 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                 //wrap the Image.network in a InkWell widget
                                 InkWell(
                                   onTap: () {
-                                    umoreSelezionato = 0;
-                                    print(umoreSelezionato);
-                                    //in base all'emoticon selezionata devo andare a modificare
-                                    //il valore di umore nel report. Se non è stato selezionata
-                                    //nessuna emoticon, l'umore di default vale 3 su una scala da 0 a 4
-                                    //altrimenti prelevo il valore dell'emoticon selezionata e lo
-                                    //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
-                                    //alla home
-                                    widget.report.umore = umoreSelezionato;
-
-                                    widget.report.createReport(
-                                        widget.caregiverID,
-                                        widget.userID,
-                                        widget.reportID);
+                                    createReport(0);
 
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
@@ -166,21 +160,7 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    umoreSelezionato = 1;
-                                    print(umoreSelezionato);
-                                    //in base all'emoticon selezionata devo andare a modificare
-                                    //il valore di umore nel report. Se non è stato selezionata
-                                    //nessuna emoticon, l'umore di default vale 3 su una scala da 0 a 4
-                                    //altrimenti prelevo il valore dell'emoticon selezionata e lo
-                                    //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
-                                    //alla home
-                                    widget.report.umore = umoreSelezionato;
-
-                                    widget.report.createReport(
-                                        widget.caregiverID,
-                                        widget.userID,
-                                        widget.reportID);
-
+                                    createReport(1);
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -196,26 +176,11 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    umoreSelezionato = 2;
-                                    print(umoreSelezionato);
-                                    //in base all'emoticon selezionata devo andare a modificare
-                                    //il valore di umore nel report. Se non è stato selezionata
-                                    //nessuna emoticon, l'umore di default vale 3 su una scala da 0 a 4
-                                    //altrimenti prelevo il valore dell'emoticon selezionata e lo
-                                    //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
-                                    //alla home
-                                    widget.report.umore = umoreSelezionato;
-
-                                    widget.report.createReport(
-                                        widget.caregiverID,
-                                        widget.userID,
-                                        widget.reportID);
-
-                                    Navigator.of(context).pushAndRemoveUntil(
+                                    createReport(2);
+                                    Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const WidgetTree()),
-                                        (Route<dynamic> route) => false);
+                                                WidgetTree()));
                                   },
                                   child: Image.network(
                                     'https://cdn-icons-png.flaticon.com/512/6637/6637207.png',
@@ -226,21 +191,7 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    umoreSelezionato = 3;
-                                    print(umoreSelezionato);
-                                    //in base all'emoticon selezionata devo andare a modificare
-                                    //il valore di umore nel report. Se non è stato selezionata
-                                    //nessuna emoticon, l'umore di default vale 3 su una scala da 0 a 4
-                                    //altrimenti prelevo il valore dell'emoticon selezionata e lo
-                                    //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
-                                    //alla home
-                                    widget.report.umore = umoreSelezionato;
-
-                                    widget.report.createReport(
-                                        widget.caregiverID,
-                                        widget.userID,
-                                        widget.reportID);
-
+                                    createReport(3);
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -256,22 +207,7 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    umoreSelezionato = 4;
-                                    print(umoreSelezionato);
-
-                                    //in base all'emoticon selezionata devo andare a modificare
-                                    //il valore di umore nel report. Se non è stato selezionata
-                                    //nessuna emoticon, l'umore di default vale 3 su una scala da 0 a 4
-                                    //altrimenti prelevo il valore dell'emoticon selezionata e lo
-                                    //salvo nel report. Dopo aver fatto ciò posso creare il report e tornare poi
-                                    //alla home
-                                    widget.report.umore = umoreSelezionato;
-
-                                    widget.report.createReport(
-                                        widget.caregiverID,
-                                        widget.userID,
-                                        widget.reportID);
-
+                                    createReport(4);
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) =>

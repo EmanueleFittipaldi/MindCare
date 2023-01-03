@@ -35,6 +35,39 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+          automaticallyImplyLeading: false,
+          actions: [],
+          leading: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                'assets/images/Logo_MindCare.jpg',
+                width: 30,
+                height: 30,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          titleSpacing: 0,
+          title: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+            child: Text(
+              'MindCare',
+              style: FlutterFlowTheme.of(context).title2.override(
+                    fontFamily: 'IBM Plex Sans',
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    fontSize: 28,
+                  ),
+            ),
+          ),
+          elevation: 0,
+        ),
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -84,7 +117,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                           if (data != null) {
                             return Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    70, 0, 0, 0),
+                                    50, 0, 0, 0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -95,8 +128,8 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 20, 0, 0),
                                       child: Container(
-                                        width: 150,
-                                        height: 150,
+                                        width: 120,
+                                        height: 120,
                                         clipBehavior: Clip.antiAlias,
                                         decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
@@ -289,7 +322,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                 .fromSTEB(0, 0, 0, 15),
                                             child: Container(
                                               width: double.infinity,
-                                              height: 130,
+                                              height: 110,
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 boxShadow: const [
@@ -362,7 +395,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                         padding:
                                                             const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                25, 30, 0, 0),
+                                                                25, 20, 0, 0),
                                                         child: Column(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -396,9 +429,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                           color:
                                                                               const Color(0xFF101213),
                                                                           fontSize:
-                                                                              25,
+                                                                              20,
                                                                           fontWeight:
-                                                                              FontWeight.w300,
+                                                                              FontWeight.w400,
                                                                         ),
                                                                   ),
                                                                 ),
@@ -426,7 +459,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                         fontFamily:
                                                                             'IBM Plex Sans',
                                                                         fontSize:
-                                                                            18,
+                                                                            15,
                                                                         fontWeight:
                                                                             FontWeight.w300,
                                                                       ),
@@ -474,8 +507,8 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                             },
                             text: '+',
                             options: FFButtonOptions(
-                              width: 130,
-                              height: 60,
+                              width: 110,
+                              height: 50,
                               color: FlutterFlowTheme.of(context).primaryColor,
                               textStyle: FlutterFlowTheme.of(context)
                                   .subtitle2

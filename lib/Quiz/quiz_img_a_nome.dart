@@ -20,6 +20,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
+import '../widget_tree.dart';
+
 class ImmagineANomeWidget extends StatefulWidget {
   final Box box;
   const ImmagineANomeWidget({required this.box, Key? key}) : super(key: key);
@@ -34,7 +36,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
   int? countTentativi;
   Timer? timer;
   Map<String, bool> mappaRisposte = <String, bool>{};
-
+  String? categoria;
+  String? tipologia;
   var quesito;
   var percentualeBarra = 0.0;
   var incrementoBarra = 0.0;
@@ -49,6 +52,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
 
   getStatoQuiz() async {
     //Apre il box. Se non c'è lo crea
+    categoria = widget.box.get('statoCorrente')['categoria'];
+    tipologia = widget.box.get('statoCorrente')['tipologia'];
     indexQuesito = widget.box.get('statoCorrente')['indexQuesito'];
     countTentativi = widget.box.get('statoCorrente')['countTentativi'];
     percentualeBarra = widget.box.get('statoCorrente')['percentualeBarra'];
@@ -85,10 +90,22 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
    3. Se l'utente seleziona "si", azzero il countTentativi. In questo modo se sbaglia
       di nuovo, verrà mostrato che non ha più tentativi disponibili.
    */
+
+  updateState(var quesito, bool boolRisposta, int indexQ, int? countTent) {
+    setState(() {
+      mappaRisposte[quesito['quesitoID']] = boolRisposta;
+      indexQuesito += indexQ;
+      percentualeBarra += incrementoBarra;
+      countTentativi = countTent;
+    });
+  }
+
   checkRisposta(var quesito, var opzioneSelezionata) async {
+    if (timer!.isActive) {
+      timer!.cancel();
+    }
     //CASO RISPOSTA GIUSTA
     if (quesito['risposta'] == opzioneSelezionata) {
-      timer!.cancel();
       await PanaraInfoDialog.show(
         context,
         imagePath:
@@ -102,24 +119,11 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
         panaraDialogType: PanaraDialogType.success,
         barrierDismissible: false, // optional parameter (default is true)
       );
-
-      setState(() {
-        mappaRisposte[quesito['quesitoID']] = true;
-        indexQuesito += 1;
-        percentualeBarra += incrementoBarra;
-        countTentativi = null;
-      });
+      updateState(quesito, true, 1, null);
     } else {
       ///CASO RISPOSTA SBAGLIATA, PROPOSTA TENTATIVO
       if (countTentativi! >= 1) {
-        timer!.cancel();
         //verifico se ci sono tentativi
-        /*var risposta = await showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return const CustomDialogSbagliata();
-            });*/
         var risposta = await PanaraConfirmDialog.show(
           context,
           title: "Risposta sbagliata!",
@@ -138,21 +142,13 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
 
         //CASO NON VOGLIO RIPROVARE
         if (!risposta) {
-          //timer!.cancel();
-          setState(() {
-            mappaRisposte[quesito['quesitoID']] = false;
-            indexQuesito += 1;
-            percentualeBarra += incrementoBarra;
-            countTentativi = null;
-          });
+          updateState(quesito, false, 1, null);
         } else {
-          //timer!.cancel();
           setState(() {
             countTentativi = countTentativi! - 1;
           });
         }
       } else {
-        timer!.cancel();
         //CASO NON HO PIU' TENTATIVI
         await showDialog(
             barrierDismissible: false,
@@ -163,13 +159,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   title: 'Risposta sbagliata!',
                   message: 'Non hai più tentativi! Ecco la risposta:');
             });
-        //timer!.cancel();
-        setState(() {
-          mappaRisposte[quesito['quesitoID']] = false;
-          indexQuesito += 1;
-          percentualeBarra += incrementoBarra;
-          countTentativi = null;
-        });
+        updateState(quesito, false, 1, null);
       }
     }
   }
@@ -195,6 +185,92 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
     return statistiche;
   }
 
+  saveQuesito() async {
+    var risposta = await PanaraConfirmDialog.show(
+      context,
+      title: "Esci dal quiz",
+      message: "Vuoi davvero uscire dal quiz? Il quiz verrà messo in pausa!",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+      onTapCancel: () {
+        Navigator.of(context).pop(false);
+      },
+      onTapConfirm: () {
+        Navigator.of(context).pop(true);
+      },
+      panaraDialogType: PanaraDialogType.normal,
+      barrierDismissible: false, // optional parameter (default is true)
+    );
+    if (risposta) {
+      if (timer!.isActive) {
+        timer!.cancel();
+      }
+//Salvo lo stato corrente del quiz perché significa che non
+//l'ho portato a termine. In questo modo potrò riprenderlo
+      Map<String, dynamic> statoCorrente = {
+        'categoria': categoria,
+        'tipologia': tipologia,
+        'indexQuesito': indexQuesito,
+        'mappaRisposte': mappaRisposte,
+        'countTentativi': countTentativi,
+        'inizioTempo': widget.box.get('statoCorrente')['inizioTempo'],
+        'percentualeBarra': percentualeBarra,
+        'quesiti': quesiti,
+        'caregiverID': widget.box.get('statoCorrente')['caregiverID'],
+        'userID': widget.box.get('statoCorrente')['userID']
+      };
+      widget.box.put('statoCorrente', statoCorrente);
+
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const WidgetTree()),
+          (Route<dynamic> route) => false);
+    } else {
+      setState(() {});
+    }
+  }
+
+  tempoScaduto() async {
+    var risposta = await PanaraConfirmDialog.show(
+      context,
+      title: "Hey",
+      message:
+          "Sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+      onTapCancel: () {
+        Navigator.of(context).pop(false);
+      },
+      onTapConfirm: () {
+        Navigator.of(context).pop(true);
+      },
+      panaraDialogType: PanaraDialogType.normal,
+      barrierDismissible: false, // optional parameter (default is true)
+    );
+
+    if (risposta) {
+      if (timer!.isActive) {
+        timer!.cancel();
+      }
+      await showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return CustomDialogNoTentativi(
+                quesito: quesito,
+                title: 'Risposta',
+                message: 'Hai scelto di vedere la risposta:');
+            //per la risposta
+          });
+      updateState(quesito, false, 1,
+          null); // devo andare alla domanda successiva e considerare questa sbagliata
+    } else {
+      if (timer!.isActive) {
+        timer!.cancel();
+      }
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     /*
@@ -218,10 +294,6 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
 
       //stoppo il timer
       DateTime fineTempo = DateTime.now();
-      /*Se c'era uno stato corrente significa che per ricavare il tempo impiegato
-      devo utilizzare l'inizioTempo memorizzato nel momento in cui ho abbandonato il quiz
-      e non quello corrente. Solo in questo modo posso ottenere quanto tempo ho impiegato
-      per completare il quiz.*/
 
       var tempoInizioMemorizzato =
           widget.box.get('statoCorrente')['inizioTempo'];
@@ -238,18 +310,20 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
           risposteErrate: risposteCorretteESbagliate['sbagliate'],
           precisione: risposteCorretteESbagliate['precisione'],
           reportID: reportID,
-          tipologia: 'Associa l\'immagine al nome',
-          categoria: widget.box.get('statoCorrente')['categoria'],
+          tipologia: tipologia!,
+          categoria: categoria!,
           umore: 3); //da reimpostare quando l'utente farà tap sull'umore
 
-      Future.microtask(() => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => QuizTerminatoWidget(
-                  report: report,
-                  caregiverID: widget.box.get('statoCorrente')['caregiverID'],
-                  userID: widget.box.get('statoCorrente')['userID'],
-                  reportID: reportID))));
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => QuizTerminatoWidget(
+                    report: report,
+                    caregiverID: widget.box.get('statoCorrente')['caregiverID'],
+                    userID: widget.box.get('statoCorrente')['userID'],
+                    reportID: reportID)),
+            (Route<dynamic> route) => false);
+      });
     } else {
       /*Prelevo il quesito che devo mostrare al video */
       quesito = quesiti![indexQuesito];
@@ -263,91 +337,23 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       la risposta.
       Se invece ho risposto no che non voglio vedere la risposta allora semplicemente resetto il timer
       ribuildando il widget con setstate.  */
-
-      timer = Timer(Duration(seconds: quesiti![indexQuesito]['tempoRisposta']),
-          () async {
-        var risposta = await PanaraConfirmDialog.show(
-          context,
-          title: "Hey",
-          message:
-              "Sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?",
-          confirmButtonText: "Si",
-          cancelButtonText: "No",
-          onTapCancel: () {
-            Navigator.of(context).pop(false);
-          },
-          onTapConfirm: () {
-            Navigator.of(context).pop(true);
-          },
-          panaraDialogType: PanaraDialogType.normal,
-          barrierDismissible: false, // optional parameter (default is true)
-        );
-
-        if (risposta) {
-          await showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (BuildContext context) {
-                return CustomDialogNoTentativi(
-                    quesito: quesito,
-                    title: 'Risposta',
-                    message: 'Hai scelto di vedere la risposta:');
-                //per la risposta
-              });
-          timer!.cancel();
-          setState(() {
-            mappaRisposte[quesito['quesitoID']] = false;
-            indexQuesito += 1;
-            percentualeBarra += incrementoBarra;
-          }); // devo andare alla domanda successiva e considerare questa sbagliata
-        } else {
-          timer!.cancel();
-          setState(() {});
-        }
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        timer =
+            Timer(Duration(seconds: quesiti![indexQuesito]['tempoRisposta']),
+                () async {
+          if (mounted) {
+            tempoScaduto();
+          }
+        });
       });
     }
 
     return WillPopScope(
       onWillPop: () async {
-        timer!.cancel();
-        var risposta = await PanaraConfirmDialog.show(
-          context,
-          title: "Esci dal quiz",
-          message:
-              "Vuoi davvero uscire dal quiz? Il quiz verrà messo in pausa!",
-          confirmButtonText: "Si",
-          cancelButtonText: "No",
-          onTapCancel: () {
-            Navigator.of(context).pop(false);
-          },
-          onTapConfirm: () {
-            Navigator.of(context).pop(true);
-          },
-          panaraDialogType: PanaraDialogType.normal,
-          barrierDismissible: false, // optional parameter (default is true)
-        );
-        if (risposta) {
+        if (timer!.isActive) {
           timer!.cancel();
-//Salvo lo stato corrente del quiz perché significa che non
-//l'ho portato a termine. In questo modo potrò riprenderlo
-          Map<String, dynamic> statoCorrente = {
-            'categoria': widget.box.get('statoCorrente')['categoria'],
-            'tipologia': 'Associa l\'immagine al nome',
-            'indexQuesito': indexQuesito,
-            'mappaRisposte': mappaRisposte,
-            'countTentativi': countTentativi,
-            'inizioTempo': widget.box.get('statoCorrente')['inizioTempo'],
-            'percentualeBarra': percentualeBarra,
-            'quesiti': quesiti,
-            'caregiverID': widget.box.get('statoCorrente')['caregiverID'],
-            'userID': widget.box.get('statoCorrente')['userID']
-          };
-          widget.box.put('statoCorrente', statoCorrente);
-
-          Navigator.of(context).pop();
-        } else {
-          setState(() {});
         }
+        saveQuesito();
         return false;
       },
       child: Scaffold(
@@ -378,47 +384,10 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   size: 30,
                 ),
                 onPressed: () async {
-                  timer!.cancel();
-                  var risposta = await PanaraConfirmDialog.show(
-                    context,
-                    title: "Esci dal quiz",
-                    message:
-                        "Vuoi davvero uscire dal quiz? Il quiz verrà messo in pausa!",
-                    confirmButtonText: "Si",
-                    cancelButtonText: "No",
-                    onTapCancel: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    onTapConfirm: () {
-                      Navigator.of(context).pop(true);
-                    },
-                    panaraDialogType: PanaraDialogType.normal,
-                    barrierDismissible:
-                        false, // optional parameter (default is true)
-                  );
-                  if (risposta) {
+                  if (timer!.isActive) {
                     timer!.cancel();
-//Salvo lo stato corrente del quiz perché significa che non
-//l'ho portato a termine. In questo modo potrò riprenderlo
-                    Map<String, dynamic> statoCorrente = {
-                      'categoria': widget.box.get('statoCorrente')['categoria'],
-                      'tipologia': 'Associa l\'immagine al nome',
-                      'indexQuesito': indexQuesito,
-                      'mappaRisposte': mappaRisposte,
-                      'countTentativi': countTentativi,
-                      'inizioTempo':
-                          widget.box.get('statoCorrente')['inizioTempo'],
-                      'percentualeBarra': percentualeBarra,
-                      'quesiti': quesiti,
-                      'caregiverID':
-                          widget.box.get('statoCorrente')['caregiverID'],
-                      'userID': widget.box.get('statoCorrente')['userID']
-                    };
-                    widget.box.put('statoCorrente', statoCorrente);
-                    Navigator.of(context).pop();
-                  } else {
-                    setState(() {});
                   }
+                  saveQuesito();
                 },
               ),
             ),
@@ -456,7 +425,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 30, 20, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(20, 30, 20, 10),
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,
@@ -546,7 +515,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                             context)
                                                         .tertiaryColor,
                                                     image: DecorationImage(
-                                                      fit: BoxFit.cover,
+                                                      fit: BoxFit.contain,
                                                       image: Image.network(
                                                         quesito['opzione1'],
                                                       ).image,
@@ -587,7 +556,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                             context)
                                                         .tertiaryColor,
                                                     image: DecorationImage(
-                                                      fit: BoxFit.cover,
+                                                      fit: BoxFit.contain,
                                                       image: Image.network(
                                                         quesito['opzione2'],
                                                       ).image,
@@ -639,7 +608,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                             context)
                                                         .tertiaryColor,
                                                     image: DecorationImage(
-                                                      fit: BoxFit.cover,
+                                                      fit: BoxFit.contain,
                                                       image: Image.network(
                                                         quesito['opzione3'],
                                                       ).image,
@@ -680,7 +649,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                             context)
                                                         .tertiaryColor,
                                                     image: DecorationImage(
-                                                      fit: BoxFit.cover,
+                                                      fit: BoxFit.contain,
                                                       image: Image.network(
                                                         quesito['opzione4'],
                                                       ).image,
