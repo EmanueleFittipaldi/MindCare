@@ -376,8 +376,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                               options: FFButtonOptions(
                                                 width: 80,
                                                 height: 60,
-                                                color: Color.fromARGB(
-                                                    255, 224, 78, 78),
+                                                color: Color(0xFFFF4D17),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .subtitle2
@@ -1292,9 +1291,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                 options: FFButtonOptions(
                                                   width: 150,
                                                   height: 60,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .borderErrorColor,
+                                                  color: Color(0xFFFF4D17),
                                                   textStyle: FlutterFlowTheme
                                                           .of(context)
                                                       .subtitle2

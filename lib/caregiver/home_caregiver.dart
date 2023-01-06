@@ -198,7 +198,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                               .secondaryText,
                                                           fontSize: 18,
                                                           fontWeight:
-                                                              FontWeight.w200,
+                                                              FontWeight.w300,
                                                         ),
                                                   )),
                                                   Padding(
@@ -221,9 +221,10 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryText,
+                                                                  fontSize: 18,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w200,
+                                                                          .w300,
                                                                 ),
                                                       ))),
                                                 ],
@@ -245,23 +246,23 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                20, 20, 0, 0),
-                            child: SelectionArea(
-                                child: Text(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+                            child: Text(
                               'Pazienti',
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                            )),
+                              textAlign: TextAlign.center,
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(

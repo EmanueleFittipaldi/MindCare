@@ -10,6 +10,8 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class GestioneAlbumWidget extends StatefulWidget {
   final Utente user;
@@ -46,47 +48,93 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
+                      width: double.infinity,
                       height: 220,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).tertiaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 12,
+                            color: Color(0x14000000),
+                            offset: Offset(0, 5),
+                          )
+                        ],
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(155),
+                          bottomRight: Radius.circular(0),
+                          topLeft: Radius.circular(0),
+                          topRight: Radius.circular(0),
+                        ),
+                      ),
+                      clipBehavior: Clip.antiAlias,
                       child: Stack(
                         children: [
-                          Container(
-                            width: double.infinity,
-                            height: 250,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).tertiaryColor,
-                              image: DecorationImage(
-                                fit: BoxFit.contain,
-                                image: Image.asset(
-                                  'assets/images/infographic_gestione_album.png',
-                                ).image,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 12,
-                                  color: Color(0x14000000),
-                                  offset: Offset(0, 5),
-                                )
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [],
+                                  ),
+                                ),
+                                Material(
+                                  color: Colors.transparent,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(0),
+                                      bottomRight: Radius.circular(0),
+                                      topLeft: Radius.circular(150),
+                                      topRight: Radius.circular(0),
+                                    ),
+                                  ),
+                                  child: Container(
+                                    width: 200,
+                                    height: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(0),
+                                        bottomRight: Radius.circular(0),
+                                        topLeft: Radius.circular(150),
+                                        topRight: Radius.circular(0),
+                                      ),
+                                      shape: BoxShape.rectangle,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10, 10, 10, 10),
+                                      child: SvgPicture.asset(
+                                        'assets/images/undraw_moments_0y20.svg',
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(155),
-                                bottomRight: Radius.circular(0),
-                                topLeft: Radius.circular(0),
-                                topRight: Radius.circular(0),
-                              ),
                             ),
-                            alignment: const AlignmentDirectional(-0.0, 0),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(15, 20, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
                       child: Text(
-                        'Aggiungi o elimina ricordi dall\'album del paziente.',
+                        'Aggiungi o elimina ricordi dall\'album del paziente',
+                        textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context).title1.override(
                               fontFamily: 'IBM Plex Sans',
                               color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 14,
+                              fontSize: 22,
                               fontWeight: FontWeight.w300,
                             ),
                       ),
@@ -99,11 +147,19 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16, 0, 0, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
                             child: Text(
                               'Ricordi',
-                              style: FlutterFlowTheme.of(context).bodyText2,
+                              textAlign: TextAlign.center,
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300,
+                                      ),
                             ),
                           ),
                           FlutterFlowIconButton(
@@ -160,7 +216,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                     for (int i = 0; i < data.length; i++)
                                       Padding(
                                         padding: const EdgeInsetsDirectional
-                                            .fromSTEB(15, 0, 15, 8),
+                                            .fromSTEB(15, 0, 15, 10),
                                         child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(
@@ -168,9 +224,9 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                                 .secondaryBackground,
                                             boxShadow: [
                                               BoxShadow(
-                                                blurRadius: 12,
+                                                blurRadius: 4,
                                                 color: Color(0x14000000),
-                                                offset: Offset(0, 5),
+                                                offset: Offset(0, 2),
                                               )
                                             ],
                                             borderRadius:

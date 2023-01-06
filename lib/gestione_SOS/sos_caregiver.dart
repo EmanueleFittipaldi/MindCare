@@ -88,7 +88,7 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   25, 50, 0, 0),
                               child: Text(
-                                'Ciao! Qui puoi inserire una serie di contatti di emergenza per far sentire sempre al sicuro le persone che ami.',
+                                'Gestione dei contatti di emergenza che il paziente può chiamare.',
                                 style: FlutterFlowTheme.of(context)
                                     .title1
                                     .override(
@@ -218,17 +218,21 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                                             });
                                             if (data.isEmpty) {
                                               //se la lista è vuota mostra 'Non ci sono domande'
-                                              return Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      'Non ci sono contatti',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                              return Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(0, 0, 0, 0),
+                                                  child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          'Non ci sono contatti!',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
                                                               .bodyText2
                                                               .override(
                                                                 fontFamily:
@@ -240,8 +244,8 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                                                                     FontWeight
                                                                         .normal,
                                                               ),
-                                                    ),
-                                                  ]);
+                                                        ),
+                                                      ]));
                                             }
                                             //altrimenti ritorna i diversi widget delle domande
                                             return Column(

@@ -1,7 +1,9 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_util.dart';
 import 'package:mindcare/gestione_SOS/sos_caregiver.dart';
 import 'package:mindcare/gestione_quiz/gestione_quiz.dart';
+import 'package:mindcare/gestione_report/seleziona_report.dart';
 import 'package:mindcare/model/utente.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -143,7 +145,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                           .override(
                                             fontFamily: 'IBM Plex Sans',
                                             fontSize: 18,
-                                            fontWeight: FontWeight.w200,
+                                            fontWeight: FontWeight.w300,
                                           ),
                                     )),
                                     SelectionArea(
@@ -155,7 +157,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                           .override(
                                             fontFamily: 'IBM Plex Sans',
                                             fontSize: 18,
-                                            fontWeight: FontWeight.w200,
+                                            fontWeight: FontWeight.w300,
                                           ),
                                     )),
                                     SelectionArea(
@@ -167,7 +169,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                           .override(
                                             fontFamily: 'IBM Plex Sans',
                                             fontSize: 18,
-                                            fontWeight: FontWeight.w200,
+                                            fontWeight: FontWeight.w300,
                                           ),
                                     )),
                                   ],
@@ -180,28 +182,28 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 0, 0),
-                    child: SelectionArea(
-                        child: Text(
-                      'Gestisci paziente',
-                      textAlign: TextAlign.start,
-                      style: FlutterFlowTheme.of(context).bodyText2.override(
+                    padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+                    child: Text(
+                      'Gestisci i dati del paziente',
+                      textAlign: TextAlign.center,
+                      style: FlutterFlowTheme.of(context).title1.override(
                             fontFamily: 'IBM Plex Sans',
-                            fontSize: 19,
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            fontSize: 22,
                             fontWeight: FontWeight.w300,
                           ),
-                    )),
+                    ),
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 5, 20, 15),
+                        const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 15),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: InkWell(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
@@ -212,127 +214,113 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                             },
                             child: Container(
                               width: 100,
-                              height: 130,
+                              height: 160,
                               decoration: BoxDecoration(
-                                boxShadow: const [
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
+                                boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 15,
+                                    blurRadius: 4,
                                     color: Color(0x14000000),
-                                    offset: Offset(0, 5),
+                                    offset: Offset(0, 2),
                                   )
                                 ],
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 1, 0, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(15, 15, 0, 0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 0, 0, 5),
-                                                child: SelectionArea(
-                                                    child: Text(
-                                                  'Quiz',
-                                                  style: FlutterFlowTheme.of(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 0, 10, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SelectionArea(
+                                              child: Text(
+                                            'Quiz',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiaryColor,
-                                                        fontSize: 25,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                )),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 0, 0, 0),
-                                                child: SelectionArea(
-                                                    child: Text(
-                                                  'Aggiungi o elimina quiz',
-                                                  style: FlutterFlowTheme.of(
+                                                      .primaryText,
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                          )),
+                                          SelectionArea(
+                                              child: Text(
+                                            'Aggiungi o elimina quiz',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiaryColor,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
-                                                )),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                      .primaryText,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w200,
+                                                ),
+                                          )),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 15, 0),
-                                        child: FlutterFlowIconButton(
-                                          borderColor: const Color(0x00FFFFFF),
-                                          borderRadius: 0,
-                                          borderWidth: 0,
-                                          buttonSize: 120,
-                                          icon: FaIcon(
-                                            FontAwesomeIcons.question,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            size: 40,
-                                          ),
-                                          onPressed: () async {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        //voglio passare a GestioneQuizWidget lo stesso
-                                                        //user che ho ricevuto da home_caregiver
-                                                        GestionQuizWidget(
-                                                            user:
-                                                                widget.user)));
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                  Material(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(110),
+                                        bottomRight: Radius.circular(30),
+                                        topLeft: Radius.circular(0),
+                                        topRight: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Container(
+                                      width: 150,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFD0E2FF),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(110),
+                                          bottomRight: Radius.circular(30),
+                                          topLeft: Radius.circular(40),
+                                          topRight: Radius.circular(30),
+                                        ),
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 10),
+                                        child: SvgPicture.asset(
+                                          'assets/images/undraw_questions_re_1fy7.svg',
+                                          width: 80,
+                                          height: 80,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: InkWell(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
@@ -341,360 +329,332 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                             },
                             child: Container(
                               width: 100,
-                              height: 130,
+                              height: 160,
                               decoration: BoxDecoration(
-                                boxShadow: const [
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
+                                boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 15,
+                                    blurRadius: 4,
                                     color: Color(0x14000000),
                                     offset: Offset(0, 2),
                                   )
                                 ],
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: Card(
-                                color:
-                                    FlutterFlowTheme.of(context).tertiaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 1, 0, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(15, 15, 0, 0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 0, 0, 5),
-                                                child: SelectionArea(
-                                                    child: Text(
-                                                  'Album',
-                                                  style: FlutterFlowTheme.of(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 0, 10, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SelectionArea(
+                                              child: Text(
+                                            'Album',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                        fontSize: 25,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                )),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 0, 0, 0),
-                                                child: SelectionArea(
-                                                    child: Text(
-                                                  'Aggiungi o elimina ricordi',
-                                                  style: FlutterFlowTheme.of(
+                                                      .primaryText,
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                          )),
+                                          SelectionArea(
+                                              child: Text(
+                                            'Aggiungi o elimina ricordi',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
-                                                )),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                      .primaryText,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w200,
+                                                ),
+                                          )),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 15, 0),
-                                        child: FlutterFlowIconButton(
-                                          borderColor: const Color(0x00FFFFFF),
-                                          borderRadius: 0,
-                                          borderWidth: 0,
-                                          buttonSize: 120,
-                                          icon: FaIcon(
-                                            Icons.photo_camera,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 40,
-                                          ),
-                                          onPressed: () async {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        GestioneAlbumWidget(
-                                                            user:
-                                                                widget.user)));
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                  Material(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(110),
+                                        bottomRight: Radius.circular(30),
+                                        topLeft: Radius.circular(0),
+                                        topRight: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Container(
+                                      width: 150,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFD0E2FF),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(110),
+                                          bottomRight: Radius.circular(30),
+                                          topLeft: Radius.circular(40),
+                                          topRight: Radius.circular(30),
+                                        ),
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 10),
+                                        child: SvgPicture.asset(
+                                          'assets/images/undraw_moments_0y20.svg',
+                                          width: 80,
+                                          height: 80,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: InkWell(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      ReportStatsWidget(user: widget.user)));
+                                  builder: (context) => SelezionaReportWidget(
+                                      user: widget.user)));
                             },
                             child: Container(
                               width: 100,
-                              height: 130,
+                              height: 160,
                               decoration: BoxDecoration(
-                                boxShadow: const [
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
+                                boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 15,
+                                    blurRadius: 4,
                                     color: Color(0x14000000),
-                                    offset: Offset(0, 5),
+                                    offset: Offset(0, 2),
                                   )
                                 ],
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 1, 0, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(15, 15, 0, 0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 0, 0, 5),
-                                                child: SelectionArea(
-                                                    child: Text(
-                                                  'Report',
-                                                  style: FlutterFlowTheme.of(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 0, 10, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SelectionArea(
+                                              child: Text(
+                                            'Report',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiaryColor,
-                                                        fontSize: 25,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                )),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 0, 0, 0),
-                                                child: SelectionArea(
-                                                    child: Text(
-                                                  'Visualizza andamento paziente',
-                                                  style: FlutterFlowTheme.of(
+                                                      .primaryText,
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                          )),
+                                          SelectionArea(
+                                              child: Text(
+                                            'Visualizzi andamento paziente',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiaryColor,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
-                                                )),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                      .primaryText,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w200,
+                                                ),
+                                          )),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 15, 0),
-                                        child: FlutterFlowIconButton(
-                                          borderColor: const Color(0x00FFFFFF),
-                                          borderRadius: 0,
-                                          borderWidth: 0,
-                                          buttonSize: 120,
-                                          icon: FaIcon(
-                                            FontAwesomeIcons.chartLine,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            size: 40,
-                                          ),
-                                          onPressed: () async {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ReportStatsWidget(
-                                                            user:
-                                                                widget.user)));
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                  Material(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(110),
+                                        bottomRight: Radius.circular(30),
+                                        topLeft: Radius.circular(0),
+                                        topRight: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Container(
+                                      width: 150,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFD0E2FF),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(110),
+                                          bottomRight: Radius.circular(30),
+                                          topLeft: Radius.circular(40),
+                                          topRight: Radius.circular(30),
+                                        ),
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 10),
+                                        child: SvgPicture.asset(
+                                          'assets/images/undraw_data_report_re_p4so.svg',
+                                          width: 80,
+                                          height: 80,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: InkWell(
                             onTap: () {},
                             child: Container(
                               width: 100,
-                              height: 130,
+                              height: 160,
                               decoration: BoxDecoration(
-                                boxShadow: const [
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
+                                boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 15,
+                                    blurRadius: 4,
                                     color: Color(0x14000000),
-                                    offset: Offset(0, 5),
+                                    offset: Offset(0, 2),
                                   )
                                 ],
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color:
-                                    FlutterFlowTheme.of(context).tertiaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 1, 0, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(15, 15, 0, 0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 0, 0, 5),
-                                                child: SelectionArea(
-                                                    child: Text(
-                                                  'Da Fare',
-                                                  style: FlutterFlowTheme.of(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 0, 10, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SelectionArea(
+                                              child: Text(
+                                            'Da Fare',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                        fontSize: 25,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                )),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 0, 0, 0),
-                                                child: SelectionArea(
-                                                    child: Text(
-                                                  'Aggiungi o elimina attività',
-                                                  style: FlutterFlowTheme.of(
+                                                      .primaryText,
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                          )),
+                                          SelectionArea(
+                                              child: Text(
+                                            'Aggiungi o elimina attività',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
-                                                )),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                      .primaryText,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w200,
+                                                ),
+                                          )),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 15, 0),
-                                        child: FlutterFlowIconButton(
-                                          borderColor: const Color(0x00FFFFFF),
-                                          borderRadius: 0,
-                                          borderWidth: 0,
-                                          buttonSize: 120,
-                                          icon: FaIcon(
-                                            FontAwesomeIcons.pencilRuler,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 40,
-                                          ),
-                                          onPressed: () async {},
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                  Material(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(110),
+                                        bottomRight: Radius.circular(30),
+                                        topLeft: Radius.circular(0),
+                                        topRight: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Container(
+                                      width: 150,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFD0E2FF),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(110),
+                                          bottomRight: Radius.circular(30),
+                                          topLeft: Radius.circular(40),
+                                          topRight: Radius.circular(30),
+                                        ),
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 10),
+                                        child: SvgPicture.asset(
+                                          'assets/images/undraw_to_do_list_re_9nt7.svg',
+                                          width: 80,
+                                          height: 80,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -706,118 +666,106 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                             onTap: () {},
                             child: Container(
                               width: 100,
-                              height: 130,
+                              height: 160,
                               decoration: BoxDecoration(
-                                boxShadow: const [
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryColor,
+                                boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 15,
+                                    blurRadius: 4,
                                     color: Color(0x14000000),
-                                    offset: Offset(0, 5),
+                                    offset: Offset(0, 2),
                                   )
                                 ],
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 1, 0, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(15, 15, 0, 0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 0, 0, 5),
-                                                child: SelectionArea(
-                                                    child: Text(
-                                                  'SOS',
-                                                  style: FlutterFlowTheme.of(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 0, 10, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SelectionArea(
+                                              child: Text(
+                                            'SOS',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiaryColor,
-                                                        fontSize: 25,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                )),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 0, 0, 0),
-                                                child: SelectionArea(
-                                                    child: Text(
-                                                  'Aggiungi contatti',
-                                                  style: FlutterFlowTheme.of(
+                                                      .primaryText,
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                          )),
+                                          SelectionArea(
+                                              child: Text(
+                                            'Aggiunti contatti',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiaryColor,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
-                                                )),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                      .primaryText,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w200,
+                                                ),
+                                          )),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 15, 0),
-                                        child: FlutterFlowIconButton(
-                                          borderColor: const Color(0x00FFFFFF),
-                                          borderRadius: 0,
-                                          borderWidth: 0,
-                                          buttonSize: 120,
-                                          icon: FaIcon(
-                                            FontAwesomeIcons.handshakeAngle,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            size: 40,
-                                          ),
-                                          onPressed: () async {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        SOSCaregiverWidget(
-                                                            user:
-                                                                widget.user)));
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                  Material(
+                                    color: Colors.transparent,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(110),
+                                        bottomRight: Radius.circular(30),
+                                        topLeft: Radius.circular(0),
+                                        topRight: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Container(
+                                      width: 150,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFD0E2FF),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(110),
+                                          bottomRight: Radius.circular(30),
+                                          topLeft: Radius.circular(40),
+                                          topRight: Radius.circular(30),
+                                        ),
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 10),
+                                        child: SvgPicture.asset(
+                                          'assets/images/undraw_people_search_re_5rre.svg',
+                                          width: 80,
+                                          height: 80,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

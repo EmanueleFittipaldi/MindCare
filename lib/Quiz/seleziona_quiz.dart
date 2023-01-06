@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/quiz_img_a_nome.dart';
 import 'package:mindcare/Quiz/quiz_nome_a_img.dart';
@@ -43,7 +44,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0xFFF0F6FF),
+      backgroundColor: FlutterFlowTheme.of(context).backgroundPrimaryColor,
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(70),
           child: AppbarWidget(
@@ -78,16 +79,17 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 15),
+                                      15, 0, 20, 10),
                                   child: Text(
                                     'Seleziona una categoria',
+                                    textAlign: TextAlign.start,
                                     style: FlutterFlowTheme.of(context)
                                         .title1
                                         .override(
                                           fontFamily: 'IBM Plex Sans',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
-                                          fontSize: 20,
+                                          fontSize: 22,
                                           fontWeight: FontWeight.w300,
                                         ),
                                   ),
@@ -128,30 +130,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 20, 0),
-                                            child: Container(
-                                              width: 100,
-                                              height: 100,
-                                              decoration: BoxDecoration(),
-                                              child: Icon(
-                                                Icons.family_restroom,
-                                                color: categorySelected ==
-                                                        'Persone'
-                                                    ? FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor
-                                                    : Color(0xFF4589FF),
-                                                size: 70,
-                                              ),
-                                            ),
-                                          ),
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
+                                                  .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -177,10 +159,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                                   : FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
-                                                              fontSize: 20,
+                                                              fontSize: 25,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w500,
+                                                                      .normal,
                                                             ),
                                                   )),
                                                   SelectionArea(
@@ -208,6 +190,46 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                             ),
                                                   )),
                                                 ],
+                                              ),
+                                            ),
+                                          ),
+                                          Material(
+                                            color: Colors.transparent,
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft:
+                                                    Radius.circular(110),
+                                                bottomRight:
+                                                    Radius.circular(30),
+                                                topLeft: Radius.circular(30),
+                                                topRight: Radius.circular(30),
+                                              ),
+                                            ),
+                                            child: Container(
+                                              width: 150,
+                                              height: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFD0E2FF),
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(110),
+                                                  bottomRight:
+                                                      Radius.circular(30),
+                                                  topLeft: Radius.circular(30),
+                                                  topRight: Radius.circular(30),
+                                                ),
+                                                shape: BoxShape.rectangle,
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 10),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/undraw_family_vg76.svg',
+                                                  width: 80,
+                                                  height: 80,
+                                                  fit: BoxFit.contain,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -252,37 +274,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 20, 0),
-                                            child: Container(
-                                              width: 100,
-                                              height: 100,
-                                              decoration: BoxDecoration(),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  FaIcon(
-                                                    FontAwesomeIcons.dog,
-                                                    color: categorySelected ==
-                                                            'Animali'
-                                                        ? FlutterFlowTheme.of(
-                                                                context)
-                                                            .tertiaryColor
-                                                        : Color(0xFF24A148),
-                                                    size: 65,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
+                                                  .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -308,10 +303,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                                   : FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
-                                                              fontSize: 20,
+                                                              fontSize: 25,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w500,
+                                                                      .normal,
                                                             ),
                                                   )),
                                                   SelectionArea(
@@ -339,6 +334,46 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                             ),
                                                   )),
                                                 ],
+                                              ),
+                                            ),
+                                          ),
+                                          Material(
+                                            color: Colors.transparent,
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft:
+                                                    Radius.circular(110),
+                                                bottomRight:
+                                                    Radius.circular(30),
+                                                topLeft: Radius.circular(30),
+                                                topRight: Radius.circular(30),
+                                              ),
+                                            ),
+                                            child: Container(
+                                              width: 150,
+                                              height: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFD0E2FF),
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(110),
+                                                  bottomRight:
+                                                      Radius.circular(30),
+                                                  topLeft: Radius.circular(30),
+                                                  topRight: Radius.circular(30),
+                                                ),
+                                                shape: BoxShape.rectangle,
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 10),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/undraw_dog_re_63j1.svg',
+                                                  width: 80,
+                                                  height: 80,
+                                                  fit: BoxFit.contain,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -383,38 +418,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 20, 0),
-                                            child: Container(
-                                              width: 100,
-                                              height: 100,
-                                              decoration: BoxDecoration(),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  FaIcon(
-                                                    FontAwesomeIcons
-                                                        .pencilRuler,
-                                                    color: categorySelected ==
-                                                            'Oggetti'
-                                                        ? FlutterFlowTheme.of(
-                                                                context)
-                                                            .tertiaryColor
-                                                        : Color(0xFFEE5396),
-                                                    size: 65,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
+                                                  .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -440,10 +447,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                                   : FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
-                                                              fontSize: 20,
+                                                              fontSize: 25,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w500,
+                                                                      .w400,
                                                             ),
                                                   )),
                                                   SelectionArea(
@@ -471,6 +478,46 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                             ),
                                                   )),
                                                 ],
+                                              ),
+                                            ),
+                                          ),
+                                          Material(
+                                            color: Colors.transparent,
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft:
+                                                    Radius.circular(110),
+                                                bottomRight:
+                                                    Radius.circular(30),
+                                                topLeft: Radius.circular(30),
+                                                topRight: Radius.circular(30),
+                                              ),
+                                            ),
+                                            child: Container(
+                                              width: 150,
+                                              height: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFD0E2FF),
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(110),
+                                                  bottomRight:
+                                                      Radius.circular(30),
+                                                  topLeft: Radius.circular(30),
+                                                  topRight: Radius.circular(30),
+                                                ),
+                                                shape: BoxShape.rectangle,
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 10),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/undraw_collecting_re_lp6p.svg',
+                                                  width: 80,
+                                                  height: 80,
+                                                  fit: BoxFit.contain,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -515,37 +562,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 20, 0),
-                                            child: Container(
-                                              width: 100,
-                                              height: 100,
-                                              decoration: BoxDecoration(),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  FaIcon(
-                                                    FontAwesomeIcons.boxOpen,
-                                                    color: categorySelected ==
-                                                            'Altro'
-                                                        ? FlutterFlowTheme.of(
-                                                                context)
-                                                            .tertiaryColor
-                                                        : Color(0xFFA56EFF),
-                                                    size: 65,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
+                                                  .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -572,10 +592,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                                   : FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
-                                                              fontSize: 20,
+                                                              fontSize: 25,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w500,
+                                                                      .w400,
                                                             ),
                                                   )),
                                                   SelectionArea(
@@ -604,6 +624,46 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                             ),
                                                   )),
                                                 ],
+                                              ),
+                                            ),
+                                          ),
+                                          Material(
+                                            color: Colors.transparent,
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft:
+                                                    Radius.circular(110),
+                                                bottomRight:
+                                                    Radius.circular(30),
+                                                topLeft: Radius.circular(30),
+                                                topRight: Radius.circular(30),
+                                              ),
+                                            ),
+                                            child: Container(
+                                              width: 150,
+                                              height: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFD0E2FF),
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(110),
+                                                  bottomRight:
+                                                      Radius.circular(30),
+                                                  topLeft: Radius.circular(30),
+                                                  topRight: Radius.circular(30),
+                                                ),
+                                                shape: BoxShape.rectangle,
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 10),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/undraw_specs_re_546x.svg',
+                                                  width: 80,
+                                                  height: 80,
+                                                  fit: BoxFit.contain,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -663,16 +723,17 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 15),
+                                      15, 0, 20, 10),
                                   child: Text(
                                     'Seleziona una tipologia',
+                                    textAlign: TextAlign.start,
                                     style: FlutterFlowTheme.of(context)
                                         .title1
                                         .override(
                                           fontFamily: 'IBM Plex Sans',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
-                                          fontSize: 20,
+                                          fontSize: 22,
                                           fontWeight: FontWeight.w300,
                                         ),
                                   ),
@@ -689,7 +750,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                     },
                                     child: Container(
                                       width: 100,
-                                      height: 130,
+                                      height: 170,
                                       decoration: BoxDecoration(
                                         color: tiplogySelected ==
                                                 'Associa l\'immagine al nome'
@@ -711,32 +772,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 20, 0),
-                                            child: Container(
-                                              width: 100,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                color: Colors.transparent,
-                                              ),
-                                              child: Icon(
-                                                Icons.image_outlined,
-                                                color: tiplogySelected ==
-                                                        'Associa l\'immagine al nome'
-                                                    ? FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor
-                                                    : Color(0xFF4589FF),
-                                                size: 70,
-                                              ),
-                                            ),
-                                          ),
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
+                                                  .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -763,10 +802,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                                   : FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
-                                                              fontSize: 16,
+                                                              fontSize: 20,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w500,
+                                                                      .normal,
                                                             ),
                                                   )),
                                                   SelectionArea(
@@ -798,6 +837,46 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                               ),
                                             ),
                                           ),
+                                          Material(
+                                            color: Colors.transparent,
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft:
+                                                    Radius.circular(250),
+                                                bottomRight:
+                                                    Radius.circular(30),
+                                                topLeft: Radius.circular(80),
+                                                topRight: Radius.circular(30),
+                                              ),
+                                            ),
+                                            child: Container(
+                                              width: 150,
+                                              height: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFD0E2FF),
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(250),
+                                                  bottomRight:
+                                                      Radius.circular(30),
+                                                  topLeft: Radius.circular(80),
+                                                  topRight: Radius.circular(30),
+                                                ),
+                                                shape: BoxShape.rectangle,
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 10),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/undraw_choose_re_7d5a.svg',
+                                                  width: 80,
+                                                  height: 80,
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -815,7 +894,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                     },
                                     child: Container(
                                       width: 100,
-                                      height: 130,
+                                      height: 170,
                                       decoration: BoxDecoration(
                                         color: tiplogySelected ==
                                                 'Associa il nome all\'immagine'
@@ -837,39 +916,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 20, 0),
-                                            child: Container(
-                                              width: 100,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                color: Colors.transparent,
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Icon(
-                                                    Icons.list,
-                                                    color: tiplogySelected ==
-                                                            'Associa il nome all\'immagine'
-                                                        ? FlutterFlowTheme.of(
-                                                                context)
-                                                            .tertiaryColor
-                                                        : Color(0xFFA56EFF),
-                                                    size: 65,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
+                                                  .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -896,10 +946,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                                   : FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryText,
-                                                              fontSize: 16,
+                                                              fontSize: 20,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w500,
+                                                                      .normal,
                                                             ),
                                                   )),
                                                   SelectionArea(
@@ -928,6 +978,46 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                             ),
                                                   )),
                                                 ],
+                                              ),
+                                            ),
+                                          ),
+                                          Material(
+                                            color: Colors.transparent,
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft:
+                                                    Radius.circular(250),
+                                                bottomRight:
+                                                    Radius.circular(30),
+                                                topLeft: Radius.circular(80),
+                                                topRight: Radius.circular(30),
+                                              ),
+                                            ),
+                                            child: Container(
+                                              width: 150,
+                                              height: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFD0E2FF),
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(250),
+                                                  bottomRight:
+                                                      Radius.circular(30),
+                                                  topLeft: Radius.circular(80),
+                                                  topRight: Radius.circular(30),
+                                                ),
+                                                shape: BoxShape.rectangle,
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 10, 10),
+                                                child: SvgPicture.asset(
+                                                  'assets/images/undraw_image_options_7uph.svg',
+                                                  width: 80,
+                                                  height: 80,
+                                                  fit: BoxFit.contain,
+                                                ),
                                               ),
                                             ),
                                           ),

@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/report_controller.dart';
+import 'package:mindcare/controller/umore_controller.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mindcare/gestione_report/chart.dart';
+import 'package:mindcare/gestione_report/humore_chart.dart';
 import 'package:mindcare/gestione_report/report_medico.dart';
 import 'package:mindcare/gestione_report/view_report.dart';
 import 'package:mindcare/model/report.dart';
@@ -13,6 +15,7 @@ import 'package:csv/csv.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/auth.dart';
+import 'package:mindcare/model/umore.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:path_provider/path_provider.dart';
@@ -30,18 +33,19 @@ import 'package:group_button/group_button.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import '../flutter_flow/flutter_flow_calendar.dart';
 
-class ReportStatsWidget extends StatefulWidget {
+class ReportQuizStatsWidget extends StatefulWidget {
   final Utente user;
 
-  const ReportStatsWidget({Key? key, required this.user}) : super(key: key);
+  const ReportQuizStatsWidget({Key? key, required this.user}) : super(key: key);
 
   @override
-  _ReportStatsWidgetState createState() => _ReportStatsWidgetState();
+  _ReportQuizStatsWidgetState createState() => _ReportQuizStatsWidgetState();
 }
 
-class _ReportStatsWidgetState extends State<ReportStatsWidget> {
+class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   PageController? pageViewController;
+  PageController? pageUmoreViewController;
   GroupButtonController? groupButtonController;
   DateTime? startDate;
   DateTime? endDate;
@@ -50,7 +54,7 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
   DateTimeRange? calendarSelectedDay;
   Map<String, dynamic>? reportSelectedDay;
   ScrollController? columnController;
-  getData() async {
+  Future getData() async {
     if (startDate == null && endDate == null) {
       endDate = DateTime.now();
       startDate = endDate!.subtract(const Duration(days: 30));
@@ -125,7 +129,7 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(70),
           child: AppbarWidget(
-            title: 'Report',
+            title: 'Andamento quiz',
           )),
       body: SafeArea(
         child: GestureDetector(
@@ -163,7 +167,7 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
                               dialogSize: const Size(325, 400),
                               borderRadius: BorderRadius.circular(15),
                             );
-                            if (results != null) {
+                            if (results != null && results.length == 2) {
                               setState(() {
                                 startDate = results[0];
                                 endDate = results[1];
@@ -222,7 +226,7 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
                               dialogSize: const Size(325, 400),
                               borderRadius: BorderRadius.circular(15),
                             );
-                            if (results != null) {
+                            if (results != null && results.length == 2) {
                               setState(() {
                                 startDate = results[0];
                                 endDate = results[1];
@@ -272,9 +276,10 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
                 ),
                 FutureBuilder(
                     future: getData(),
-                    builder: (context, snapshot) {
+                    builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
-                        List<Report> data = snapshot.data as List<Report>;
+                        List<Report> data = snapshot.data! as List<Report>;
+
                         if (data.isEmpty) {
                           return Text(
                             'Non ci sono dati!',
@@ -287,6 +292,7 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
                                     ),
                           );
                         }
+
                         return Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -332,47 +338,64 @@ class _ReportStatsWidgetState extends State<ReportStatsWidget> {
                                         unselectedColor: Colors.white),
                                   )),
                             ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16, 20, 16, 10),
-                              child: Container(
-                                  height: 500,
-                                  width: double.infinity,
-                                  child: PageView(
-                                    controller: pageViewController ??=
-                                        PageController(initialPage: 0),
-                                    scrollDirection: Axis.horizontal,
-                                    children: [
-                                      StatsChart(
-                                        data: data,
-                                        category: 'Persone',
-                                        typeChart: chartType!,
-                                        pageViewController: pageViewController!,
-                                      ),
-                                      StatsChart(
-                                        data: data,
-                                        category: 'Animali',
-                                        typeChart: chartType!,
-                                        pageViewController: pageViewController!,
-                                      ),
-                                      StatsChart(
-                                        data: data,
-                                        category: 'Oggetti',
-                                        typeChart: chartType!,
-                                        pageViewController: pageViewController!,
-                                      ),
-                                      StatsChart(
-                                        data: data,
-                                        category: 'Altro',
-                                        typeChart: chartType!,
-                                        pageViewController: pageViewController!,
-                                      ),
-                                    ],
-                                  )),
-                            ),
+                            data.isEmpty == false
+                                ? Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            16, 20, 16, 10),
+                                    child: Container(
+                                        height: 500,
+                                        width: double.infinity,
+                                        child: PageView(
+                                          controller: pageViewController ??=
+                                              PageController(initialPage: 0),
+                                          scrollDirection: Axis.horizontal,
+                                          children: [
+                                            StatsChart(
+                                              data: data,
+                                              category: 'Persone',
+                                              typeChart: chartType!,
+                                              pageViewController:
+                                                  pageViewController!,
+                                            ),
+                                            StatsChart(
+                                              data: data,
+                                              category: 'Animali',
+                                              typeChart: chartType!,
+                                              pageViewController:
+                                                  pageViewController!,
+                                            ),
+                                            StatsChart(
+                                              data: data,
+                                              category: 'Oggetti',
+                                              typeChart: chartType!,
+                                              pageViewController:
+                                                  pageViewController!,
+                                            ),
+                                            StatsChart(
+                                              data: data,
+                                              category: 'Altro',
+                                              typeChart: chartType!,
+                                              pageViewController:
+                                                  pageViewController!,
+                                            ),
+                                          ],
+                                        )),
+                                  )
+                                : Text(
+                                    'Non ci sono dati sui quiz!',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'IBM Plex Sans',
+                                          color: const Color(0xFF101213),
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                  ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                                  EdgeInsetsDirectional.fromSTEB(0, 10, 0, 20),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   List<List<dynamic>> csv = [];

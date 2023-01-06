@@ -25,7 +25,9 @@ class _InitHomepageState extends State<InitHomepage> {
     _widgetOptions = [
       {
         'Caregiver': const HomeCaregiverWidget(),
-        'Paziente': const HomePazienteWidget()
+        'Paziente': HomePazienteWidget(
+          caregiverUID: widget.carUID!,
+        )
       },
     ];
     super.initState();

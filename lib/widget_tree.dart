@@ -25,7 +25,6 @@ class _WidgetTreeState extends State<WidgetTree> {
   Utente? userLogged;
   String? caregiverUID;
   Future<String> checkUser() async {
-    print("Controllo l'user");
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('user')
         .get(); //ottenimento di tutti i documenti nella collezione user
@@ -43,8 +42,6 @@ class _WidgetTreeState extends State<WidgetTree> {
             profileImgPath: caregiverMap['profileImagePath'],
             checkBiometric: caregiverMap['checkBiometric']);
         //verifico se il campo userID è uguale a quello loggato
-        print("caregiverMap[checkBiometric] " +
-            caregiverMap['checkBiometric'].toString());
         /*if(caregiverMap['checkBiometric'] == true){
           isLoggedWithBiometrics = await checkBiometrics();
           if(!isLoggedWithBiometrics) {
@@ -55,7 +52,6 @@ class _WidgetTreeState extends State<WidgetTree> {
         }*/ //da togliere. Senno non mi fa entrare nell'app
         return caregiverMap['type']; //allora è il caregiver
       } else {
-        print('Sto in paziente');
         //altrimenti ciclo sui pazienti del caregiver
         QuerySnapshot snapshotPat = await FirebaseFirestore.instance
             .collection('user')
@@ -171,7 +167,8 @@ class _WidgetTreeState extends State<WidgetTree> {
                   if (type == 'Caregiver') {
                     var closed = false;
                     if (Auth().currentUser!.emailVerified) {
-                      return InitHomepage(user: userLogged!, carUID: null);
+                      return InitHomepage(
+                          user: userLogged!, carUID: Auth().currentUser!.uid);
                     } else {
                       DateTime? date =
                           Auth().currentUser!.metadata.creationTime;
