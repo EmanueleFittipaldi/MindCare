@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -134,7 +135,14 @@ class _DialogUmore extends State<DialogUmore> {
                 child: PanaraButton(
                   buttonTextColor: Colors.white,
                   text: 'Fatto!',
-                  onTap: () => Navigator.of(context).pop(textController!.text),
+                  onTap: () {
+                    if (textController!.text.length > 0 &&
+                        textController!.text.replaceAll(' ', '') != '') {
+                      Navigator.of(context).pop(textController!.text);
+                    } else {
+                      Fluttertoast.showToast(msg: 'Errore nella descrizione!');
+                    }
+                  },
                   bgColor: FlutterFlowTheme.of(context).primaryColor,
                   isOutlined: false,
                 ),

@@ -6,16 +6,14 @@ import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/model/umore.dart';
 
 class UmoreController {
-  Future<void> createUmore(
+  Future<String> createUmore(
       String caregiverID, String user, String text, String type) async {
     DateTime data = DateTime.now();
-    var results =
-        Sentiment().analysis(text, languageCode: LanguageCode.italian);
     var umoreID = umoreIDGenerator(28);
     Umore umore = Umore(
         text: text,
-        score: results['score'],
-        comparative: results['comparative'],
+        score: 0,
+        comparative: 0,
         data: data,
         umoreID: umoreID,
         type: type);
@@ -28,6 +26,25 @@ class UmoreController {
         .collection('Umore')
         .doc(umoreID);
     await docUmore.set(json);
+    return umoreID;
+  }
+
+  Future<void> updateUmore(
+      String caregiverID, String userID, String umoreID, String text) async {
+    var results =
+        Sentiment().analysis(text, languageCode: LanguageCode.italian);
+    var collection = FirebaseFirestore.instance.collection("user");
+    collection
+        .doc(caregiverID)
+        .collection('Pazienti')
+        .doc(userID)
+        .collection('Umore')
+        .doc(umoreID)
+        .update({
+      'text': text,
+      'score': results['score'],
+      'comparative': results['comparative'],
+    });
   }
 
   static String umoreIDGenerator(int len) {

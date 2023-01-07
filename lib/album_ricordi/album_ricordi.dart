@@ -10,6 +10,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class AlbumRicordiWidget extends StatefulWidget {
   final String caregiverUID;
@@ -99,42 +100,86 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  20, 30, 20, 0),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        blurRadius: 12,
-                                        color: Color(0x14000000),
-                                        offset: Offset(0, 5),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: CustomDropdown.search(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30),
-                                    hintText: 'Cosa vuoi vedere?',
-                                    items: tags,
-                                    controller: tagsController,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        if (value == 'Tutti i ricordi') {
-                                          tagSelected = null;
-                                        } else {
-                                          tagSelected = value;
-                                        }
-                                      });
-                                    },
-                                  ))),
+                          Container(
+                            width: double.infinity,
+                            height: 180,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 12,
+                                  color: Color(0x14000000),
+                                  offset: Offset(0, 5),
+                                )
+                              ],
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40),
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20, 0, 20, 5),
+                                  child: SelectionArea(
+                                      child: AutoSizeText(
+                                    'Da questa schermata puoi rivivere i tuoi ricordi! Mettiti comodo e seleziona il ricordo che più ti aggrada!',
+                                    textAlign: TextAlign.center,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'IBM Plex Sans',
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                  )),
+                                ),
+                                Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            20, 20, 20, 0),
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiaryColor,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              blurRadius: 12,
+                                              color: Color(0x14000000),
+                                              offset: Offset(0, 5),
+                                            )
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                        child: CustomDropdown.search(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .borderColor,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          hintText: 'Cosa vuoi vedere?',
+                                          items: tags,
+                                          controller: tagsController,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              if (value == 'Tutti i ricordi') {
+                                                tagSelected = null;
+                                              } else {
+                                                tagSelected = value;
+                                              }
+                                            });
+                                          },
+                                        ))),
+                              ],
+                            ),
+                          ),
                           Expanded(
                             child: Container(
                               width: MediaQuery.of(context).size.width,

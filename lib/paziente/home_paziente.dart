@@ -10,6 +10,7 @@ import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/Quiz/seleziona_quiz.dart';
 import 'package:mindcare/widget_tree.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -103,7 +104,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                 children: [
                   Container(
                       width: double.infinity,
-                      height: 200,
+                      height: 230,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
                         boxShadow: const [
@@ -114,8 +115,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                           )
                         ],
                         borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(155),
-                          bottomRight: Radius.circular(0),
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
                           topLeft: Radius.circular(0),
                           topRight: Radius.circular(0),
                         ),
@@ -152,17 +153,38 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                     builder: (BuildContext context,
                                         AsyncSnapshot snapshot) {
                                       if (snapshot.hasData) {
-                                        print(snapshot.data);
-
                                         int percent = snapshot.data;
+
                                         /*QUANDO FUTURE BUILDER HA TERMINATO VERIFICA L'UMORE: */
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((_) async {
                                           if (!checkHumor) {
+                                            var now = DateTime(
+                                                DateTime.now().year,
+                                                DateTime.now().month,
+                                                DateTime.now().day + 1);
+                                            var last = Auth()
+                                                .currentUser!
+                                                .metadata
+                                                .lastSignInTime;
+                                            var lastSignIn = DateTime(
+                                                last!.year,
+                                                last.month,
+                                                last.day);
+                                            var umoreID;
+
                                             checkHumor = true;
                                             var bool = await UmoreController()
                                                 .checkUmore(widget.caregiverUID,
                                                     Auth().currentUser!.uid);
+                                            if (now.compareTo(lastSignIn) > 0) {
+                                              umoreID = await UmoreController()
+                                                  .createUmore(
+                                                      widget.caregiverUID,
+                                                      Auth().currentUser!.uid,
+                                                      '',
+                                                      'giornaliero');
+                                            }
                                             if (!bool) {
                                               Future.delayed(
                                                   const Duration(seconds: 3),
@@ -179,217 +201,283 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                               'Come ti senti oggi?');
                                                     });
                                                 if (text != '') {
-                                                  UmoreController().createUmore(
+                                                  UmoreController().updateUmore(
                                                       widget.caregiverUID,
                                                       Auth().currentUser!.uid,
-                                                      text,
-                                                      'giornaliero');
+                                                      umoreID,
+                                                      text);
                                                 }
                                               });
                                             }
                                           }
                                         });
-                                        return Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(40, 0, 0, 0),
-                                          child: Row(
+                                        return Column(
                                             mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
                                             children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(0, 20, 0, 0),
-                                                child: Container(
-                                                  width: 120,
-                                                  height: 120,
-                                                  clipBehavior: Clip.antiAlias,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child:
-                                                      data['profileImagePath'] !=
-                                                              ''
-                                                          ? Image.network(
-                                                              data[
-                                                                  'profileImagePath'],
-                                                              fit: BoxFit.cover,
-                                                            )
-                                                          : Image.asset(
-                                                              'assets/images/add_photo.png',
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                  child: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(15, 2, 2, 12),
-                                                child: Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.44,
-                                                  height: 190,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .tertiaryColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                  ),
-                                                  child: Padding(
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Expanded(
+                                                      child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                                 .fromSTEB(
-                                                            12, 8, 12, 8),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                  0, 12, 0, 0),
-                                                          child: Text(
-                                                            '${'Salve, ' + data['name']}!',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .subtitle1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'IBM Plex Sans',
-                                                                  fontSize: 22,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                  0, 4, 0, 0),
-                                                          child: Text(
-                                                            'Quiz completati oggi',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'IBM Plex Sans',
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                        Row(
+                                                            15, 2, 2, 0),
+                                                    child: Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.44,
+                                                      height: 160,
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                12, 8, 12, 8),
+                                                        child: Column(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
-                                                                  .end,
+                                                                  .start,
                                                           children: [
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                      0,
-                                                                      4,
-                                                                      0,
-                                                                      0),
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          12,
+                                                                          0,
+                                                                          0),
                                                               child: Text(
-                                                                'Progressi: ',
+                                                                'Salve,',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText2
+                                                                    .subtitle1
                                                                     .override(
                                                                       fontFamily:
                                                                           'IBM Plex Sans',
+                                                                      fontSize:
+                                                                          20,
                                                                       fontWeight:
                                                                           FontWeight
-                                                                              .w500,
+                                                                              .w300,
                                                                     ),
                                                               ),
+                                                            ),
+                                                            Text(
+                                                              '${data['name']}!',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .subtitle1
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'IBM Plex Sans',
+                                                                    fontSize:
+                                                                        25,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
                                                             ),
                                                             Padding(
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                      5,
+                                                                      0,
                                                                       4,
                                                                       0,
                                                                       0),
                                                               child: Text(
-                                                                '$percent/8',
+                                                                'Quiz completati oggi',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyText2
                                                                     .override(
                                                                       fontFamily:
                                                                           'IBM Plex Sans',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          15,
                                                                       fontWeight:
                                                                           FontWeight
-                                                                              .w500,
+                                                                              .w300,
                                                                     ),
+                                                              ),
+                                                            ),
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                          0,
+                                                                          4,
+                                                                          0,
+                                                                          0),
+                                                                  child: Text(
+                                                                    'Progressi: ',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText2
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'IBM Plex Sans',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontWeight:
+                                                                              FontWeight.w300,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                          5,
+                                                                          4,
+                                                                          0,
+                                                                          0),
+                                                                  child: Text(
+                                                                    '$percent/8',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText2
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'IBM Plex Sans',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontWeight:
+                                                                              FontWeight.w300,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      0,
+                                                                      8,
+                                                                      0,
+                                                                      0),
+                                                              child:
+                                                                  LinearPercentIndicator(
+                                                                percent:
+                                                                    (1 / 8) *
+                                                                        percent,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.38,
+                                                                lineHeight: 12,
+                                                                animation: true,
+                                                                progressColor:
+                                                                    const Color(
+                                                                        0xFF4589FF),
+                                                                backgroundColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .lineColor,
+                                                                barRadius:
+                                                                    const Radius
+                                                                        .circular(8),
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .zero,
                                                               ),
                                                             ),
                                                           ],
                                                         ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                  0, 8, 0, 0),
-                                                          child:
-                                                              LinearPercentIndicator(
-                                                            percent: (1 / 8) *
-                                                                percent,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.38,
-                                                            lineHeight: 12,
-                                                            animation: true,
-                                                            progressColor:
-                                                                const Color(
-                                                                    0xFF4589FF),
-                                                            backgroundColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .lineColor,
-                                                            barRadius:
-                                                                const Radius
-                                                                    .circular(8),
-                                                            padding:
-                                                                EdgeInsets.zero,
-                                                          ),
+                                                      ),
+                                                    ),
+                                                  )),
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 20, 30, 0),
+                                                      child: Container(
+                                                        width: 130,
+                                                        height: 130,
+                                                        clipBehavior:
+                                                            Clip.antiAlias,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
                                                         ),
-                                                      ],
+                                                        child:
+                                                            data['profileImagePath'] !=
+                                                                    ''
+                                                                ? Image.network(
+                                                                    data[
+                                                                        'profileImagePath'],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  )
+                                                                : Image.asset(
+                                                                    'assets/images/add_photo.png',
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                      ),
                                                     ),
                                                   ),
+                                                ],
+                                              ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 20, 5),
+                                                  child: SelectionArea(
+                                                      child: AutoSizeText(
+                                                    'Questa è la tua schermata principale.\nCompleta un quiz oppure rivivi i tuoi ricordi!',
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          fontSize: 19,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                        ),
+                                                  )),
                                                 ),
-                                              )),
-                                            ],
-                                          ),
-                                        );
+                                              ),
+                                            ]);
                                       } else {
                                         return const Center(
                                           child: CircularProgressIndicator(),
@@ -404,19 +492,6 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                           );
                         },
                       )),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
-                    child: Text(
-                      'Questa è la tua schermata principale.\nCompleta un quiz oppure rivivi i tuoi ricordi!',
-                      textAlign: TextAlign.start,
-                      style: FlutterFlowTheme.of(context).title1.override(
-                            fontFamily: 'IBM Plex Sans',
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w300,
-                          ),
-                    ),
-                  ),
                   Padding(
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),

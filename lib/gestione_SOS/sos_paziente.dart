@@ -1,15 +1,15 @@
+import 'package:fluttertoast/fluttertoast.dart';
+
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:telephony/telephony.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'dart:io' show Platform;
 
 class SosWidget extends StatefulWidget {
   const SosWidget({Key? key}) : super(key: key);
@@ -106,7 +106,7 @@ class _SosWidgetState extends State<SosWidget> {
         scheme: 'sms',
         path: phoneNumber,
         query: encodeQueryParameters(
-            <String, String>{'body': 'ciao sono un test'}),
+            <String, String>{'body': 'Indirizzo: $_currentAddress'}),
       );
       if (!await launchUrl(_url)) {
         throw 'Cannot lunch $_url';
@@ -318,7 +318,11 @@ class _SosWidgetState extends State<SosWidget> {
                                   size: 30,
                                 ),
                                 onPressed: () {
-                                  _sendSMSAndroid('+39-3312739420');
+                                  if (Platform.isAndroid) {
+                                    _sendSMS('+39-3312739420');
+                                  } else if (Platform.isIOS) {
+                                    _sendSMS('+39-3312739420');
+                                  }
                                 },
                               ),
                             ],

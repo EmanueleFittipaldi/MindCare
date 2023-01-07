@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class GestioneAlbumWidget extends StatefulWidget {
   final Utente user;
@@ -48,95 +49,81 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: double.infinity,
-                      height: 220,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 12,
-                            color: Color(0x14000000),
-                            offset: Offset(0, 5),
-                          )
-                        ],
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(155),
-                          bottomRight: Radius.circular(0),
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(0),
-                        ),
-                      ),
-                      clipBehavior: Clip.antiAlias,
+                      height: 250,
                       child: Stack(
                         children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [],
-                                  ),
-                                ),
-                                Material(
-                                  color: Colors.transparent,
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(0),
-                                      bottomRight: Radius.circular(0),
-                                      topLeft: Radius.circular(150),
-                                      topRight: Radius.circular(0),
-                                    ),
-                                  ),
-                                  child: Container(
-                                    width: 200,
-                                    height: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(0),
-                                        bottomRight: Radius.circular(0),
-                                        topLeft: Radius.circular(150),
-                                        topRight: Radius.circular(0),
-                                      ),
-                                      shape: BoxShape.rectangle,
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10, 10, 10, 10),
-                                      child: SvgPicture.asset(
-                                        'assets/images/undraw_moments_0y20.svg',
-                                        width: 100,
-                                        height: 100,
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                          Container(
+                            width: double.infinity,
+                            height: 230,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 12,
+                                  color: Color(0x14000000),
+                                  offset: Offset(0, 5),
+                                )
                               ],
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40),
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
+                              ),
+                            ),
+                            alignment: AlignmentDirectional(-0.0, 0),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(0.1, -1),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                              child: SvgPicture.asset(
+                                'assets/images/undraw_camera_re_cnp4.svg',
+                                width: 300,
+                                height: 170,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0.85),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(20, 5, 20, 5),
+                              child: Container(
+                                width: double.infinity,
+                                height: 50,
+                                decoration: BoxDecoration(),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 0),
+                                        child: AutoSizeText(
+                                          'Aggiungi o elimina ricordi dall\'album del paziente',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .title1
+                                              .override(
+                                                fontFamily: 'IBM Plex Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w200,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
-                      child: Text(
-                        'Aggiungi o elimina ricordi dall\'album del paziente',
-                        textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).title1.override(
-                              fontFamily: 'IBM Plex Sans',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w300,
-                            ),
                       ),
                     ),
                     Padding(

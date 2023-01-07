@@ -10,6 +10,7 @@ import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import '../gestione_report/gestione_report.dart';
 import '../gestione_ricordi/gestione_album.dart';
@@ -67,7 +68,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                 children: [
                   Container(
                     width: double.infinity,
-                    height: 200,
+                    height: 230,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
                       boxShadow: const [
@@ -78,119 +79,169 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                         )
                       ],
                       borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(155),
-                        bottomRight: Radius.circular(0),
+                        bottomLeft: Radius.circular(40),
+                        bottomRight: Radius.circular(40),
                         topLeft: Radius.circular(0),
                         topRight: Radius.circular(0),
                       ),
                     ),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(50, 0, 0, 0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 0),
-                            child: Container(
-                              width: 120,
-                              height: 120,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: widget.user.profileImgPath != ''
-                                  ? Image.network(
-                                      widget.user.profileImgPath,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.asset(
-                                      'assets/images/add_photo.png',
-                                      fit: BoxFit.cover,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(15, 2, 2, 0),
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.44,
+                                  height: 160,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .tertiaryColor,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12, 8, 12, 8),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                            child: AutoSizeText(
+                                          '${widget.user.name} ${widget.user.lastname}',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .title2
+                                              .override(
+                                                fontFamily: 'IBM Plex Sans',
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        )),
+                                        AutoSizeText(
+                                          DateFormat("dd-MM-yyyy")
+                                              .format(widget.user.date),
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'IBM Plex Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                        ),
+                                        Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 4, 0, 0),
+                                            child: AutoSizeText(
+                                              getAge() + ' anni',
+                                              textAlign: TextAlign.start,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily: 'IBM Plex Sans',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                            )),
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 4, 0, 0),
+                                            child: AutoSizeText(
+                                              widget.user.email,
+                                              textAlign: TextAlign.start,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyText2
+                                                  .override(
+                                                    fontFamily: 'IBM Plex Sans',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  20, 40, 0, 10),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SelectionArea(
-                                        child: Text(
-                                      '${widget.user.name} ${widget.user.lastname}',
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .title2
-                                          .override(
-                                              fontFamily: 'IBM Plex Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontWeight: FontWeight.normal),
-                                    )),
-                                    SelectionArea(
-                                        child: Text(
-                                      DateFormat("dd-MM-yyyy")
-                                          .format(widget.user.date),
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'IBM Plex Sans',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                    )),
-                                    SelectionArea(
-                                        child: Text(
-                                      getAge() + ' anni',
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'IBM Plex Sans',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                    )),
-                                    SelectionArea(
-                                        child: Text(
-                                      widget.user.email,
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'IBM Plex Sans',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                    )),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 20, 40, 0),
+                              child: Container(
+                                width: 130,
+                                height: 130,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: widget.user.profileImgPath != ''
+                                    ? Image.network(
+                                        widget.user.profileImgPath,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.asset(
+                                        'assets/images/add_photo.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 0, 20, 5),
+                            child: SelectionArea(
+                                child: AutoSizeText(
+                              'Gestisci tutti i dati associati al paziente',
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'IBM Plex Sans',
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                            )),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
                     child: Text(
-                      'Gestisci i dati del paziente',
+                      'Gestisci paziente',
                       textAlign: TextAlign.center,
                       style: FlutterFlowTheme.of(context).title1.override(
                             fontFamily: 'IBM Plex Sans',
                             color: FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w300,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w200,
                           ),
                     ),
                   ),
@@ -663,7 +714,13 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      //voglio passare a GestioneQuizWidget lo stesso
+                                      //user che ho ricevuto da home_caregiver
+                                      SOSCaregiverWidget(user: widget.user)));
+                            },
                             child: Container(
                               width: 100,
                               height: 160,

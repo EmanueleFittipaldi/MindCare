@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/gestione_quiz/domanda_img_a_nome.dart';
@@ -10,6 +11,7 @@ import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import '../model/utente.dart';
 
@@ -50,20 +52,14 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 220,
+                      height: 250,
                       child: Stack(
                         children: [
                           Container(
                             width: double.infinity,
-                            height: 250,
+                            height: 230,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiaryColor,
-                              image: DecorationImage(
-                                fit: BoxFit.contain,
-                                image: Image.asset(
-                                  'assets/images/infographic_gestione_album.png',
-                                ).image,
-                              ),
                               boxShadow: [
                                 BoxShadow(
                                   blurRadius: 12,
@@ -72,33 +68,66 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                 )
                               ],
                               borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(155),
-                                bottomRight: Radius.circular(0),
+                                bottomLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40),
                                 topLeft: Radius.circular(0),
                                 topRight: Radius.circular(0),
                               ),
                             ),
-                            alignment: const AlignmentDirectional(-0.0, 0),
+                            alignment: AlignmentDirectional(-0.0, 0),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(0.1, -1),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                              child: SvgPicture.asset(
+                                'assets/images/undraw_add_notes_re_ln36.svg',
+                                width: 300,
+                                height: 165,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0.8),
+                            child: Container(
+                              width: double.infinity,
+                              height: 60,
+                              decoration: BoxDecoration(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 10, 20, 10),
+                                      child: AutoSizeText(
+                                        'Seleziona una categoria e tipologia per visualizzare le domande',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                              fontFamily: 'IBM Plex Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w200,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
-                      child: Text(
-                        'Seleziona una categoria e tipologia per visualizzare le domande',
-                        textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).title1.override(
-                              fontFamily: 'IBM Plex Sans',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w300,
-                            ),
-                      ),
-                    ),
-                    Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 0),
+                          const EdgeInsetsDirectional.fromSTEB(15, 5, 15, 0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
