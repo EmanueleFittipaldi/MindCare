@@ -4,6 +4,7 @@ import 'package:mindcare/flutter_flow/flutter_flow_util.dart';
 import 'package:mindcare/gestione_SOS/sos_caregiver.dart';
 import 'package:mindcare/gestione_quiz/gestione_quiz.dart';
 import 'package:mindcare/gestione_report/seleziona_report.dart';
+import 'package:mindcare/gestione_todolist/gestione_todolist.dart';
 import 'package:mindcare/model/utente.dart';
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -541,7 +542,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                           )),
                                           SelectionArea(
                                               child: Text(
-                                            'Visualizzi andamento paziente',
+                                            'Visualizza andamento paziente',
                                             textAlign: TextAlign.start,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText1
@@ -603,7 +604,11 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      ToDoListWidget(user: widget.user)));
+                            },
                             child: Container(
                               width: 100,
                               height: 160,
