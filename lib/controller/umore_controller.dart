@@ -10,10 +10,12 @@ class UmoreController {
       String caregiverID, String user, String text, String type) async {
     DateTime data = DateTime.now();
     var umoreID = umoreIDGenerator(28);
+    var results =
+        Sentiment().analysis(text, languageCode: LanguageCode.italian);
     Umore umore = Umore(
         text: text,
-        score: 0,
-        comparative: 0,
+        score: results['score'],
+        comparative: results['comparative'],
         data: data,
         umoreID: umoreID,
         type: type);
@@ -27,24 +29,6 @@ class UmoreController {
         .doc(umoreID);
     await docUmore.set(json);
     return umoreID;
-  }
-
-  Future<void> updateUmore(
-      String caregiverID, String userID, String umoreID, String text) async {
-    var results =
-        Sentiment().analysis(text, languageCode: LanguageCode.italian);
-    var collection = FirebaseFirestore.instance.collection("user");
-    collection
-        .doc(caregiverID)
-        .collection('Pazienti')
-        .doc(userID)
-        .collection('Umore')
-        .doc(umoreID)
-        .update({
-      'text': text,
-      'score': results['score'],
-      'comparative': results['comparative'],
-    });
   }
 
   static String umoreIDGenerator(int len) {
