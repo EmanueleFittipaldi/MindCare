@@ -128,7 +128,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 10, 15, 0),
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
