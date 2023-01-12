@@ -628,7 +628,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 5),
                               child: FlutterFlowDropDown(
-                                initialOption: '10',
+                                initialOption: dropDownValueTime,
                                 options: const ['5', '10', '30', '60'],
                                 onChanged: (val) async {
                                   setState(() {
@@ -673,7 +673,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 5),
                               child: FlutterFlowDropDown(
-                                initialOption: '1',
+                                initialOption: dropDownValueTentativi,
                                 options: const ['1', '2', '3', '4', '5'],
                                 onChanged: (val) async {
                                   setState(() {

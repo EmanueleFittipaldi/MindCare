@@ -59,8 +59,12 @@ dependencies:
   table_calendar: ^3.0.8
   panara_dialogs: ^0.1.4
   dart_sentiment: ^0.0.9
+  csv: ^5.0.1
+  flutter_email_sender: ^5.2.0
   url_launcher: ^6.1.7
   telephony: ^0.2.0
+  flutter_custom_clippers: ^2.1.0
+  flutter_svg: ^1.1.6
   geolocator: ^9.0.2
   geocoding: ^2.0.5
 dev_dependencies:

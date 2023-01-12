@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/gestione_quiz/domanda_img_a_nome.dart';
@@ -10,6 +11,7 @@ import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import '../model/utente.dart';
 
@@ -50,20 +52,14 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 220,
+                      height: 250,
                       child: Stack(
                         children: [
                           Container(
                             width: double.infinity,
-                            height: 250,
+                            height: 230,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiaryColor,
-                              image: DecorationImage(
-                                fit: BoxFit.contain,
-                                image: Image.asset(
-                                  'assets/images/infographic_gestione_album.png',
-                                ).image,
-                              ),
                               boxShadow: [
                                 BoxShadow(
                                   blurRadius: 12,
@@ -72,48 +68,86 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                 )
                               ],
                               borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(155),
-                                bottomRight: Radius.circular(0),
+                                bottomLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40),
                                 topLeft: Radius.circular(0),
                                 topRight: Radius.circular(0),
                               ),
                             ),
-                            alignment: const AlignmentDirectional(-0.0, 0),
+                            alignment: AlignmentDirectional(-0.0, 0),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(0.1, -1),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                              child: SvgPicture.asset(
+                                'assets/images/undraw_add_notes_re_ln36.svg',
+                                width: 300,
+                                height: 165,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0.8),
+                            child: Container(
+                              width: double.infinity,
+                              height: 60,
+                              decoration: BoxDecoration(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20, 10, 20, 10),
+                                      child: AutoSizeText(
+                                        'Seleziona una categoria e tipologia per visualizzare le domande',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                              fontFamily: 'IBM Plex Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w200,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(15, 20, 0, 0),
-                      child: Text(
-                        'Seleziona una categoria e tipologia per visualizzare le domande.',
-                        style: FlutterFlowTheme.of(context).title1.override(
-                              fontFamily: 'IBM Plex Sans',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300,
-                            ),
-                      ),
-                    ),
-                    Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 0),
+                          const EdgeInsetsDirectional.fromSTEB(15, 5, 15, 0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SelectionArea(
-                              child: Text(
-                            'Categoria:',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          )),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 00, 0),
+                            child: Text(
+                              'Categoria:',
+                              textAlign: TextAlign.start,
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 5, 0, 5),
@@ -159,18 +193,22 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SelectionArea(
-                              child: Text(
-                            'Tipologia:',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                          )),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 00, 0),
+                            child: Text(
+                              'Tipologia:',
+                              textAlign: TextAlign.start,
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 5, 0, 5),
@@ -216,11 +254,19 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16, 0, 0, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                             child: Text(
-                              'Domande',
-                              style: FlutterFlowTheme.of(context).bodyText2,
+                              'Domande:',
+                              textAlign: TextAlign.start,
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300,
+                                      ),
                             ),
                           ),
                           FlutterFlowIconButton(
@@ -322,7 +368,7 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                     for (var item in data)
                                       Padding(
                                         padding: const EdgeInsetsDirectional
-                                            .fromSTEB(15, 0, 15, 8),
+                                            .fromSTEB(15, 0, 15, 10),
                                         child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(
@@ -330,9 +376,9 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                 .secondaryBackground,
                                             boxShadow: [
                                               BoxShadow(
-                                                blurRadius: 12,
+                                                blurRadius: 4,
                                                 color: Color(0x14000000),
-                                                offset: Offset(0, 5),
+                                                offset: Offset(0, 2),
                                               )
                                             ],
                                             borderRadius:
@@ -364,13 +410,18 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                           0, 0),
                                                   //ho pensato che è meglio inserire la categoria
                                                   //delle domande piuttosto che un numero progressivo
-                                                  child: Text(
-                                                    item['categoria'],
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1,
-                                                  ),
+                                                  child: Text(item['categoria'],
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                fontSize: 12,
+                                                              )),
                                                 ),
                                                 Expanded(
                                                   child: Padding(
@@ -530,7 +581,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                   borderWidth: 1,
                                                   buttonSize: 45,
                                                   icon: const Icon(
-                                                    Icons.cancel,
+                                                    Icons
+                                                        .delete_forever_outlined,
                                                     color: Color(0xFF8E8E8E),
                                                     size: 25,
                                                   ),

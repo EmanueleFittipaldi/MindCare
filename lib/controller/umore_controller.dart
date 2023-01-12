@@ -6,21 +6,19 @@ import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/model/umore.dart';
 
 class UmoreController {
-  Future<void> createUmore(
-    String caregiverID,
-    String user,
-    String text,
-  ) async {
+  Future<String> createUmore(
+      String caregiverID, String user, String text, String type) async {
     DateTime data = DateTime.now();
+    var umoreID = umoreIDGenerator(28);
     var results =
         Sentiment().analysis(text, languageCode: LanguageCode.italian);
-    var umoreID = umoreIDGenerator(28);
     Umore umore = Umore(
         text: text,
         score: results['score'],
         comparative: results['comparative'],
         data: data,
-        umoreID: umoreID);
+        umoreID: umoreID,
+        type: type);
     final json = umore.toJson();
     final docUmore = FirebaseFirestore.instance
         .collection('user')
@@ -30,6 +28,7 @@ class UmoreController {
         .collection('Umore')
         .doc(umoreID);
     await docUmore.set(json);
+    return umoreID;
   }
 
   static String umoreIDGenerator(int len) {
@@ -54,9 +53,43 @@ class UmoreController {
         .get();
 
     if (docSnapshot.docs.isNotEmpty) {
-      return true;
-    } else {
-      return false;
+      var isGiornaliero = false;
+      for (var item in docSnapshot.docs) {
+        if (item['type'] == 'giornaliero') {
+          isGiornaliero = true;
+        }
+      }
+      return isGiornaliero;
     }
+    return false;
+  }
+
+  getUmoreDataInRange(userID, startDate, endDate) async {
+    var fIstance = FirebaseFirestore.instance.collection('user');
+
+    QuerySnapshot docSnapshot = await fIstance
+        .doc(Auth().currentUser!.uid)
+        .collection('Pazienti')
+        .doc(userID)
+        .collection('Umore')
+        .where('data', isLessThanOrEqualTo: Timestamp.fromDate(endDate!))
+        .where('data', isGreaterThanOrEqualTo: Timestamp.fromDate(startDate!))
+        .orderBy('data', descending: false)
+        .get();
+
+    List<Umore> umoreData = [];
+
+    for (var j = 0; j < docSnapshot.docs.length; j++) {
+      var item = docSnapshot.docs[j].data() as Map<String, dynamic>?;
+      umoreData.add(Umore(
+          text: item!['text'],
+          score: item['score'],
+          comparative: item['comparative'],
+          data: (item['data'] as Timestamp).toDate(),
+          umoreID: item['umoreID'],
+          type: item['type']));
+    }
+
+    return umoreData;
   }
 }

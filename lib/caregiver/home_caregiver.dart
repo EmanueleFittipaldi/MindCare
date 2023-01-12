@@ -35,6 +35,39 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+          automaticallyImplyLeading: false,
+          actions: [],
+          leading: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                'assets/images/Logo_MindCare.jpg',
+                width: 30,
+                height: 30,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          titleSpacing: 0,
+          title: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+            child: Text(
+              'MindCare',
+              style: FlutterFlowTheme.of(context).title2.override(
+                    fontFamily: 'IBM Plex Sans',
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    fontSize: 28,
+                  ),
+            ),
+          ),
+          elevation: 0,
+        ),
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -49,7 +82,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
               children: [
                 Container(
                     width: double.infinity,
-                    height: 200,
+                    height: 230,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).tertiaryColor,
                       boxShadow: const [
@@ -60,8 +93,8 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                         )
                       ],
                       borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(155),
-                        bottomRight: Radius.circular(0),
+                        bottomLeft: Radius.circular(40),
+                        bottomRight: Radius.circular(40),
                         topLeft: Radius.circular(0),
                         topRight: Radius.circular(0),
                       ),
@@ -82,21 +115,130 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                             } //mappatura dei dati
                           });
                           if (data != null) {
-                            return Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    70, 0, 0, 0),
-                                child: Row(
+                            return Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Row(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            15, 2, 2, 0),
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.44,
+                                          height: 160,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12, 8, 12, 8),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 12, 0, 0),
+                                                  child: Text(
+                                                    'Salve,',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle1
+                                                        .override(
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                        ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: AutoSizeText(
+                                                    data['name'],
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle1
+                                                        .override(
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          fontSize: 25,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 4, 0, 0),
+                                                  child: AutoSizeText(
+                                                    'Caregiver',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                        ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 4, 0, 0),
+                                                    child: AutoSizeText(
+                                                      data['email'],
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'IBM Plex Sans',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 20, 0, 0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 20, 40, 0),
                                       child: Container(
-                                        width: 150,
-                                        height: 150,
+                                        width: 130,
+                                        height: 130,
                                         clipBehavior: Clip.antiAlias,
                                         decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
@@ -112,92 +254,28 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                               ),
                                       ),
                                     ),
-                                    Expanded(
-                                        child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(20, 40, 5, 10),
-                                            child: SingleChildScrollView(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0, 0, 5, 0),
-                                                    child: SelectionArea(
-                                                        child: Text(
-                                                      data['name'] +
-                                                          ' ' +
-                                                          data['lastname'],
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .title2
-                                                              .override(
-                                                                fontFamily:
-                                                                    'IBM Plex Sans',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                              ),
-                                                    )),
-                                                  ),
-                                                  SelectionArea(
-                                                      child: Text(
-                                                    'Caregiver',
-                                                    textAlign: TextAlign.start,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w200,
-                                                        ),
-                                                  )),
-                                                  Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              0, 0, 0, 0),
-                                                      child: SelectionArea(
-                                                          child: AutoSizeText(
-                                                        data['email'],
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'IBM Plex Sans',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w200,
-                                                                ),
-                                                      ))),
-                                                ],
-                                              ),
-                                            ))),
                                   ],
-                                ));
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20, 0, 20, 5),
+                                    child: SelectionArea(
+                                        child: AutoSizeText(
+                                      'Questa è la tua schermata principale.\nGestisci i pazienti di cui sei responsabile.',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'IBM Plex Sans',
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                    )),
+                                  ),
+                                ),
+                              ],
+                            );
                           }
                         }
                         return const Scaffold(
@@ -212,23 +290,23 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                20, 20, 0, 0),
-                            child: SelectionArea(
-                                child: Text(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+                            child: Text(
                               'Pazienti',
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                            )),
+                              textAlign: TextAlign.center,
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.w200,
+                                      ),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
@@ -289,7 +367,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                 .fromSTEB(0, 0, 0, 15),
                                             child: Container(
                                               width: double.infinity,
-                                              height: 130,
+                                              height: 110,
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 boxShadow: const [
@@ -362,7 +440,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                         padding:
                                                             const EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                25, 30, 0, 0),
+                                                                25, 20, 0, 0),
                                                         child: Column(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -396,9 +474,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                           color:
                                                                               const Color(0xFF101213),
                                                                           fontSize:
-                                                                              25,
+                                                                              20,
                                                                           fontWeight:
-                                                                              FontWeight.w300,
+                                                                              FontWeight.w400,
                                                                         ),
                                                                   ),
                                                                 ),
@@ -426,7 +504,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                                         fontFamily:
                                                                             'IBM Plex Sans',
                                                                         fontSize:
-                                                                            18,
+                                                                            15,
                                                                         fontWeight:
                                                                             FontWeight.w300,
                                                                       ),
@@ -472,19 +550,19 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                   builder: (context) =>
                                       const AggiuntaPazienteWidget()));
                             },
-                            text: '+',
+                            text: 'Nuovo paziente',
                             options: FFButtonOptions(
-                              width: 130,
-                              height: 60,
+                              width: 160,
+                              height: 50,
                               color: FlutterFlowTheme.of(context).primaryColor,
                               textStyle: FlutterFlowTheme.of(context)
                                   .subtitle2
                                   .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    fontSize: 36,
-                                  ),
+                                      fontFamily: 'IBM Plex Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w300),
                               borderSide: const BorderSide(
                                 color: Color(0x00101213),
                                 width: 1,

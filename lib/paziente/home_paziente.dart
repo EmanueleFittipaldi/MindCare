@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_sentiment/dart_sentiment.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/dialog_umore.dart';
 import 'package:mindcare/album_ricordi/album_ricordi.dart';
 import 'package:mindcare/controller/report_controller.dart';
@@ -7,8 +8,11 @@ import 'package:mindcare/controller/umore_controller.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/gestione_SOS/sos_paziente.dart';
 import 'package:mindcare/model/utente.dart';
+import 'package:mindcare/Quiz/seleziona_quiz.dart';
+import 'package:mindcare/todolist/todolist.dart';
 import 'package:mindcare/widget_tree.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -22,7 +26,9 @@ import '../autenticazione/login.dart';
 import 'opzioni_paziente.dart';
 
 class HomePazienteWidget extends StatefulWidget {
-  const HomePazienteWidget({Key? key}) : super(key: key);
+  final String caregiverUID;
+  const HomePazienteWidget({Key? key, required this.caregiverUID})
+      : super(key: key);
 
   @override
   _HomePazienteWidgetState createState() => _HomePazienteWidgetState();
@@ -30,11 +36,19 @@ class HomePazienteWidget extends StatefulWidget {
 
 class _HomePazienteWidgetState extends State<HomePazienteWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  String caregiverID = '';
   Utente? user;
-
+  bool checkHumor = false;
+  Future? futureQuizCompletati;
+  Stream<QuerySnapshot>? _patientStream;
   @override
   void initState() {
+    _patientStream = FirebaseFirestore.instance
+        .collection('user')
+        .doc(widget.caregiverUID)
+        .collection('Pazienti')
+        .snapshots();
+    futureQuizCompletati = ReportController()
+        .getQuizCompletati(widget.caregiverUID, Auth().currentUser!.uid);
     super.initState();
   }
 
@@ -43,6 +57,39 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).backgroundPrimaryColor,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
+          automaticallyImplyLeading: false,
+          actions: [],
+          leading: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                'assets/images/Logo_MindCare.jpg',
+                width: 30,
+                height: 30,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          titleSpacing: 0,
+          title: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+            child: Text(
+              'MindCare',
+              style: FlutterFlowTheme.of(context).title2.override(
+                    fontFamily: 'IBM Plex Sans',
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    fontSize: 28,
+                  ),
+            ),
+          ),
+          elevation: 0,
+        ),
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -59,7 +106,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                 children: [
                   Container(
                       width: double.infinity,
-                      height: 200,
+                      height: 230,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
                         boxShadow: const [
@@ -70,161 +117,159 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                           )
                         ],
                         borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(155),
-                          bottomRight: Radius.circular(0),
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
                           topLeft: Radius.circular(0),
                           topRight: Radius.circular(0),
                         ),
                       ),
-                      child: FutureBuilder(
-                        future: UserController()
-                            .getCaregiverID(Auth().currentUser!.uid),
+                      child: StreamBuilder(
+                        stream: _patientStream,
                         builder: (context, AsyncSnapshot snapshot) {
-                          if (snapshot.hasData) {
-                            caregiverID = snapshot.data;
-                            return StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection('user')
-                                  .doc(caregiverID)
-                                  .collection('Pazienti')
-                                  .snapshots(),
-                              builder: (context, AsyncSnapshot snapshot) {
-                                if (snapshot.hasData) {
-                                  var data;
-                                  snapshot.data?.docs.forEach((doc) {
-                                    //iterazione sui singoli documenti
-                                    Map<String, dynamic>? cmap = doc.data();
-                                    if (cmap!['userID'] ==
-                                        Auth().currentUser!.uid) {
-                                      data = cmap;
-                                    } //mappatura dei dati
-                                  });
-                                  if (data != null) {
-                                    user = Utente(
-                                        userID: data['userID'],
-                                        name: data['name'],
-                                        lastname: data['lastname'],
-                                        email: data['email'],
-                                        type: data['type'],
-                                        date:
-                                            (data?['dateOfBirth'] as Timestamp)
-                                                .toDate(),
-                                        profileImgPath:
-                                            data['profileImagePath'],
-                                        checkBiometric: data['checkBiometric']);
+                          if (snapshot.connectionState ==
+                              ConnectionState.active) {
+                            if (snapshot.hasData) {
+                              var data;
+                              snapshot.data?.docs.forEach((doc) {
+                                //iterazione sui singoli documenti
+                                Map<String, dynamic>? cmap = doc.data();
+                                if (cmap!['userID'] ==
+                                    Auth().currentUser!.uid) {
+                                  data = cmap;
+                                } //mappatura dei dati
+                              });
+                              if (data != null) {
+                                user = Utente(
+                                    userID: data['userID'],
+                                    name: data['name'],
+                                    lastname: data['lastname'],
+                                    email: data['email'],
+                                    type: data['type'],
+                                    date: (data?['dateOfBirth'] as Timestamp)
+                                        .toDate(),
+                                    profileImgPath: data['profileImagePath'],
+                                    checkBiometric: data['checkBiometric']);
 
-                                    /*QUANDO FUTURE BUILDER HA TERMINATO VERIFICA L'UMORE: */
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) async {
-                                      var bool = await UmoreController()
-                                          .checkUmore(caregiverID,
-                                              Auth().currentUser!.uid);
-                                      if (!bool) {
-                                        Future.delayed(
-                                            const Duration(seconds: 3),
-                                            () async {
-                                          var text = await showDialog(
-                                              barrierDismissible: false,
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return DialogUmore(
-                                                    title:
-                                                        'Ciao ${user!.name}!',
-                                                    message:
-                                                        'Come ti senti oggi?');
+                                return FutureBuilder(
+                                    future: futureQuizCompletati,
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.hasData) {
+                                        int percent = snapshot.data;
+
+                                        /*QUANDO FUTURE BUILDER HA TERMINATO VERIFICA L'UMORE: */
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) async {
+                                          await Hive.initFlutter();
+                                          var box = await Hive.openBox('temp');
+
+                                          var bool = await UmoreController()
+                                              .checkUmore(widget.caregiverUID,
+                                                  Auth().currentUser!.uid);
+
+                                          if (!bool) {
+                                            if (box.get('umore') == null ||
+                                                box.get('umore') == 'false') {
+                                              box.put('umore', 'true');
+
+                                              Future.delayed(
+                                                  const Duration(seconds: 3),
+                                                  () async {
+                                                var text = await showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return DialogUmore(
+                                                          title:
+                                                              'Ciao ${user!.name}!',
+                                                          message:
+                                                              'Come ti senti oggi?');
+                                                    });
+                                                if (text != '') {
+                                                  UmoreController().createUmore(
+                                                      widget.caregiverUID,
+                                                      Auth().currentUser!.uid,
+                                                      text,
+                                                      'giornaliero');
+                                                }
                                               });
-                                          if (text != '') {
-                                            UmoreController().createUmore(
-                                                caregiverID,
-                                                Auth().currentUser!.uid,
-                                                text);
+                                            }
+                                          } else {
+                                            box.put('umore', 'false');
                                           }
                                         });
-                                      }
-                                    });
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              40, 0, 0, 0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 20, 0, 0),
-                                            child: Container(
-                                              width: 150,
-                                              height: 150,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: data['profileImagePath'] !=
-                                                      ''
-                                                  ? Image.network(
-                                                      data['profileImagePath'],
-                                                      fit: BoxFit.cover,
-                                                    )
-                                                  : Image.asset(
-                                                      'assets/images/add_photo.png',
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                              child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(15, 2, 2, 12),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.44,
-                                              height: 190,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiaryColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(16),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12, 8, 12, 8),
-                                                child: FutureBuilder(
-                                                  future: ReportController()
-                                                      .getQuizCompletati(
-                                                          caregiverID,
-                                                          Auth()
-                                                              .currentUser!
-                                                              .uid),
-                                                  builder: (context,
-                                                      AsyncSnapshot snapshot) {
-                                                    if (snapshot.hasData) {
-                                                      int percent =
-                                                          snapshot.data;
-                                                      return Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                    0,
-                                                                    12,
-                                                                    0,
-                                                                    0),
-                                                            child: Text(
-                                                              '${'Salve, ' + data['name']}!',
+                                        return Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Expanded(
+                                                      child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            15, 2, 2, 0),
+                                                    child: Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.44,
+                                                      height: 160,
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                12, 8, 12, 8),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          12,
+                                                                          0,
+                                                                          0),
+                                                              child: Text(
+                                                                'Salve,',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .subtitle1
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'IBM Plex Sans',
+                                                                      fontSize:
+                                                                          20,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w300,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              '${data['name']}!',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .subtitle1
@@ -232,161 +277,209 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                                     fontFamily:
                                                                         'IBM Plex Sans',
                                                                     fontSize:
-                                                                        22,
+                                                                        25,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500,
                                                                   ),
                                                             ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                    0, 4, 0, 0),
-                                                            child: Text(
-                                                              'Quiz completati oggi',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText2
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'IBM Plex Sans',
-                                                                    fontSize:
-                                                                        15,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                        0,
-                                                                        4,
-                                                                        0,
-                                                                        0),
-                                                                child: Text(
-                                                                  'Progressi',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'IBM Plex Sans',
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                            .fromSTEB(
-                                                                        20,
-                                                                        4,
-                                                                        0,
-                                                                        0),
-                                                                child: Text(
-                                                                  '$percent/8',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'IBM Plex Sans',
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                    0, 8, 0, 0),
-                                                            child:
-                                                                LinearPercentIndicator(
-                                                              percent: (1 / 8) *
-                                                                  percent,
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.38,
-                                                              lineHeight: 12,
-                                                              animation: true,
-                                                              progressColor:
-                                                                  const Color(
-                                                                      0xFF4589FF),
-                                                              backgroundColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .lineColor,
-                                                              barRadius:
-                                                                  const Radius
-                                                                      .circular(8),
+                                                            Padding(
                                                               padding:
-                                                                  EdgeInsets
-                                                                      .zero,
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      0,
+                                                                      4,
+                                                                      0,
+                                                                      0),
+                                                              child: Text(
+                                                                'Quiz completati oggi',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'IBM Plex Sans',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w300,
+                                                                    ),
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    } else {
-                                                      return CircularProgressIndicator();
-                                                    }
-                                                  },
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .end,
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                          0,
+                                                                          4,
+                                                                          0,
+                                                                          0),
+                                                                  child: Text(
+                                                                    'Progressi: ',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText2
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'IBM Plex Sans',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontWeight:
+                                                                              FontWeight.w300,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsetsDirectional
+                                                                              .fromSTEB(
+                                                                          5,
+                                                                          4,
+                                                                          0,
+                                                                          0),
+                                                                  child: Text(
+                                                                    '$percent/8',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText2
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'IBM Plex Sans',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          fontWeight:
+                                                                              FontWeight.w300,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      0,
+                                                                      8,
+                                                                      0,
+                                                                      0),
+                                                              child:
+                                                                  LinearPercentIndicator(
+                                                                percent:
+                                                                    (1 / 8) *
+                                                                        percent,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.38,
+                                                                lineHeight: 12,
+                                                                animation: true,
+                                                                progressColor:
+                                                                    const Color(
+                                                                        0xFF4589FF),
+                                                                backgroundColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .lineColor,
+                                                                barRadius:
+                                                                    const Radius
+                                                                        .circular(8),
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )),
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 20, 30, 0),
+                                                      child: Container(
+                                                        width: 130,
+                                                        height: 130,
+                                                        clipBehavior:
+                                                            Clip.antiAlias,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        child:
+                                                            data['profileImagePath'] !=
+                                                                    ''
+                                                                ? Image.network(
+                                                                    data[
+                                                                        'profileImagePath'],
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  )
+                                                                : Image.asset(
+                                                                    'assets/images/add_photo.png',
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 20, 5),
+                                                  child: SelectionArea(
+                                                      child: AutoSizeText(
+                                                    'Questa è la tua schermata principale.\nCompleta un quiz oppure rivivi i tuoi ricordi!',
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily:
+                                                              'IBM Plex Sans',
+                                                          fontSize: 19,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                        ),
+                                                  )),
                                                 ),
                                               ),
-                                            ),
-                                          )),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                }
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
-                            );
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
+                                            ]);
+                                      } else {
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+                                    });
+                              }
+                            }
                           }
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
                         },
                       )),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 20, 15, 0),
-                    child: SelectionArea(
-                        child: Text(
-                      'Questa è la tua schermata principale.\nCompleta un quiz oppure rivivi i tuoi ricordi!',
-                      textAlign: TextAlign.start,
-                      style: FlutterFlowTheme.of(context).bodyText2.override(
-                            fontFamily: 'IBM Plex Sans',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w300,
-                          ),
-                    )),
-                  ),
                   Padding(
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
@@ -401,10 +494,9 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                             child: InkWell(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        SelezionaCategoriaWidget(
-                                            user: user!,
-                                            caregiverID: caregiverID)));
+                                    builder: (context) => SelezionaQuizWidget(
+                                        user: user!,
+                                        caregiverID: widget.caregiverUID)));
                               },
                               child: Container(
                                 width: 100,
@@ -447,10 +539,10 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        SelezionaCategoriaWidget(
+                                                        SelezionaQuizWidget(
                                                             user: user!,
-                                                            caregiverID:
-                                                                caregiverID)));
+                                                            caregiverID: widget
+                                                                .caregiverUID)));
                                           },
                                         ),
                                       ),
@@ -483,7 +575,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => AlbumRicordiWidget(
-                                      caregiverUID: caregiverID, user: user!)));
+                                      caregiverUID: widget.caregiverUID,
+                                      user: user!)));
                             },
                             child: Container(
                               width: 100,
@@ -530,8 +623,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         AlbumRicordiWidget(
-                                                            caregiverUID:
-                                                                caregiverID,
+                                                            caregiverUID: widget
+                                                                .caregiverUID,
                                                             user: user!)));
                                           },
                                         ),
@@ -612,7 +705,15 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                 .tertiaryColor,
                                             size: 50,
                                           ),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ToDoListPazienteWidget(
+                                                            user: user!,
+                                                            caregiverID: widget
+                                                                .caregiverUID)));
+                                          },
                                         ),
                                       ),
                                       Padding(

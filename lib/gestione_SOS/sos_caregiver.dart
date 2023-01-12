@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/gestione_SOS/sos_creazioneContatto.dart';
@@ -11,7 +12,7 @@ import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import '../model/utente.dart';
 
 class SOSCaregiverWidget extends StatefulWidget {
@@ -60,53 +61,76 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: double.infinity,
                       height: 250,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).tertiaryColor,
-                        boxShadow: const [
-                          BoxShadow(
-                            blurRadius: 12,
-                            color: Color(0x14000000),
-                            offset: Offset(0, 5),
-                          )
-                        ],
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(155),
-                          bottomRight: Radius.circular(0),
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(0),
-                        ),
-                      ),
-                      alignment: const AlignmentDirectional(0, 0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: Stack(
                         children: [
-                          Expanded(
+                          Container(
+                            width: double.infinity,
+                            height: 230,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 12,
+                                  color: Color(0x14000000),
+                                  offset: Offset(0, 5),
+                                )
+                              ],
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40),
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
+                              ),
+                            ),
+                            alignment: AlignmentDirectional(-0.0, 0),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(0.1, -1),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  25, 50, 0, 0),
-                              child: Text(
-                                'Ciao! Qui puoi inserire una serie di contatti di emergenza per far sentire sempre al sicuro le persone che ami.',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'IBM Plex Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w300,
-                                    ),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                              child: SvgPicture.asset(
+                                'assets/images/undraw_connecting_teams_re_hno7.svg',
+                                width: 300,
+                                height: 165,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(0),
-                              child: Image.asset(
-                                'assets/images/young-man-talking-on-mobile-phone-calling-concept-vector-40718994.jpg',
-                                fit: BoxFit.cover,
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0.8),
+                            child: Container(
+                              width: double.infinity,
+                              height: 50,
+                              decoration: BoxDecoration(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                    child: Align(
+                                      alignment: AlignmentDirectional(0, 0.15),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            20, 10, 20, 10),
+                                        child: AutoSizeText(
+                                          'Aggiungi o elimina contatti di emergenza',
+                                          textAlign: TextAlign.center,
+                                          style: FlutterFlowTheme.of(context)
+                                              .title1
+                                              .override(
+                                                fontFamily: 'IBM Plex Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w200,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -121,16 +145,19 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16, 0, 0, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                             child: Text(
-                              'Contatti di emergenza',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    fontSize: 20,
-                                  ),
+                              'Contatti di emergenza:',
+                              textAlign: TextAlign.start,
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300,
+                                      ),
                             ),
                           ),
                           FlutterFlowIconButton(
@@ -218,17 +245,21 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                                             });
                                             if (data.isEmpty) {
                                               //se la lista è vuota mostra 'Non ci sono domande'
-                                              return Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      'Non ci sono contatti',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                              return Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(0, 0, 0, 0),
+                                                  child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          'Non ci sono contatti!',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
                                                               .bodyText2
                                                               .override(
                                                                 fontFamily:
@@ -240,8 +271,8 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                                                                     FontWeight
                                                                         .normal,
                                                               ),
-                                                    ),
-                                                  ]);
+                                                        ),
+                                                      ]));
                                             }
                                             //altrimenti ritorna i diversi widget delle domande
                                             return Column(

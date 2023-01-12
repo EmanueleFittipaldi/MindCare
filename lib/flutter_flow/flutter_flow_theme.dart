@@ -44,6 +44,7 @@ abstract class FlutterFlowTheme {
   late Color primaryBtnText;
   late Color lineColor;
   late Color backgroundPrimaryColor;
+  late Color backgroundSVG;
 
   TextStyle get title1 => GoogleFonts.getFont(
         'Poppins',
@@ -102,7 +103,8 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color borderErrorColor = const Color(0xFFC11215);
   late Color primaryBtnText = const Color(0xFF0F62FE);
   late Color lineColor = const Color(0xFFE0E3E7);
-  late Color backgroundPrimaryColor = const Color(0xFFF0F6FF);
+  late Color backgroundPrimaryColor = const Color(0xFFECF4FF);
+  late Color backgroundSVG = const Color(0xFFD0E2FF);
 }
 
 class DarkModeTheme extends FlutterFlowTheme {
@@ -118,6 +120,7 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color primaryBtnText = const Color(0xFFFFFFFF);
   late Color lineColor = const Color(0xFF22282F);
   late Color backgroundPrimaryColor = const Color(0xFFF0F6FF);
+  late Color backgroundSVG = const Color(0xFFD0E2FF);
 }
 
 extension TextStyleHelper on TextStyle {

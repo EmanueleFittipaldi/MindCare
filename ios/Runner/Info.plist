@@ -53,5 +53,16 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>this application needs access to the photos</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
+    <key>UIFileSharingEnabled</key>
+    <true/>
+	<key>MFMailComposeViewController</key>
+    <true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>this application needs access to the location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>this application needs access to the location</string>
+	
 </dict>
 </plist>

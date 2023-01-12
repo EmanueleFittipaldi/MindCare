@@ -41,9 +41,9 @@ class _SOScontattoWidgetState extends State<SOScontattoWidget> {
     telefonoController = TextEditingController(); //numero di telefono
 
     if (widget.item != null) {
-      nomeController!.text = widget.item!.name!;
-      cognomeController!.text = widget.item!.lastname!;
-      telefonoController!.text = widget.item!.cell!;
+      nomeController!.text = widget.item!.name;
+      cognomeController!.text = widget.item!.lastname;
+      telefonoController!.text = widget.item!.cell;
     }
   }
 
@@ -71,7 +71,7 @@ passata come parametro */
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         automaticallyImplyLeading: false,
         title: Text(
-          'SOS contatto',
+          'Contatto',
           style: FlutterFlowTheme.of(context).title2,
         ),
         actions: [
@@ -110,8 +110,8 @@ passata come parametro */
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(15, 10, 15, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            15, 10, 15, 10),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -132,7 +132,7 @@ passata come parametro */
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 4, 0, 0),
+                                  0, 20, 0, 0),
                               child: InkWell(
                                 onTap: () async {},
                                 child: Container(
@@ -181,7 +181,7 @@ passata come parametro */
                                           )
                                         : widget.item != null
                                             ? Image.network(
-                                                widget.item!.profileImgPath!,
+                                                widget.item!.profileImgPath,
                                                 width: 100,
                                                 height: 100,
                                                 fit: BoxFit.cover,
@@ -222,7 +222,7 @@ passata come parametro */
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 5, 0, 5),
+                                  0, 20, 0, 10),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -235,7 +235,7 @@ passata come parametro */
                                         }
                                         return null;
                                       },
-                                      controller: cognomeController,
+                                      controller: nomeController,
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -295,7 +295,7 @@ passata come parametro */
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 5, 0, 5),
+                                  0, 5, 0, 10),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -308,7 +308,7 @@ passata come parametro */
                                         }
                                         return null;
                                       },
-                                      controller: telefonoController,
+                                      controller: cognomeController,
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -381,7 +381,7 @@ passata come parametro */
                                         }
                                         return null;
                                       },
-                                      controller: cognomeController,
+                                      controller: telefonoController,
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(

@@ -1,4 +1,3 @@
-
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -45,82 +44,81 @@ class _SosWidgetState extends State<SosWidget> {
 
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location services are disabled. Please enable the services')));
-      return false;
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+                'Location services are disabled. Please enable the services')));
         return false;
       }
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Location permissions are denied')));
+          return false;
+        }
+      }
+      if (permission == LocationPermission.deniedForever) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+                'Location permissions are permanently denied, we cannot request permissions.')));
+        return false;
+      }
+      return true;
     }
-    if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
-      return false;
-    }
-    return true;
-  }
 
     Future<void> _getAddressFromLatLng(Position position) async {
       await placemarkFromCoordinates(
-            _currentPosition.latitude, _currentPosition.longitude)
-        .then((List<Placemark> placemarks) {
-      Placemark place = placemarks[0];
-      setState(() {
-        _currentAddress =
-            '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
-      });
-    }).catchError((e) {
-      debugPrint(e);
-    });
-  }
-
-  Future<void> getLocation() async {
-     final hasPermission = await _handleLocationPermission();
-      if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-      .then((Position position) {
-          setState(() => _currentPosition = position);
-          _getAddressFromLatLng(_currentPosition);
-        }).catchError((e) {
-          debugPrint(e);
+              _currentPosition.latitude, _currentPosition.longitude)
+          .then((List<Placemark> placemarks) {
+        Placemark place = placemarks[0];
+        setState(() {
+          _currentAddress =
+              '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
         });
+      }).catchError((e) {
+        debugPrint(e);
+      });
     }
 
+    Future<void> getLocation() async {
+      final hasPermission = await _handleLocationPermission();
+      if (!hasPermission) return;
+      await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high)
+          .then((Position position) {
+        setState(() => _currentPosition = position);
+        _getAddressFromLatLng(_currentPosition);
+      }).catchError((e) {
+        debugPrint(e);
+      });
+    }
 
     String? encodeQueryParameters(Map<String, String> params) {
-    return params.entries
-        .map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-        .join('&');
-  }
+      return params.entries
+          .map((e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+          .join('&');
+    }
 
     Future<void> _sendSMS(String phoneNumber) async {
       final Uri _url = Uri(
         scheme: 'sms',
         path: phoneNumber,
-        query: encodeQueryParameters(<String, String>{
-          'body': 'Indirizzo: $_currentAddress'
-        }),
+        query: encodeQueryParameters(
+            <String, String>{'body': 'Indirizzo: $_currentAddress'}),
       );
       if (!await launchUrl(_url)) {
         throw 'Cannot lunch $_url';
       }
     }
 
-    Future <void> _sendSMSAndroid(String phoneNumber) async {
+    Future<void> _sendSMSAndroid(String phoneNumber) async {
       final Telephony telephony = Telephony.instance;
       await getLocation();
-      telephony.sendSms(to: phoneNumber, message: "Indirizzo: $_currentAddress");
+      telephony.sendSms(
+          to: phoneNumber, message: "Indirizzo: $_currentAddress");
     }
-
-  
 
     return Scaffold(
       key: scaffoldKey,
@@ -320,12 +318,12 @@ class _SosWidgetState extends State<SosWidget> {
                                   size: 30,
                                 ),
                                 onPressed: () {
-                                  if(Platform.isAndroid){
-                                    _sendSMS('+39-3312739420');   
-                                  }
-                                  else if(Platform.isIOS) {
+                                  if (Platform.isAndroid) {
                                     _sendSMS('+39-3312739420');
-                                  }                                },
+                                  } else if (Platform.isIOS) {
+                                    _sendSMS('+39-3312739420');
+                                  }
+                                },
                               ),
                             ],
                           ),

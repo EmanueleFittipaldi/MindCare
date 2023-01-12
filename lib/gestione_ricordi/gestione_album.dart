@@ -10,6 +10,9 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class GestioneAlbumWidget extends StatefulWidget {
   final Utente user;
@@ -46,20 +49,14 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 220,
+                      height: 250,
                       child: Stack(
                         children: [
                           Container(
                             width: double.infinity,
-                            height: 250,
+                            height: 230,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiaryColor,
-                              image: DecorationImage(
-                                fit: BoxFit.contain,
-                                image: Image.asset(
-                                  'assets/images/infographic_gestione_album.png',
-                                ).image,
-                              ),
                               boxShadow: [
                                 BoxShadow(
                                   blurRadius: 12,
@@ -68,42 +65,88 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                 )
                               ],
                               borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(155),
-                                bottomRight: Radius.circular(0),
+                                bottomLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40),
                                 topLeft: Radius.circular(0),
                                 topRight: Radius.circular(0),
                               ),
                             ),
-                            alignment: const AlignmentDirectional(-0.0, 0),
+                            alignment: AlignmentDirectional(-0.0, 0),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(0.1, -1),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                              child: SvgPicture.asset(
+                                'assets/images/undraw_camera_re_cnp4.svg',
+                                width: 300,
+                                height: 170,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0.85),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(20, 5, 20, 5),
+                              child: Container(
+                                width: double.infinity,
+                                height: 50,
+                                decoration: BoxDecoration(),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 0),
+                                        child: AutoSizeText(
+                                          'Aggiungi o elimina ricordi dall\'album del paziente',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .title1
+                                              .override(
+                                                fontFamily: 'IBM Plex Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w200,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(15, 20, 0, 0),
-                      child: Text(
-                        'Aggiungi o elimina ricordi dall\'album del paziente.',
-                        style: FlutterFlowTheme.of(context).title1.override(
-                              fontFamily: 'IBM Plex Sans',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300,
-                            ),
-                      ),
-                    ),
-                    Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 10, 15, 0),
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16, 0, 0, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
                             child: Text(
                               'Ricordi',
-                              style: FlutterFlowTheme.of(context).bodyText2,
+                              textAlign: TextAlign.center,
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'IBM Plex Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300,
+                                      ),
                             ),
                           ),
                           FlutterFlowIconButton(
@@ -160,7 +203,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                     for (int i = 0; i < data.length; i++)
                                       Padding(
                                         padding: const EdgeInsetsDirectional
-                                            .fromSTEB(15, 0, 15, 8),
+                                            .fromSTEB(15, 0, 15, 10),
                                         child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(
@@ -168,9 +211,9 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                                 .secondaryBackground,
                                             boxShadow: [
                                               BoxShadow(
-                                                blurRadius: 12,
+                                                blurRadius: 4,
                                                 color: Color(0x14000000),
-                                                offset: Offset(0, 5),
+                                                offset: Offset(0, 2),
                                               )
                                             ],
                                             borderRadius:
