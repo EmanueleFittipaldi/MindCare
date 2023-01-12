@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_sentiment/dart_sentiment.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/dialog_umore.dart';
 import 'package:mindcare/album_ricordi/album_ricordi.dart';
 import 'package:mindcare/controller/report_controller.dart';
@@ -8,6 +9,7 @@ import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/gestione_SOS/sos_paziente.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/Quiz/seleziona_quiz.dart';
+import 'package:mindcare/todolist/todolist.dart';
 import 'package:mindcare/widget_tree.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -158,34 +160,18 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                         /*QUANDO FUTURE BUILDER HA TERMINATO VERIFICA L'UMORE: */
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((_) async {
-                                          if (!checkHumor) {
-                                            var now = DateTime(
-                                                DateTime.now().year,
-                                                DateTime.now().month,
-                                                DateTime.now().day + 1);
-                                            var last = Auth()
-                                                .currentUser!
-                                                .metadata
-                                                .lastSignInTime;
-                                            var lastSignIn = DateTime(
-                                                last!.year,
-                                                last.month,
-                                                last.day);
-                                            var umoreID;
+                                          await Hive.initFlutter();
+                                          var box = await Hive.openBox('temp');
 
-                                            checkHumor = true;
-                                            var bool = await UmoreController()
-                                                .checkUmore(widget.caregiverUID,
-                                                    Auth().currentUser!.uid);
-                                            if (now.compareTo(lastSignIn) > 0) {
-                                              umoreID = await UmoreController()
-                                                  .createUmore(
-                                                      widget.caregiverUID,
-                                                      Auth().currentUser!.uid,
-                                                      '',
-                                                      'giornaliero');
-                                            }
-                                            if (!bool) {
+                                          var bool = await UmoreController()
+                                              .checkUmore(widget.caregiverUID,
+                                                  Auth().currentUser!.uid);
+
+                                          if (!bool) {
+                                            if (box.get('umore') == null ||
+                                                box.get('umore') == 'false') {
+                                              box.put('umore', 'true');
+
                                               Future.delayed(
                                                   const Duration(seconds: 3),
                                                   () async {
@@ -201,14 +187,16 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                               'Come ti senti oggi?');
                                                     });
                                                 if (text != '') {
-                                                  UmoreController().updateUmore(
+                                                  UmoreController().createUmore(
                                                       widget.caregiverUID,
                                                       Auth().currentUser!.uid,
-                                                      umoreID,
-                                                      text);
+                                                      text,
+                                                      'giornaliero');
                                                 }
                                               });
                                             }
+                                          } else {
+                                            box.put('umore', 'false');
                                           }
                                         });
                                         return Column(
@@ -717,7 +705,15 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                 .tertiaryColor,
                                             size: 50,
                                           ),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ToDoListPazienteWidget(
+                                                            user: user!,
+                                                            caregiverID: widget
+                                                                .caregiverUID)));
+                                          },
                                         ),
                                       ),
                                       Padding(

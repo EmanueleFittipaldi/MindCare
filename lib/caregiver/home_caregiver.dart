@@ -550,19 +550,19 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                   builder: (context) =>
                                       const AggiuntaPazienteWidget()));
                             },
-                            text: '+',
+                            text: 'Nuovo paziente',
                             options: FFButtonOptions(
-                              width: 110,
+                              width: 160,
                               height: 50,
                               color: FlutterFlowTheme.of(context).primaryColor,
                               textStyle: FlutterFlowTheme.of(context)
                                   .subtitle2
                                   .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .tertiaryColor,
-                                    fontSize: 36,
-                                  ),
+                                      fontFamily: 'IBM Plex Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .tertiaryColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w300),
                               borderSide: const BorderSide(
                                 color: Color(0x00101213),
                                 width: 1,
