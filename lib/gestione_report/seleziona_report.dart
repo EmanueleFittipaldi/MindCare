@@ -145,7 +145,7 @@ class _SelezionaReportWidgetState extends State<SelezionaReportWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          fontSize: 30,
+                                                          fontSize: 28,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                         ),
@@ -291,7 +291,7 @@ class _SelezionaReportWidgetState extends State<SelezionaReportWidget> {
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .primaryText,
-                                                    fontSize: 30,
+                                                    fontSize: 28,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                             )),
