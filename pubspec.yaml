@@ -63,8 +63,6 @@ dependencies:
   flutter_email_sender: ^5.2.0
   url_launcher: ^6.1.7
   telephony: ^0.2.0
-  geolocator: ^8.2.0
-  geocoding: ^2.0.4
   flutter_custom_clippers: ^2.1.0
   flutter_svg: ^1.1.6
   geolocator: ^9.0.2
