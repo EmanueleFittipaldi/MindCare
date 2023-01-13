@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/contattoSOS.dart';
@@ -457,36 +458,11 @@ passata come parametro */
                             !formKey.currentState!.validate()) {
                           return;
                         }
-
-                        /*
-                        Distinguo il caso della modifica di un contatto esistente
-                        dalla creazione di un nuovo contatto constatando se è stato
-                        passato un oggetto di tipo contatto a domanda_nome_a_imag.dart
-                        oppure no */
-
                         if (widget.item != null) {
-                          /*QuizController().updatecontattoNomeImg(
-                              widget.user.userID,
-                              widget.item,
-                              cognomeController?.text,
-                              telefonoController?.text,
-                              textController4?.text,
-                              textController5?.text,
-                              nomeController?.text,
-                              imagContatto,
-                              dropDownValue,
-                              widget.categoria,
-                              widget.tipologia,
-                              dropDownValueTime);*/
-
-                          //Una volta modificato il contatto ritorno a GestioneQuiz
-                          /*Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  GestionQuizWidget(user: widget.user)));*/
+                          Fluttertoast.showToast(
+                                msg: 'widget.item != null');
                           Navigator.of(context).pop();
                         } else {
-                          // Caricamento dell'immagine oggetto
-                          // della domanda su firebase
                           var imageUrlDomanda;
                           if (imagContatto != '') {
                             imageUrlDomanda =
@@ -494,26 +470,18 @@ passata come parametro */
                           }
                           if (imageUrlDomanda == null) {
                             Fluttertoast.showToast(
-                                msg: 'Caricara un\'immagine');
+                                msg: 'Caricare un\'immagine');
                           } else {
-                            //Creazione del contatto
-                            /*QuizController().creazionecontattoNomeImg(
-                                widget.user,
-                                cognomeController?.text,
-                                telefonoController?.text,
-                                textController4?.text,
-                                textController5?.text,
-                                nomeController?.text,
-                                imageUrlDomanda,
-                                dropDownValue,
-                                widget.categoria,
-                                widget.tipologia,
-                                dropDownValueTime);*/
-
-                            //Una volta creato il contatto ritorno a GestioneQuiz
-                            /*Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    GestionQuizWidget(user: widget.user)));*/
+                            final contattoSOS =  ContattoSOS(
+                              contattoID: "ciao",
+                              name: "ciao",
+                              lastname: "ciao",
+                              cell: "ciao",
+                              profileImgPath: "ciao",
+                            );
+                            contattoSOS.createContatto(widget.user.userID);
+                            Fluttertoast.showToast(
+                                msg: 'Contatto Creato');
                             Navigator.of(context).pop();
                           }
                         } //fine if
