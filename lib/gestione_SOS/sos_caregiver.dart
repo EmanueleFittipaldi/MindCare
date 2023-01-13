@@ -448,7 +448,7 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                                                                         .user
                                                                         .userID)
                                                                     .collection(
-                                                                        'contattiSOS')
+                                                                        'ContattiSOS')
                                                                     .doc(item[
                                                                         'contattoID'])
                                                                     .delete();

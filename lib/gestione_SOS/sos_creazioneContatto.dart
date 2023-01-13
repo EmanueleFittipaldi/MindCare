@@ -468,9 +468,22 @@ passata come parametro */
                           return;
                         }
                         if (widget.item != null) {
-                          Fluttertoast.showToast(
-                                msg: 'widget.item != null');
-                          Navigator.of(context).pop();
+                          var filePath;
+                              if (imagContatto != '') {
+                                filePath = await ImageUpload()
+                                    .uploadImage(imagContatto);
+                              }
+                          final contattoSOS =  ContattoSOS(
+                              contattoID: widget.item!.contattoID,
+                              name: nomeController!.text,
+                              lastname: cognomeController!.text,
+                              cell: telefonoController!.text,
+                              profileImgPath: filePath ?? '',
+                            );
+                            contattoSOS.createContatto(widget.user.userID);
+                            Fluttertoast.showToast(
+                                msg: 'Contatto Creato');
+                            Navigator.of(context).pop();
                         } else {
                           var imageUrlSos;
                           if (imagContatto != '') {
