@@ -58,7 +58,7 @@ class Auth {
         return credential.user?.uid;
       }
     } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: 'Errore inaspettato. Riprova!');
+      Fluttertoast.showToast(msg: 'Errore inaspettato. Riprova! ' + e.toString());
     }
 
 // after creating the account, delete the secondary app as below:
