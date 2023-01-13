@@ -92,6 +92,13 @@ class _SosWidgetState extends State<SosWidget> {
       }).catchError((e) {
         debugPrint(e);
       });
+    } 
+    
+    Future<void> _sendSMSAndroid(String phoneNumber) async {
+      final Telephony telephony = Telephony.instance;
+      await getLocation();
+      telephony.sendSms(
+          to: phoneNumber, message: "Indirizzo: $_currentAddress");
     }
 
     String? encodeQueryParameters(Map<String, String> params) {
@@ -102,6 +109,7 @@ class _SosWidgetState extends State<SosWidget> {
     }
 
     Future<void> _sendSMS(String phoneNumber) async {
+      await getLocation();
       final Uri _url = Uri(
         scheme: 'sms',
         path: phoneNumber,
@@ -113,12 +121,7 @@ class _SosWidgetState extends State<SosWidget> {
       }
     }
 
-    Future<void> _sendSMSAndroid(String phoneNumber) async {
-      final Telephony telephony = Telephony.instance;
-      await getLocation();
-      telephony.sendSms(
-          to: phoneNumber, message: "Indirizzo: $_currentAddress");
-    }
+   
 
     return Scaffold(
       key: scaffoldKey,
@@ -313,7 +316,7 @@ class _SosWidgetState extends State<SosWidget> {
                                 buttonSize: 50,
                                 icon: const FaIcon(
                                   // ignore: deprecated_member_use
-                                  FontAwesomeIcons.phoneAlt,
+                                  FontAwesomeIcons.sms,
                                   color: Color(0xFF8E8E8E),
                                   size: 30,
                                 ),
