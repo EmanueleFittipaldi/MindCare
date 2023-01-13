@@ -173,8 +173,7 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                               size: 25,
                             ),
                             onPressed: () async {
-                              await Navigator.push(
-                                context,
+                              await Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => SOScontattoWidget(
                                       user: widget.user, item: null),
@@ -229,7 +228,7 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                                             .doc(Auth().currentUser?.uid)
                                             .collection('Pazienti')
                                             .doc(widget.user.userID)
-                                            .collection('contattiSOS')
+                                            .collection('ContattiSOS')
                                             .snapshots(),
                                         //StreamBuilder per caricare i dati dei quesiti
                                         //funzione per ottenere i dati dei quesiti
@@ -312,7 +311,7 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                                                             //ho pensato che è meglio inserire la categoria
                                                             //delle domande piuttosto che un numero progressivo
                                                             child: Text(
-                                                              item['categoria'],
+                                                              item['name'],
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -350,7 +349,7 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                                                                             0),
                                                                     child: Text(
                                                                       item[
-                                                                          'domanda'],
+                                                                          'lastname'],
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyText2
