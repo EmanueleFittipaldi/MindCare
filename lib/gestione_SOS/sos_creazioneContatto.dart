@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -62,6 +64,13 @@ passata come parametro */
     ImageUpload().deleteFile(imagPrecedente);
     return await ImageUpload().uploadImage(imagContatto);
   }
+
+   static String sosIdGenerator(int len) {
+    var r = Random();
+    const chars = '1234567890aAbBcCdDeEfFgGhHiIlLmMnNoOpPqQrRsStTuUvVzZ';
+    return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -463,21 +472,26 @@ passata come parametro */
                                 msg: 'widget.item != null');
                           Navigator.of(context).pop();
                         } else {
-                          var imageUrlDomanda;
+                          var imageUrlSos;
                           if (imagContatto != '') {
-                            imageUrlDomanda =
+                            imageUrlSos =
                                 await ImageUpload().uploadImage(imagContatto);
                           }
-                          if (imageUrlDomanda == null) {
+                          if (imageUrlSos == null) {
                             Fluttertoast.showToast(
                                 msg: 'Caricare un\'immagine');
                           } else {
+                            var filePath;
+                              if (imagContatto != '') {
+                                filePath = await ImageUpload()
+                                    .uploadImage(imagContatto);
+                              }
                             final contattoSOS =  ContattoSOS(
-                              contattoID: "ciao",
-                              name: "ciao",
-                              lastname: "ciao",
-                              cell: "ciao",
-                              profileImgPath: "ciao",
+                              contattoID:  sosIdGenerator(28),
+                              name: nomeController!.text,
+                              lastname: cognomeController!.text,
+                              cell: telefonoController!.text,
+                              profileImgPath: filePath ?? '',
                             );
                             contattoSOS.createContatto(widget.user.userID);
                             Fluttertoast.showToast(
