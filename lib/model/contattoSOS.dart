@@ -29,13 +29,15 @@ class ContattoSOS {
       cell: json['cell'],
       profileImgPath: json['profileImagePath']);
 
-  Future<void> createContatto() async {
+  Future<void> createContatto(String user) async {
     final json = toJson();
     final docUser = FirebaseFirestore.instance
         .collection('user')
         .doc(Auth().currentUser?.uid)
         .collection('Pazienti')
-        .doc(json['contattoID']);
+        .doc(user)
+        .collection('ContattiSOS')
+        .doc(contattoID);
     await docUser.set(json);
   }
 }
