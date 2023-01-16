@@ -1,17 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dart_sentiment/dart_sentiment.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/dialog_umore.dart';
 import 'package:mindcare/album_ricordi/album_ricordi.dart';
 import 'package:mindcare/controller/report_controller.dart';
 import 'package:mindcare/controller/umore_controller.dart';
-import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/gestione_SOS/sos_paziente.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/Quiz/seleziona_quiz.dart';
 import 'package:mindcare/todolist/todolist.dart';
-import 'package:mindcare/widget_tree.dart';
-import 'package:panara_dialogs/panara_dialogs.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
@@ -21,9 +18,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../controller/auth.dart';
-import '../quiz/categoria.dart';
-import '../autenticazione/login.dart';
-import 'opzioni_paziente.dart';
 
 class HomePazienteWidget extends StatefulWidget {
   final String caregiverUID;
@@ -58,13 +52,13 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).backgroundPrimaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
           automaticallyImplyLeading: false,
-          actions: [],
+          actions: const [],
           leading: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
+            padding: const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
@@ -77,7 +71,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
           ),
           titleSpacing: 0,
           title: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
             child: Text(
               'MindCare',
               style: FlutterFlowTheme.of(context).title2.override(
@@ -129,6 +123,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                           if (snapshot.connectionState ==
                               ConnectionState.active) {
                             if (snapshot.hasData) {
+                              // ignore: prefer_typing_uninitialized_variables
                               var data;
                               snapshot.data?.docs.forEach((doc) {
                                 //iterazione sui singoli documenti
@@ -246,12 +241,12 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                           children: [
                                                             Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          12,
-                                                                          0,
-                                                                          0),
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      0,
+                                                                      12,
+                                                                      0,
+                                                                      0),
                                                               child: Text(
                                                                 'Salve,',
                                                                 style: FlutterFlowTheme.of(
@@ -446,8 +441,10 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                               ),
                                               Expanded(
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(20, 0, 20, 5),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          20, 0, 20, 5),
                                                   child: SelectionArea(
                                                       child: AutoSizeText(
                                                     'Questa è la tua schermata principale.\nCompleta un quiz oppure rivivi i tuoi ricordi!',
@@ -788,7 +785,11 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const SosWidget()));
+                                                        SosWidget(
+                                                          caregiverUID: widget
+                                                              .caregiverUID,
+                                                          user: user!,
+                                                        )));
                                           },
                                         ),
                                       ),

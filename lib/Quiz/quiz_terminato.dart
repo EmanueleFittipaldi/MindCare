@@ -3,11 +3,7 @@ import 'package:mindcare/widget_tree.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class QuizTerminatoWidget extends StatefulWidget {
   final String caregiverID;
@@ -67,7 +63,7 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                   fontSize: 30,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 0,
         ),
@@ -199,7 +195,7 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  WidgetTree()));
+                                                  const WidgetTree()));
                                     },
                                     child: Image.network(
                                       'https://cdn-icons-png.flaticon.com/512/6637/6637207.png',

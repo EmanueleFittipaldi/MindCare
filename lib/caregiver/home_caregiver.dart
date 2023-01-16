@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/model/utente.dart';
@@ -8,6 +10,7 @@ import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import '../gestione_paziente/aggiunta_paziente.dart';
 import '../gestione_paziente/dashboard_paziente.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
 class HomeCaregiverWidget extends StatefulWidget {
@@ -36,13 +39,13 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
           automaticallyImplyLeading: false,
-          actions: [],
+          actions: const [],
           leading: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
+            padding: const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
@@ -55,7 +58,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
           ),
           titleSpacing: 0,
           title: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
             child: Text(
               'MindCare',
               style: FlutterFlowTheme.of(context).title2.override(
@@ -79,6 +82,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                     width: double.infinity,
@@ -126,8 +130,8 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            15, 2, 2, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(15, 2, 2, 0),
                                         child: Container(
                                           width: MediaQuery.of(context)
                                                   .size
@@ -141,17 +145,18 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                 BorderRadius.circular(16),
                                           ),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    12, 8, 12, 8),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 8, 12, 8),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 12, 0, 0),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          0, 12, 0, 0),
                                                   child: Text(
                                                     'Salve,',
                                                     style: FlutterFlowTheme.of(
@@ -182,8 +187,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 4, 0, 0),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(0, 4, 0, 0),
                                                   child: AutoSizeText(
                                                     'Caregiver',
                                                     style: FlutterFlowTheme.of(
@@ -204,9 +210,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                 Expanded(
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 4, 0, 0),
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            0, 4, 0, 0),
                                                     child: AutoSizeText(
                                                       data['email'],
                                                       style:
@@ -234,8 +240,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 40, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 20, 40, 0),
                                       child: Container(
                                         width: 130,
                                         height: 130,
@@ -258,8 +265,9 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        20, 0, 20, 5),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            20, 0, 20, 5),
                                     child: SelectionArea(
                                         child: AutoSizeText(
                                       'Questa è la tua schermata principale.\nGestisci i pazienti di cui sei responsabile.',
@@ -293,8 +301,8 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 10, 20, 0),
                             child: Text(
                               'Pazienti',
                               textAlign: TextAlign.center,
@@ -344,7 +352,7 @@ class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
                                                     fontFamily: 'Outfit',
                                                     color:
                                                         const Color(0xFF57636C),
-                                                    fontSize: 18,
+                                                    fontSize: 22,
                                                     fontWeight:
                                                         FontWeight.normal,
                                                   ),

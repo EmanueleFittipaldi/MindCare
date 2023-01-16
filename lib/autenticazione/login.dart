@@ -1,6 +1,8 @@
+// ignore: unnecessary_import
 import 'package:flutter/services.dart';
 import 'package:mindcare/autenticazione/password_dimenticata.dart';
 import 'package:mindcare/autenticazione/registrazione.dart';
+// ignore: unused_import
 import 'package:mindcare/widget_tree.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
@@ -32,6 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       await Auth().signInWithEmailAndPassword(
           email: _controllerEmail.text, password: _controllerPassword.text);
     } on FirebaseAuthException catch (e) {
+      // ignore: unused_local_variable
       String msg = '';
       if (e.toString().contains("Given String is empty or null")) {
         PanaraInfoDialog.show(
@@ -51,7 +54,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         PanaraInfoDialog.show(
           context,
           title: "Accesso",
-          message: "Inserire un\'email valida prima di procedere!",
+          message: "Inserire un'email valida prima di procedere!",
           buttonText: "Okay",
           onTapDismiss: () {
             Navigator.pop(context);
@@ -124,7 +127,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
             child: Container(
               width: double.infinity,
               height: double.infinity,
@@ -138,16 +141,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(0, 0.99),
+                      alignment: const AlignmentDirectional(0, 0.99),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 10),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 10),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 10, 0),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.asset(
@@ -184,7 +188,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             'assets/images/Alzheimer-bro.png',
                           ).image,
                         ),
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(150),
                           bottomRight: Radius.circular(150),
                           topLeft: Radius.circular(0),
@@ -193,13 +197,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 20),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 20),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(30, 0, 30, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                30, 0, 30, 0),
                             child: TextFormField(
                               controller: _controllerEmail,
                               autofocus: true,
@@ -264,8 +269,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(30, 30, 30, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                30, 30, 30, 0),
                             child: TextFormField(
                               controller: _controllerPassword,
                               autofocus: true,
@@ -333,7 +338,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     passwordVisibility
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    color: Color(0xFF757575),
+                                    color: const Color(0xFF757575),
                                     size: 22,
                                   ),
                                 ),
@@ -350,8 +355,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 0),
                             child: FFButtonWidget(
                               onPressed: () async {
                                 Navigator.of(context).push(MaterialPageRoute(
@@ -373,7 +378,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           .primaryText,
                                       fontWeight: FontWeight.w200,
                                     ),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color.fromARGB(0, 255, 255, 255),
                                   width: 0,
                                 ),
@@ -382,15 +387,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(30, 15, 30, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                30, 15, 30, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 5, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 5, 0),
                                     child: FFButtonWidget(
                                       onPressed: signInWithEmailAndPassword,
                                       text: 'Accedi',
@@ -418,8 +424,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5, 0, 0, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            5, 0, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         Navigator.of(context).push(

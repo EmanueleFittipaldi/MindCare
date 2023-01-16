@@ -1,11 +1,7 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/image_upload.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/widget_tree.dart';
@@ -16,13 +12,12 @@ import '../../flutter_flow/flutter_flow_theme.dart';
 // ignore: unused_import
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import '../controller/auth.dart';
-import '../autenticazione/login.dart';
 
 import '../model/utente.dart';
 
+// ignore: must_be_immutable
 class OpzioniWidget extends StatefulWidget {
   Utente user;
   final String caregiverUID;
@@ -94,6 +89,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
               : FirebaseFirestore.instance.collection('user').snapshots(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
+              // ignore: prefer_typing_uninitialized_variables
               var data;
               snapshot.data?.docs.forEach((doc) {
                 //iterazione sui singoli documenti
@@ -134,8 +130,9 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        25, 30, 15, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            25, 30, 15, 0),
                                     child: SelectionArea(
                                         child: Text(
                                       'Impostazioni',
@@ -150,15 +147,16 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                     )),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        20, 30, 20, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            20, 30, 20, 0),
                                     child: Container(
                                       width: double.infinity,
                                       height: 60,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 5,
                                             color: Color(0x3416202A),
@@ -169,14 +167,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 8, 8, 8),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(8, 8, 8, 8),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 0, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
                                               child: Text(
                                                 'Modifica dati',
                                                 style:
@@ -187,7 +186,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             Expanded(
                                               child: Align(
                                                   alignment:
-                                                      AlignmentDirectional(
+                                                      const AlignmentDirectional(
                                                           0.9, 0),
                                                   child: IconButton(
                                                     onPressed: () {
@@ -210,15 +209,16 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        20, 12, 20, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            20, 12, 20, 0),
                                     child: Container(
                                       width: double.infinity,
                                       height: 60,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 5,
                                             color: Color(0x3416202A),
@@ -229,14 +229,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 8, 8, 8),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(8, 8, 8, 8),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 0, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
                                               child: Text(
                                                 'Biometria',
                                                 style:
@@ -247,7 +248,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             Expanded(
                                               child: Align(
                                                   alignment:
-                                                      AlignmentDirectional(
+                                                      const AlignmentDirectional(
                                                           0.9, 0),
                                                   child: IconButton(
                                                     onPressed: () {
@@ -270,15 +271,16 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        20, 12, 20, 0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            20, 12, 20, 0),
                                     child: Container(
                                       width: double.infinity,
                                       height: 60,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 5,
                                             color: Color(0x3416202A),
@@ -289,14 +291,15 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 8, 8, 8),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(8, 8, 8, 8),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 0, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
                                               child: Text(
                                                 'Termini & Servizi',
                                                 style:
@@ -306,8 +309,9 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             ),
                                             Expanded(
                                               child: Align(
-                                                alignment: AlignmentDirectional(
-                                                    0.9, 0),
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        0.9, 0),
                                                 child: IconButton(
                                                   onPressed: () {
                                                     pageViewController!
@@ -318,6 +322,110 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
+                                                    size: 18,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            20, 12, 20, 0),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            blurRadius: 5,
+                                            color: Color(0x3416202A),
+                                            offset: Offset(0, 2),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.circular(30),
+                                        shape: BoxShape.rectangle,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(8, 8, 8, 8),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
+                                              child: Text(
+                                                'Elimina account',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment:
+                                                    const AlignmentDirectional(
+                                                        0.9, 0),
+                                                child: IconButton(
+                                                  onPressed: () async {
+                                                    var confirmDialogResponse =
+                                                        await PanaraConfirmDialog
+                                                            .show(
+                                                      context,
+                                                      title:
+                                                          "Eliminazione account",
+                                                      message:
+                                                          "Vuoi davvero eliminare l'account? L'azione è irreversibile!",
+                                                      confirmButtonText:
+                                                          "Conferma",
+                                                      cancelButtonText:
+                                                          "Annulla",
+                                                      onTapCancel: () {
+                                                        Navigator.of(context)
+                                                            .pop(false);
+                                                      },
+                                                      onTapConfirm: () {
+                                                        Navigator.of(context)
+                                                            .pop(true);
+                                                      },
+                                                      panaraDialogType:
+                                                          PanaraDialogType
+                                                              .error,
+
+                                                      barrierDismissible:
+                                                          false, // optional parameter (default is true)
+                                                    );
+                                                    if (confirmDialogResponse) {
+                                                      // ignore: unused_local_variable
+                                                      var success =
+                                                          await UserController()
+                                                              .deleteAccount(
+                                                                  widget
+                                                                      .caregiverUID,
+                                                                  widget.user
+                                                                      .userID,
+                                                                  widget.user
+                                                                      .type,
+                                                                  widget.user
+                                                                      .profileImgPath);
+                                                      // ignore: use_build_context_synchronously
+                                                      Navigator.of(context).push(
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const WidgetTree()));
+                                                    }
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    color: Color(0xFFFF4D17),
                                                     size: 18,
                                                   ),
                                                 ),
@@ -366,6 +474,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                 );
                                                 if (confirmDialogResponse) {
                                                   Auth().signOut();
+                                                  // ignore: use_build_context_synchronously
                                                   Navigator.of(context).push(
                                                       MaterialPageRoute(
                                                           builder: (context) =>
@@ -376,7 +485,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                               options: FFButtonOptions(
                                                 width: 80,
                                                 height: 60,
-                                                color: Color(0xFFFF4D17),
+                                                color: const Color(0xFFFF4D17),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .subtitle2
@@ -427,9 +536,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             },
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(15, 0, 0, 0),
                                             child: Text(
                                               'Biometria',
                                               style: FlutterFlowTheme.of(
@@ -445,8 +553,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                         ],
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 12, 0, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 12, 0, 0),
                                         child: SwitchListTile.adaptive(
                                           value: switchBiometric ??= false,
                                           onChanged: (newValue) async {
@@ -474,13 +582,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                           activeColor:
                                               FlutterFlowTheme.of(context)
                                                   .primaryColor,
-                                          activeTrackColor: Color(0x8A4B39EF),
+                                          activeTrackColor:
+                                              const Color(0x8A4B39EF),
                                           dense: false,
                                           controlAffinity:
                                               ListTileControlAffinity.trailing,
                                           contentPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  24, 12, 24, 12),
+                                              const EdgeInsetsDirectional
+                                                  .fromSTEB(24, 12, 24, 12),
                                         ),
                                       ),
                                     ])),
@@ -509,9 +618,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                           },
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  15, 0, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(15, 0, 0, 0),
                                           child: Text(
                                             'Modifica dati',
                                             style: FlutterFlowTheme.of(context)
@@ -582,8 +690,9 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 0, 10),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 0, 10),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
                                                   setState(() {
@@ -611,7 +720,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                         fontWeight:
                                                             FontWeight.w200,
                                                       ),
-                                                  borderSide: BorderSide(
+                                                  borderSide: const BorderSide(
                                                     color: Color.fromARGB(
                                                         0, 255, 255, 255),
                                                     width: 0,
@@ -792,6 +901,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                               padding:
                                                   const EdgeInsetsDirectional
                                                       .fromSTEB(0, 15, 0, 0),
+                                              // ignore: sized_box_for_whitespace
                                               child: Container(
                                                 width: double.infinity,
                                                 height: 55,
@@ -1053,6 +1163,68 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 0, 10),
+                                              child: FFButtonWidget(
+                                                onPressed: () async {
+                                                  var success =
+                                                      await UserController()
+                                                          .forgottenPassword(
+                                                              widget
+                                                                  .user.email);
+                                                  if (success) {
+                                                    // ignore: use_build_context_synchronously
+                                                    PanaraInfoDialog.show(
+                                                      context,
+                                                      title:
+                                                          "Modifica password",
+                                                      message:
+                                                          "Email per la modifica della password inviata!",
+                                                      buttonText: "Okay",
+                                                      onTapDismiss: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      panaraDialogType:
+                                                          PanaraDialogType
+                                                              .normal,
+                                                      barrierDismissible:
+                                                          false, // optional parameter (default is true)
+                                                    );
+                                                  }
+                                                },
+                                                text: 'Modifica password',
+                                                options: FFButtonOptions(
+                                                  elevation: 0,
+                                                  width: 120,
+                                                  height: 60,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryColor,
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily:
+                                                            'IBM Plex Sans',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 25,
+                                                      ),
+                                                  borderSide: const BorderSide(
+                                                    color: Color.fromARGB(
+                                                        0, 255, 255, 255),
+                                                    width: 0,
+                                                  ),
+                                                  borderRadius: 8,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
                                                       .fromSTEB(0, 15, 0, 15),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
@@ -1081,6 +1253,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                         false, // optional parameter (default is true)
                                                   );
                                                   if (confirmDialogResponse) {
+                                                    // ignore: prefer_typing_uninitialized_variables
                                                     var image;
 
                                                     if (imagePickedPath != '') {
@@ -1118,6 +1291,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                                     .caregiverUID,
                                                                 image);
                                                     if (success) {
+                                                      // ignore: use_build_context_synchronously
                                                       PanaraInfoDialog.show(
                                                         context,
                                                         title:
@@ -1136,6 +1310,7 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                             false, // optional parameter (default is true)
                                                       );
                                                     } else {
+                                                      // ignore: use_build_context_synchronously
                                                       PanaraInfoDialog.show(
                                                         context,
                                                         title:
@@ -1165,133 +1340,6 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryColor,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily:
-                                                            'IBM Plex Sans',
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                  borderSide: const BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius: 30,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 20, 0, 0),
-                                              child: FFButtonWidget(
-                                                onPressed: () async {
-                                                  var success =
-                                                      await UserController()
-                                                          .forgottenPassword(
-                                                              widget
-                                                                  .user.email);
-                                                  if (success) {
-                                                    PanaraInfoDialog.show(
-                                                      context,
-                                                      title:
-                                                          "Modifica password",
-                                                      message:
-                                                          "Email per la modifica della password inviata!",
-                                                      buttonText: "Okay",
-                                                      onTapDismiss: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      panaraDialogType:
-                                                          PanaraDialogType
-                                                              .normal,
-                                                      barrierDismissible:
-                                                          false, // optional parameter (default is true)
-                                                    );
-                                                  }
-                                                },
-                                                text: 'Modifica password',
-                                                options: FFButtonOptions(
-                                                  width: 150,
-                                                  height: 60,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                          fontFamily:
-                                                              'IBM Plex Sans',
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                          fontSize: 18),
-                                                  borderSide: const BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius: 30,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 30, 0, 15),
-                                              child: FFButtonWidget(
-                                                onPressed: () async {
-                                                  var confirmDialogResponse =
-                                                      await PanaraConfirmDialog
-                                                          .show(
-                                                    context,
-                                                    title:
-                                                        "Eliminazione account",
-                                                    message:
-                                                        "Vuoi davvero eliminare l\'account? L'azione è irreversibile!",
-                                                    confirmButtonText:
-                                                        "Conferma",
-                                                    cancelButtonText: "Annulla",
-                                                    onTapCancel: () {
-                                                      Navigator.of(context)
-                                                          .pop(false);
-                                                    },
-                                                    onTapConfirm: () {
-                                                      Navigator.of(context)
-                                                          .pop(true);
-                                                    },
-                                                    panaraDialogType:
-                                                        PanaraDialogType.error,
-
-                                                    barrierDismissible:
-                                                        false, // optional parameter (default is true)
-                                                  );
-                                                  if (confirmDialogResponse) {
-                                                    var success =
-                                                        await UserController()
-                                                            .deleteAccount(
-                                                                widget
-                                                                    .caregiverUID,
-                                                                widget.user
-                                                                    .userID,
-                                                                widget
-                                                                    .user.type,
-                                                                widget.user
-                                                                    .profileImgPath);
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const WidgetTree()));
-                                                  }
-                                                },
-                                                text: 'Elimina account',
-                                                options: FFButtonOptions(
-                                                  width: 150,
-                                                  height: 60,
-                                                  color: Color(0xFFFF4D17),
                                                   textStyle: FlutterFlowTheme
                                                           .of(context)
                                                       .subtitle2
@@ -1342,9 +1390,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                             },
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(15, 0, 0, 0),
                                             child: Text(
                                               'Termini & Servizi',
                                               style: FlutterFlowTheme.of(
@@ -1360,8 +1407,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                         ],
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            20, 12, 20, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(20, 12, 20, 0),
                                         child: Text(
                                           "L'utilizzo dei Servizi avviene a rischio dell'utente ed è soggetto alle seguenti esclusioni di responsabilità. I nostri Servizi sono forniti nello stato in cui si trovano, senza garanzie esplicite o implicite, ivi comprese, a titolo esemplificativo e non esaustivo, garanzie relative a commerciabilità, idoneità per scopo specifico, proprietà o non violazione di diritti di terzi e assenza di virus o altri codici informatici dannosi. Non forniamo alcuna garanzia in merito all'esattezza, alla completezza e all'utilità delle informazioni, al funzionamento, alla mancanza di errori, alla sicurezza o alla protezione dei nostri Servizi o al funzionamento dei nostri Servizi senza interruzioni, ritardi o difetti. Non deteniamo il controllo e non siamo responsabili del controllo della modalità o del momento di utilizzo dei Servizi o delle funzioni, dei servizi e delle interfacce fornite dai nostri Servizi. Non siamo responsabili e non abbiamo l'obbligo di controllare le azioni o le informazioni dei nostri utenti o di altri terzi. L'utente esenta noi, le nostre società controllate e affiliate e i rispettivi dirigenti, amministratori, dipendenti, partner e agenti da ogni reclamo, ricorso, azione legale, controversia, contenzioso o danno, noti e non noti, relativi a, derivanti da o collegati in qualsiasi modo a reclami che l'utente possa avere contro terzi. I diritti dell'utente non vengono modificati dalle presenti esclusioni di responsabilità se le leggi in vigore nel Paese o nel territorio in cui risiede, applicabili come conseguenza dell'utilizzo dei nostri Servizi, non lo permettono.",
                                           textAlign: TextAlign.start,
@@ -1382,11 +1429,11 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                 );
               }
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }),

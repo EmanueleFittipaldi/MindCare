@@ -5,6 +5,7 @@ import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 import '../controller/auth.dart';
@@ -50,9 +51,10 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => Center(child: CircularProgressIndicator()));
+        builder: (context) => const Center(child: CircularProgressIndicator()));
     try {
       await Auth().forgottenPassword(email: widget.user.email);
+      // ignore: use_build_context_synchronously
       Navigator.of(context).popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.toString());
@@ -62,7 +64,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = new DateTime.now();
+    DateTime now = DateTime.now();
     int age = now.year - widget.user.date.year;
 
     if (now.month < widget.user.date.month) {
@@ -142,7 +144,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.user.name + ' ' + widget.user.lastname,
+                              '${widget.user.name} ${widget.user.lastname}',
                               style:
                                   FlutterFlowTheme.of(context).title3.override(
                                         fontFamily: 'IBM Plex Sans',
@@ -178,7 +180,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: SizedBox.shrink(),
+                    collapsed: const SizedBox.shrink(),
                     expanded: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
@@ -321,7 +323,7 @@ class _DatiPazienteWidgetState extends State<DatiPazienteWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: SizedBox.shrink(),
+                    collapsed: const SizedBox.shrink(),
                     expanded: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),

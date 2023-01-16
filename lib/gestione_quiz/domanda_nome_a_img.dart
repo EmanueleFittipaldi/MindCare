@@ -1,12 +1,10 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/quesito.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
-import '../controller/auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -15,7 +13,6 @@ import 'package:flutter/material.dart';
 
 import '../controller/image_upload.dart';
 import '../model/utente.dart';
-import 'gestione_quiz.dart';
 
 class CreazioneDomandaNomeAImmagineWidget extends StatefulWidget {
   final Utente user;
@@ -132,6 +129,7 @@ passata come parametro */
                       false, // optional parameter (default is true)
                 );
                 if (confirmDialogResponse) {
+                  // ignore: use_build_context_synchronously
                   Navigator.of(context).pop();
                 }
               },
@@ -899,6 +897,7 @@ passata come parametro */
                         } else {
                           // Caricamento dell'immagine oggetto
                           // della domanda su firebase
+                          // ignore: prefer_typing_uninitialized_variables
                           var imageUrlDomanda;
                           if (imagDomanda != '') {
                             imageUrlDomanda =
@@ -927,6 +926,7 @@ passata come parametro */
                             /*Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
                                     GestionQuizWidget(user: widget.user)));*/
+                            // ignore: use_build_context_synchronously
                             Navigator.of(context).pop();
                           }
                         } //fine if

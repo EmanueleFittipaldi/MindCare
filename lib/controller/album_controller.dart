@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:mindcare/controller/auth.dart';
-import 'package:mindcare/model/report.dart';
 
 class AlbumController {
   //funzione per eliminare un paziente e la sua immagine salvate nello storage

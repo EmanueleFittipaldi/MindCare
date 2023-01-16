@@ -1,14 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
-import 'package:mindcare/controller/auth.dart';
-import '../autenticazione/login.dart';
-import 'package:mindcare/caregiver/opzioni.dart';
-import 'package:mindcare/widget_tree.dart';
-import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-
-import '../model/utente.dart';
 
 class AppbarWidget extends StatelessWidget {
   final String title;
@@ -16,18 +8,9 @@ class AppbarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var docSnaphot;
-    Map<String, dynamic>? data;
-
-    Future<void> datiCaregiver() async {
-      var collection = FirebaseFirestore.instance.collection("user");
-      docSnaphot = await collection.doc(Auth().currentUser?.uid).get();
-      data = docSnaphot.data();
-    }
-
     return AppBar(
       systemOverlayStyle:
-          SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+          const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       iconTheme:
           IconThemeData(color: FlutterFlowTheme.of(context).secondaryText),
@@ -40,7 +23,7 @@ class AppbarWidget extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
       ),
-      actions: [],
+      actions: const [],
       centerTitle: false,
       elevation: 0,
     );

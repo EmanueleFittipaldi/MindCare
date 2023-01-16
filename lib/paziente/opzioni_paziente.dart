@@ -12,7 +12,6 @@ import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import '../controller/auth.dart';
-import '../autenticazione/login.dart';
 
 import '../model/utente.dart';
 
@@ -76,9 +75,10 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => Center(child: CircularProgressIndicator()));
+        builder: (context) => const Center(child: CircularProgressIndicator()));
     try {
       await Auth().forgottenPassword(email: widget.user.email);
+      // ignore: use_build_context_synchronously
       Navigator.of(context).popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.toString());
@@ -113,7 +113,7 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
-          actions: [],
+          actions: const [],
           flexibleSpace: FlexibleSpaceBar(
             title: Row(
               mainAxisSize: MainAxisSize.max,
@@ -266,7 +266,7 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: SizedBox.shrink(),
+                    collapsed: const SizedBox.shrink(),
                     expanded: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
@@ -597,7 +597,7 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: SizedBox.shrink(),
+                    collapsed: const SizedBox.shrink(),
                     expanded: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 15),
@@ -690,7 +690,7 @@ class _OpzioniPazienteWidgetState extends State<OpzioniPazienteWidget> {
                         style: FlutterFlowTheme.of(context).subtitle2,
                       ),
                     ),
-                    collapsed: SizedBox.shrink(),
+                    collapsed: const SizedBox.shrink(),
                     expanded: Align(
                       alignment: const AlignmentDirectional(-1, 0),
                       child: Padding(

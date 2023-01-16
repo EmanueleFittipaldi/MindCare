@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
-import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/gestione_quiz/domanda_img_a_nome.dart';
 import 'package:mindcare/gestione_quiz/domanda_nome_a_img.dart';
 import 'package:mindcare/model/quesito.dart';
@@ -51,6 +50,7 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ignore: sized_box_for_whitespace
                     Container(
                       height: 250,
                       child: Stack(
@@ -60,27 +60,27 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                             height: 230,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiaryColor,
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   blurRadius: 12,
                                   color: Color(0x14000000),
                                   offset: Offset(0, 5),
                                 )
                               ],
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(40),
                                 bottomRight: Radius.circular(40),
                                 topLeft: Radius.circular(0),
                                 topRight: Radius.circular(0),
                               ),
                             ),
-                            alignment: AlignmentDirectional(-0.0, 0),
+                            alignment: const AlignmentDirectional(-0.0, 0),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.1, -1),
+                            alignment: const AlignmentDirectional(0.1, -1),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  8, 8, 8, 8),
                               child: SvgPicture.asset(
                                 'assets/images/undraw_add_notes_re_ln36.svg',
                                 width: 300,
@@ -90,18 +90,19 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1, 0.8),
+                            alignment: const AlignmentDirectional(-1, 0.8),
                             child: Container(
                               width: double.infinity,
                               height: 60,
-                              decoration: BoxDecoration(),
+                              decoration: const BoxDecoration(),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Expanded(
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 10, 20, 10),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              20, 10, 20, 10),
                                       child: AutoSizeText(
                                         'Seleziona una categoria e tipologia per visualizzare le domande',
                                         textAlign: TextAlign.center,
@@ -133,8 +134,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 00, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 00, 0),
                             child: Text(
                               'Categoria:',
                               textAlign: TextAlign.start,
@@ -194,8 +195,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 00, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 00, 0),
                             child: Text(
                               'Tipologia:',
                               textAlign: TextAlign.start,
@@ -254,8 +255,8 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 0, 0, 0),
                             child: Text(
                               'Domande:',
                               textAlign: TextAlign.start,
@@ -374,7 +375,7 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
-                                            boxShadow: [
+                                            boxShadow: const [
                                               BoxShadow(
                                                 blurRadius: 4,
                                                 color: Color(0x14000000),

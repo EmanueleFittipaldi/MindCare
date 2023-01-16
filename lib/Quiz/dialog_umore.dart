@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+// ignore: duplicate_import
 import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:panara_dialogs/src/widgets/panara_button.dart';
 
 class DialogUmore extends StatefulWidget {
@@ -25,7 +25,6 @@ class _DialogUmore extends State<DialogUmore> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     textController = TextEditingController();
   }
@@ -53,7 +52,7 @@ class _DialogUmore extends State<DialogUmore> {
             children: [
               Text(
                 widget.title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   height: 1.2,
                   fontWeight: FontWeight.w600,
@@ -72,10 +71,10 @@ class _DialogUmore extends State<DialogUmore> {
                 textAlign: TextAlign.center,
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                padding: const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
                 child: Container(
                   height: 160,
-                  decoration: BoxDecoration(),
+                  decoration: const BoxDecoration(),
                   child: TextFormField(
                     controller: textController,
                     autofocus: true,
@@ -92,28 +91,28 @@ class _DialogUmore extends State<DialogUmore> {
                           ),
                       hintStyle: FlutterFlowTheme.of(context).bodyText2,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Color(0xFFE0E3E7),
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Color(0xFFE0E3E7),
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Color(0x00000000),
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Color(0x00000000),
                           width: 1,
                         ),
@@ -131,12 +130,12 @@ class _DialogUmore extends State<DialogUmore> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                 child: PanaraButton(
                   buttonTextColor: Colors.white,
                   text: 'Fatto!',
                   onTap: () {
-                    if (textController!.text.length > 0 &&
+                    if (textController!.text.isNotEmpty &&
                         textController!.text.replaceAll(' ', '') != '') {
                       Navigator.of(context).pop(textController!.text);
                     } else {

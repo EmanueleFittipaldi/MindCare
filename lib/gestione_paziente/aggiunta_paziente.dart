@@ -1,15 +1,10 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mindcare/controller/auth.dart';
-import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_util.dart';
 import 'package:mindcare/controller/image_upload.dart';
-import 'package:mindcare/init_homepage.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
@@ -131,6 +126,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                       false, // optional parameter (default is true)
                 );
                 if (confirmDialogResponse) {
+                  // ignore: use_build_context_synchronously
                   Navigator.of(context).pop();
                 }
               },
@@ -338,8 +334,8 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 15, 10, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 15, 10, 0),
                                         child: TextFormField(
                                           validator: (value) {
                                             if (value == null ||
@@ -632,6 +628,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                             if (formKey.currentState!
                                                     .validate() &&
                                                 datePicked != null) {
+                                              // ignore: prefer_typing_uninitialized_variables
                                               var imageUrl;
                                               if (imagePickedPath != '') {
                                                 imageUrl = await ImageUpload()
@@ -659,6 +656,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                                         imageUrl ?? '',
                                                     checkBiometric: false);
                                                 user.createPatient();
+                                                // ignore: use_build_context_synchronously
                                                 Navigator.of(context).pop();
                                               }
                                             } else {

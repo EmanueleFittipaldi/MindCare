@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/controller/image_upload.dart';
 import 'package:mindcare/model/quesito.dart';
-import 'package:mindcare/model/report.dart';
 import 'package:mindcare/model/utente.dart';
 
 class QuizController {
@@ -14,14 +13,15 @@ class QuizController {
   */
   getQuesiti(String categoria, String tipologia, String userID,
       String caregiverID) async {
-    CollectionReference _collectionRef = FirebaseFirestore.instance
+    CollectionReference collectionRef = FirebaseFirestore.instance
         .collection('user')
         .doc(caregiverID)
         .collection('Pazienti')
         .doc(userID)
         .collection('Quesiti');
 
-    QuerySnapshot QueryCategoria = await _collectionRef
+    // ignore: non_constant_identifier_names
+    QuerySnapshot QueryCategoria = await collectionRef
         .where('tipologia', isEqualTo: tipologia)
         .where('categoria', isEqualTo: categoria)
         .get();
@@ -48,7 +48,7 @@ altrimenti restituisce tutti i quesiti prelevati. */
       Set quesitiEstratti = <int>{};
       List<dynamic> quesitiScelti = [];
 
-      final random = new Random();
+      final random = Random();
       int numeroQuesito = 0;
       while (quesitiScelti.length < 10) {
         numeroQuesito = random.nextInt(quesiti.length);
@@ -223,7 +223,7 @@ passata come parametro */
   getQuesitiByID(String userID, String caregiverID, quesitiID) async {
     var result = [];
     for (var id in quesitiID) {
-      DocumentSnapshot _collectionRef = await FirebaseFirestore.instance
+      DocumentSnapshot collectionRef = await FirebaseFirestore.instance
           .collection('user')
           .doc(caregiverID)
           .collection('Pazienti')
@@ -231,21 +231,22 @@ passata come parametro */
           .collection('Quesiti')
           .doc(id)
           .get();
-      var data = _collectionRef.get('risposta');
-      var nOp = data.replaceAll(new RegExp(r'[^0-9]'), '');
+      var data = collectionRef.get('risposta');
+      var nOp = data.replaceAll(RegExp(r'[^0-9]'), '');
       result.add(Quesito(
-          quesitoID: _collectionRef.get('quesitoID'),
-          opzione1: _collectionRef.get('opzione1'),
-          opzione2: _collectionRef.get('opzione2'),
-          opzione3: _collectionRef.get('opzione3'),
-          opzione4: _collectionRef.get('opzione4'),
-          domanda: _collectionRef.get('domanda'),
-          domandaImmagine: _collectionRef.get('domandaImmagine'),
-          risposta: _collectionRef.get('opzione' + nOp),
-          categoria: _collectionRef.get('categoria'),
-          tipologia: _collectionRef.get('tipologia'),
-          tempoRisposta: _collectionRef.get('tempoRisposta'),
-          numeroTentativi: _collectionRef.get('numeroTentativi')));
+          quesitoID: collectionRef.get('quesitoID'),
+          opzione1: collectionRef.get('opzione1'),
+          opzione2: collectionRef.get('opzione2'),
+          opzione3: collectionRef.get('opzione3'),
+          opzione4: collectionRef.get('opzione4'),
+          domanda: collectionRef.get('domanda'),
+          domandaImmagine: collectionRef.get('domandaImmagine'),
+          // ignore: prefer_interpolation_to_compose_strings
+          risposta: collectionRef.get('opzione' + nOp),
+          categoria: collectionRef.get('categoria'),
+          tipologia: collectionRef.get('tipologia'),
+          tempoRisposta: collectionRef.get('tempoRisposta'),
+          numeroTentativi: collectionRef.get('numeroTentativi')));
     }
     return result;
   }

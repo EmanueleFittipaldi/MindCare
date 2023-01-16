@@ -49,6 +49,7 @@ class _HumorStatsChartState extends State<HumorStatsChart> {
   createChart(String typeHumor, List<Umore> data) {
     List<Umore> dataTypeH = [];
 
+    // ignore: avoid_function_literals_in_foreach_calls
     data.forEach((d) {
       if (d.type == typeHumor) {
         dataTypeH.add(d);
@@ -119,7 +120,7 @@ class _HumorStatsChartState extends State<HumorStatsChart> {
                           .toString(),
                   yValueMapper: (Umore data, _) =>
                       double.parse((data.score.toStringAsFixed(2))),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
                   dataLabelSettings: DataLabelSettings(
                       isVisible: true,
                       useSeriesColor: true,
@@ -153,7 +154,7 @@ class _HumorStatsChartState extends State<HumorStatsChart> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(1, 2, 1, 16),
+      padding: const EdgeInsetsDirectional.fromSTEB(1, 2, 1, 16),
       child: Container(
         width: double.infinity,
         height: double.infinity,
@@ -195,11 +196,11 @@ class _HumorStatsChartState extends State<HumorStatsChart> {
                           ),
                           onPressed: () {
                             widget.pageViewController.previousPage(
-                                duration: Duration(milliseconds: 600),
+                                duration: const Duration(milliseconds: 600),
                                 curve: Curves.linear);
                           }),
                       Text(
-                        'Umore ' + widget.tipoUmore,
+                        'Umore ${widget.tipoUmore}',
                         style: FlutterFlowTheme.of(context).title3.override(
                               fontFamily: 'IBM Plex Sans',
                               color: const Color(0xFF101213),
@@ -219,14 +220,14 @@ class _HumorStatsChartState extends State<HumorStatsChart> {
                           ),
                           onPressed: () {
                             widget.pageViewController.nextPage(
-                                duration: Duration(milliseconds: 600),
+                                duration: const Duration(milliseconds: 600),
                                 curve: Curves.linear);
                           }),
                     ]),
               ),
               Expanded(
                   child: Container(
-                      decoration: BoxDecoration(),
+                      decoration: const BoxDecoration(),
                       clipBehavior: Clip.antiAlias,
                       width: double.infinity,
                       child: Padding(

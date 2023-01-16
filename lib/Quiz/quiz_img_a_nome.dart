@@ -1,24 +1,13 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:mindcare/Quiz/fine_quiz.dart';
 import 'package:mindcare/Quiz/no_piu_tentativi.dart';
-import 'package:mindcare/autenticazione/login.dart';
-import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/model/report.dart';
-import 'package:mindcare/model/utente.dart';
-import 'package:mindcare/quiz/alert_risposta.dart';
 import 'package:mindcare/quiz/quiz_terminato.dart';
-import 'package:mindcare/quiz/risposta_corretta.dart';
-import 'package:mindcare/quiz/risposta_sbagliata.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:provider/provider.dart';
 
 import '../widget_tree.dart';
 
@@ -38,6 +27,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
   Map<String, bool> mappaRisposte = <String, bool>{};
   String? categoria;
   String? tipologia;
+  // ignore: prefer_typing_uninitialized_variables
   var quesito;
   var percentualeBarra = 0.0;
   var incrementoBarra = 0.0;
@@ -221,6 +211,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       };
       widget.box.put('statoCorrente', statoCorrente);
 
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const WidgetTree()),
           (Route<dynamic> route) => false);
@@ -234,7 +225,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       context,
       title: "Hey",
       message:
-          "Sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?",
+          "Sembra che questa domanda ti abbia messo un po' in difficoltà, vuoi vedere la risposta?",
       confirmButtonText: "Si",
       cancelButtonText: "No",
       onTapCancel: () {
@@ -358,7 +349,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFFF0F6FF),
+        backgroundColor: const Color(0xFFF0F6FF),
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
@@ -371,7 +362,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
           ),
           actions: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
               child: FlutterFlowIconButton(
                 borderColor: Colors.transparent,
                 borderRadius: 30,
@@ -407,7 +398,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 12, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20, 12, 0, 0),
                       child: LinearPercentIndicator(
                         animateFromLastPercent: true,
                         percent: percentualeBarra,
@@ -417,7 +409,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                         progressColor:
                             FlutterFlowTheme.of(context).primaryColor,
                         backgroundColor: FlutterFlowTheme.of(context).lineColor,
-                        barRadius: Radius.circular(24),
+                        barRadius: const Radius.circular(24),
                         padding: EdgeInsets.zero,
                       ),
                     ),
@@ -425,13 +417,14 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 30, 20, 10),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(20, 30, 20, 10),
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             blurRadius: 12,
                             color: Color(0x14000000),
@@ -441,17 +434,18 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: const AlignmentDirectional(-1, 0),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 20, 0, 0),
                                 child: Text(
                                   'Domanda ${indexQuesito + 1}/${quesiti!.length}',
                                   style: FlutterFlowTheme.of(context)
@@ -465,8 +459,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 20, 10, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 20, 10, 0),
                               child: SelectionArea(
                                   child: Text(
                                 quesito['domanda'],
@@ -491,8 +485,9 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                       CrossAxisAlignment.stretch,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 70, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 70, 0, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -500,8 +495,9 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 15, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 15, 0),
                                               child: InkWell(
                                                 onTap: () async {
                                                   checkRisposta(
@@ -520,7 +516,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                         quesito['opzione1'],
                                                       ).image,
                                                     ),
-                                                    boxShadow: [
+                                                    boxShadow: const [
                                                       BoxShadow(
                                                         blurRadius: 12,
                                                         color:
@@ -532,7 +528,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                         BorderRadius.circular(
                                                             30),
                                                     border: Border.all(
-                                                      color: Color(0xFFA0A0A0),
+                                                      color: const Color(
+                                                          0xFFA0A0A0),
                                                     ),
                                                   ),
                                                 ),
@@ -541,8 +538,9 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(15, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(15, 0, 10, 0),
                                               child: InkWell(
                                                 onTap: () async {
                                                   checkRisposta(
@@ -561,7 +559,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                         quesito['opzione2'],
                                                       ).image,
                                                     ),
-                                                    boxShadow: [
+                                                    boxShadow: const [
                                                       BoxShadow(
                                                         blurRadius: 12,
                                                         color:
@@ -573,7 +571,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                         BorderRadius.circular(
                                                             30),
                                                     border: Border.all(
-                                                      color: Color(0xFFA0A0A0),
+                                                      color: const Color(
+                                                          0xFFA0A0A0),
                                                     ),
                                                   ),
                                                 ),
@@ -584,8 +583,9 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 30, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 30, 0, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -593,8 +593,9 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 15, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 15, 0),
                                               child: InkWell(
                                                 onTap: () async {
                                                   checkRisposta(
@@ -613,7 +614,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                         quesito['opzione3'],
                                                       ).image,
                                                     ),
-                                                    boxShadow: [
+                                                    boxShadow: const [
                                                       BoxShadow(
                                                         blurRadius: 12,
                                                         color:
@@ -625,7 +626,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                         BorderRadius.circular(
                                                             30),
                                                     border: Border.all(
-                                                      color: Color(0xFFA0A0A0),
+                                                      color: const Color(
+                                                          0xFFA0A0A0),
                                                     ),
                                                   ),
                                                 ),
@@ -634,8 +636,9 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(15, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(15, 0, 10, 0),
                                               child: InkWell(
                                                 onTap: () async {
                                                   checkRisposta(
@@ -654,7 +657,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                         quesito['opzione4'],
                                                       ).image,
                                                     ),
-                                                    boxShadow: [
+                                                    boxShadow: const [
                                                       BoxShadow(
                                                         blurRadius: 12,
                                                         color:
@@ -666,7 +669,8 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                         BorderRadius.circular(
                                                             30),
                                                     border: Border.all(
-                                                      color: Color(0xFFA0A0A0),
+                                                      color: const Color(
+                                                          0xFFA0A0A0),
                                                     ),
                                                   ),
                                                 ),

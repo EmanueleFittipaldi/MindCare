@@ -53,6 +53,7 @@ class _StatsChartState extends State<StatsChart> {
   createChart(String categoria, List<Report> data) {
     List<Report> dataCategory = [];
 
+    // ignore: avoid_function_literals_in_foreach_calls
     data.forEach((d) {
       if (d.categoria == categoria) {
         dataCategory.add(d);
@@ -130,7 +131,7 @@ class _StatsChartState extends State<StatsChart> {
                           .toString(),
                   yValueMapper: (Report data, _) =>
                       double.parse((data.precisione.toStringAsFixed(2))),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
                   dataLabelSettings: DataLabelSettings(
                       isVisible: true,
                       useSeriesColor: true,
@@ -163,7 +164,7 @@ class _StatsChartState extends State<StatsChart> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(1, 2, 1, 16),
+      padding: const EdgeInsetsDirectional.fromSTEB(1, 2, 1, 16),
       child: Container(
         width: double.infinity,
         height: double.infinity,
@@ -205,7 +206,7 @@ class _StatsChartState extends State<StatsChart> {
                           ),
                           onPressed: () {
                             widget.pageViewController.previousPage(
-                                duration: Duration(milliseconds: 600),
+                                duration: const Duration(milliseconds: 600),
                                 curve: Curves.linear);
                           }),
                       Text(
@@ -229,14 +230,14 @@ class _StatsChartState extends State<StatsChart> {
                           ),
                           onPressed: () {
                             widget.pageViewController.nextPage(
-                                duration: Duration(milliseconds: 600),
+                                duration: const Duration(milliseconds: 600),
                                 curve: Curves.linear);
                           }),
                     ]),
               ),
               Expanded(
                   child: Container(
-                      decoration: BoxDecoration(),
+                      decoration: const BoxDecoration(),
                       clipBehavior: Clip.antiAlias,
                       width: double.infinity,
                       child: Padding(

@@ -1,4 +1,3 @@
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +71,7 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
             ),
             Expanded(
                 child: Align(
-                    alignment: AlignmentDirectional(1, 1),
+                    alignment: const AlignmentDirectional(1, 1),
                     child: Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 20, 15, 10),

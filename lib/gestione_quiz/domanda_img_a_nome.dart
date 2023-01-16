@@ -1,13 +1,10 @@
 import 'dart:io';
-import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/model/quesito.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
-import '../controller/auth.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -16,7 +13,6 @@ import 'package:flutter/material.dart';
 
 import '../controller/image_upload.dart';
 import '../model/utente.dart';
-import 'gestione_quiz.dart';
 
 class CreazioneDomandaImmagineANomeWidget extends StatefulWidget {
   final Utente user;
@@ -115,6 +111,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                       false, // optional parameter (default is true)
                 );
                 if (confirmDialogResponse) {
+                  // ignore: use_build_context_synchronously
                   Navigator.of(context).pop();
                 }
               },
@@ -745,6 +742,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                           Navigator.of(context).pop();
                         } else {
                           //caricamento immagine 1 su firebase
+                          // ignore: prefer_typing_uninitialized_variables
                           var imageUrlOp1;
                           if (imagOp1 != '') {
                             imageUrlOp1 =
@@ -752,6 +750,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                           }
 
                           //caricamento immagine 2 su firebase
+                          // ignore: prefer_typing_uninitialized_variables
                           var imageUrlOp2;
                           if (imagOp2 != '') {
                             imageUrlOp2 =
@@ -759,6 +758,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                           }
 
                           //caricamento immagine 3 su firebase
+                          // ignore: prefer_typing_uninitialized_variables
                           var imageUrlOp3;
                           if (imagOp3 != '') {
                             imageUrlOp3 =
@@ -766,6 +766,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                           }
 
                           //Caricamento immagine 4 su firebase
+                          // ignore: prefer_typing_uninitialized_variables
                           var imageUrlOp4;
                           if (imagOp4 != '') {
                             imageUrlOp4 =
@@ -800,6 +801,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                             /*Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
                                     GestionQuizWidget(user: widget.user)));*/
+                            // ignore: use_build_context_synchronously
                             Navigator.of(context).pop();
                           }
                         } //fine if

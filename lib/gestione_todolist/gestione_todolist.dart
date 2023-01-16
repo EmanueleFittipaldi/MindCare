@@ -12,8 +12,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
 class ToDoListWidget extends StatefulWidget {
@@ -71,8 +70,8 @@ class _ToDoListWidgetState extends State<ToDoListWidget> {
                     height: 150,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: [
-                        const BoxShadow(
+                      boxShadow: const [
+                        BoxShadow(
                           blurRadius: 12,
                           color: Color(0x14000000),
                           offset: Offset(0, 5),
@@ -183,8 +182,8 @@ class _ToDoListWidgetState extends State<ToDoListWidget> {
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
-                                          boxShadow: [
-                                            const BoxShadow(
+                                          boxShadow: const [
+                                            BoxShadow(
                                               blurRadius: 4,
                                               color: Color(0x14000000),
                                               offset: Offset(0, 2),
@@ -291,6 +290,7 @@ class _ToDoListWidgetState extends State<ToDoListWidget> {
                                                         item['completed'] ==
                                                                 false
                                                             ? 'Completato: --:--'
+                                                            // ignore: prefer_interpolation_to_compose_strings
                                                             : 'Completato: ' +
                                                                 item[
                                                                     'oraCompleted'],
@@ -396,7 +396,7 @@ class _ToDoListWidgetState extends State<ToDoListWidget> {
                                                             title:
                                                                 "Eliminazione attività",
                                                             message:
-                                                                "Vuoi davvero eliminare l\'attività? L'azione non è riversibile!",
+                                                                "Vuoi davvero eliminare l'attività? L'azione non è riversibile!",
                                                             confirmButtonText:
                                                                 "Conferma",
                                                             cancelButtonText:

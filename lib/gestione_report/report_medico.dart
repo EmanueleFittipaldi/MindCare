@@ -1,12 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+// ignore: duplicate_import
 import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:panara_dialogs/src/widgets/panara_button.dart';
+// ignore: depend_on_referenced_packages
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
@@ -32,13 +31,12 @@ class _DialogSendReport extends State<DialogSendReport> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     textControllerEmail = TextEditingController();
     textControllerOggetto = TextEditingController();
     textControllerMessaggio = TextEditingController();
     textControllerOggetto!.text = widget.subject;
     textControllerMessaggio!.text = widget.msg;
+    super.initState();
   }
 
   @override
@@ -73,7 +71,7 @@ class _DialogSendReport extends State<DialogSendReport> {
                 textAlign: TextAlign.center,
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                padding: const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
                 child: TextFormField(
                   controller: textControllerEmail,
                   autofocus: true,
@@ -88,28 +86,28 @@ class _DialogSendReport extends State<DialogSendReport> {
                         ),
                     hintStyle: FlutterFlowTheme.of(context).bodyText2,
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0xFFE0E3E7),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0xFFE0E3E7),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0x00000000),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0x00000000),
                         width: 1,
                       ),
@@ -126,7 +124,7 @@ class _DialogSendReport extends State<DialogSendReport> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15, 5, 15, 15),
+                padding: const EdgeInsetsDirectional.fromSTEB(15, 5, 15, 15),
                 child: TextFormField(
                   controller: textControllerOggetto,
                   autofocus: true,
@@ -141,28 +139,28 @@ class _DialogSendReport extends State<DialogSendReport> {
                         ),
                     hintStyle: FlutterFlowTheme.of(context).bodyText2,
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0xFFE0E3E7),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0xFFE0E3E7),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0x00000000),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0x00000000),
                         width: 1,
                       ),
@@ -179,7 +177,7 @@ class _DialogSendReport extends State<DialogSendReport> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15, 5, 15, 15),
+                padding: const EdgeInsetsDirectional.fromSTEB(15, 5, 15, 15),
                 child: TextFormField(
                   controller: textControllerMessaggio,
                   autofocus: true,
@@ -194,28 +192,28 @@ class _DialogSendReport extends State<DialogSendReport> {
                         ),
                     hintStyle: FlutterFlowTheme.of(context).bodyText2,
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0xFFE0E3E7),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0xFFE0E3E7),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0x00000000),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Color(0x00000000),
                         width: 1,
                       ),
@@ -232,7 +230,7 @@ class _DialogSendReport extends State<DialogSendReport> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
+                padding: const EdgeInsetsDirectional.fromSTEB(20, 10, 20, 10),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -245,7 +243,8 @@ class _DialogSendReport extends State<DialogSendReport> {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                         child: Text(
                           widget.path.split('/').last,
                           style:
@@ -297,6 +296,7 @@ class _DialogSendReport extends State<DialogSendReport> {
                                 );
 
                                 await FlutterEmailSender.send(email);
+                                // ignore: use_build_context_synchronously
                                 Navigator.of(context).pop('Ciao');
                               },
                               bgColor:

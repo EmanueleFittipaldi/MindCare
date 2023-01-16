@@ -1,13 +1,16 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:local_auth_android/local_auth_android.dart';
-import 'package:local_auth_ios/local_auth_ios.dart';
+// ignore: unused_import
 import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/init_homepage.dart';
+// ignore: unused_import
 import 'package:mindcare/paziente/home_paziente.dart';
 import 'package:mindcare/model/utente.dart';
+// ignore: unused_import
 import 'package:panara_dialogs/panara_dialogs.dart';
 
 import 'controller/auth.dart';
@@ -24,10 +27,12 @@ class WidgetTree extends StatefulWidget {
 class _WidgetTreeState extends State<WidgetTree> {
   Utente? userLogged;
   String? caregiverUID;
+  // ignore: duplicate_ignore
   Future<String> checkUser() async {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('user')
         .get(); //ottenimento di tutti i documenti nella collezione user
+
     bool isLoggedWithBiometrics;
     for (var i = 0; i < snapshot.docs.length; i++) {
       var caregiverMap = snapshot.docs[i].data() as Map<String, dynamic>?;
@@ -90,6 +95,7 @@ class _WidgetTreeState extends State<WidgetTree> {
   }
 
   Future<bool> checkBiometrics() async {
+    // ignore: no_leading_underscores_for_local_identifiers
     final LocalAuthentication _localAuthentication = LocalAuthentication();
     bool isBiometricSupported = await _localAuthentication.isDeviceSupported();
     bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
@@ -104,10 +110,12 @@ class _WidgetTreeState extends State<WidgetTree> {
             options: const AuthenticationOptions(
                 useErrorDialogs: true, biometricOnly: true, stickyAuth: true));
       } on PlatformException catch (e) {
+        // ignore: prefer_interpolation_to_compose_strings, avoid_print
         print("stampo l'errore " + e.toString());
       }
     }
-    print("isAuthenticated#2 " + isAuthenticated.toString());
+    // ignore: avoid_print
+    print("isAuthenticated#2 $isAuthenticated");
     return isAuthenticated;
   }
 

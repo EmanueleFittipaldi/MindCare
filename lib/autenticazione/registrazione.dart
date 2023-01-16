@@ -1,22 +1,19 @@
+// ignore_for_file: unnecessary_string_escapes
+
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/image_upload.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/widget_tree.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
-import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../controller/auth.dart';
-import '../main.dart';
 
 class RegistrazioneWidget extends StatefulWidget {
   const RegistrazioneWidget({Key? key}) : super(key: key);
@@ -40,13 +37,12 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
   String imagePickedPath = '';
   String? errorMessage = 'Qualcosa è andato storto';
   bool biometria = false;
-  final TextEditingController _controllerEmail = new TextEditingController();
-  final TextEditingController _controllerPassword = new TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
   final TextEditingController _controllerRepeatPassword =
-      new TextEditingController();
-  final TextEditingController _controllerNome = new TextEditingController();
-  final TextEditingController _controllerCognome = new TextEditingController();
-  final TextEditingController _controllerDate = new TextEditingController();
+      TextEditingController();
+  final TextEditingController _controllerNome = TextEditingController();
+  final TextEditingController _controllerCognome = TextEditingController();
 
   @override
   void initState() {
@@ -392,8 +388,9 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                     RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                                 if (value == null || value.isEmpty) {
                                   return 'Inserisci una email!';
-                                } else if (!regex.hasMatch(value))
+                                } else if (!regex.hasMatch(value)) {
                                   return 'Inserisci una email valida!';
+                                }
                                 return null;
                               },
                               controller: _controllerEmail,
@@ -676,6 +673,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                                   _controllerPassword.text);
                                           final currentUser =
                                               Auth().currentUser;
+                                          // ignore: prefer_typing_uninitialized_variables
                                           var imageUrl;
                                           if (imagePickedPath != '') {
                                             imageUrl = await ImageUpload()
@@ -693,6 +691,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                                 profileImgPath: imageUrl ?? '',
                                                 checkBiometric: false);
                                             user.createNewUser();
+                                            // ignore: use_build_context_synchronously
                                             PanaraInfoDialog.show(
                                               context,
                                               title: "Registrazione",
