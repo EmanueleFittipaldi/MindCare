@@ -106,6 +106,13 @@ class _SosWidgetState extends State<SosWidget> {
       });
     }
 
+    Future<void> _sendSMSAndroid(String phoneNumber) async {
+      final Telephony telephony = Telephony.instance;
+      await getLocation();
+      telephony.sendSms(
+          to: phoneNumber, message: "Indirizzo: $_currentAddress");
+    }
+
     String? encodeQueryParameters(Map<String, String> params) {
       return params.entries
           .map((e) =>
@@ -115,6 +122,7 @@ class _SosWidgetState extends State<SosWidget> {
 
     // ignore: no_leading_underscores_for_local_identifiers
     Future<void> _sendSMS(String phoneNumber) async {
+      await getLocation();
       final Uri url = Uri(
         scheme: 'sms',
         path: phoneNumber,
@@ -127,12 +135,6 @@ class _SosWidgetState extends State<SosWidget> {
     }
 
     // ignore: no_leading_underscores_for_local_identifiers, unused_element
-    Future<void> _sendSMSAndroid(String phoneNumber) async {
-      final Telephony telephony = Telephony.instance;
-      await getLocation();
-      telephony.sendSms(
-          to: phoneNumber, message: "Indirizzo: $_currentAddress");
-    }
 
     return Scaffold(
       key: scaffoldKey,
