@@ -107,19 +107,19 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
 
         switch (humorAverage.round()) {
           case 0:
-            image = 'https://cdn-icons-png.flaticon.com/512/6637/6637186.png';
+            image = 'assets/images/angry.png';
             break;
           case 1:
-            image = 'https://cdn-icons-png.flaticon.com/512/6637/6637163.png';
+            image = 'assets/images/sad.png';
             break;
           case 2:
-            image = 'https://cdn-icons-png.flaticon.com/512/6637/6637207.png';
+            image = 'assets/images/neutral.png';
             break;
           case 3:
-            image = 'https://cdn-icons-png.flaticon.com/512/6637/6637188.png';
+            image = 'assets/images/happy.png';
             break;
           case 4:
-            image = 'https://cdn-icons-png.flaticon.com/512/6637/6637197.png';
+            image = 'assets/images/excited.png';
             break;
         }
       }
@@ -715,7 +715,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                       ),
                                                                 ),
                                                               )
-                                                            : Image.network(
+                                                            : Image.asset(
                                                                 reportSelectedDay![
                                                                         'Statistiche']
                                                                     [

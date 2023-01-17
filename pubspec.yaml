@@ -67,6 +67,7 @@ dependencies:
   flutter_svg: ^1.1.6
   geolocator: ^9.0.2
   geocoding: ^2.0.5
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -90,7 +91,7 @@ dev_dependencies:
   video_player_avfoundation: ^2.3.8
   video_player_platform_interface: ^6.0.1
   video_player_web: ^2.0.13
-
+  cron: ^0.5.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

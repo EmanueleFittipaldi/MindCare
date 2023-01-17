@@ -33,22 +33,28 @@ class _ViewUmoreState extends State<ViewUmore> {
     String image = '';
     switch (umore) {
       case 0:
-        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637186.png';
+        image = 'assets/images/angry.png';
         break;
       case 1:
-        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637163.png';
+        image = 'assets/images/sad.png';
         break;
       case 2:
-        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637207.png';
+        image = 'assets/images/neutral.png';
         break;
       case 3:
-        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637188.png';
+        image = 'assets/images/happy.png';
         break;
       case 4:
-        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637197.png';
+        image = 'assets/images/excited.png';
         break;
     }
     return image;
+  }
+
+  getEmoji(String text) {
+    var emoji = ['😡', '🙁', '😐', '🙂', '😍'];
+    var t = text.split(' ').last;
+    return getEmoticon(emoji.indexOf(t));
   }
 
   @override
@@ -213,6 +219,84 @@ class _ViewUmoreState extends State<ViewUmore> {
                                             ],
                                           ),
                                         ),
+                                        item.type != 'quiz'
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(16, 5, 16, 0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Emoticon:',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .subtitle1
+                                                          .override(
+                                                            fontFamily:
+                                                                'Outfit',
+                                                            color: const Color(
+                                                                0xFF101213),
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                    ),
+                                                    Image.asset(
+                                                      getEmoji(item.text),
+                                                      width: 30,
+                                                      height: 30,
+                                                      fit: BoxFit.contain,
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(16, 5, 16, 0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .subtitle1
+                                                          .override(
+                                                            fontFamily:
+                                                                'Outfit',
+                                                            color: const Color(
+                                                                0xFF101213),
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                    ),
+                                                    Text(
+                                                      '',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .subtitle1
+                                                          .override(
+                                                            fontFamily:
+                                                                'Outfit',
+                                                            color: const Color(
+                                                                0xFF101213),
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
                                       ],
                                     ),
                                   ),
@@ -223,7 +307,7 @@ class _ViewUmoreState extends State<ViewUmore> {
                                         // ignore: sized_box_for_whitespace
                                         Container(
                                           width: 200,
-                                          height: 130,
+                                          height: 185,
                                           child: SingleChildScrollView(
                                             child: Column(
                                                 mainAxisSize: MainAxisSize.max,
@@ -253,7 +337,7 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                                 ),
                                                       )),
                                                   item.type == 'quiz'
-                                                      ? Image.network(
+                                                      ? Image.asset(
                                                           getEmoticon(
                                                               item.score),
                                                           width: 70,
@@ -266,7 +350,11 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                                       .fromSTEB(
                                                                   16, 5, 0, 0),
                                                           child: AutoSizeText(
-                                                            item.text,
+                                                            item.text.substring(
+                                                                0,
+                                                                item.text
+                                                                        .length -
+                                                                    2),
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .subtitle1
@@ -278,7 +366,7 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                                   fontSize: 16,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w400,
+                                                                          .w200,
                                                                 ),
                                                           )),
                                                 ]),

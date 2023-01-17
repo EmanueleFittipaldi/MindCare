@@ -18,6 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../controller/auth.dart';
+import 'package:cron/cron.dart';
+import 'package:path/path.dart';
 
 class HomePazienteWidget extends StatefulWidget {
   final String caregiverUID;
@@ -28,12 +30,14 @@ class HomePazienteWidget extends StatefulWidget {
   _HomePazienteWidgetState createState() => _HomePazienteWidgetState();
 }
 
-class _HomePazienteWidgetState extends State<HomePazienteWidget> {
+class _HomePazienteWidgetState extends State<HomePazienteWidget>
+    with WidgetsBindingObserver {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Utente? user;
   bool checkHumor = false;
   Future? futureQuizCompletati;
   Stream<QuerySnapshot>? _patientStream;
+  final cron = Cron();
   @override
   void initState() {
     _patientStream = FirebaseFirestore.instance
@@ -43,7 +47,56 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
         .snapshots();
     futureQuizCompletati = ReportController()
         .getQuizCompletati(widget.caregiverUID, Auth().currentUser!.uid);
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        //Execute the code here when user come back the app.
+        //In my case, I needed to show if user active or not,
+        print('ok');
+        break;
+      case AppLifecycleState.inactive:
+        //Execute the code the when user leave the app
+        /* cron.close;
+        await Hive.initFlutter();
+        var box = await Hive.openBox('temp');
+        if (box.get('timer_todo') != null) {
+          box.put('timer_todo', false);
+        }
+        print('sto per uscire');
+        */
+        break;
+      default:
+        break;
+    }
+  }
+
+  createCron(context) async {
+    print('richiamato il contesto');
+    await Hive.initFlutter();
+    var box = await Hive.openBox('temp');
+    if (box.get('timer_todo') == null || box.get('timer_todo') == true) {
+      print('Non cè il timer');
+
+      cron.schedule(Schedule.parse('*/1 * * * *'), () async {
+        print('every minutes');
+        print(ModalRoute.of(context)!.settings.name);
+      });
+    } else if (box.get('timer_todo') == false) {
+      print('sto in true');
+      cron.close();
+      box.put('timer_todo', true);
+    }
   }
 
   @override
@@ -151,7 +204,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                         AsyncSnapshot snapshot) {
                                       if (snapshot.hasData) {
                                         int percent = snapshot.data;
-
+                                        //createCron(context);
                                         /*QUANDO FUTURE BUILDER HA TERMINATO VERIFICA L'UMORE: */
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((_) async {

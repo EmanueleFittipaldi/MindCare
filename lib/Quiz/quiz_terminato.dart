@@ -166,8 +166,8 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                                   const WidgetTree()),
                                           (Route<dynamic> route) => false);
                                     },
-                                    child: Image.network(
-                                      'https://cdn-icons-png.flaticon.com/512/6637/6637186.png',
+                                    child: Image.asset(
+                                      'assets/images/angry.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -182,8 +182,8 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                                   const WidgetTree()),
                                           (Route<dynamic> route) => false);
                                     },
-                                    child: Image.network(
-                                      'https://cdn-icons-png.flaticon.com/512/6637/6637163.png',
+                                    child: Image.asset(
+                                      'assets/images/sad.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -197,8 +197,8 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                               builder: (context) =>
                                                   const WidgetTree()));
                                     },
-                                    child: Image.network(
-                                      'https://cdn-icons-png.flaticon.com/512/6637/6637207.png',
+                                    child: Image.asset(
+                                      'assets/images/neutral.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -213,8 +213,8 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                                   const WidgetTree()),
                                           (Route<dynamic> route) => false);
                                     },
-                                    child: Image.network(
-                                      'https://cdn-icons-png.flaticon.com/512/6637/6637188.png',
+                                    child: Image.asset(
+                                      'assets/images/happy.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
@@ -229,8 +229,8 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                                   const WidgetTree()),
                                           (Route<dynamic> route) => false);
                                     },
-                                    child: Image.network(
-                                      'https://cdn-icons-png.flaticon.com/512/6637/6637197.png',
+                                    child: Image.asset(
+                                      'assets/images/excited.png',
                                       width: 50,
                                       height: 50,
                                       fit: BoxFit.cover,
