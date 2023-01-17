@@ -1,28 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:mindcare/Quiz/fine_quiz.dart';
 import 'package:mindcare/Quiz/no_piu_tentativi.dart';
-import 'package:mindcare/dialog/confirm_dialog.dart';
-import 'package:mindcare/model/quesito.dart';
 import 'package:mindcare/quiz/quiz_terminato.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
-import '../autenticazione/login.dart';
 import 'package:mindcare/model/report.dart';
-import 'package:mindcare/quiz/risposta_corretta.dart';
-import 'package:mindcare/quiz/risposta_sbagliata.dart';
-import '../model/utente.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../widget_tree.dart';
-import 'dialog_umore.dart';
-import 'alert_risposta.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:provider/provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
 class NomeAImmagineWidget extends StatefulWidget {
@@ -41,6 +30,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
   Map<String, bool> mappaRisposte = <String, bool>{};
   String? categoria;
   String? tipologia;
+  // ignore: prefer_typing_uninitialized_variables
   var quesito;
   var percentualeBarra = 0.0;
   var incrementoBarra = 0.0;
@@ -230,7 +220,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
       context,
       title: "Hey",
       message:
-          "Sembra che questa domanda ti abbia messo un po\' in difficoltà, vuoi vedere la risposta?",
+          "Sembra che questa domanda ti abbia messo un po' in difficoltà, vuoi vedere la risposta?",
       confirmButtonText: "Si",
       cancelButtonText: "No",
       onTapCancel: () {
@@ -467,8 +457,8 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 2, 10, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 2, 10, 0),
                               child: SelectionArea(
                                   child: Text(
                                 quesito['domanda'],
@@ -486,7 +476,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                             ),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     20, 20, 20, 20),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(30),
@@ -508,8 +498,9 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                       CrossAxisAlignment.stretch,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 50, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 50, 0, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -517,8 +508,9 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 10, 0),
                                               child: InkWell(
                                                 onTap: () async {
                                                   checkRisposta(
@@ -535,7 +527,8 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                                         BorderRadius.circular(
                                                             30),
                                                     border: Border.all(
-                                                      color: Color(0xFFA0A0A0),
+                                                      color: const Color(
+                                                          0xFFA0A0A0),
                                                     ),
                                                   ),
                                                   child: Row(
@@ -544,14 +537,14 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(15, 0,
-                                                                    10, 0),
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                15, 0, 10, 0),
                                                         child: Container(
                                                           width: 30,
                                                           height: 30,
                                                           decoration:
-                                                              BoxDecoration(
+                                                              const BoxDecoration(
                                                             color: Color(
                                                                 0xB6F4F4F4),
                                                             shape:
@@ -605,8 +598,9 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 10, 0),
                                               child: InkWell(
                                                 onTap: () async {
                                                   checkRisposta(
@@ -623,7 +617,8 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                                         BorderRadius.circular(
                                                             30),
                                                     border: Border.all(
-                                                      color: Color(0xFFA0A0A0),
+                                                      color: const Color(
+                                                          0xFFA0A0A0),
                                                     ),
                                                   ),
                                                   child: Row(
@@ -632,14 +627,14 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(15, 0,
-                                                                    10, 0),
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                15, 0, 10, 0),
                                                         child: Container(
                                                           width: 30,
                                                           height: 30,
                                                           decoration:
-                                                              BoxDecoration(
+                                                              const BoxDecoration(
                                                             color: Color(
                                                                 0xB6F4F4F4),
                                                             shape:
@@ -695,8 +690,9 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 20, 0, 0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -704,8 +700,9 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 10, 0),
                                               child: InkWell(
                                                 onTap: () async {
                                                   checkRisposta(
@@ -722,7 +719,8 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                                         BorderRadius.circular(
                                                             30),
                                                     border: Border.all(
-                                                      color: Color(0xFFA0A0A0),
+                                                      color: const Color(
+                                                          0xFFA0A0A0),
                                                     ),
                                                   ),
                                                   child: Row(
@@ -731,14 +729,14 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(15, 0,
-                                                                    10, 0),
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                15, 0, 10, 0),
                                                         child: Container(
                                                           width: 30,
                                                           height: 30,
                                                           decoration:
-                                                              BoxDecoration(
+                                                              const BoxDecoration(
                                                             color: Color(
                                                                 0xB6F4F4F4),
                                                             shape:
@@ -792,8 +790,9 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 10, 0),
                                               child: InkWell(
                                                 onTap: () async {
                                                   checkRisposta(
@@ -810,7 +809,8 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                                         BorderRadius.circular(
                                                             30),
                                                     border: Border.all(
-                                                      color: Color(0xFFA0A0A0),
+                                                      color: const Color(
+                                                          0xFFA0A0A0),
                                                     ),
                                                   ),
                                                   child: Row(
@@ -819,14 +819,14 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(15, 0,
-                                                                    10, 0),
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                15, 0, 10, 0),
                                                         child: Container(
                                                           width: 30,
                                                           height: 30,
                                                           decoration:
-                                                              BoxDecoration(
+                                                              const BoxDecoration(
                                                             color: Color(
                                                                 0xB6F4F4F4),
                                                             shape:

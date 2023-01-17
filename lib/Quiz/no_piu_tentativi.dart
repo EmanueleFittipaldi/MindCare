@@ -1,9 +1,6 @@
-import 'dart:io';
-
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:panara_dialogs/src/widgets/panara_button.dart';
 
 class CustomDialogNoTentativi extends StatefulWidget {
@@ -31,7 +28,8 @@ class _CustomDialogNoTentativiState extends State<CustomDialogNoTentativi> {
   getRisposta() {
     var risposta = widget.quesito['risposta'];
     //take last character of the string risposta
-    var lastChar = risposta.replaceAll(new RegExp(r'[^0-9]'), '');
+    var lastChar = risposta.replaceAll(RegExp(r'[^0-9]'), '');
+    // ignore: prefer_interpolation_to_compose_strings
     return widget.quesito['opzione' + lastChar];
   }
 
@@ -58,7 +56,7 @@ class _CustomDialogNoTentativiState extends State<CustomDialogNoTentativi> {
             children: [
               Text(
                 widget.title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   height: 1.2,
                   fontWeight: FontWeight.w600,
@@ -95,7 +93,7 @@ class _CustomDialogNoTentativiState extends State<CustomDialogNoTentativi> {
                       height: 200,
                     ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                 child: PanaraButton(
                   buttonTextColor: Colors.white,
                   text: 'Torna al quiz',

@@ -1,21 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/controller/todo_controller.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_util.dart';
-import 'package:mindcare/model/contattoSOS.dart';
 import 'package:mindcare/model/todo.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
-import '../controller/auth.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../controller/image_upload.dart';
 import '../model/utente.dart';
 
 class CreazioneAttivita extends StatefulWidget {
@@ -81,6 +74,7 @@ class _CreazioneAttivitaState extends State<CreazioneAttivita> {
           barrierDismissible: false, // optional parameter (default is true)
         );
         if (confirmDialogResponse) {
+          // ignore: use_build_context_synchronously
           Navigator.of(context).pop();
         }
         return false;
@@ -127,6 +121,7 @@ class _CreazioneAttivitaState extends State<CreazioneAttivita> {
                         false, // optional parameter (default is true)
                   );
                   if (confirmDialogResponse) {
+                    // ignore: use_build_context_synchronously
                     Navigator.of(context).pop();
                   }
                 },
@@ -260,8 +255,9 @@ class _CreazioneAttivitaState extends State<CreazioneAttivita> {
                                 children: [
                                   Expanded(
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 15, 10, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 15, 10, 0),
                                       child: TextFormField(
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {

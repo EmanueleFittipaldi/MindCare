@@ -8,8 +8,10 @@ import 'package:mindcare/model/ricordo.dart';
 import 'package:mindcare/model/utente.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
 class AlbumRicordiWidget extends StatefulWidget {
@@ -44,6 +46,7 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
           UmoreController().createUmore(
               widget.caregiverUID, Auth().currentUser!.uid, text, 'ricordi');
         }
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pop();
         return false;
       },
@@ -105,14 +108,14 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                             height: 180,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiaryColor,
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   blurRadius: 12,
                                   color: Color(0x14000000),
                                   offset: Offset(0, 5),
                                 )
                               ],
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(40),
                                 bottomRight: Radius.circular(40),
                                 topLeft: Radius.circular(0),
@@ -123,7 +126,7 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20, 0, 20, 5),
                                   child: SelectionArea(
                                       child: AutoSizeText(
@@ -181,12 +184,17 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                             ),
                           ),
                           Expanded(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 1,
-                              child: TimelinePage(
-                                  caregiverUID: widget.caregiverUID,
-                                  doodles: doodles),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 20, 0, 10),
+                              // ignore: sized_box_for_whitespace
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height * 1,
+                                child: TimelinePage(
+                                    caregiverUID: widget.caregiverUID,
+                                    doodles: doodles),
+                              ),
                             ),
                           ),
                         ],

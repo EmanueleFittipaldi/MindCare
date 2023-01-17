@@ -15,6 +15,7 @@ enum VideoType {
 Set<VideoPlayerController> _videoPlayers = Set();
 
 class FlutterFlowVideoPlayer extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const FlutterFlowVideoPlayer({
     required this.path,
     this.videoType = VideoType.network,
@@ -119,6 +120,7 @@ class _FlutterFlowVideoPlayerState extends State<FlutterFlowVideoPlayer> {
   @override
   Widget build(BuildContext context) => FittedBox(
         fit: BoxFit.cover,
+        // ignore: sized_box_for_whitespace
         child: Container(
           height: height,
           width: width,

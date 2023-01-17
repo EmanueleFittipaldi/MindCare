@@ -10,8 +10,8 @@ class UmoreController {
       String caregiverID, String user, String text, String type) async {
     DateTime data = DateTime.now();
     var umoreID = umoreIDGenerator(28);
-    var results =
-        Sentiment().analysis(text, languageCode: LanguageCode.italian);
+    var results = Sentiment()
+        .analysis(text, languageCode: LanguageCode.italian, emoji: true);
     Umore umore = Umore(
         text: text,
         score: results['score'],

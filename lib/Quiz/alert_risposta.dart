@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_theme.dart';
-import 'package:mindcare/model/quesito.dart';
 
 class AlertRisposta extends StatelessWidget {
   final dynamic quesito;
-  AlertRisposta(this.quesito);
+  const AlertRisposta(this.quesito, {super.key});
 
 /*Funzione che ritorna l'opzione corrispondente alla risposta. */
   getRisposta() {

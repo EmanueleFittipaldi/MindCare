@@ -8,12 +8,8 @@ import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 import '../model/utente.dart';
 
@@ -58,11 +54,12 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
+                // ignore: sized_box_for_whitespace
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),
                     child: PageView(
                       physics: const NeverScrollableScrollPhysics(),
                       controller: pageViewController ??=
@@ -70,15 +67,15 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              20, 20, 20, 0),
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       15, 0, 20, 10),
                                   child: Text(
                                     'Seleziona una categoria',
@@ -95,7 +92,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       2, 0, 2, 15),
                                   child: InkWell(
                                     onTap: () async {
@@ -103,7 +100,8 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         categorySelected = 'Persone';
                                       });
                                       await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
+                                        duration:
+                                            const Duration(milliseconds: 300),
                                         curve: Curves.ease,
                                       );
                                     },
@@ -116,7 +114,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 .primaryColor
                                             : FlutterFlowTheme.of(context)
                                                 .tertiaryColor,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 4,
                                             color: Color(0x14000000),
@@ -132,8 +130,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -196,7 +195,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                           Material(
                                             color: Colors.transparent,
                                             elevation: 0,
-                                            shape: RoundedRectangleBorder(
+                                            shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(110),
@@ -209,7 +208,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                             child: Container(
                                               width: 150,
                                               height: double.infinity,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 color: Color(0xFFD0E2FF),
                                                 borderRadius: BorderRadius.only(
                                                   bottomLeft:
@@ -222,8 +221,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 shape: BoxShape.rectangle,
                                               ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 10, 0, 10),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 10, 0, 10),
                                                 child: SvgPicture.asset(
                                                   'assets/images/undraw_family_vg76.svg',
                                                   width: 80,
@@ -239,7 +239,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       2, 0, 2, 15),
                                   child: InkWell(
                                     onTap: () async {
@@ -247,7 +247,8 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         categorySelected = 'Animali';
                                       });
                                       await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
+                                        duration:
+                                            const Duration(milliseconds: 300),
                                         curve: Curves.ease,
                                       );
                                     },
@@ -260,7 +261,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 .primaryColor
                                             : FlutterFlowTheme.of(context)
                                                 .tertiaryColor,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 4,
                                             color: Color(0x14000000),
@@ -276,8 +277,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -340,7 +342,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                           Material(
                                             color: Colors.transparent,
                                             elevation: 0,
-                                            shape: RoundedRectangleBorder(
+                                            shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(110),
@@ -353,7 +355,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                             child: Container(
                                               width: 150,
                                               height: double.infinity,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 color: Color(0xFFD0E2FF),
                                                 borderRadius: BorderRadius.only(
                                                   bottomLeft:
@@ -366,8 +368,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 shape: BoxShape.rectangle,
                                               ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 10, 0, 10),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 10, 0, 10),
                                                 child: SvgPicture.asset(
                                                   'assets/images/undraw_dog_re_63j1.svg',
                                                   width: 80,
@@ -383,7 +386,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       2, 0, 2, 14),
                                   child: InkWell(
                                     onTap: () async {
@@ -391,7 +394,8 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         categorySelected = 'Oggetti';
                                       });
                                       await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
+                                        duration:
+                                            const Duration(milliseconds: 300),
                                         curve: Curves.ease,
                                       );
                                     },
@@ -404,7 +408,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 .primaryColor
                                             : FlutterFlowTheme.of(context)
                                                 .tertiaryColor,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 4,
                                             color: Color(0x14000000),
@@ -420,8 +424,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -484,7 +489,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                           Material(
                                             color: Colors.transparent,
                                             elevation: 0,
-                                            shape: RoundedRectangleBorder(
+                                            shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(110),
@@ -497,7 +502,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                             child: Container(
                                               width: 150,
                                               height: double.infinity,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 color: Color(0xFFD0E2FF),
                                                 borderRadius: BorderRadius.only(
                                                   bottomLeft:
@@ -510,8 +515,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 shape: BoxShape.rectangle,
                                               ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 10, 0, 10),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 10, 0, 10),
                                                 child: SvgPicture.asset(
                                                   'assets/images/undraw_collecting_re_lp6p.svg',
                                                   width: 80,
@@ -527,7 +533,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       2, 0, 2, 15),
                                   child: InkWell(
                                     onTap: () async {
@@ -535,7 +541,8 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         categorySelected = 'Altro';
                                       });
                                       await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
+                                        duration:
+                                            const Duration(milliseconds: 300),
                                         curve: Curves.ease,
                                       );
                                     },
@@ -548,7 +555,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 .primaryColor
                                             : FlutterFlowTheme.of(context)
                                                 .tertiaryColor,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 4,
                                             color: Color(0x14000000),
@@ -564,8 +571,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -630,7 +638,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                           Material(
                                             color: Colors.transparent,
                                             elevation: 0,
-                                            shape: RoundedRectangleBorder(
+                                            shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(110),
@@ -643,7 +651,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                             child: Container(
                                               width: 150,
                                               height: double.infinity,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 color: Color(0xFFD0E2FF),
                                                 borderRadius: BorderRadius.only(
                                                   bottomLeft:
@@ -656,8 +664,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 shape: BoxShape.rectangle,
                                               ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 10, 0, 10),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 10, 0, 10),
                                                 child: SvgPicture.asset(
                                                   'assets/images/undraw_specs_re_546x.svg',
                                                   width: 80,
@@ -701,7 +710,8 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                       ),
                                       onPressed: () async {
                                         await pageViewController?.nextPage(
-                                          duration: Duration(milliseconds: 300),
+                                          duration:
+                                              const Duration(milliseconds: 300),
                                           curve: Curves.ease,
                                         );
                                       },
@@ -713,8 +723,8 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              20, 20, 20, 0),
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -722,7 +732,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       15, 0, 20, 10),
                                   child: Text(
                                     'Seleziona una tipologia',
@@ -739,7 +749,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       2, 0, 2, 15),
                                   child: InkWell(
                                     onTap: () async {
@@ -758,7 +768,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 .primaryColor
                                             : FlutterFlowTheme.of(context)
                                                 .tertiaryColor,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 4,
                                             color: Color(0x14000000),
@@ -774,8 +784,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -840,7 +851,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                           Material(
                                             color: Colors.transparent,
                                             elevation: 0,
-                                            shape: RoundedRectangleBorder(
+                                            shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(250),
@@ -853,7 +864,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                             child: Container(
                                               width: 150,
                                               height: double.infinity,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 color: Color(0xFFD0E2FF),
                                                 borderRadius: BorderRadius.only(
                                                   bottomLeft:
@@ -866,8 +877,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 shape: BoxShape.rectangle,
                                               ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 10, 0, 10),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 10, 0, 10),
                                                 child: SvgPicture.asset(
                                                   'assets/images/undraw_choose_re_7d5a.svg',
                                                   width: 80,
@@ -883,7 +895,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       2, 0, 2, 15),
                                   child: InkWell(
                                     onTap: () async {
@@ -902,7 +914,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 .primaryColor
                                             : FlutterFlowTheme.of(context)
                                                 .tertiaryColor,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 4,
                                             color: Color(0x14000000),
@@ -918,8 +930,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 10, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 10, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -984,7 +997,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                           Material(
                                             color: Colors.transparent,
                                             elevation: 0,
-                                            shape: RoundedRectangleBorder(
+                                            shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
                                                 bottomLeft:
                                                     Radius.circular(250),
@@ -997,7 +1010,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                             child: Container(
                                               width: 150,
                                               height: double.infinity,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 color: Color(0xFFD0E2FF),
                                                 borderRadius: BorderRadius.only(
                                                   bottomLeft:
@@ -1010,8 +1023,10 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 shape: BoxShape.rectangle,
                                               ),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 10, 10, 10),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                        0, 10, 10, 10),
                                                 child: SvgPicture.asset(
                                                   'assets/images/undraw_image_options_7uph.svg',
                                                   width: 80,
@@ -1042,7 +1057,8 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                       ),
                                       onPressed: () async {
                                         await pageViewController?.previousPage(
-                                          duration: Duration(milliseconds: 300),
+                                          duration:
+                                              const Duration(milliseconds: 300),
                                           curve: Curves.ease,
                                         );
                                       },
@@ -1062,7 +1078,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       40, 40, 40, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
@@ -1117,6 +1133,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                             };
                                             box.put(
                                                 'statoCorrente', statoCorrente);
+                                            // ignore: use_build_context_synchronously
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
@@ -1124,6 +1141,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                             box: box)));
                                           }
                                         } else {
+                                          // ignore: use_build_context_synchronously
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -1179,6 +1197,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                             };
                                             box.put(
                                                 'statoCorrente', statoCorrente);
+                                            // ignore: use_build_context_synchronously
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
@@ -1186,6 +1205,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                             box: box)));
                                           }
                                         } else {
+                                          // ignore: use_build_context_synchronously
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -1198,7 +1218,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                     options: FFButtonOptions(
                                       width: 130,
                                       height: 60,
-                                      color: Color(0xFF32C157),
+                                      color: const Color(0xFF32C157),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .subtitle2
                                           .override(
@@ -1206,7 +1226,7 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                             color: Colors.white,
                                             fontSize: 25,
                                           ),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
                                       ),

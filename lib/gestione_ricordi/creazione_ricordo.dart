@@ -7,6 +7,7 @@ import 'package:mindcare/controller/image_upload.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+// ignore: depend_on_referenced_packages
 import 'package:video_player/video_player.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
         isNetworkImage = true;
       } else if (dropDownType == 'Video') {
         videoPickedPath = widget.memoryItem!.filePath;
+        // ignore: no_leading_underscores_for_local_identifiers, unused_local_variable
         var _video = File(videoPickedPath);
 
         _videoPlayerController = VideoPlayerController.network(videoPickedPath)
@@ -107,6 +109,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
           barrierDismissible: false, // optional parameter (default is true)
         );
         if (confirmDialogResponse) {
+          // ignore: use_build_context_synchronously
           Navigator.of(context).pop();
         }
         return false;
@@ -156,6 +159,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                           false, // optional parameter (default is true)
                     );
                     if (confirmDialogResponse) {
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pop();
                     }
                   }
@@ -330,8 +334,8 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 5, 0, 5),
                                 child: FlutterFlowDropDown(
                                   initialOption: dropDownType ??= 'Immagine',
                                   options: const ['Video', 'Immagine'],
@@ -363,7 +367,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                       FlutterFlowTheme.of(context).borderColor,
                                   borderWidth: 1,
                                   borderRadius: 10,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
+                                  margin: const EdgeInsetsDirectional.fromSTEB(
                                       12, 4, 12, 4),
                                   hidesUnderline: true,
                                 ),
@@ -463,6 +467,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                                       await ImageUpload()
                                                           .pickFile('video');
                                                   if (videoPath != null) {
+                                                    // ignore: no_leading_underscores_for_local_identifiers
                                                     var _video =
                                                         File(videoPath);
 
@@ -502,14 +507,14 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 15, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 15, 15, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: const AlignmentDirectional(-1, 0),
                                 child: Text(
                                   'Descrizione: ',
                                   textAlign: TextAlign.center,
@@ -524,8 +529,8 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    15, 0, 0, 0),
                                 child: dropDownType == 'Video'
                                     ? Switch(
                                         value: switchDescritpionValue ??= true,
@@ -619,10 +624,10 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                   maxLines: 7,
                                 ),
                               )
-                            : Text(''),
+                            : const Text(''),
                         Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(15, 15, 15, 10),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                15, 15, 15, 10),
                             child: Tags(
                               key: _globalKey,
                               columns: 3,
@@ -636,9 +641,11 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                       .tertiaryColor,
                                   index: index,
                                   title: currentItem,
-                                  textStyle: TextStyle(fontSize: 14),
+                                  textStyle: const TextStyle(fontSize: 14),
                                   combine: ItemTagsCombine.withTextBefore,
+                                  // ignore: avoid_print
                                   onPressed: (i) => print(i),
+                                  // ignore: avoid_print
                                   onLongPressed: (i) => print(i),
                                   removeButton: ItemTagsRemoveButton(
                                     onRemoved: () {
@@ -652,15 +659,15 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                               },
                             )),
                         Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(15, 15, 15, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              15, 15, 15, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 15, 0),
                                   child: TextFormField(
                                     controller: controllerTag,
@@ -714,7 +721,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                 ),
                               ),
                               FlutterFlowIconButton(
-                                borderColor: Color(0xFFE0E3E7),
+                                borderColor: const Color(0xFFE0E3E7),
                                 borderRadius: 20,
                                 borderWidth: 1,
                                 buttonSize: 60,
@@ -762,6 +769,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                               (imagePickedPath != '' ||
                                   videoPickedPath != '')) {
                             if (widget.memoryItem != null) {
+                              // ignore: prefer_typing_uninitialized_variables
                               var filePath;
 
                               if (isMediaChanged) {
@@ -788,6 +796,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                   tags: tags);
                               ricordo.createMemory(widget.userID);
                             } else {
+                              // ignore: prefer_typing_uninitialized_variables
                               var filePath;
                               if (imagePickedPath != '') {
                                 filePath = await ImageUpload()
@@ -806,6 +815,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                   tags: tags);
                               ricordo.createMemory(widget.userID);
                             }
+                            // ignore: use_build_context_synchronously
                             Navigator.of(context).pop();
                           } else {
                             PanaraInfoDialog.show(

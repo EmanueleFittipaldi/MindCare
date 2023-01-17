@@ -1,34 +1,22 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/report_controller.dart';
-import 'package:mindcare/controller/umore_controller.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_widgets.dart';
 import 'package:mindcare/gestione_report/chart.dart';
-import 'package:mindcare/gestione_report/humore_chart.dart';
 import 'package:mindcare/gestione_report/report_medico.dart';
 import 'package:mindcare/gestione_report/view_report.dart';
 import 'package:mindcare/model/report.dart';
 import 'package:csv/csv.dart';
-import 'package:mindcare/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/auth.dart';
-import 'package:mindcare/model/umore.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import '../flutter_flow/flutter_flow_calendar.dart';
@@ -83,6 +71,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
     if (listR.isNotEmpty) {
       humorAverage = (humorAverage / listR.length);
       var stats = {};
+      // ignore: prefer_typing_uninitialized_variables
       var image;
       switch (humorAverage.round()) {
         case 0:
@@ -140,7 +129,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 10, 15, 10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(15, 10, 15, 10),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -183,7 +172,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF57636C),
+                                      color: const Color(0xFF57636C),
                                       fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -197,7 +186,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF57636C),
+                                      color: const Color(0xFF57636C),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w200,
                                     ),
@@ -242,7 +231,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF57636C),
+                                      color: const Color(0xFF57636C),
                                       fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -256,7 +245,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF57636C),
+                                      color: const Color(0xFF57636C),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w200,
                                     ),
@@ -271,7 +260,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [],
+                    children: const [],
                   ),
                 ),
                 FutureBuilder(
@@ -297,8 +286,8 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(15, 5, 15, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  15, 5, 15, 0),
                               child: Container(
                                   clipBehavior: Clip.antiAlias,
                                   decoration: BoxDecoration(
@@ -324,7 +313,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                         chartType = value as String;
                                       });
                                     },
-                                    buttons: [
+                                    buttons: const [
                                       "Grafico a barre",
                                       "Grafico a linee",
                                     ],
@@ -343,6 +332,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             16, 20, 16, 10),
+                                    // ignore: sized_box_for_whitespace
                                     child: Container(
                                         height: 500,
                                         width: double.infinity,
@@ -394,8 +384,8 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                         ),
                                   ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 10, 0, 20),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 10, 0, 20),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   List<List<dynamic>> csv = [];
@@ -433,17 +423,15 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                       ? await getExternalStorageDirectory() //FOR ANDROID
                                       : await getApplicationSupportDirectory(); //FOR iOS
                                   var fname =
-                                      'Report_${widget.user.name}_${widget.user.lastname}_P#_${widget.user.userID}_' +
-                                          DateTime.now().toString() +
-                                          '.csv';
+                                      'Report_${widget.user.name}_${widget.user.lastname}_P#_${widget.user.userID}_${DateTime.now()}.csv';
                                   File f = File(
-                                      directory!.absolute.path + "/" + fname);
+                                      "${directory!.absolute.path}/$fname");
 
                                   f.writeAsString(csvS);
 
-                                  print(f.path);
                                   var msg =
-                                      'Report quiz [${startDate} - ${endDate}]\nPaziente: ${widget.user.lastname} ${widget.user.name} \nID:#${widget.user.userID}\nCreato il: ${DateTime.now()}\n\nEmesso dal Caregiver:#${Auth().currentUser!.uid}';
+                                      'Report quiz [$startDate - $endDate]\nPaziente: ${widget.user.lastname} ${widget.user.name} \nID:#${widget.user.userID}\nCreato il: ${DateTime.now()}\n\nEmesso dal Caregiver:#${Auth().currentUser!.uid}';
+                                  // ignore: unused_local_variable
                                   var text = await showDialog(
                                       barrierDismissible: false,
                                       context: context,
@@ -470,7 +458,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                               .tertiaryColor,
                                           fontWeight: FontWeight.w400,
                                           fontSize: 14),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 0,
                                   ),
@@ -479,8 +467,8 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(15, 0, 15, 15),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  15, 0, 15, 15),
                               child: Container(
                                 width: double.infinity,
                                 height: 150,
@@ -534,22 +522,24 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                     await columnController!.animateTo(
                                       columnController!
                                           .position.maxScrollExtent,
-                                      duration: Duration(milliseconds: 1000),
+                                      duration:
+                                          const Duration(milliseconds: 1000),
                                       curve: Curves.ease,
                                     );
                                   },
-                                  titleStyle: TextStyle(),
-                                  dayOfWeekStyle: TextStyle(),
-                                  dateStyle: TextStyle(),
-                                  selectedDateStyle: TextStyle(),
-                                  inactiveDateStyle: TextStyle(),
+                                  titleStyle: const TextStyle(),
+                                  dayOfWeekStyle: const TextStyle(),
+                                  dateStyle: const TextStyle(),
+                                  selectedDateStyle: const TextStyle(),
+                                  inactiveDateStyle: const TextStyle(),
                                 ),
                               ),
                             ),
                             reportSelectedDay != null
                                 ? Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16, 10, 16, 20),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            16, 10, 16, 20),
                                     child: Container(
                                       width: double.infinity,
                                       decoration: BoxDecoration(
@@ -569,16 +559,17 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                             width: 0,
                                           )),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            4, 4, 4, 4),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(4, 4, 4, 4),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 12, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(16, 12, 0, 0),
                                               child: Text(
                                                 'Resoconto giornaliero',
                                                 style:
@@ -586,8 +577,8 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                                         .subtitle1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF101213),
+                                                          color: const Color(
+                                                              0xFF101213),
                                                           fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -595,8 +586,9 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 16, 16, 16),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(16, 16, 16, 16),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -618,9 +610,9 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      22, 0, 0),
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  0, 22, 0, 0),
                                                           child: Text(
                                                             'Umore medio',
                                                             style: FlutterFlowTheme
@@ -629,7 +621,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                                                 .override(
                                                                   fontFamily:
                                                                       'Outfit',
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0xFF57636C),
                                                                   fontSize: 14,
                                                                   fontWeight:
@@ -648,9 +640,9 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 0, 12),
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  0, 0, 0, 12),
                                                           child:
                                                               CircularPercentIndicator(
                                                             percent: reportSelectedDay ==
@@ -665,20 +657,16 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                                             lineWidth: 12,
                                                             animation: true,
                                                             progressColor:
-                                                                Color(
+                                                                const Color(
                                                                     0xFF4B39EF),
                                                             backgroundColor:
-                                                                Color(
+                                                                const Color(
                                                                     0xFFF1F4F8),
                                                             center: Text(
                                                               reportSelectedDay ==
                                                                       null
                                                                   ? ''
-                                                                  : reportSelectedDay!['Statistiche']
-                                                                              [
-                                                                              'QuizCompletati']
-                                                                          .toString() +
-                                                                      '/8',
+                                                                  : '${reportSelectedDay!['Statistiche']['QuizCompletati']}/8',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyText1
@@ -705,7 +693,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                                               .override(
                                                                 fontFamily:
                                                                     'Outfit',
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xFF57636C),
                                                                 fontSize: 14,
                                                                 fontWeight:
@@ -720,8 +708,9 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 16, 16, 16),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(16, 16, 16, 16),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -735,8 +724,8 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                                         .subtitle1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF101213),
+                                                          color: const Color(
+                                                              0xFF101213),
                                                           fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.w300,
@@ -753,8 +742,8 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                                         .subtitle1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF101213),
+                                                          color: const Color(
+                                                              0xFF101213),
                                                           fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.w300,
@@ -768,6 +757,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                       ),
                                     ),
                                   )
+                                // ignore: avoid_unnecessary_containers
                                 : Container(
                                     child: Text(
                                         'Non ci sono report in questo giorno!',
@@ -783,8 +773,9 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                   ),
                             reportSelectedDay != null
                                 ? Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        50, 0, 50, 20),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            50, 0, 50, 20),
                                     child: FFButtonWidget(
                                       onPressed: () {
                                         Navigator.of(context).push(
@@ -812,7 +803,7 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                                         .tertiaryColor,
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 14),
-                                        borderSide: BorderSide(
+                                        borderSide: const BorderSide(
                                           color: Colors.transparent,
                                           width: 0,
                                         ),
@@ -820,11 +811,11 @@ class _ReportQuizStatsWidgetState extends State<ReportQuizStatsWidget> {
                                       ),
                                     ),
                                   )
-                                : SizedBox.shrink(),
+                                : const SizedBox.shrink(),
                           ],
                         );
                       } else {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
                     })
               ],

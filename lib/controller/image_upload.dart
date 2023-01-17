@@ -1,4 +1,5 @@
 import 'dart:io';
+// ignore: unused_import
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,7 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class ImageUpload {
   pickFile(String filetype) async {
-    final _imagePicker = ImagePicker();
+    final imagePicker = ImagePicker();
     final XFile? image;
 
     PermissionStatus permissionStatus;
@@ -20,9 +21,9 @@ class ImageUpload {
     }
     if (permissionStatus.isGranted || permissionStatus.isLimited) {
       if (filetype.toLowerCase() == 'image') {
-        image = await _imagePicker.pickImage(source: ImageSource.gallery);
+        image = await imagePicker.pickImage(source: ImageSource.gallery);
       } else if (filetype.toLowerCase() == 'video') {
-        image = await _imagePicker.pickVideo(source: ImageSource.gallery);
+        image = await imagePicker.pickVideo(source: ImageSource.gallery);
       } else {
         image = null;
       }
@@ -38,7 +39,6 @@ class ImageUpload {
   }
 
   uploadImage(String image) async {
-    final _firebaseStorage = FirebaseStorage.instance;
     String? imageUrl;
 
     var file = File(image);
@@ -57,13 +57,13 @@ class ImageUpload {
       imageUrl = await (await uploadTask).ref.getDownloadURL();
       return imageUrl;
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
     }
     return null;
   }
 
   uploadVideo(String video) async {
-    final _firebaseStorage = FirebaseStorage.instance;
     String? videoUrl;
 
     var file = File(video);
@@ -82,6 +82,7 @@ class ImageUpload {
       videoUrl = await (await uploadTask).ref.getDownloadURL();
       return videoUrl;
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
     }
     return null;

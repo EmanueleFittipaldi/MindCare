@@ -3,10 +3,8 @@ import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/controller/quiz_controller.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
 class ViewDomande extends StatefulWidget {
@@ -35,7 +33,7 @@ class _ViewDomandeState extends State<ViewDomande> {
       ),
       body: SafeArea(
         child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
             child: FutureBuilder(
               future: QuizController().getQuesitiByID(widget.uid,
                   Auth().currentUser!.uid, widget.mappaRisposte.keys),
@@ -52,7 +50,8 @@ class _ViewDomandeState extends State<ViewDomande> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                           child: ListView(
                             padding: EdgeInsets.zero,
                             primary: false,
@@ -61,7 +60,7 @@ class _ViewDomandeState extends State<ViewDomande> {
                             children: [
                               for (var item in data)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       15, 0, 15, 8),
                                   child: Container(
                                     width: double.infinity,
@@ -69,7 +68,7 @@ class _ViewDomandeState extends State<ViewDomande> {
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                           blurRadius: 12,
                                           color: Color(0x14000000),
@@ -83,8 +82,9 @@ class _ViewDomandeState extends State<ViewDomande> {
                                       ),
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          8, 8, 8, 8),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              8, 8, 8, 8),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -99,12 +99,13 @@ class _ViewDomandeState extends State<ViewDomande> {
                                                   BorderRadius.circular(30),
                                             ),
                                             alignment:
-                                                AlignmentDirectional(0, 0),
+                                                const AlignmentDirectional(
+                                                    0, 0),
                                             child: Container(
                                               width: 120,
                                               height: 120,
                                               clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 shape: BoxShape.circle,
                                               ),
                                               child: item.domandaImmagine != ''
@@ -120,8 +121,9 @@ class _ViewDomandeState extends State<ViewDomande> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(12, 0, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(12, 0, 0, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -131,9 +133,9 @@ class _ViewDomandeState extends State<ViewDomande> {
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 4, 0, 0),
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            0, 4, 0, 0),
                                                     child: AutoSizeText(
                                                       item.domanda,
                                                       style:
@@ -162,16 +164,17 @@ class _ViewDomandeState extends State<ViewDomande> {
                                                   BorderRadius.circular(30),
                                             ),
                                             alignment:
-                                                AlignmentDirectional(0, 0),
+                                                const AlignmentDirectional(
+                                                    0, 0),
                                             child: widget.mappaRisposte[
                                                         item.quesitoID] ==
                                                     true
-                                                ? Icon(
+                                                ? const Icon(
                                                     Icons.check_rounded,
                                                     color: Color(0xFF17901E),
                                                     size: 40,
                                                   )
-                                                : Icon(
+                                                : const Icon(
                                                     Icons.clear_rounded,
                                                     color: Color(0xFFAB2B40),
                                                     size: 40,
@@ -189,7 +192,7 @@ class _ViewDomandeState extends State<ViewDomande> {
                     ),
                   );
                 } else {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }

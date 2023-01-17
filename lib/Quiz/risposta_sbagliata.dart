@@ -1,10 +1,6 @@
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-
-import '../paziente/home_paziente.dart';
-import '../autenticazione/login.dart';
 
 class CustomDialogSbagliata extends StatefulWidget {
   const CustomDialogSbagliata({Key? key}) : super(key: key);

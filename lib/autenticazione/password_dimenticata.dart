@@ -1,16 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/user_controller.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
-import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-
-import '../controller/auth.dart';
 
 class PasswordDimenticataWidget extends StatefulWidget {
   const PasswordDimenticataWidget({Key? key}) : super(key: key);
@@ -42,8 +36,8 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(70),
         child: AppbarWidget(title: 'Password dimenticata'),
       ),
       body: SafeArea(
@@ -175,7 +169,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                                     PanaraInfoDialog.show(
                                       context,
                                       title: "Accesso",
-                                      message: "Inserisci l\'email!",
+                                      message: "Inserisci l'email!",
                                       buttonText: "Okay",
                                       onTapDismiss: () {
                                         Navigator.pop(context);
@@ -190,6 +184,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                                         .forgottenPassword(
                                             _controllerEmail.text);
                                     if (success) {
+                                      // ignore: use_build_context_synchronously
                                       PanaraInfoDialog.show(
                                         context,
                                         title: "Password dimenticata",
@@ -205,6 +200,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                                             false, // optional parameter (default is true)
                                       );
                                     } else {
+                                      // ignore: use_build_context_synchronously
                                       PanaraInfoDialog.show(
                                         context,
                                         title: "Password dimenticata",
@@ -235,7 +231,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                                         color: Colors.white,
                                         fontWeight: FontWeight.normal,
                                       ),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1,
                                   ),

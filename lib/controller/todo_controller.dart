@@ -1,20 +1,17 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dart_sentiment/dart_sentiment.dart';
 import 'package:flutter/material.dart';
-import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/model/todo.dart';
-import 'package:mindcare/model/umore.dart';
 
 class ToDoController {
   Future<void> createToDo(String userID, String text, DateTime data) async {
     var todoID = todoIDGenerator(28);
-    TimeOfDay hourC = TimeOfDay(hour: 00, minute: 00);
+    TimeOfDay hourC = const TimeOfDay(hour: 00, minute: 00);
     ToDo todo = ToDo(
         todoID: todoID,
         text: text,
-        oraCompleted: hourC.hour.toString() + ':' + hourC.minute.toString(),
+        oraCompleted: '${hourC.hour}:${hourC.minute}',
         completed: false,
         data: data);
     todo.crateToDo(userID);

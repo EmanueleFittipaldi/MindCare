@@ -1,17 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mindcare/album_ricordi/ricordo_widget.dart';
-import 'package:mindcare/controller/auth.dart';
 import '../flutter_flow/flutter_flow_video_player.dart';
 // ignore: depend_on_referenced_packages
-import 'package:timeline_list/timeline.dart';
 // ignore: depend_on_referenced_packages
-import 'package:timeline_list/timeline_model.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 // ignore: unused_import
 import '../flutter_flow/flutter_flow_util.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 import '../model/ricordo.dart';
 
@@ -53,7 +49,7 @@ class _TimelinePageState extends State<TimelinePage> {
                 ),
                 child: Stack(children: <Widget>[
                   Align(
-                      alignment: AlignmentDirectional(0, 0),
+                      alignment: const AlignmentDirectional(0, 0),
                       child: item.tipoRicordo == 'Immagine'
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(16),
@@ -83,7 +79,7 @@ class _TimelinePageState extends State<TimelinePage> {
                                         allowPlaybackSpeedMenu: false,
                                       ))))),
                   Align(
-                    alignment: AlignmentDirectional(0, 1),
+                    alignment: const AlignmentDirectional(0, 1),
                     child: Container(
                       width: double.infinity,
                       height: 140,
@@ -105,16 +101,16 @@ class _TimelinePageState extends State<TimelinePage> {
                         ),
                       ),
                       child: Align(
-                        alignment: AlignmentDirectional(0, 0.5),
+                        alignment: const AlignmentDirectional(0, 0.5),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: const AlignmentDirectional(-1, 0),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     20, 0, 20, 0),
                                 child: AutoSizeText(
                                   item.titolo,
@@ -130,10 +126,10 @@ class _TimelinePageState extends State<TimelinePage> {
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: const AlignmentDirectional(-1, 0),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    20, 0, 0, 0),
                                 child: Text(
                                   item.annoRicordo.toString(),
                                   textAlign: TextAlign.start,

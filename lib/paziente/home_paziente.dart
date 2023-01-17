@@ -1,17 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dart_sentiment/dart_sentiment.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/dialog_umore.dart';
 import 'package:mindcare/album_ricordi/album_ricordi.dart';
 import 'package:mindcare/controller/report_controller.dart';
 import 'package:mindcare/controller/umore_controller.dart';
-import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/gestione_SOS/sos_paziente.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/Quiz/seleziona_quiz.dart';
 import 'package:mindcare/todolist/todolist.dart';
-import 'package:mindcare/widget_tree.dart';
-import 'package:panara_dialogs/panara_dialogs.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
@@ -21,9 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../controller/auth.dart';
-import '../quiz/categoria.dart';
-import '../autenticazione/login.dart';
-import 'opzioni_paziente.dart';
+import 'package:cron/cron.dart';
+import 'package:path/path.dart';
 
 class HomePazienteWidget extends StatefulWidget {
   final String caregiverUID;
@@ -34,12 +30,14 @@ class HomePazienteWidget extends StatefulWidget {
   _HomePazienteWidgetState createState() => _HomePazienteWidgetState();
 }
 
-class _HomePazienteWidgetState extends State<HomePazienteWidget> {
+class _HomePazienteWidgetState extends State<HomePazienteWidget>
+    with WidgetsBindingObserver {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Utente? user;
   bool checkHumor = false;
   Future? futureQuizCompletati;
   Stream<QuerySnapshot>? _patientStream;
+  final cron = Cron();
   @override
   void initState() {
     _patientStream = FirebaseFirestore.instance
@@ -49,7 +47,56 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
         .snapshots();
     futureQuizCompletati = ReportController()
         .getQuizCompletati(widget.caregiverUID, Auth().currentUser!.uid);
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        //Execute the code here when user come back the app.
+        //In my case, I needed to show if user active or not,
+        print('ok');
+        break;
+      case AppLifecycleState.inactive:
+        //Execute the code the when user leave the app
+        /* cron.close;
+        await Hive.initFlutter();
+        var box = await Hive.openBox('temp');
+        if (box.get('timer_todo') != null) {
+          box.put('timer_todo', false);
+        }
+        print('sto per uscire');
+        */
+        break;
+      default:
+        break;
+    }
+  }
+
+  createCron(context) async {
+    print('richiamato il contesto');
+    await Hive.initFlutter();
+    var box = await Hive.openBox('temp');
+    if (box.get('timer_todo') == null || box.get('timer_todo') == true) {
+      print('Non cè il timer');
+
+      cron.schedule(Schedule.parse('*/1 * * * *'), () async {
+        print('every minutes');
+        print(ModalRoute.of(context)!.settings.name);
+      });
+    } else if (box.get('timer_todo') == false) {
+      print('sto in true');
+      cron.close();
+      box.put('timer_todo', true);
+    }
   }
 
   @override
@@ -58,13 +105,13 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).backgroundPrimaryColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(70),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
           automaticallyImplyLeading: false,
-          actions: [],
+          actions: const [],
           leading: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
+            padding: const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 5),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
@@ -77,7 +124,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
           ),
           titleSpacing: 0,
           title: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
             child: Text(
               'MindCare',
               style: FlutterFlowTheme.of(context).title2.override(
@@ -129,6 +176,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                           if (snapshot.connectionState ==
                               ConnectionState.active) {
                             if (snapshot.hasData) {
+                              // ignore: prefer_typing_uninitialized_variables
                               var data;
                               snapshot.data?.docs.forEach((doc) {
                                 //iterazione sui singoli documenti
@@ -156,7 +204,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                         AsyncSnapshot snapshot) {
                                       if (snapshot.hasData) {
                                         int percent = snapshot.data;
-
+                                        //createCron(context);
                                         /*QUANDO FUTURE BUILDER HA TERMINATO VERIFICA L'UMORE: */
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((_) async {
@@ -246,12 +294,12 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                           children: [
                                                             Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          12,
-                                                                          0,
-                                                                          0),
+                                                                  const EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                      0,
+                                                                      12,
+                                                                      0,
+                                                                      0),
                                                               child: Text(
                                                                 'Salve,',
                                                                 style: FlutterFlowTheme.of(
@@ -446,8 +494,10 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                               ),
                                               Expanded(
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(20, 0, 20, 5),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          20, 0, 20, 5),
                                                   child: SelectionArea(
                                                       child: AutoSizeText(
                                                     'Questa è la tua schermata principale.\nCompleta un quiz oppure rivivi i tuoi ricordi!',
@@ -788,7 +838,11 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const SosWidget()));
+                                                        SosWidget(
+                                                          caregiverUID: widget
+                                                              .caregiverUID,
+                                                          user: user!,
+                                                        )));
                                           },
                                         ),
                                       ),

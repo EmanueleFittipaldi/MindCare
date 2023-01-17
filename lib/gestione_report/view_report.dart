@@ -90,7 +90,7 @@ class _ViewReportState extends State<ViewReport> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
+          padding: const EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -98,12 +98,13 @@ class _ViewReportState extends State<ViewReport> {
               children: [
                 for (var item in widget.data)
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 20),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 20),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             blurRadius: 12,
                             color: Color(0x14000000),
@@ -113,13 +114,14 @@ class _ViewReportState extends State<ViewReport> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   15, 15, 15, 15),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -133,9 +135,8 @@ class _ViewReportState extends State<ViewReport> {
                                           CrossAxisAlignment.stretch,
                                       children: [
                                         Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 5, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(16, 5, 0, 0),
                                             child: Text(
                                               'Categoria:',
                                               style: FlutterFlowTheme.of(
@@ -143,31 +144,31 @@ class _ViewReportState extends State<ViewReport> {
                                                   .subtitle1
                                                   .override(
                                                     fontFamily: 'Outfit',
-                                                    color: Color(0xFF101213),
+                                                    color:
+                                                        const Color(0xFF101213),
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                             )),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16, 0, 0, 0),
                                           child: Text(
-                                            '${item.categoria}',
+                                            item.categoria,
                                             style: FlutterFlowTheme.of(context)
                                                 .subtitle1
                                                 .override(
                                                   fontFamily: 'Outfit',
-                                                  color: Color(0xFF101213),
+                                                  color:
+                                                      const Color(0xFF101213),
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w200,
                                                 ),
                                           ),
                                         ),
                                         Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 5, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(16, 5, 0, 0),
                                             child: Text(
                                               'Tipologia:',
                                               style: FlutterFlowTheme.of(
@@ -175,31 +176,31 @@ class _ViewReportState extends State<ViewReport> {
                                                   .subtitle1
                                                   .override(
                                                     fontFamily: 'Outfit',
-                                                    color: Color(0xFF101213),
+                                                    color:
+                                                        const Color(0xFF101213),
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                             )),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16, 0, 0, 0),
                                           child: Text(
-                                            '${item.tipologia}',
+                                            item.tipologia,
                                             style: FlutterFlowTheme.of(context)
                                                 .subtitle1
                                                 .override(
                                                   fontFamily: 'Outfit',
-                                                  color: Color(0xFF101213),
+                                                  color:
+                                                      const Color(0xFF101213),
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w200,
                                                 ),
                                           ),
                                         ),
                                         Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 5, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(16, 5, 0, 0),
                                             child: Text(
                                               'Data completato:',
                                               style: FlutterFlowTheme.of(
@@ -207,15 +208,15 @@ class _ViewReportState extends State<ViewReport> {
                                                   .subtitle1
                                                   .override(
                                                     fontFamily: 'Outfit',
-                                                    color: Color(0xFF101213),
+                                                    color:
+                                                        const Color(0xFF101213),
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                             )),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 5, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16, 5, 0, 0),
                                           child: Text(
                                             DateFormat('dd-MM-yyyy HH:mm')
                                                 .format(item.dataInizio)
@@ -224,16 +225,16 @@ class _ViewReportState extends State<ViewReport> {
                                                 .subtitle1
                                                 .override(
                                                   fontFamily: 'Outfit',
-                                                  color: Color(0xFF101213),
+                                                  color:
+                                                      const Color(0xFF101213),
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w200,
                                                 ),
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 5, 16, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16, 5, 16, 0),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             crossAxisAlignment:
@@ -246,8 +247,8 @@ class _ViewReportState extends State<ViewReport> {
                                                         .subtitle1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF101213),
+                                                          color: const Color(
+                                                              0xFF101213),
                                                           fontSize: 16,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -262,8 +263,8 @@ class _ViewReportState extends State<ViewReport> {
                                                         .subtitle1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF101213),
+                                                          color: const Color(
+                                                              0xFF101213),
                                                           fontSize: 16,
                                                           fontWeight:
                                                               FontWeight.w200,
@@ -273,9 +274,8 @@ class _ViewReportState extends State<ViewReport> {
                                           ),
                                         ),
                                         Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 5, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(16, 5, 0, 0),
                                             child: Text(
                                               'Totale domande:',
                                               style: FlutterFlowTheme.of(
@@ -283,15 +283,15 @@ class _ViewReportState extends State<ViewReport> {
                                                   .subtitle1
                                                   .override(
                                                     fontFamily: 'Outfit',
-                                                    color: Color(0xFF101213),
+                                                    color:
+                                                        const Color(0xFF101213),
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                             )),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16, 0, 0, 0),
                                           child: Text(
                                             (item.risposteCorrette +
                                                     item.risposteErrate)
@@ -300,7 +300,8 @@ class _ViewReportState extends State<ViewReport> {
                                                 .subtitle1
                                                 .override(
                                                   fontFamily: 'Outfit',
-                                                  color: Color(0xFF101213),
+                                                  color:
+                                                      const Color(0xFF101213),
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w200,
                                                 ),
@@ -313,6 +314,7 @@ class _ViewReportState extends State<ViewReport> {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
+                                        // ignore: sized_box_for_whitespace
                                         Container(
                                             width: 200,
                                             height: 50,
@@ -324,9 +326,9 @@ class _ViewReportState extends State<ViewReport> {
                                                   Expanded(
                                                     child: Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(16, 5,
-                                                                    0, 0),
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                16, 5, 0, 0),
                                                         child: Text(
                                                           'Umore:',
                                                           style: FlutterFlowTheme
@@ -335,7 +337,7 @@ class _ViewReportState extends State<ViewReport> {
                                                               .override(
                                                                 fontFamily:
                                                                     'Outfit',
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xFF101213),
                                                                 fontSize: 16,
                                                                 fontWeight:
@@ -354,9 +356,9 @@ class _ViewReportState extends State<ViewReport> {
                                                   ),
                                                 ])),
                                         Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 15, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 15, 0, 0),
+                                            // ignore: sized_box_for_whitespace
                                             child: Container(
                                                 width: 200,
                                                 height: 150,
@@ -373,10 +375,10 @@ class _ViewReportState extends State<ViewReport> {
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0, 0),
+                              alignment: const AlignmentDirectional(0, 0),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 0, 5),
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     Navigator.of(context).push(
@@ -399,7 +401,7 @@ class _ViewReportState extends State<ViewReport> {
                                             color: Colors.black,
                                             fontWeight: FontWeight.w300,
                                             fontSize: 25),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       color: Colors.transparent,
                                       width: 0,
                                     ),

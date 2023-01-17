@@ -6,16 +6,12 @@ import 'package:mindcare/gestione_quiz/gestione_quiz.dart';
 import 'package:mindcare/gestione_report/seleziona_report.dart';
 import 'package:mindcare/gestione_todolist/gestione_todolist.dart';
 import 'package:mindcare/model/utente.dart';
-import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-import '../gestione_report/gestione_report.dart';
 import '../gestione_ricordi/gestione_album.dart';
-import 'dati_paziente.dart';
 
 class DashboardPazienteWidget extends StatefulWidget {
   final Utente user;
@@ -31,7 +27,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   getAge() {
-    DateTime now = new DateTime.now();
+    DateTime now = DateTime.now();
     int age = now.year - widget.user.date.year;
 
     if (now.month < widget.user.date.month) {
@@ -96,8 +92,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(15, 2, 2, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    15, 2, 2, 0),
                                 child: Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.44,
@@ -108,8 +104,9 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        12, 8, 12, 8),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 8, 12, 8),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
@@ -143,9 +140,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                               ),
                                         ),
                                         Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 4, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 4, 0, 0),
                                             child: AutoSizeText(
                                               getAge() + ' anni',
                                               textAlign: TextAlign.start,
@@ -163,9 +159,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                             )),
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 4, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 4, 0, 0),
                                             child: AutoSizeText(
                                               widget.user.email,
                                               textAlign: TextAlign.start,
@@ -214,8 +209,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                         ),
                         Expanded(
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 0, 20, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 0, 20, 5),
                             child: SelectionArea(
                                 child: AutoSizeText(
                               'Gestisci tutti i dati associati al paziente',
@@ -234,7 +229,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
                     child: Text(
                       'Gestisci paziente',
                       textAlign: TextAlign.center,
@@ -270,7 +266,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                               decoration: BoxDecoration(
                                 color:
                                     FlutterFlowTheme.of(context).tertiaryColor,
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 4,
                                     color: Color(0x14000000),
@@ -286,8 +282,9 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                 children: [
                                   Expanded(
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 0, 10, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              20, 0, 10, 0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -332,7 +329,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                   Material(
                                     color: Colors.transparent,
                                     elevation: 0,
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(110),
                                         bottomRight: Radius.circular(30),
@@ -343,7 +340,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     child: Container(
                                       width: 150,
                                       height: double.infinity,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color: Color(0xFFD0E2FF),
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(110),
@@ -354,8 +351,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 10),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 0, 10),
                                         child: SvgPicture.asset(
                                           'assets/images/undraw_questions_re_1fy7.svg',
                                           width: 80,
@@ -385,7 +382,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                               decoration: BoxDecoration(
                                 color:
                                     FlutterFlowTheme.of(context).tertiaryColor,
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 4,
                                     color: Color(0x14000000),
@@ -401,8 +398,9 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                 children: [
                                   Expanded(
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 0, 10, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              20, 0, 10, 0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -447,7 +445,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                   Material(
                                     color: Colors.transparent,
                                     elevation: 0,
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(110),
                                         bottomRight: Radius.circular(30),
@@ -458,7 +456,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     child: Container(
                                       width: 150,
                                       height: double.infinity,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color: Color(0xFFD0E2FF),
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(110),
@@ -469,8 +467,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 10),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 0, 10),
                                         child: SvgPicture.asset(
                                           'assets/images/undraw_moments_0y20.svg',
                                           width: 80,
@@ -500,7 +498,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                               decoration: BoxDecoration(
                                 color:
                                     FlutterFlowTheme.of(context).tertiaryColor,
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 4,
                                     color: Color(0x14000000),
@@ -516,8 +514,9 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                 children: [
                                   Expanded(
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 0, 10, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              20, 0, 10, 0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -562,7 +561,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                   Material(
                                     color: Colors.transparent,
                                     elevation: 0,
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(110),
                                         bottomRight: Radius.circular(30),
@@ -573,7 +572,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     child: Container(
                                       width: 150,
                                       height: double.infinity,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color: Color(0xFFD0E2FF),
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(110),
@@ -584,8 +583,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 10),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 0, 10),
                                         child: SvgPicture.asset(
                                           'assets/images/undraw_data_report_re_p4so.svg',
                                           width: 80,
@@ -615,7 +614,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                               decoration: BoxDecoration(
                                 color:
                                     FlutterFlowTheme.of(context).tertiaryColor,
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 4,
                                     color: Color(0x14000000),
@@ -631,8 +630,9 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                 children: [
                                   Expanded(
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 0, 10, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              20, 0, 10, 0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -677,7 +677,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                   Material(
                                     color: Colors.transparent,
                                     elevation: 0,
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(110),
                                         bottomRight: Radius.circular(30),
@@ -688,7 +688,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     child: Container(
                                       width: 150,
                                       height: double.infinity,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color: Color(0xFFD0E2FF),
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(110),
@@ -699,8 +699,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 10),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 0, 10),
                                         child: SvgPicture.asset(
                                           'assets/images/undraw_to_do_list_re_9nt7.svg',
                                           width: 80,
@@ -732,7 +732,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                               decoration: BoxDecoration(
                                 color:
                                     FlutterFlowTheme.of(context).tertiaryColor,
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 4,
                                     color: Color(0x14000000),
@@ -748,8 +748,9 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                 children: [
                                   Expanded(
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 0, 10, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              20, 0, 10, 0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -794,7 +795,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                   Material(
                                     color: Colors.transparent,
                                     elevation: 0,
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(110),
                                         bottomRight: Radius.circular(30),
@@ -805,7 +806,7 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                     child: Container(
                                       width: 150,
                                       height: double.infinity,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color: Color(0xFFD0E2FF),
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(110),
@@ -816,8 +817,8 @@ class _DashboardPazienteWidgetState extends State<DashboardPazienteWidget> {
                                         shape: BoxShape.rectangle,
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 10),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 0, 10),
                                         child: SvgPicture.asset(
                                           'assets/images/undraw_people_search_re_5rre.svg',
                                           width: 80,

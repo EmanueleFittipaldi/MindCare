@@ -1,12 +1,10 @@
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_util.dart';
-import 'package:mindcare/gestione_report/view_domande.dart';
 import 'package:mindcare/model/umore.dart';
 import 'package:mindcare/model/utente.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
 class ViewUmore extends StatefulWidget {
@@ -35,22 +33,28 @@ class _ViewUmoreState extends State<ViewUmore> {
     String image = '';
     switch (umore) {
       case 0:
-        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637186.png';
+        image = 'assets/images/angry.png';
         break;
       case 1:
-        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637163.png';
+        image = 'assets/images/sad.png';
         break;
       case 2:
-        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637207.png';
+        image = 'assets/images/neutral.png';
         break;
       case 3:
-        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637188.png';
+        image = 'assets/images/happy.png';
         break;
       case 4:
-        image = 'https://cdn-icons-png.flaticon.com/512/6637/6637197.png';
+        image = 'assets/images/excited.png';
         break;
     }
     return image;
+  }
+
+  getEmoji(String text) {
+    var emoji = ['😡', '🙁', '😐', '🙂', '😍'];
+    var t = text.split(' ').last;
+    return getEmoticon(emoji.indexOf(t));
   }
 
   @override
@@ -66,7 +70,7 @@ class _ViewUmoreState extends State<ViewUmore> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
+          padding: const EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -74,12 +78,13 @@ class _ViewUmoreState extends State<ViewUmore> {
               children: [
                 for (var item in widget.data)
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 20),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 20),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             blurRadius: 12,
                             color: Color(0x14000000),
@@ -89,13 +94,14 @@ class _ViewUmoreState extends State<ViewUmore> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   15, 15, 15, 15),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -109,9 +115,8 @@ class _ViewUmoreState extends State<ViewUmore> {
                                           CrossAxisAlignment.stretch,
                                       children: [
                                         Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 5, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(16, 5, 0, 0),
                                             child: Text(
                                               'Tipologia risposta:',
                                               style: FlutterFlowTheme.of(
@@ -119,31 +124,31 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                   .subtitle1
                                                   .override(
                                                     fontFamily: 'Outfit',
-                                                    color: Color(0xFF101213),
+                                                    color:
+                                                        const Color(0xFF101213),
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                             )),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16, 0, 0, 0),
                                           child: Text(
-                                            '${item.type}',
+                                            item.type,
                                             style: FlutterFlowTheme.of(context)
                                                 .subtitle1
                                                 .override(
                                                   fontFamily: 'Outfit',
-                                                  color: Color(0xFF101213),
+                                                  color:
+                                                      const Color(0xFF101213),
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w200,
                                                 ),
                                           ),
                                         ),
                                         Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 5, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(16, 5, 0, 0),
                                             child: Text(
                                               'Data risposta:',
                                               style: FlutterFlowTheme.of(
@@ -151,15 +156,15 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                   .subtitle1
                                                   .override(
                                                     fontFamily: 'Outfit',
-                                                    color: Color(0xFF101213),
+                                                    color:
+                                                        const Color(0xFF101213),
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                             )),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 5, 0, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16, 5, 0, 0),
                                           child: Text(
                                             DateFormat('dd-MM-yyyy HH:mm')
                                                 .format(item.data)
@@ -168,16 +173,16 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                 .subtitle1
                                                 .override(
                                                   fontFamily: 'Outfit',
-                                                  color: Color(0xFF101213),
+                                                  color:
+                                                      const Color(0xFF101213),
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w200,
                                                 ),
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 5, 16, 0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16, 5, 16, 0),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             crossAxisAlignment:
@@ -190,8 +195,8 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                         .subtitle1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF101213),
+                                                          color: const Color(
+                                                              0xFF101213),
                                                           fontSize: 16,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -204,8 +209,8 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                         .subtitle1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF101213),
+                                                          color: const Color(
+                                                              0xFF101213),
                                                           fontSize: 16,
                                                           fontWeight:
                                                               FontWeight.w200,
@@ -214,6 +219,84 @@ class _ViewUmoreState extends State<ViewUmore> {
                                             ],
                                           ),
                                         ),
+                                        item.type != 'quiz'
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(16, 5, 16, 0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Emoticon:',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .subtitle1
+                                                          .override(
+                                                            fontFamily:
+                                                                'Outfit',
+                                                            color: const Color(
+                                                                0xFF101213),
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                    ),
+                                                    Image.asset(
+                                                      getEmoji(item.text),
+                                                      width: 30,
+                                                      height: 30,
+                                                      fit: BoxFit.contain,
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(16, 5, 16, 0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .subtitle1
+                                                          .override(
+                                                            fontFamily:
+                                                                'Outfit',
+                                                            color: const Color(
+                                                                0xFF101213),
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                    ),
+                                                    Text(
+                                                      '',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .subtitle1
+                                                          .override(
+                                                            fontFamily:
+                                                                'Outfit',
+                                                            color: const Color(
+                                                                0xFF101213),
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
                                       ],
                                     ),
                                   ),
@@ -221,9 +304,10 @@ class _ViewUmoreState extends State<ViewUmore> {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
+                                        // ignore: sized_box_for_whitespace
                                         Container(
                                           width: 200,
-                                          height: 130,
+                                          height: 185,
                                           child: SingleChildScrollView(
                                             child: Column(
                                                 mainAxisSize: MainAxisSize.max,
@@ -232,9 +316,9 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                 children: [
                                                   Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 0, 0, 5),
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0, 0, 0, 5),
                                                       child: Text(
                                                         'Risposta:',
                                                         style:
@@ -244,7 +328,7 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                                 .override(
                                                                   fontFamily:
                                                                       'Outfit',
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0xFF101213),
                                                                   fontSize: 16,
                                                                   fontWeight:
@@ -253,7 +337,7 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                                 ),
                                                       )),
                                                   item.type == 'quiz'
-                                                      ? Image.network(
+                                                      ? Image.asset(
                                                           getEmoticon(
                                                               item.score),
                                                           width: 70,
@@ -262,23 +346,27 @@ class _ViewUmoreState extends State<ViewUmore> {
                                                         )
                                                       : Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(16,
-                                                                      5, 0, 0),
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  16, 5, 0, 0),
                                                           child: AutoSizeText(
-                                                            '${item.text}',
+                                                            item.text.substring(
+                                                                0,
+                                                                item.text
+                                                                        .length -
+                                                                    2),
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .subtitle1
                                                                 .override(
                                                                   fontFamily:
                                                                       'Outfit',
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0xFF101213),
                                                                   fontSize: 16,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w400,
+                                                                          .w200,
                                                                 ),
                                                           )),
                                                 ]),

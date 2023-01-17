@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/todo_controller.dart';
@@ -10,8 +12,6 @@ import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class ToDoListPazienteWidget extends StatefulWidget {
   final Utente user;
@@ -73,11 +73,11 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
       return Colors.green;
     }
     if (oraScadenza.difference(now).isNegative) {
-      return Color(0xFFAB2B40);
+      return const Color(0xFFAB2B40);
     } else if (oraScadenza.difference(now).inMinutes < 30) {
-      return Color(0xFFFF8B17);
+      return const Color(0xFFFF8B17);
     }
-    return Color(0xFF101213);
+    return const Color(0xFF101213);
   }
 
   getCheckDeadlineActiviy(DateTime oraScadenza, bool completed) {
@@ -91,7 +91,7 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0xFFECF4FF),
+      backgroundColor: const Color(0xFFECF4FF),
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70),
         child: AppbarWidget(
@@ -112,14 +112,14 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                   height: 180,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).tertiaryColor,
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         blurRadius: 12,
                         color: Color(0x14000000),
                         offset: Offset(0, 5),
                       )
                     ],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(40),
                       bottomRight: Radius.circular(40),
                       topLeft: Radius.circular(0),
@@ -138,7 +138,7 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     20, 0, 20, 5),
                                 child: SelectionArea(
                                     child: AutoSizeText(
@@ -154,7 +154,7 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                                 )),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     20, 0, 20, 5),
                                 child: SelectionArea(
                                     child: AutoSizeText(
@@ -176,7 +176,7 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     20, 0, 20, 5),
                                 child: SelectionArea(
                                     child: AutoSizeText(
@@ -196,7 +196,8 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 30, 20, 5),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 30, 20, 5),
                         child: SelectionArea(
                             child: AutoSizeText(
                           'Da questa schermata puoi gestire le tue attività giornaliere',
@@ -213,7 +214,7 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('user')
@@ -247,15 +248,16 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                               children: [
                                 for (var item in data)
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        15, 0, 15, 8),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            15, 0, 15, 8),
                                     child: Container(
                                       width: double.infinity,
                                       height: 110,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 4,
                                             color: Color(0x14000000),
@@ -269,14 +271,15 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                                         ),
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 5),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 0, 5),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(20, 0, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(20, 0, 0, 0),
                                               child: ToggleIcon(
                                                 onPressed: () async {
                                                   TimeOfDay t = TimeOfDay.now();
@@ -328,7 +331,7 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                                                   });
                                                 },
                                                 value: item['completed'],
-                                                onIcon: Icon(
+                                                onIcon: const Icon(
                                                   Icons.check_box,
                                                   color: Color(0xFF17901E),
                                                   size: 30,
@@ -344,8 +347,9 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                                             ),
                                             Expanded(
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 20, 0),
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(0, 0, 20, 0),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -358,9 +362,9 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                                                     Expanded(
                                                       child: Padding(
                                                         padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(0, 0,
-                                                                    20, 0),
+                                                            const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                0, 0, 20, 0),
                                                         child: Column(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -374,19 +378,19 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                                                             Expanded(
                                                               child: Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            16,
-                                                                            10,
-                                                                            0,
-                                                                            10),
+                                                                    const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                        16,
+                                                                        10,
+                                                                        0,
+                                                                        10),
                                                                 child:
                                                                     AutoSizeText(
                                                                   item['text'],
                                                                   style: FlutterFlowTheme.of(context).subtitle1.override(
                                                                       fontFamily:
                                                                           'Outfit',
-                                                                      color: Color(
+                                                                      color: const Color(
                                                                           0xFF101213),
                                                                       fontSize:
                                                                           18,

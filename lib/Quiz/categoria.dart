@@ -5,10 +5,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import '../autenticazione/login.dart';
 import '../model/utente.dart';
 
 class SelezionaCategoriaWidget extends StatefulWidget {

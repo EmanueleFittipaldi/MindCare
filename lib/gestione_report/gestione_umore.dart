@@ -1,35 +1,23 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/report_controller.dart';
 import 'package:mindcare/controller/umore_controller.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_widgets.dart';
-import 'package:mindcare/gestione_report/chart.dart';
 import 'package:mindcare/gestione_report/humore_chart.dart';
 import 'package:mindcare/gestione_report/report_medico.dart';
-import 'package:mindcare/gestione_report/view_report.dart';
 import 'package:mindcare/gestione_report/view_umore.dart';
 import 'package:mindcare/model/report.dart';
 import 'package:csv/csv.dart';
-import 'package:mindcare/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/model/umore.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:group_button/group_button.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import '../flutter_flow/flutter_flow_calendar.dart';
@@ -119,19 +107,19 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
 
         switch (humorAverage.round()) {
           case 0:
-            image = 'https://cdn-icons-png.flaticon.com/512/6637/6637186.png';
+            image = 'assets/images/angry.png';
             break;
           case 1:
-            image = 'https://cdn-icons-png.flaticon.com/512/6637/6637163.png';
+            image = 'assets/images/sad.png';
             break;
           case 2:
-            image = 'https://cdn-icons-png.flaticon.com/512/6637/6637207.png';
+            image = 'assets/images/neutral.png';
             break;
           case 3:
-            image = 'https://cdn-icons-png.flaticon.com/512/6637/6637188.png';
+            image = 'assets/images/happy.png';
             break;
           case 4:
-            image = 'https://cdn-icons-png.flaticon.com/512/6637/6637197.png';
+            image = 'assets/images/excited.png';
             break;
         }
       }
@@ -175,7 +163,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 10, 15, 10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(15, 10, 15, 10),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -218,7 +206,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF57636C),
+                                      color: const Color(0xFF57636C),
                                       fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -232,7 +220,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF57636C),
+                                      color: const Color(0xFF57636C),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w200,
                                     ),
@@ -277,7 +265,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF57636C),
+                                      color: const Color(0xFF57636C),
                                       fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -291,7 +279,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF57636C),
+                                      color: const Color(0xFF57636C),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w200,
                                     ),
@@ -306,7 +294,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [],
+                    children: const [],
                   ),
                 ),
                 FutureBuilder(
@@ -343,8 +331,8 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 5, 0, 5),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   List<List<dynamic>> csv = [];
@@ -374,17 +362,15 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                       ? await getExternalStorageDirectory() //FOR ANDROID
                                       : await getApplicationSupportDirectory(); //FOR iOS
                                   var fname =
-                                      'Report_UMORE_${widget.user.name}_${widget.user.lastname}_P#_${widget.user.userID}_' +
-                                          DateTime.now().toString() +
-                                          '.csv';
+                                      'Report_UMORE_${widget.user.name}_${widget.user.lastname}_P#_${widget.user.userID}_${DateTime.now()}.csv';
                                   File f = File(
-                                      directory!.absolute.path + "/" + fname);
+                                      "${directory!.absolute.path}/$fname");
 
                                   f.writeAsString(csvS);
 
-                                  print(f.path);
                                   var msg =
-                                      'Report umore [${startDate} - ${endDate}]\nPaziente: ${widget.user.lastname} ${widget.user.name} \nID:#${widget.user.userID}\nCreato il: ${DateTime.now()}\n\nEmesso dal Caregiver:#${Auth().currentUser!.uid}';
+                                      'Report umore [$startDate - $endDate]\nPaziente: ${widget.user.lastname} ${widget.user.name} \nID:#${widget.user.userID}\nCreato il: ${DateTime.now()}\n\nEmesso dal Caregiver:#${Auth().currentUser!.uid}';
+                                  // ignore: unused_local_variable
                                   var text = await showDialog(
                                       barrierDismissible: false,
                                       context: context,
@@ -411,7 +397,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                               .tertiaryColor,
                                           fontWeight: FontWeight.w400,
                                           fontSize: 14),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 0,
                                   ),
@@ -424,6 +410,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             16, 20, 16, 10),
+                                    // ignore: sized_box_for_whitespace
                                     child: Container(
                                         height: 500,
                                         width: double.infinity,
@@ -439,9 +426,9 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 0, 0, 10),
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            0, 0, 0, 10),
                                                     child: Text(
                                                       'Score ottenuto da sentiment analysis. \nMaggiore è lo score migliore è l\'umore del paziente.',
                                                       textAlign:
@@ -478,8 +465,10 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 0, 10),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          0, 0, 0, 10),
                                                   child: Text(
                                                     'Score ottenuto da sentiment analysis. \nMaggiore è lo score migliore è l\'umore del paziente.',
                                                     textAlign: TextAlign.center,
@@ -514,8 +503,10 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 0, 10),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          0, 0, 0, 10),
                                                   child: Text(
                                                     'Score ottenuto dalla emoticon selezionata dopo aver completato il quiz.',
                                                     textAlign: TextAlign.center,
@@ -561,8 +552,8 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                         ),
                                   ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(15, 0, 15, 15),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  15, 0, 15, 15),
                               child: Container(
                                 width: double.infinity,
                                 height: 150,
@@ -596,7 +587,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                           context,
                                           title: "Errore data",
                                           message:
-                                              "Inserisci una data nell\'intervallo selezionato!",
+                                              "Inserisci una data nell'intervallo selezionato!",
                                           buttonText: "Okay",
                                           onTapDismiss: () {
                                             Navigator.pop(context);
@@ -616,22 +607,24 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                     await columnController!.animateTo(
                                       columnController!
                                           .position.maxScrollExtent,
-                                      duration: Duration(milliseconds: 1000),
+                                      duration:
+                                          const Duration(milliseconds: 1000),
                                       curve: Curves.ease,
                                     );
                                   },
-                                  titleStyle: TextStyle(),
-                                  dayOfWeekStyle: TextStyle(),
-                                  dateStyle: TextStyle(),
-                                  selectedDateStyle: TextStyle(),
-                                  inactiveDateStyle: TextStyle(),
+                                  titleStyle: const TextStyle(),
+                                  dayOfWeekStyle: const TextStyle(),
+                                  dateStyle: const TextStyle(),
+                                  selectedDateStyle: const TextStyle(),
+                                  inactiveDateStyle: const TextStyle(),
                                 ),
                               ),
                             ),
                             reportSelectedDay != null
                                 ? Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16, 10, 16, 20),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            16, 10, 16, 20),
                                     child: Container(
                                       width: double.infinity,
                                       decoration: BoxDecoration(
@@ -651,16 +644,17 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                             width: 0,
                                           )),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            4, 4, 4, 4),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(4, 4, 4, 4),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 12, 0, 0),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(16, 12, 0, 0),
                                               child: Text(
                                                 'Resoconto giornaliero',
                                                 style:
@@ -668,8 +662,8 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                         .subtitle1
                                                         .override(
                                                           fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF101213),
+                                                          color: const Color(
+                                                              0xFF101213),
                                                           fontSize: 18,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -677,8 +671,9 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(16, 16, 16, 16),
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(16, 16, 16, 16),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -697,12 +692,12 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                 ''
                                                             ? Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            22,
-                                                                            0,
-                                                                            0),
+                                                                    const EdgeInsetsDirectional
+                                                                            .fromSTEB(
+                                                                        0,
+                                                                        22,
+                                                                        0,
+                                                                        0),
                                                                 child: Text(
                                                                   'NaN',
                                                                   style: FlutterFlowTheme.of(
@@ -711,7 +706,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                       .override(
                                                                         fontFamily:
                                                                             'Outfit',
-                                                                        color: Color(
+                                                                        color: const Color(
                                                                             0xFF57636C),
                                                                         fontSize:
                                                                             30,
@@ -720,7 +715,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                       ),
                                                                 ),
                                                               )
-                                                            : Image.network(
+                                                            : Image.asset(
                                                                 reportSelectedDay![
                                                                         'Statistiche']
                                                                     [
@@ -732,9 +727,9 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                               ),
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      22, 0, 0),
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  0, 22, 0, 0),
                                                           child: Text(
                                                             'Umore medio quiz',
                                                             style: FlutterFlowTheme
@@ -743,7 +738,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                 .override(
                                                                   fontFamily:
                                                                       'Outfit',
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0xFF57636C),
                                                                   fontSize: 14,
                                                                   fontWeight:
@@ -762,9 +757,9 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 0, 5),
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  0, 0, 0, 5),
                                                           child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -776,8 +771,8 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                 Expanded(
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -791,7 +786,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                             fontFamily:
                                                                                 'Outfit',
                                                                             color:
-                                                                                Color(0xFF57636C),
+                                                                                const Color(0xFF57636C),
                                                                             fontSize:
                                                                                 14,
                                                                             fontWeight:
@@ -803,8 +798,8 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                 Expanded(
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -821,7 +816,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                             fontFamily:
                                                                                 'Outfit',
                                                                             color:
-                                                                                Color(0xFF57636C),
+                                                                                const Color(0xFF57636C),
                                                                             fontSize:
                                                                                 25,
                                                                             fontWeight:
@@ -834,9 +829,9 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 0, 5),
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  0, 0, 0, 5),
                                                           child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -848,8 +843,8 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                 Expanded(
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -863,7 +858,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                             fontFamily:
                                                                                 'Outfit',
                                                                             color:
-                                                                                Color(0xFF57636C),
+                                                                                const Color(0xFF57636C),
                                                                             fontSize:
                                                                                 14,
                                                                             fontWeight:
@@ -875,8 +870,8 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                 Expanded(
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -893,7 +888,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                             fontFamily:
                                                                                 'Outfit',
                                                                             color:
-                                                                                Color(0xFF57636C),
+                                                                                const Color(0xFF57636C),
                                                                             fontSize:
                                                                                 25,
                                                                             fontWeight:
@@ -906,9 +901,9 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 0, 5),
+                                                              const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                  0, 0, 0, 5),
                                                           child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -920,8 +915,8 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                 Expanded(
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -935,7 +930,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                             fontFamily:
                                                                                 'Outfit',
                                                                             color:
-                                                                                Color(0xFF57636C),
+                                                                                const Color(0xFF57636C),
                                                                             fontSize:
                                                                                 14,
                                                                             fontWeight:
@@ -947,8 +942,8 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                 Expanded(
                                                                   child:
                                                                       Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                    padding:
+                                                                        const EdgeInsetsDirectional.fromSTEB(
                                                                             0,
                                                                             0,
                                                                             0,
@@ -965,7 +960,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                                             fontFamily:
                                                                                 'Outfit',
                                                                             color:
-                                                                                Color(0xFF57636C),
+                                                                                const Color(0xFF57636C),
                                                                             fontSize:
                                                                                 25,
                                                                             fontWeight:
@@ -987,6 +982,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                       ),
                                     ),
                                   )
+                                // ignore: avoid_unnecessary_containers
                                 : Container(
                                     child: Text(
                                         'Non ci sono report in questo giorno!',
@@ -1002,8 +998,9 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                   ),
                             reportSelectedDay != null
                                 ? Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        50, 0, 50, 20),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            50, 0, 50, 20),
                                     child: FFButtonWidget(
                                       onPressed: () {
                                         Navigator.of(context).push(
@@ -1029,7 +1026,7 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                                         .tertiaryColor,
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 14),
-                                        borderSide: BorderSide(
+                                        borderSide: const BorderSide(
                                           color: Colors.transparent,
                                           width: 0,
                                         ),
@@ -1037,11 +1034,11 @@ class _UmoreStatsWidgetState extends State<UmoreStatsWidget> {
                                       ),
                                     ),
                                   )
-                                : SizedBox.shrink(),
+                                : const SizedBox.shrink(),
                           ],
                         );
                       } else {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
                     })
               ],

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mindcare/caregiver/home_caregiver.dart';
 import 'package:mindcare/caregiver/opzioni.dart';
-import 'package:mindcare/controller/user_controller.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_theme.dart';
 import 'package:mindcare/paziente/home_paziente.dart';
 import 'package:mindcare/model/utente.dart';

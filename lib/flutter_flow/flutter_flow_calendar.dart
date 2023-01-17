@@ -146,10 +146,10 @@ class _FlutterFlowCalendarState extends State<FlutterFlowCalendar> {
             rowHeight:
                 widget.rowHeight ?? MediaQuery.of(context).size.width / 7,
             calendarStyle: CalendarStyle(
-              weekendTextStyle: widget.dateStyle ??
-                  const TextStyle(color: const Color(0xFF5A5A5A)),
-              holidayTextStyle: widget.dateStyle ??
-                  const TextStyle(color: const Color(0xFF5C6BC0)),
+              weekendTextStyle:
+                  widget.dateStyle ?? const TextStyle(color: Color(0xFF5A5A5A)),
+              holidayTextStyle:
+                  widget.dateStyle ?? const TextStyle(color: Color(0xFF5C6BC0)),
               selectedTextStyle:
                   const TextStyle(color: Color(0xFFFAFAFA), fontSize: 16.0)
                       .merge(widget.selectedDateStyle),

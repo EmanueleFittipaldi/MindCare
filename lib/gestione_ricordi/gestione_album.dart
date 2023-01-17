@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/controller/album_controller.dart';
 import 'package:mindcare/controller/auth.dart';
-import 'package:mindcare/dialog/confirm_dialog.dart';
 import 'package:mindcare/gestione_ricordi/creazione_ricordo.dart';
 import 'package:mindcare/model/ricordo.dart';
 import 'package:mindcare/model/utente.dart';
@@ -10,8 +9,8 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+// ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
 class GestioneAlbumWidget extends StatefulWidget {
@@ -48,6 +47,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ignore: sized_box_for_whitespace
                     Container(
                       height: 250,
                       child: Stack(
@@ -57,27 +57,27 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                             height: 230,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiaryColor,
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   blurRadius: 12,
                                   color: Color(0x14000000),
                                   offset: Offset(0, 5),
                                 )
                               ],
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(40),
                                 bottomRight: Radius.circular(40),
                                 topLeft: Radius.circular(0),
                                 topRight: Radius.circular(0),
                               ),
                             ),
-                            alignment: AlignmentDirectional(-0.0, 0),
+                            alignment: const AlignmentDirectional(-0.0, 0),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.1, -1),
+                            alignment: const AlignmentDirectional(0.1, -1),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  8, 8, 8, 8),
                               child: SvgPicture.asset(
                                 'assets/images/undraw_camera_re_cnp4.svg',
                                 width: 300,
@@ -87,21 +87,21 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1, 0.85),
+                            alignment: const AlignmentDirectional(-1, 0.85),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(20, 5, 20, 5),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20, 5, 20, 5),
                               child: Container(
                                 width: double.infinity,
                                 height: 50,
-                                decoration: BoxDecoration(),
+                                decoration: const BoxDecoration(),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 10, 0, 0),
                                         child: AutoSizeText(
                                           'Aggiungi o elimina ricordi dall\'album del paziente',
                                           textAlign: TextAlign.start,
@@ -134,8 +134,8 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 10, 20, 0),
                             child: Text(
                               'Ricordi',
                               textAlign: TextAlign.center,
@@ -209,7 +209,7 @@ class _GestioneAlbumWidgetState extends State<GestioneAlbumWidget> {
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
-                                            boxShadow: [
+                                            boxShadow: const [
                                               BoxShadow(
                                                 blurRadius: 4,
                                                 color: Color(0x14000000),

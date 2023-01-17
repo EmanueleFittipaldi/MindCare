@@ -1,22 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/quiz_img_a_nome.dart';
 import 'package:mindcare/Quiz/quiz_nome_a_img.dart';
 import 'package:mindcare/controller/quiz_controller.dart';
-import 'package:mindcare/model/quesito.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import '../appbar/appbar_caregiver.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import '../gestione_quiz/domanda_nome_a_img.dart';
-import '../autenticazione/login.dart';
 import '../model/utente.dart';
-import 'dart:math';
-import '../flutter_flow/flutter_flow_util.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SelezionaTipologiaWidget extends StatefulWidget {
   final String categoria;
@@ -41,7 +32,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0xFFF0F6FF),
+      backgroundColor: const Color(0xFFF0F6FF),
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(70),
           child: AppbarWidget(
@@ -64,14 +55,14 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                       fit: BoxFit.cover,
                       image: Image.asset('assets/images/tipologia.jpg').image,
                     ),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         blurRadius: 12,
                         color: Color(0x14000000),
                         offset: Offset(0, 5),
                       )
                     ],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(155),
                       bottomRight: Radius.circular(0),
                       topLeft: Radius.circular(0),
@@ -80,7 +71,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 15, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 15, 0),
                   child: SelectionArea(
                       child: Text(
                     'In questa pagina è possibile scegliere tra due tipologie di quiz: "Associa immagine a nome" e "Associa nome ad immagine". Divertiti allenandoti!',
@@ -93,7 +84,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                   )),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 5),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -103,7 +94,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                           width: 100,
                           height: 190,
                           decoration: BoxDecoration(
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 blurRadius: 12,
                                 color: Color(0x14000000),
@@ -114,7 +105,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                           ),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFF4589FF),
+                            color: const Color(0xFF4589FF),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
@@ -125,7 +116,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                               children: [
                                 Expanded(
                                   child: FlutterFlowIconButton(
-                                    borderColor: Color(0x00FFFFFF),
+                                    borderColor: const Color(0x00FFFFFF),
                                     borderRadius: 0,
                                     borderWidth: 0,
                                     buttonSize: 140,
@@ -196,6 +187,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                           };
                                           box.put(
                                               'statoCorrente', statoCorrente);
+                                          // ignore: use_build_context_synchronously
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -203,6 +195,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                                           box: box)));
                                         }
                                       } else {
+                                        // ignore: use_build_context_synchronously
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
@@ -213,7 +206,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20, 0, 0, 5),
                                   child: SelectionArea(
                                       child: Text(
@@ -230,7 +223,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   )),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(
@@ -256,7 +249,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20, 5, 20, 10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 5, 20, 10),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -266,7 +259,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                           width: 100,
                           height: 190,
                           decoration: BoxDecoration(
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 blurRadius: 12,
                                 color: Color(0x14000000),
@@ -277,7 +270,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                           ),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFA56EFF),
+                            color: const Color(0xFFA56EFF),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
@@ -288,7 +281,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                               children: [
                                 Expanded(
                                   child: FlutterFlowIconButton(
-                                    borderColor: Color(0x00FFFFFF),
+                                    borderColor: const Color(0x00FFFFFF),
                                     borderRadius: 0,
                                     borderWidth: 0,
                                     buttonSize: 140,
@@ -359,6 +352,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                           };
                                           box.put(
                                               'statoCorrente', statoCorrente);
+                                          // ignore: use_build_context_synchronously
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -366,6 +360,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                                           box: box)));
                                         }
                                       } else {
+                                        // ignore: use_build_context_synchronously
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
@@ -376,7 +371,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20, 0, 0, 5),
                                   child: SelectionArea(
                                       child: Text(
@@ -393,7 +388,7 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                   )),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20, 0, 0, 15),
                                   child: SelectionArea(
                                       child: Text(
