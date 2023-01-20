@@ -60,4 +60,26 @@ class ToDoController {
       deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione
     });
   }
+
+  Future<bool> checkToDo(userID, caregiverID) async {
+    DateTime start = DateTime.now();
+    DateTime end = start.add(const Duration(minutes: 30));
+    var fIstance = FirebaseFirestore.instance.collection('user');
+    var docSnapshot = await fIstance
+        .doc(caregiverID)
+        .collection('Pazienti')
+        .doc(userID)
+        .collection('ToDoList')
+        .where('data', isLessThanOrEqualTo: Timestamp.fromDate(end))
+        .where('data', isGreaterThanOrEqualTo: Timestamp.fromDate(start))
+        .get();
+    if (docSnapshot.docs.isNotEmpty) {
+      for (var item in docSnapshot.docs) {
+        if (item['completed'] == false) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 }

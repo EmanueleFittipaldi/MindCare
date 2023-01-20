@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/dialog_umore.dart';
 import 'package:mindcare/album_ricordi/album_ricordi.dart';
 import 'package:mindcare/controller/report_controller.dart';
+import 'package:mindcare/controller/todo_controller.dart';
 import 'package:mindcare/controller/umore_controller.dart';
 import 'package:mindcare/gestione_SOS/sos_paziente.dart';
 import 'package:mindcare/model/utente.dart';
@@ -10,6 +13,7 @@ import 'package:mindcare/Quiz/seleziona_quiz.dart';
 import 'package:mindcare/todolist/todolist.dart';
 // ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../../flutter_flow/flutter_flow_icon_button.dart';
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -37,7 +41,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
   bool checkHumor = false;
   Future? futureQuizCompletati;
   Stream<QuerySnapshot>? _patientStream;
-  final cron = Cron();
+  var cron = Cron();
   @override
   void initState() {
     _patientStream = FirebaseFirestore.instance
@@ -49,6 +53,9 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
         .getQuizCompletati(widget.caregiverUID, Auth().currentUser!.uid);
     WidgetsBinding.instance.addObserver(this);
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      createCron(scaffoldKey.currentContext);
+    });
   }
 
   @override
@@ -61,20 +68,15 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.resumed:
-        //Execute the code here when user come back the app.
-        //In my case, I needed to show if user active or not,
-        print('ok');
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          createCron(scaffoldKey.currentContext);
+        });
         break;
       case AppLifecycleState.inactive:
-        //Execute the code the when user leave the app
-        /* cron.close;
+        cron.close();
         await Hive.initFlutter();
         var box = await Hive.openBox('temp');
-        if (box.get('timer_todo') != null) {
-          box.put('timer_todo', false);
-        }
-        print('sto per uscire');
-        */
+        box.put('timer_todo', false);
         break;
       default:
         break;
@@ -82,20 +84,28 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
   }
 
   createCron(context) async {
-    print('richiamato il contesto');
     await Hive.initFlutter();
     var box = await Hive.openBox('temp');
-    if (box.get('timer_todo') == null || box.get('timer_todo') == true) {
-      print('Non cè il timer');
-
-      cron.schedule(Schedule.parse('*/1 * * * *'), () async {
-        print('every minutes');
-        print(ModalRoute.of(context)!.settings.name);
+    if (box.get('timer_todo') == null || box.get('timer_todo') == false) {
+      cron = Cron();
+      cron.schedule(Schedule.parse('*/15 * * * *'), () async {
+        var bool = await ToDoController()
+            .checkToDo(Auth().currentUser!.uid, widget.caregiverUID);
+        if (bool) {
+          PanaraInfoDialog.show(
+            context,
+            title: "Attività",
+            message:
+                "Hai delle attività in scadenza da svolgere, recati in Da Fare!",
+            buttonText: "Okay",
+            onTapDismiss: () {
+              Navigator.pop(context);
+            },
+            panaraDialogType: PanaraDialogType.normal,
+            barrierDismissible: false, // optional parameter (default is true)
+          );
+        }
       });
-    } else if (box.get('timer_todo') == false) {
-      print('sto in true');
-      cron.close();
-      box.put('timer_todo', true);
     }
   }
 
@@ -204,7 +214,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                                         AsyncSnapshot snapshot) {
                                       if (snapshot.hasData) {
                                         int percent = snapshot.data;
-                                        //createCron(context);
+
                                         /*QUANDO FUTURE BUILDER HA TERMINATO VERIFICA L'UMORE: */
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((_) async {
