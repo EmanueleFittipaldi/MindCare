@@ -2,7 +2,10 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:mindcare/model/todo.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class ToDoController {
   Future<void> createToDo(String userID, String text, DateTime data) async {
@@ -61,9 +64,16 @@ class ToDoController {
     });
   }
 
-  Future<bool> checkToDo(userID, caregiverID) async {
-    DateTime start = DateTime.now();
-    DateTime end = start.add(const Duration(minutes: 30));
+  Future<List> checkToDo(userID, caregiverID) async {
+    tz.initializeTimeZones();
+    tz.setLocalLocation(
+      tz.getLocation(
+        await FlutterNativeTimezone.getLocalTimezone(),
+      ),
+    );
+    var start = tz.TZDateTime.now(tz.local);
+    var end = tz.TZDateTime.now(tz.local)
+        .add(Duration(hours: 23 - start.hour, minutes: 59 - start.minute));
     var fIstance = FirebaseFirestore.instance.collection('user');
     var docSnapshot = await fIstance
         .doc(caregiverID)
@@ -72,14 +82,17 @@ class ToDoController {
         .collection('ToDoList')
         .where('data', isLessThanOrEqualTo: Timestamp.fromDate(end))
         .where('data', isGreaterThanOrEqualTo: Timestamp.fromDate(start))
+        .orderBy('data', descending: false)
         .get();
+    var listD = [];
     if (docSnapshot.docs.isNotEmpty) {
       for (var item in docSnapshot.docs) {
         if (item['completed'] == false) {
-          return true;
+          var dateToDo = (item['data'] as Timestamp).toDate();
+          listD.add(dateToDo.difference(start).inSeconds);
         }
       }
     }
-    return false;
+    return listD;
   }
 }
