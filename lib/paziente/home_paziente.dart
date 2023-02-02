@@ -10,6 +10,7 @@ import 'package:mindcare/controller/umore_controller.dart';
 import 'package:mindcare/gestione_SOS/sos_paziente.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/Quiz/seleziona_quiz.dart';
+import 'package:mindcare/notification_service.dart';
 import 'package:mindcare/todolist/todolist.dart';
 // ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
@@ -41,7 +42,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
   bool checkHumor = false;
   Future? futureQuizCompletati;
   Stream<QuerySnapshot>? _patientStream;
-  var cron = Cron();
+  late final NotificationService notificationService;
   @override
   void initState() {
     _patientStream = FirebaseFirestore.instance
@@ -52,10 +53,36 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
     futureQuizCompletati = ReportController()
         .getQuizCompletati(widget.caregiverUID, Auth().currentUser!.uid);
     WidgetsBinding.instance.addObserver(this);
+
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      createCron(scaffoldKey.currentContext);
+      notificationService = NotificationService();
+      listenToNotificationStream(scaffoldKey.currentContext);
+      notificationService.initializePlatformNotifications();
     });
+  }
+
+  void listenToNotificationStream(context) =>
+      notificationService.behaviorSubject.listen((payload) {
+        /*Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ToDoListPazienteWidget(
+                user: user!, caregiverID: widget.caregiverUID)));*/
+      });
+
+  notificationInitializer() async {
+    notificationService.cancelAllNotifications();
+    var listDuration =
+        await ToDoController().checkToDo(user!.userID, widget.caregiverUID);
+    var id = 0;
+    for (var seconds in listDuration) {
+      await notificationService.showScheduledLocalNotification(
+          id: id,
+          title: "Attività da svolgere",
+          body: "Hai delle attività da svolgere!",
+          payload: "Svolgi le attività!",
+          seconds: seconds);
+      id += 1;
+    }
   }
 
   @override
@@ -68,44 +95,11 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.resumed:
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          createCron(scaffoldKey.currentContext);
-        });
         break;
       case AppLifecycleState.inactive:
-        cron.close();
-        await Hive.initFlutter();
-        var box = await Hive.openBox('temp');
-        box.put('timer_todo', false);
         break;
       default:
         break;
-    }
-  }
-
-  createCron(context) async {
-    await Hive.initFlutter();
-    var box = await Hive.openBox('temp');
-    if (box.get('timer_todo') == null || box.get('timer_todo') == false) {
-      cron = Cron();
-      cron.schedule(Schedule.parse('*/15 * * * *'), () async {
-        var bool = await ToDoController()
-            .checkToDo(Auth().currentUser!.uid, widget.caregiverUID);
-        if (bool) {
-          PanaraInfoDialog.show(
-            context,
-            title: "Attività",
-            message:
-                "Hai delle attività in scadenza da svolgere, recati in Da Fare!",
-            buttonText: "Okay",
-            onTapDismiss: () {
-              Navigator.pop(context);
-            },
-            panaraDialogType: PanaraDialogType.normal,
-            barrierDismissible: false, // optional parameter (default is true)
-          );
-        }
-      });
     }
   }
 
@@ -256,6 +250,8 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                                           } else {
                                             box.put('umore', 'false');
                                           }
+
+                                          notificationInitializer();
                                         });
                                         return Column(
                                             mainAxisSize: MainAxisSize.max,
@@ -553,10 +549,14 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                                 0, 0, 10, 0),
                             child: InkWell(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => SelezionaQuizWidget(
-                                        user: user!,
-                                        caregiverID: widget.caregiverUID)));
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            SelezionaQuizWidget(
+                                                user: user!,
+                                                caregiverID:
+                                                    widget.caregiverUID)))
+                                    .then((value) => notificationInitializer());
                               },
                               child: Container(
                                 width: 100,
@@ -596,13 +596,15 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                                             size: 50,
                                           ),
                                           onPressed: () async {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
                                                     builder: (context) =>
                                                         SelezionaQuizWidget(
                                                             user: user!,
                                                             caregiverID: widget
-                                                                .caregiverUID)));
+                                                                .caregiverUID)))
+                                                .then((value) =>
+                                                    notificationInitializer());
                                           },
                                         ),
                                       ),
@@ -633,10 +635,12 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                         Expanded(
                           child: InkWell(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => AlbumRicordiWidget(
-                                      caregiverUID: widget.caregiverUID,
-                                      user: user!)));
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(
+                                      builder: (context) => AlbumRicordiWidget(
+                                          caregiverUID: widget.caregiverUID,
+                                          user: user!)))
+                                  .then((value) => notificationInitializer());
                             },
                             child: Container(
                               width: 100,
@@ -679,13 +683,15 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                                             size: 50,
                                           ),
                                           onPressed: () async {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
                                                     builder: (context) =>
                                                         AlbumRicordiWidget(
                                                             caregiverUID: widget
                                                                 .caregiverUID,
-                                                            user: user!)));
+                                                            user: user!)))
+                                                .then((value) =>
+                                                    notificationInitializer());
                                           },
                                         ),
                                       ),
@@ -766,13 +772,15 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                                             size: 50,
                                           ),
                                           onPressed: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
                                                     builder: (context) =>
                                                         ToDoListPazienteWidget(
                                                             user: user!,
                                                             caregiverID: widget
-                                                                .caregiverUID)));
+                                                                .caregiverUID)))
+                                                .then((value) =>
+                                                    notificationInitializer());
                                           },
                                         ),
                                       ),
@@ -843,7 +851,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                                                 .tertiaryColor,
                                             size: 50,
                                           ),
-                                          onPressed: () {
+                                          onPressed: () async {
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(

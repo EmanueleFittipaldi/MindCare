@@ -316,6 +316,27 @@ class _ToDoListPazienteWidgetState extends State<ToDoListPazienteWidget> {
                                                         barrierDismissible:
                                                             false, // optional parameter (default is true)
                                                       );
+                                                    } else if (oraScadenza
+                                                            .difference(now)
+                                                            .inMinutes >
+                                                        10) {
+                                                      PanaraInfoDialog.show(
+                                                        context,
+                                                        title:
+                                                            "Completa attività",
+                                                        message:
+                                                            "Non è consentito completare l'attività in un'orario diverso da quello specificato!",
+                                                        buttonText: "Okay",
+                                                        onTapDismiss: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        panaraDialogType:
+                                                            PanaraDialogType
+                                                                .warning,
+                                                        barrierDismissible:
+                                                            false, // optional parameter (default is true)
+                                                      );
                                                     } else if (!item[
                                                         'completed']) {
                                                       ToDoController()

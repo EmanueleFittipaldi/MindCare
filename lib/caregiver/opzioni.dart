@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mindcare/controller/image_upload.dart';
 import 'package:mindcare/controller/user_controller.dart';
+import 'package:mindcare/notification_service.dart';
 import 'package:mindcare/widget_tree.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
@@ -474,6 +475,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                 );
                                                 if (confirmDialogResponse) {
                                                   Auth().signOut();
+                                                  NotificationService()
+                                                      .cancelAllNotifications();
                                                   // ignore: use_build_context_synchronously
                                                   Navigator.of(context).push(
                                                       MaterialPageRoute(
