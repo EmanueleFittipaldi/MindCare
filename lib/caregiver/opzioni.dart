@@ -426,7 +426,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                   },
                                                   icon: const Icon(
                                                     Icons.arrow_forward_ios,
-                                                    color: Color(0xFFFF4D17),
+                                                    color: Color.fromARGB(
+                                                        255, 246, 83, 83),
                                                     size: 18,
                                                   ),
                                                 ),
@@ -488,7 +489,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                               options: FFButtonOptions(
                                                 width: 80,
                                                 height: 60,
-                                                color: const Color(0xFFFF4D17),
+                                                color: Color.fromARGB(
+                                                    255, 246, 83, 83),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .subtitle2

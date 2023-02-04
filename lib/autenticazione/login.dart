@@ -78,7 +78,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         PanaraInfoDialog.show(
           context,
           title: "Accesso",
-          message: "Ops! Qualcosa è andato storto!",
+          message: "Le informazioni inserite non sono corrette!",
           buttonText: "Okay",
           onTapDismiss: () {
             Navigator.pop(context);
@@ -156,8 +156,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.asset(
                                   'assets/images/Logo_MindCare.jpg',
-                                  width: 60,
-                                  height: 60,
+                                  width: 45,
+                                  height: 45,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -169,7 +169,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         fontFamily: 'IBM Plex Sans',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryColor,
-                                        fontSize: 40,
+                                        fontSize: 38,
                                         fontWeight: FontWeight.bold,
                                       ),
                             ),
@@ -179,7 +179,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                     Container(
                       width: 100,
-                      height: 320,
+                      height: 250,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).tertiaryColor,
                         image: DecorationImage(
