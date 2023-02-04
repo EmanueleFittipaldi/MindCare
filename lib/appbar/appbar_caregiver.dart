@@ -19,7 +19,7 @@ class AppbarWidget extends StatelessWidget {
         title,
         style: FlutterFlowTheme.of(context).bodyText2.override(
               fontFamily: 'IBM Plex Sans',
-              fontSize: 30,
+              fontSize: 25,
               fontWeight: FontWeight.w500,
             ),
       ),
