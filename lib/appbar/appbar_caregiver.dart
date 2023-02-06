@@ -9,8 +9,6 @@ class AppbarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      systemOverlayStyle:
-          const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       iconTheme:
           IconThemeData(color: FlutterFlowTheme.of(context).secondaryText),

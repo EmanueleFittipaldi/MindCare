@@ -100,6 +100,12 @@ class UserController {
       String caregiveruid, String useruid, String type, String imgPath) async {
     var user = FirebaseFirestore.instance.collection('user');
     if (type == 'Caregiver') {
+      var docPatients =
+          await user.doc(caregiveruid).collection('Pazienti').get();
+
+      if (docPatients.docs.isNotEmpty) {
+        return 'error with data';
+      }
       var docSnapshot =
           user.doc(caregiveruid); //riferimento al documento da eliminare
       await FirebaseFirestore.instance

@@ -118,7 +118,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                          const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                       child: Form(
                         key: formKey,
                         autovalidateMode: AutovalidateMode.disabled,
@@ -127,12 +127,12 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 4, 0, 30),
+                                  0, 4, 0, 20),
                               child: InkWell(
                                 onTap: () async {},
                                 child: Container(
-                                  width: 120,
-                                  height: 120,
+                                  width: 100,
+                                  height: 100,
                                   clipBehavior: Clip.antiAlias,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
@@ -191,37 +191,32 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
+                                        fontFamily: 'Lexend Deca',
+                                        color: const Color(0xFF95A1AC),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
-                                  hintText: 'Inserisci nome...',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiaryColor,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
+                                        fontFamily: 'Lexend Deca',
+                                        color: const Color(0xFF95A1AC),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFB9BEBF),
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFB9BEBF),
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -229,7 +224,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                           .borderErrorColor,
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -237,23 +232,22 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                           .borderErrorColor,
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .subtitle2
                                     .override(
                                       fontFamily: 'IBM Plex Sans',
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w300,
+                                          .secondaryText,
+                                      fontWeight: FontWeight.w500,
                                     ),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15, 30, 15, 0),
+                                  15, 12, 15, 0),
                               child: TextFormField(
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -269,37 +263,32 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
+                                        fontFamily: 'Lexend Deca',
+                                        color: const Color(0xFF95A1AC),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
-                                  hintText: 'Inserisci cognome...',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
+                                        fontFamily: 'Lexend Deca',
+                                        color: const Color(0xFF95A1AC),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFB9BEBF),
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFB9BEBF),
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -307,7 +296,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                           .borderErrorColor,
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -315,23 +304,22 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                           .borderErrorColor,
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .subtitle2
                                     .override(
                                       fontFamily: 'IBM Plex Sans',
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w300,
+                                          .secondaryText,
+                                      fontWeight: FontWeight.w500,
                                     ),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15, 20, 15, 0),
+                                  15, 12, 15, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -344,16 +332,15 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                       height: 60,
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(30),
                                         border: Border.all(
-                                          color: FlutterFlowTheme.of(context)
-                                              .borderColor,
+                                          color: const Color(0xFFB9BEBF),
                                           width: 1,
                                         ),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional
-                                            .fromSTEB(12, 5, 12, 5),
+                                            .fromSTEB(12, 5, 20, 5),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -370,9 +357,12 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                                       context)
                                                   .bodyText1
                                                   .override(
-                                                    fontFamily: 'IBM Plex Sans',
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w300,
+                                                    fontFamily: 'Lexend Deca',
+                                                    color:
+                                                        const Color(0xFF95A1AC),
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.normal,
                                                   ),
                                             ),
                                             InkWell(
@@ -409,7 +399,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15, 30, 15, 0),
+                                  15, 12, 15, 0),
                               child: TextFormField(
                                 validator: (value) {
                                   RegExp regex = RegExp(
@@ -429,37 +419,32 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
+                                        fontFamily: 'Lexend Deca',
+                                        color: const Color(0xFF95A1AC),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
-                                  hintText: 'Inserisci email...',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
+                                        fontFamily: 'Lexend Deca',
+                                        color: const Color(0xFF95A1AC),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFB9BEBF),
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFB9BEBF),
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -467,7 +452,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                           .borderErrorColor,
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -475,24 +460,23 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                           .borderErrorColor,
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .subtitle2
                                     .override(
                                       fontFamily: 'IBM Plex Sans',
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w300,
+                                          .secondaryText,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                 keyboardType: TextInputType.emailAddress,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15, 30, 15, 0),
+                                  15, 12, 15, 0),
                               child: TextFormField(
                                 validator: (value) {
                                   RegExp regex = RegExp(
@@ -512,37 +496,32 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
+                                        fontFamily: 'Lexend Deca',
+                                        color: const Color(0xFF95A1AC),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
-                                  hintText: 'Inserisci password...',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
+                                        fontFamily: 'Lexend Deca',
+                                        color: const Color(0xFF95A1AC),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFB9BEBF),
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFB9BEBF),
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -550,7 +529,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                           .borderErrorColor,
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -558,7 +537,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                           .borderErrorColor,
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   suffixIcon: InkWell(
                                     onTap: () => setState(
@@ -576,19 +555,18 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .subtitle2
                                     .override(
                                       fontFamily: 'IBM Plex Sans',
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w300,
+                                          .secondaryText,
+                                      fontWeight: FontWeight.w500,
                                     ),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15, 30, 15, 0),
+                                  15, 12, 15, 0),
                               child: TextFormField(
                                 validator: (value) {
                                   if (value?.compareTo(
@@ -605,37 +583,32 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
+                                        fontFamily: 'Lexend Deca',
+                                        color: const Color(0xFF95A1AC),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
-                                  hintText: 'Ripeti password...',
                                   hintStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
+                                        fontFamily: 'Lexend Deca',
+                                        color: const Color(0xFF95A1AC),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFB9BEBF),
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFB9BEBF),
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -643,7 +616,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                           .borderErrorColor,
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -651,7 +624,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                           .borderErrorColor,
                                       width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
                                   suffixIcon: InkWell(
                                     onTap: () => setState(
@@ -669,117 +642,113 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
-                                    .bodyText1
+                                    .subtitle2
                                     .override(
                                       fontFamily: 'IBM Plex Sans',
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w300,
+                                          .secondaryText,
+                                      fontWeight: FontWeight.w500,
                                     ),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15, 35, 15, 0),
+                                  15, 20, 15, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              5, 0, 0, 0),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          if (formKey.currentState!
-                                                  .validate() &&
-                                              datePicked != null) {
-                                            //qui dentro ci va il codice di dopo
-                                            //significa che tutti i campi sono stati compilati e corretti
-                                            await UserController()
-                                                .createNewAccount(
-                                                    _controllerEmail.text,
-                                                    _controllerPassword.text);
-                                            final currentUser =
-                                                Auth().currentUser;
-                                            // ignore: prefer_typing_uninitialized_variables
-                                            var imageUrl;
-                                            if (imagePickedPath != '') {
-                                              imageUrl = await ImageUpload()
-                                                  .uploadImage(imagePickedPath);
-                                            }
-                                            if (currentUser != null) {
-                                              final user = Utente(
-                                                  userID: currentUser.uid,
-                                                  name: _controllerNome.text,
-                                                  lastname:
-                                                      _controllerCognome.text,
-                                                  email: _controllerEmail.text,
-                                                  date: datePicked!,
-                                                  type: 'Caregiver',
-                                                  profileImgPath:
-                                                      imageUrl ?? '',
-                                                  checkBiometric: false);
-                                              user.createNewUser();
-                                              // ignore: use_build_context_synchronously
-                                              PanaraInfoDialog.show(
-                                                context,
-                                                title: "Registrazione",
-                                                message:
-                                                    "Registrazione avvenuta! Verifica l\'account attraverso l\'email inviata!",
-                                                buttonText: "Okay",
-                                                onTapDismiss: () {
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const WidgetTree()));
-                                                },
-                                                panaraDialogType:
-                                                    PanaraDialogType.success,
-                                                barrierDismissible:
-                                                    false, // optional parameter (default is true)
-                                              );
-                                            }
-                                          } else {
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            5, 0, 0, 0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        if (formKey.currentState!.validate() &&
+                                            datePicked != null) {
+                                          //qui dentro ci va il codice di dopo
+                                          //significa che tutti i campi sono stati compilati e corretti
+                                          await UserController()
+                                              .createNewAccount(
+                                                  _controllerEmail.text,
+                                                  _controllerPassword.text);
+                                          final currentUser =
+                                              Auth().currentUser;
+                                          // ignore: prefer_typing_uninitialized_variables
+                                          var imageUrl;
+                                          if (imagePickedPath != '') {
+                                            imageUrl = await ImageUpload()
+                                                .uploadImage(imagePickedPath);
+                                          }
+                                          if (currentUser != null) {
+                                            final user = Utente(
+                                                userID: currentUser.uid,
+                                                name: _controllerNome.text,
+                                                lastname:
+                                                    _controllerCognome.text,
+                                                email: _controllerEmail.text,
+                                                date: datePicked!,
+                                                type: 'Caregiver',
+                                                profileImgPath: imageUrl ?? '',
+                                                checkBiometric: false);
+                                            user.createNewUser();
+                                            // ignore: use_build_context_synchronously
                                             PanaraInfoDialog.show(
                                               context,
                                               title: "Registrazione",
                                               message:
-                                                  "Inserisci tutti i campi!",
+                                                  "Registrazione avvenuta! Verifica l\'account attraverso l\'email inviata!",
                                               buttonText: "Okay",
                                               onTapDismiss: () {
-                                                Navigator.pop(context);
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const WidgetTree()));
                                               },
                                               panaraDialogType:
-                                                  PanaraDialogType.error,
+                                                  PanaraDialogType.success,
                                               barrierDismissible:
                                                   false, // optional parameter (default is true)
                                             );
                                           }
-                                        },
-                                        text: 'Conferma',
-                                        options: FFButtonOptions(
-                                          width: 130,
-                                          height: 60,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .subtitle2
-                                                  .override(
-                                                    fontFamily: 'IBM Plex Sans',
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                  ),
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiaryColor,
-                                            width: 0,
-                                          ),
-                                          borderRadius: 30,
+                                        } else {
+                                          PanaraInfoDialog.show(
+                                            context,
+                                            title: "Registrazione",
+                                            message: "Inserisci tutti i campi!",
+                                            buttonText: "Okay",
+                                            onTapDismiss: () {
+                                              Navigator.pop(context);
+                                            },
+                                            panaraDialogType:
+                                                PanaraDialogType.error,
+                                            barrierDismissible:
+                                                false, // optional parameter (default is true)
+                                          );
+                                        }
+                                      },
+                                      text: 'Conferma',
+                                      options: FFButtonOptions(
+                                        width: 230,
+                                        height: 50,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Lexend Deca',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                        elevation: 3,
+                                        borderSide: const BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
                                         ),
+                                        borderRadius: 30,
                                       ),
                                     ),
                                   ),
