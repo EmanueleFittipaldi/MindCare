@@ -47,14 +47,14 @@ class _WidgetTreeState extends State<WidgetTree> {
             profileImgPath: caregiverMap['profileImagePath'],
             checkBiometric: caregiverMap['checkBiometric']);
         //verifico se il campo userID è uguale a quello loggato
-        /*if(caregiverMap['checkBiometric'] == true){
+        if (caregiverMap['checkBiometric'] == true) {
           isLoggedWithBiometrics = await checkBiometrics();
-          if(!isLoggedWithBiometrics) {
-                Fluttertoast.showToast(msg: "Identità non riconosciuta");
-                Auth().signOut();
-                return '';
-              }
-        }*/ //da togliere. Senno non mi fa entrare nell'app
+          if (!isLoggedWithBiometrics) {
+            Fluttertoast.showToast(msg: "Identità non riconosciuta");
+            Auth().signOut();
+            return '';
+          }
+        } //da togliere. Senno non mi fa entrare nell'app
         return caregiverMap['type']; //allora è il caregiver
       } else {
         //altrimenti ciclo sui pazienti del caregiver
@@ -78,14 +78,14 @@ class _WidgetTreeState extends State<WidgetTree> {
                 checkBiometric: patientMap['checkBiometric']);
 
             //se l'userID nel documento dei pazienti è uguale a quello loggato
-            /*if (patientMap['checkBiometric'] == true) {
+            if (patientMap['checkBiometric'] == true) {
               isLoggedWithBiometrics = await checkBiometrics();
               if (!isLoggedWithBiometrics) {
                 Fluttertoast.showToast(msg: "Identità non riconosciuta");
                 Auth().signOut();
                 return '';
               }
-            }*/ //commento da togliere
+            } //commento da togliere
             return patientMap['type']; //è il paziente e ritorna il tipo
           }
         }

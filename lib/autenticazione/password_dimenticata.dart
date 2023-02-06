@@ -96,37 +96,32 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                               labelStyle: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Lexend Deca',
+                                    color: const Color(0xFF95A1AC),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
                                   ),
-                              hintText: 'Inserisci email...',
                               hintStyle: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
-                                    fontFamily: 'IBM Plex Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Lexend Deca',
+                                    color: const Color(0xFF95A1AC),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
                                   ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).borderColor,
+                                borderSide: const BorderSide(
+                                  color: Color(0xFFB9BEBF),
                                   width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(30),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).borderColor,
+                                borderSide: const BorderSide(
+                                  color: Color(0xFFB9BEBF),
                                   width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(30),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -134,7 +129,7 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                                       .borderErrorColor,
                                   width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(30),
                               ),
                               focusedErrorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -142,18 +137,16 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                                       .borderErrorColor,
                                   width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(30),
                               ),
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyText1
-                                .override(
-                                  fontFamily: 'IBM Plex Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w300,
-                                ),
+                            style:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                      fontFamily: 'IBM Plex Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                             keyboardType: TextInputType.emailAddress,
                           ),
                         ),
@@ -220,17 +213,20 @@ class _PasswordDimenticataWidgetState extends State<PasswordDimenticataWidget> {
                                 },
                                 text: 'Invia email',
                                 options: FFButtonOptions(
-                                  width: 170,
-                                  height: 60,
+                                  width: 230,
+                                  height: 50,
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .subtitle2
                                       .override(
-                                        fontFamily: 'IBM Plex Sans',
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'Lexend Deca',
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
                                       ),
+                                  elevation: 3,
                                   borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1,

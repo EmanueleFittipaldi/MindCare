@@ -417,16 +417,42 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                                                       .type,
                                                                   widget.user
                                                                       .profileImgPath);
+                                                      if (success ==
+                                                          'error with data') {
+                                                        // ignore: use_build_context_synchronously
+                                                        PanaraInfoDialog.show(
+                                                          context,
+                                                          title:
+                                                              "Eliminazione account",
+                                                          message:
+                                                              "Attenzione! Sei responsabile di alcuni pazienti, salva i loro dati ed elimina i loro account prima di eseguire questa operazione!",
+                                                          buttonText: "Okay",
+                                                          onTapDismiss: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          panaraDialogType:
+                                                              PanaraDialogType
+                                                                  .warning,
+                                                          barrierDismissible:
+                                                              false, // optional parameter (default is true)
+                                                        );
+                                                      } else if (success ==
+                                                          'success') {
+                                                        Navigator.of(context).push(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const WidgetTree()));
+                                                      }
                                                       // ignore: use_build_context_synchronously
-                                                      Navigator.of(context).push(
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const WidgetTree()));
+
                                                     }
                                                   },
                                                   icon: const Icon(
                                                     Icons.arrow_forward_ios,
-                                                    color: Color(0xFFFF4D17),
+                                                    color: Color.fromARGB(
+                                                        255, 246, 83, 83),
                                                     size: 18,
                                                   ),
                                                 ),
@@ -488,7 +514,8 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                               options: FFButtonOptions(
                                                 width: 80,
                                                 height: 60,
-                                                color: const Color(0xFFFF4D17),
+                                                color: const Color.fromARGB(
+                                                    255, 246, 83, 83),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .subtitle2

@@ -9,8 +9,6 @@ class AppbarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      systemOverlayStyle:
-          const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
       backgroundColor: FlutterFlowTheme.of(context).tertiaryColor,
       iconTheme:
           IconThemeData(color: FlutterFlowTheme.of(context).secondaryText),
@@ -19,7 +17,7 @@ class AppbarWidget extends StatelessWidget {
         title,
         style: FlutterFlowTheme.of(context).bodyText2.override(
               fontFamily: 'IBM Plex Sans',
-              fontSize: 30,
+              fontSize: 25,
               fontWeight: FontWeight.w500,
             ),
       ),
