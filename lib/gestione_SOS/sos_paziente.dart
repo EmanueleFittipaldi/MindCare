@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mindcare/model/utente.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -53,9 +54,19 @@ class _SosWidgetState extends State<SosWidget> {
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text(
-                'Location services are disabled. Please enable the services')));
+        PanaraInfoDialog.show(
+          context,
+          title: "Localizzazione",
+          message: "Localizzazione disattivata. Per favore attiva il servizio!",
+          buttonText: "Okay",
+          onTapDismiss: () {
+            Navigator.pop(context);
+          },
+          panaraDialogType: PanaraDialogType.warning,
+          barrierDismissible: false, // optional parameter (default is true)
+        );
+        // ignore: use_build_context_synchronously
+
         return false;
       }
       permission = await Geolocator.checkPermission();
@@ -63,16 +74,36 @@ class _SosWidgetState extends State<SosWidget> {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           // ignore: use_build_context_synchronously
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Location permissions are denied')));
+          PanaraInfoDialog.show(
+            context,
+            title: "Localizzazione",
+            message:
+                "I permessi per accedere alla localizazione sono stati negati!",
+            buttonText: "Okay",
+            onTapDismiss: () {
+              Navigator.pop(context);
+            },
+            panaraDialogType: PanaraDialogType.warning,
+            barrierDismissible: false, // optional parameter (default is true)
+          );
           return false;
         }
       }
       if (permission == LocationPermission.deniedForever) {
         // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text(
-                'Location permissions are permanently denied, we cannot request permissions.')));
+        PanaraInfoDialog.show(
+          context,
+          title: "Localizzazione",
+          message:
+              "I permessi per accedere alla localizazione sono stati permanentemente negati! Non posso effettuare altre richieste!",
+          buttonText: "Okay",
+          onTapDismiss: () {
+            Navigator.pop(context);
+          },
+          panaraDialogType: PanaraDialogType.warning,
+          barrierDismissible: false, // optional parameter (default is true)
+        );
+
         return false;
       }
       return true;
@@ -414,11 +445,12 @@ class _SosWidgetState extends State<SosWidget> {
                                             size: 30,
                                           ),
                                           onPressed: () {
+                                            var number = '+39-' + item['cell'];
                                             //qui ci vuole sicuramente il numero di telefono contenuto in item['cell']
                                             if (Platform.isAndroid) {
-                                              _sendSMS('+39-3312739420');
+                                              _sendSMS(number);
                                             } else if (Platform.isIOS) {
-                                              _sendSMS('+39-3312739420');
+                                              _sendSMS(number);
                                             }
                                           },
                                         ),

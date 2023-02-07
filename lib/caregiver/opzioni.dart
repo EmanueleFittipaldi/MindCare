@@ -588,8 +588,14 @@ class _OpzioniWidgetState extends State<OpzioniWidget> {
                                         child: SwitchListTile.adaptive(
                                           value: switchBiometric ??= false,
                                           onChanged: (newValue) async {
+                                            print(newValue);
                                             setState(() =>
                                                 switchBiometric = newValue);
+                                            UserController().useBiometric(
+                                                widget.user.type,
+                                                Auth().currentUser!.uid,
+                                                widget.caregiverUID,
+                                                newValue);
                                           },
                                           title: Text(
                                             'Utilizza biometria',

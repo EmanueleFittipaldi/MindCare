@@ -545,7 +545,7 @@ passata come parametro */
                               profileImgPath: filePath ?? '',
                             );
                             contattoSOS.createContatto(widget.user.userID);
-                            Fluttertoast.showToast(msg: 'Contatto Creato');
+
                             // ignore: use_build_context_synchronously
                             Navigator.of(context).pop();
                           } else {
@@ -573,7 +573,6 @@ passata come parametro */
                                 profileImgPath: filePath ?? '',
                               );
                               contattoSOS.createContatto(widget.user.userID);
-                              Fluttertoast.showToast(msg: 'Contatto Creato');
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).pop();
                             }

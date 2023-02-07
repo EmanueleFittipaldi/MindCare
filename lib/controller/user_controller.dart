@@ -139,4 +139,31 @@ class UserController {
       return e.toString();
     }
   }
+
+  Future<bool> useBiometric(
+      type, userLoggedID, caregiverUID, newBiometric) async {
+    if (type == 'Paziente') {
+      var collection = FirebaseFirestore.instance.collection("user");
+      collection
+          .doc(caregiverUID)
+          .collection('Pazienti')
+          .doc(userLoggedID)
+          .update({
+        'checkBiometric': newBiometric,
+      });
+      return true;
+    } else if (type == 'Caregiver') {
+      var collection = FirebaseFirestore.instance.collection("user");
+      try {
+        collection.doc(userLoggedID).update({
+          'checkBiometric': newBiometric,
+        });
+        return true;
+      } on FirebaseException catch (e) {
+        Fluttertoast.showToast(msg: e.toString());
+        return false;
+      }
+    }
+    return false;
+  }
 }
