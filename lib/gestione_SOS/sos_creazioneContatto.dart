@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:fluttertoast/fluttertoast.dart';
@@ -224,8 +225,8 @@ passata come parametro */
                                     - Tutto questo viene fatto usando l'operatore ternario in maniera nidificata.
                                      */
                                       child: imagContatto != ''
-                                          ? Image.asset(
-                                              imagContatto,
+                                          ? Image.file(
+                                              File(imagContatto),
                                               width: 100,
                                               height: 100,
                                               fit: BoxFit.cover,
@@ -281,9 +282,18 @@ passata come parametro */
                                     Expanded(
                                       child: TextFormField(
                                         validator: (value) {
-                                          if (value == null || value.isEmpty) {
+                                          if (value == null) {
                                             return 'Inserisci il nome';
                                           }
+                                          var val = value.replaceAll(' ', '');
+                                          if (val.isEmpty || value.isEmpty) {
+                                            return 'Inserisci il nome';
+                                          }
+                                          RegExp reg = RegExp(r'^[a-zA-Z ]*$');
+                                          if (!reg.hasMatch(value)) {
+                                            return 'Inserisci un nome valido!';
+                                          }
+
                                           return null;
                                         },
                                         controller: nomeController,
@@ -361,9 +371,18 @@ passata come parametro */
                                     Expanded(
                                       child: TextFormField(
                                         validator: (value) {
-                                          if (value == null || value.isEmpty) {
+                                          if (value == null) {
                                             return 'Inserisci il cognome';
                                           }
+                                          var val = value.replaceAll(' ', '');
+                                          if (val.isEmpty || value.isEmpty) {
+                                            return 'Inserisci il cognome';
+                                          }
+                                          RegExp reg = RegExp(r'^[a-zA-Z ]*$');
+                                          if (!reg.hasMatch(value)) {
+                                            return 'Inserisci un cognome valido!';
+                                          }
+
                                           return null;
                                         },
                                         controller: cognomeController,
@@ -441,12 +460,17 @@ passata come parametro */
                                     Expanded(
                                       child: TextFormField(
                                         validator: (value) {
-                                          if (value == null || value.isEmpty) {
+                                          if (value == null) {
+                                            return 'Inserisci il numero di telefono';
+                                          }
+                                          var val = value.replaceAll(' ', '');
+                                          if (val.isEmpty || value.isEmpty) {
                                             return 'Inserisci il numero di telefono';
                                           }
                                           return null;
                                         },
                                         controller: telefonoController,
+                                        keyboardType: TextInputType.number,
                                         autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
@@ -533,16 +557,22 @@ passata come parametro */
                           if (widget.item != null) {
                             // ignore: prefer_typing_uninitialized_variables
                             var filePath;
+                            var image;
+                            print(imagContatto);
                             if (imagContatto != '') {
-                              filePath =
+                              image =
                                   await ImageUpload().uploadImage(imagContatto);
+                              await ImageUpload()
+                                  .deleteFile(widget.item!.profileImgPath);
+                            } else {
+                              image = widget.item!.profileImgPath;
                             }
                             final contattoSOS = ContattoSOS(
                               contattoID: widget.item!.contattoID,
                               name: nomeController!.text,
                               lastname: cognomeController!.text,
                               cell: telefonoController!.text,
-                              profileImgPath: filePath ?? '',
+                              profileImgPath: image,
                             );
                             contattoSOS.createContatto(widget.user.userID);
 

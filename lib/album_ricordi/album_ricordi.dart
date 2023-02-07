@@ -42,12 +42,13 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                   message:
                       'Come ti senti dopo aver visualizzato i tuoi ricordi?');
             });
-        if (text != '') {
+        if (text != null && text != '') {
           UmoreController().createUmore(
               widget.caregiverUID, Auth().currentUser!.uid, text, 'ricordi');
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pop();
         }
-        // ignore: use_build_context_synchronously
-        Navigator.of(context).pop();
+
         return false;
       },
       child: Scaffold(
@@ -77,8 +78,10 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                     if (snapshot.hasData) {
                       List<Ricordo> doodles = [];
                       List<String> tags = ['Tutti i ricordi'];
+
                       snapshot.data?.docs.forEach((doc) async {
                         Map<String, dynamic>? memory = doc.data();
+
                         if (tagSelected == null ||
                             memory!['tags']
                                 .contains(tagSelected!.toLowerCase())) {
@@ -91,6 +94,7 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                               tipoRicordo: memory['tipoRicordo'],
                               tags: memory['tags']));
                         }
+
                         memory['tags'].forEach((e) {
                           var el = e.toString()[0].toUpperCase() +
                               e.toString().substring(1).toLowerCase();
@@ -99,6 +103,7 @@ class _AlbumRicordiWidgetState extends State<AlbumRicordiWidget> {
                           }
                         });
                       });
+
                       return Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,

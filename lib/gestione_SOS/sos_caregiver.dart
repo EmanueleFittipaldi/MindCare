@@ -205,14 +205,14 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                               //se la lista è vuota mostra 'Non ci sono domande'
                               return Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 0),
+                                      15, 0, 0, 0),
                                   child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Non ci sono contatti!',
+                                          'Non ci sono domande!',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(

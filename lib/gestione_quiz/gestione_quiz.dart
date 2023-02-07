@@ -336,23 +336,28 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                               });
                               if (data.isEmpty) {
                                 //se la lista è vuota mostra 'Non ci sono domande'
-                                return Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Non ci sono domande',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText2
-                                            .override(
-                                              fontFamily: 'IBM Plex Sans',
-                                              color: const Color(0xFF57636C),
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                      ),
-                                    ]);
+                                return Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            15, 0, 0, 0),
+                                    child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Non ci sono domande!',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2
+                                                .override(
+                                                  fontFamily: 'IBM Plex Sans',
+                                                  color:
+                                                      const Color(0xFF57636C),
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ]));
                               }
                               //altrimenti ritorna i diversi widget delle domande
                               return ListView(

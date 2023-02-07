@@ -149,8 +149,16 @@ class _CreazioneDomandaImmagineANomeWidgetState
                             const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 5),
                         child: TextFormField(
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null) {
                               return 'Inserisci il titolo della domanda!';
+                            }
+                            var val = value.replaceAll(' ', '');
+                            if (val.isEmpty || value.isEmpty) {
+                              return 'Inserisci il titolo della domanda!';
+                            }
+                            RegExp reg = RegExp(r'^[a-zA-Z ]*$');
+                            if (!reg.hasMatch(value)) {
+                              return 'Inserisci un titolo della domanda valido!';
                             }
                             return null;
                           },
@@ -671,7 +679,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                                   0, 5, 0, 5),
                               child: FlutterFlowDropDown(
                                 initialOption: dropDownValueTentativi,
-                                options: const ['1', '2', '3', '4', '5'],
+                                options: const ['1', '2', '3', '4'],
                                 onChanged: (val) async {
                                   setState(() {
                                     dropDownValueTentativi = val!;

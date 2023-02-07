@@ -245,7 +245,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           .secondaryText,
                                       fontWeight: FontWeight.w500,
                                     ),
-                                maxLines: null,
+                                maxLines: 1,
                               ),
                             ),
                             Padding(

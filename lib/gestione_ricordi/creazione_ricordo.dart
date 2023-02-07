@@ -189,9 +189,18 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                               15, 15, 15, 5),
                           child: TextFormField(
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
+                              if (value == null) {
                                 return 'Inserisci un titolo!';
                               }
+                              var val = value.replaceAll(' ', '');
+                              if (val.isEmpty || value.isEmpty) {
+                                return 'Inserisci un titolo!';
+                              }
+                              RegExp reg = RegExp(r'^[a-zA-Z ]*$');
+                              if (!reg.hasMatch(value)) {
+                                return 'Inserisci un titolo valido!';
+                              }
+
                               return null;
                             },
                             controller: controllerTitolo,
@@ -569,9 +578,18 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                     if (switchDescritpionValue == false) {
                                       return null;
                                     }
-                                    if (value == null || value.isEmpty) {
+                                    if (value == null) {
                                       return 'Inserisci una descrizione!';
                                     }
+                                    var val = value.replaceAll(' ', '');
+                                    if (val.isEmpty || value.isEmpty) {
+                                      return 'Inserisci una descrizione!';
+                                    }
+                                    RegExp reg = RegExp(r'^[a-zA-Z ]*$');
+                                    if (!reg.hasMatch(value)) {
+                                      return 'Inserisci una descrizione valida!';
+                                    }
+
                                     return null;
                                   },
                                   controller: controllerDescrizione,
@@ -820,7 +838,7 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                           } else {
                             PanaraInfoDialog.show(
                               context,
-                              title: "Creazione paziente",
+                              title: "Creazione ricordo",
                               message: "Errore: inserisci tutti i campi!",
                               buttonText: "Okay",
                               onTapDismiss: () {

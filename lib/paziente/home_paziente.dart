@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/dialog_umore.dart';
 import 'package:mindcare/album_ricordi/album_ricordi.dart';
+import 'package:mindcare/controller/album_controller.dart';
 import 'package:mindcare/controller/report_controller.dart';
 import 'package:mindcare/controller/todo_controller.dart';
 import 'package:mindcare/controller/umore_controller.dart';
@@ -634,13 +635,34 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                         ),
                         Expanded(
                           child: InkWell(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(
-                                      builder: (context) => AlbumRicordiWidget(
-                                          caregiverUID: widget.caregiverUID,
-                                          user: user!)))
-                                  .then((value) => notificationInitializer());
+                            onTap: () async {
+                              var memoryExists = await AlbumController()
+                                  .checkMemory(
+                                      widget.caregiverUID, user!.userID);
+                              if (memoryExists) {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            AlbumRicordiWidget(
+                                                caregiverUID:
+                                                    widget.caregiverUID,
+                                                user: user!)))
+                                    .then((value) => notificationInitializer());
+                              } else {
+                                // ignore: use_build_context_synchronously
+                                PanaraInfoDialog.show(
+                                  context,
+                                  title: "Ricordi",
+                                  message: "Non sono presenti ricordi!",
+                                  buttonText: "Okay",
+                                  onTapDismiss: () {
+                                    Navigator.pop(context);
+                                  },
+                                  panaraDialogType: PanaraDialogType.warning,
+                                  barrierDismissible:
+                                      false, // optional parameter (default is true)
+                                );
+                              }
                             },
                             child: Container(
                               width: 100,
@@ -683,15 +705,38 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                                             size: 50,
                                           ),
                                           onPressed: () async {
-                                            Navigator.of(context)
-                                                .push(MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        AlbumRicordiWidget(
-                                                            caregiverUID: widget
-                                                                .caregiverUID,
-                                                            user: user!)))
-                                                .then((value) =>
-                                                    notificationInitializer());
+                                            var memoryExists =
+                                                await AlbumController()
+                                                    .checkMemory(
+                                                        widget.caregiverUID,
+                                                        user!.userID);
+                                            if (memoryExists) {
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AlbumRicordiWidget(
+                                                              caregiverUID: widget
+                                                                  .caregiverUID,
+                                                              user: user!)))
+                                                  .then((value) =>
+                                                      notificationInitializer());
+                                            } else {
+                                              // ignore: use_build_context_synchronously
+                                              PanaraInfoDialog.show(
+                                                context,
+                                                title: "Ricordi",
+                                                message:
+                                                    "Non sono presenti ricordi!",
+                                                buttonText: "Okay",
+                                                onTapDismiss: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                panaraDialogType:
+                                                    PanaraDialogType.warning,
+                                                barrierDismissible:
+                                                    false, // optional parameter (default is true)
+                                              );
+                                            }
                                           },
                                         ),
                                       ),

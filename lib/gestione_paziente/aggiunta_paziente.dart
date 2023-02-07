@@ -512,7 +512,7 @@ class _AggiuntaPazienteWidgetState extends State<AggiuntaPazienteWidget> {
                                       if (value == null || value.isEmpty) {
                                         return 'Inserisci la password!';
                                       } else if (!regex.hasMatch(value)) {
-                                        return 'Inserisci una password valida!\nAlmeno 8 caratteri\nCarattere maiuscolo\nCarattere minuscolo\nUn numero\nUn carattere speciale';
+                                        return 'Inserisci una password valida!\nMin 8 - Max 20 caratteri\nCarattere maiuscolo\nCarattere minuscolo\nUn numero\nUn carattere speciale';
                                       }
                                       return null;
                                     },

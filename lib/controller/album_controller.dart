@@ -21,4 +21,19 @@ class AlbumController {
           .delete(); //eliminazione immagine
     }
   }
+
+  Future<bool> checkMemory(caregiverID, patientID) async {
+    var fIstance = FirebaseFirestore.instance.collection('user');
+    var docSnapshot = await fIstance
+        .doc(caregiverID)
+        .collection('Pazienti')
+        .doc(patientID)
+        .collection('Ricordi')
+        .get();
+
+    if (docSnapshot.docs.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
 }

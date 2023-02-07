@@ -178,8 +178,16 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   15, 10, 15, 0),
                               child: TextFormField(
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
+                                  if (value == null) {
                                     return 'Inserisci un nome!';
+                                  }
+                                  var val = value.replaceAll(' ', '');
+                                  if (val.isEmpty || value.isEmpty) {
+                                    return 'Inserisci un nome!';
+                                  }
+                                  RegExp reg = RegExp(r'^[a-zA-Z ]*$');
+                                  if (!reg.hasMatch(value)) {
+                                    return 'Inserisci un nome valido!';
                                   }
                                   return null;
                                 },
@@ -250,8 +258,17 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                                   15, 12, 15, 0),
                               child: TextFormField(
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
+                                  if (value == null) {
                                     return 'Inserisci un cognome!';
+                                  }
+                                  var val = value.replaceAll(' ', '');
+                                  if (val.isEmpty || value.isEmpty) {
+                                    return 'Inserisci un cognome!';
+                                  }
+
+                                  RegExp reg = RegExp(r'^[a-zA-Z ]*$');
+                                  if (!reg.hasMatch(value)) {
+                                    return 'Inserisci un cognome valido!';
                                   }
                                   return null;
                                 },
@@ -570,9 +587,11 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                               child: TextFormField(
                                 validator: (value) {
                                   if (value?.compareTo(
-                                          _controllerPassword.text) ==
-                                      1)
+                                          _controllerPassword.text) !=
+                                      0) {
                                     return 'Le password devono coincidere!';
+                                  }
+
                                   return null;
                                 },
                                 controller: _controllerRepeatPassword,

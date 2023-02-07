@@ -1,4 +1,5 @@
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mindcare/controller/todo_controller.dart';
 import 'package:mindcare/flutter_flow/flutter_flow_util.dart';
 import 'package:mindcare/model/todo.dart';
@@ -176,10 +177,18 @@ class _CreazioneAttivitaState extends State<CreazioneAttivita> {
                                     Expanded(
                                       child: TextFormField(
                                         validator: (value) {
-                                          if (value == null ||
+                                          if (value == null) {
+                                            return 'Inserisci una breve descrizione';
+                                          }
+                                          var val = value.replaceAll(' ', '');
+                                          if (val.isEmpty ||
                                               value.isEmpty ||
-                                              value.replaceAll(' ', '') == '') {
-                                            return 'Inserisci una descrizione';
+                                              value.length > 100) {
+                                            return 'Inserisci una descrizione valida di max 100 caratteri';
+                                          }
+                                          RegExp reg = RegExp(r'^[a-zA-Z ]*$');
+                                          if (!reg.hasMatch(value)) {
+                                            return 'Inserisci una descrizione valida!';
                                           }
                                           return null;
                                         },
@@ -331,16 +340,35 @@ class _CreazioneAttivitaState extends State<CreazioneAttivita> {
                                       await DatePicker.showTimePicker(context,
                                           showTitleActions: true,
                                           onConfirm: (date) {
-                                        setState(() {
-                                          datePicked = date;
+                                        if (date
+                                            .difference(DateTime.now())
+                                            .isNegative) {
+                                          PanaraInfoDialog.show(
+                                            context,
+                                            title: "Orario completamento",
+                                            message:
+                                                "Non puoi inserire un'orario precedente a quello corrente!",
+                                            buttonText: "Okay",
+                                            onTapDismiss: () {
+                                              Navigator.pop(context);
+                                            },
+                                            panaraDialogType:
+                                                PanaraDialogType.warning,
+                                            barrierDismissible:
+                                                false, // optional parameter (default is true)
+                                          );
+                                        } else {
+                                          setState(() {
+                                            datePicked = date;
 
-                                          controllerData!.text = datePicked ==
-                                                  null
-                                              ? 'Ore'
-                                              : DateFormat('HH:mm').format(
-                                                  DateTime.parse(
-                                                      datePicked.toString()));
-                                        });
+                                            controllerData!.text = datePicked ==
+                                                    null
+                                                ? 'Ore'
+                                                : DateFormat('HH:mm').format(
+                                                    DateTime.parse(
+                                                        datePicked.toString()));
+                                          });
+                                        }
                                       },
                                           currentTime:
                                               datePicked ?? widget.data);

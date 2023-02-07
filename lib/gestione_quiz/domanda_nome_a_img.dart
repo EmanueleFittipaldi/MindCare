@@ -169,8 +169,16 @@ passata come parametro */
                         //qualcosa scritto
                         child: TextFormField(
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Inserire il testo della domanda';
+                            if (value == null) {
+                              return 'Inserisci il titolo della domanda!';
+                            }
+                            var val = value.replaceAll(' ', '');
+                            if (val.isEmpty || value.isEmpty) {
+                              return 'Inserisci il titolo della domanda!';
+                            }
+                            RegExp reg = RegExp(r'^[a-zA-Z ]*$');
+                            if (!reg.hasMatch(value)) {
+                              return 'Inserisci un titolo della domanda valido!';
                             }
                             return null;
                           },
@@ -358,9 +366,14 @@ passata come parametro */
                                   Expanded(
                                     child: TextFormField(
                                       validator: (value) {
-                                        if (value == null || value.isEmpty) {
+                                        if (value == null) {
                                           return 'Inserisci l\'opzione1';
                                         }
+                                        var val = value.replaceAll(' ', '');
+                                        if (val.isEmpty || value.isEmpty) {
+                                          return 'Inserisci l\'opzione1';
+                                        }
+
                                         return null;
                                       },
                                       controller: textController2,
@@ -448,7 +461,11 @@ passata come parametro */
                                   Expanded(
                                     child: TextFormField(
                                       validator: (value) {
-                                        if (value == null || value.isEmpty) {
+                                        if (value == null) {
+                                          return 'Inserisci l\'opzione2';
+                                        }
+                                        var val = value.replaceAll(' ', '');
+                                        if (val.isEmpty || value.isEmpty) {
                                           return 'Inserisci l\'opzione2';
                                         }
                                         return null;
@@ -538,7 +555,11 @@ passata come parametro */
                                   Expanded(
                                     child: TextFormField(
                                       validator: (value) {
-                                        if (value == null || value.isEmpty) {
+                                        if (value == null) {
+                                          return 'Inserisci l\'opzione3';
+                                        }
+                                        var val = value.replaceAll(' ', '');
+                                        if (val.isEmpty || value.isEmpty) {
                                           return 'Inserisci l\'opzione3';
                                         }
                                         return null;
@@ -628,8 +649,12 @@ passata come parametro */
                                   Expanded(
                                     child: TextFormField(
                                       validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Inserisci l\'opzione4';
+                                        if (value == null) {
+                                          return 'Inserisci l\'opzione3';
+                                        }
+                                        var val = value.replaceAll(' ', '');
+                                        if (val.isEmpty || value.isEmpty) {
+                                          return 'Inserisci l\'opzione3';
                                         }
                                         return null;
                                       },
@@ -775,7 +800,7 @@ passata come parametro */
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 5),
                               child: FlutterFlowDropDown(
-                                initialOption: '10',
+                                initialOption: dropDownValueTime,
                                 options: const ['5', '10', '30', '60'],
                                 onChanged: (val) async {
                                   setState(() {
@@ -820,8 +845,8 @@ passata come parametro */
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 5, 0, 5),
                               child: FlutterFlowDropDown(
-                                initialOption: '1',
-                                options: const ['1', '2', '3', '4', '5'],
+                                initialOption: dropDownValueTentativi,
+                                options: const ['1', '2', '3', '4'],
                                 onChanged: (val) async {
                                   setState(() {
                                     dropDownValueTentativi = val!;
