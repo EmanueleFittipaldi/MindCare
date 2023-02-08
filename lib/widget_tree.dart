@@ -16,6 +16,7 @@ import 'package:panara_dialogs/panara_dialogs.dart';
 import 'controller/auth.dart';
 import '../autenticazione/login.dart';
 import 'package:flutter/material.dart';
+import 'package:local_auth/error_codes.dart' as auth_error;
 
 class WidgetTree extends StatefulWidget {
   const WidgetTree({Key? key}) : super(key: key);
@@ -49,11 +50,6 @@ class _WidgetTreeState extends State<WidgetTree> {
         //verifico se il campo userID è uguale a quello loggato
         if (caregiverMap['checkBiometric'] == true) {
           isLoggedWithBiometrics = await checkBiometrics();
-          if (!isLoggedWithBiometrics) {
-            Fluttertoast.showToast(msg: "Identità non riconosciuta");
-            Auth().signOut();
-            return '';
-          }
         } //da togliere. Senno non mi fa entrare nell'app
         return caregiverMap['type']; //allora è il caregiver
       } else {
@@ -80,11 +76,6 @@ class _WidgetTreeState extends State<WidgetTree> {
             //se l'userID nel documento dei pazienti è uguale a quello loggato
             if (patientMap['checkBiometric'] == true) {
               isLoggedWithBiometrics = await checkBiometrics();
-              if (!isLoggedWithBiometrics) {
-                Fluttertoast.showToast(msg: "Identità non riconosciuta");
-                Auth().signOut();
-                return '';
-              }
             } //commento da togliere
             return patientMap['type']; //è il paziente e ritorna il tipo
           }
@@ -111,8 +102,17 @@ class _WidgetTreeState extends State<WidgetTree> {
                 useErrorDialogs: true, biometricOnly: true, stickyAuth: true));
       } on PlatformException catch (e) {
         // ignore: prefer_interpolation_to_compose_strings, avoid_print
-        print("stampo l'errore " + e.toString());
+        print("stampo l'errore " + e.code.toString());
+        if(e.code.toString() == "auth_in_progress"){
+          isAuthenticated = true;
+        }
       }
+      print("isLoggedWithBiometrics " + isAuthenticated.toString());
+      if (!isAuthenticated) {
+        Fluttertoast.showToast(msg: "Identità non riconosciuta");
+        Auth().signOut();
+        print("Non ti ho riconosciuto quindi ho fatto il logout");
+        }
     }
     // ignore: avoid_print
     print("isAuthenticated#2 $isAuthenticated");
