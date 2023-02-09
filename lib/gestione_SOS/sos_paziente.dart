@@ -157,8 +157,10 @@ class _SosWidgetState extends State<SosWidget> {
       final Uri url = Uri(
         scheme: 'sms',
         path: phoneNumber,
-        query: encodeQueryParameters(
-            <String, String>{'body': 'Indirizzo: $_currentAddress'}),
+        query: encodeQueryParameters(<String, String>{
+          'body':
+              'SOS MINDCARE: AIUTO! Mi sono perso! Indirizzo: $_currentAddress'
+        }),
       );
       if (!await launchUrl(url)) {
         throw 'Cannot lunch $url';

@@ -1,4 +1,6 @@
+import 'package:mindcare/init_homepage.dart';
 import 'package:mindcare/model/report.dart';
+import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/widget_tree.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 
@@ -7,14 +9,14 @@ import 'package:flutter/material.dart';
 
 class QuizTerminatoWidget extends StatefulWidget {
   final String caregiverID;
-  final String userID;
+  final Utente user;
   final String reportID;
   final Report report;
 
   const QuizTerminatoWidget(
       {Key? key,
       required this.caregiverID,
-      required this.userID,
+      required this.user,
       required this.reportID,
       required this.report})
       : super(key: key);
@@ -30,7 +32,7 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
     widget.report.umore = umoreSelezionato;
 
     widget.report
-        .createReport(widget.caregiverID, widget.userID, widget.reportID);
+        .createReport(widget.caregiverID, widget.user.userID, widget.reportID);
   }
 
   @override
@@ -163,7 +165,10 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                       Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const WidgetTree()),
+                                                  InitHomepage(
+                                                      user: widget.user,
+                                                      carUID:
+                                                          widget.caregiverID)),
                                           (Route<dynamic> route) => false);
                                     },
                                     child: Image.asset(
@@ -179,7 +184,10 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                       Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const WidgetTree()),
+                                                  InitHomepage(
+                                                      user: widget.user,
+                                                      carUID:
+                                                          widget.caregiverID)),
                                           (Route<dynamic> route) => false);
                                     },
                                     child: Image.asset(
@@ -192,10 +200,14 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                   InkWell(
                                     onTap: () {
                                       createReport(2);
-                                      Navigator.of(context).push(
+                                      Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const WidgetTree()));
+                                                  InitHomepage(
+                                                      user: widget.user,
+                                                      carUID:
+                                                          widget.caregiverID)),
+                                          (Route<dynamic> route) => false);
                                     },
                                     child: Image.asset(
                                       'assets/images/neutral.png',
@@ -210,7 +222,10 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                       Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const WidgetTree()),
+                                                  InitHomepage(
+                                                      user: widget.user,
+                                                      carUID:
+                                                          widget.caregiverID)),
                                           (Route<dynamic> route) => false);
                                     },
                                     child: Image.asset(
@@ -226,7 +241,10 @@ class _QuizTerminatoWidgetState extends State<QuizTerminatoWidget> {
                                       Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const WidgetTree()),
+                                                  InitHomepage(
+                                                      user: widget.user,
+                                                      carUID:
+                                                          widget.caregiverID)),
                                           (Route<dynamic> route) => false);
                                     },
                                     child: Image.asset(

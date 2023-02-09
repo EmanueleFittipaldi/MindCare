@@ -1138,7 +1138,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         NomeAImmagineWidget(
-                                                            box: box)));
+                                                            box: box,
+                                                            user:
+                                                                widget.user)));
                                           }
                                         } else {
                                           // ignore: use_build_context_synchronously
@@ -1146,7 +1148,8 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       NomeAImmagineWidget(
-                                                          box: box)));
+                                                          box: box,
+                                                          user: widget.user)));
                                         }
                                       } else if (tiplogySelected ==
                                           'Associa l\'immagine al nome') {
@@ -1202,7 +1205,9 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         ImmagineANomeWidget(
-                                                            box: box)));
+                                                            box: box,
+                                                            user:
+                                                                widget.user)));
                                           }
                                         } else {
                                           // ignore: use_build_context_synchronously
@@ -1210,7 +1215,8 @@ class _SelezionaQuizWidgetState extends State<SelezionaQuizWidget> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       ImmagineANomeWidget(
-                                                          box: box)));
+                                                          box: box,
+                                                          user: widget.user)));
                                         }
                                       }
                                     },

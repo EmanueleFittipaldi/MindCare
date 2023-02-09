@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mindcare/appbar/appbar_caregiver.dart';
+import 'package:mindcare/controller/quiz_controller.dart';
 import 'package:mindcare/gestione_quiz/domanda_img_a_nome.dart';
 import 'package:mindcare/gestione_quiz/domanda_nome_a_img.dart';
 import 'package:mindcare/model/quesito.dart';
@@ -624,19 +625,14 @@ class _GestionQuizWidgetState extends State<GestionQuizWidget> {
                                                           false, // optional parameter (default is true)
                                                     );
                                                     if (confirmDialogResponse) {
-                                                      FirebaseFirestore.instance
-                                                          .collection('user')
-                                                          .doc(Auth()
-                                                              .currentUser
-                                                              ?.uid)
-                                                          .collection(
-                                                              'Pazienti')
-                                                          .doc(widget
-                                                              .user.userID)
-                                                          .collection('Quesiti')
-                                                          .doc(
-                                                              item['quesitoID'])
-                                                          .delete();
+                                                      QuizController()
+                                                          .deleteQuiz(
+                                                              Auth()
+                                                                  .currentUser
+                                                                  ?.uid,
+                                                              widget
+                                                                  .user.userID,
+                                                              item);
                                                     }
                                                   },
                                                 ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mindcare/controller/sos_controller.dart';
 import 'package:mindcare/gestione_SOS/sos_creazioneContatto.dart';
 import 'package:mindcare/model/contattoSOS.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
@@ -212,7 +213,7 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Non ci sono domande!',
+                                          'Non ci sono contatti di emergenza!',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
@@ -413,16 +414,15 @@ class _SOSCaregiverWidgetState extends State<SOSCaregiverWidget> {
                                                 );
 
                                                 if (confirmDialogResponse) {
-                                                  FirebaseFirestore.instance
-                                                      .collection('user')
-                                                      .doc(Auth()
-                                                          .currentUser
-                                                          ?.uid)
-                                                      .collection('Pazienti')
-                                                      .doc(widget.user.userID)
-                                                      .collection('ContattiSOS')
-                                                      .doc(item['contattoID'])
-                                                      .delete();
+                                                  ContattoController()
+                                                      .deleteContatto(
+                                                          widget.user.userID,
+                                                          Auth()
+                                                              .currentUser
+                                                              ?.uid,
+                                                          item['contattoID'],
+                                                          item[
+                                                              'profileImagePath']);
                                                 }
                                               },
                                             ),

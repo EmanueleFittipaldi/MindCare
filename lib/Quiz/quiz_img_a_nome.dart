@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:mindcare/Quiz/no_piu_tentativi.dart';
 import 'package:mindcare/model/report.dart';
-import 'package:mindcare/quiz/quiz_terminato.dart';
+import 'package:mindcare/model/utente.dart';
+import 'package:mindcare/Quiz/quiz_terminato.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -13,7 +14,9 @@ import '../widget_tree.dart';
 
 class ImmagineANomeWidget extends StatefulWidget {
   final Box box;
-  const ImmagineANomeWidget({required this.box, Key? key}) : super(key: key);
+  final Utente user;
+  const ImmagineANomeWidget({required this.box, required this.user, Key? key})
+      : super(key: key);
 
   @override
   _ImmagineANomeWidgetState createState() => _ImmagineANomeWidgetState();
@@ -311,7 +314,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                 builder: (context) => QuizTerminatoWidget(
                     report: report,
                     caregiverID: widget.box.get('statoCorrente')['caregiverID'],
-                    userID: widget.box.get('statoCorrente')['userID'],
+                    user: widget.user,
                     reportID: reportID)),
             (Route<dynamic> route) => false);
       });

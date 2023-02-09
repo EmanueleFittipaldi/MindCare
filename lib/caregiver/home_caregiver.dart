@@ -13,6 +13,8 @@ import '../gestione_paziente/dashboard_paziente.dart';
 // ignore: depend_on_referenced_packages
 import 'package:auto_size_text/auto_size_text.dart';
 
+import '../widget_tree.dart';
+
 class HomeCaregiverWidget extends StatefulWidget {
   const HomeCaregiverWidget({Key? key}) : super(key: key);
 
@@ -20,17 +22,36 @@ class HomeCaregiverWidget extends StatefulWidget {
   _HomeCaregiverWidgetState createState() => _HomeCaregiverWidgetState();
 }
 
-class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget> {
+class _HomeCaregiverWidgetState extends State<HomeCaregiverWidget>
+    with WidgetsBindingObserver {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        Navigator.of(scaffoldKey.currentContext!).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const WidgetTree()),
+            (Route<dynamic> route) => false);
+
+        break;
+      case AppLifecycleState.inactive:
+        break;
+      default:
+        break;
+    }
   }
 
   @override

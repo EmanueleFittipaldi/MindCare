@@ -196,10 +196,6 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                               if (val.isEmpty || value.isEmpty) {
                                 return 'Inserisci un titolo!';
                               }
-                              RegExp reg = RegExp(r'^[a-zA-Z ]*$');
-                              if (!reg.hasMatch(value)) {
-                                return 'Inserisci un titolo valido!';
-                              }
 
                               return null;
                             },
@@ -584,10 +580,6 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                                     var val = value.replaceAll(' ', '');
                                     if (val.isEmpty || value.isEmpty) {
                                       return 'Inserisci una descrizione!';
-                                    }
-                                    RegExp reg = RegExp(r'^[a-zA-Z ]*$');
-                                    if (!reg.hasMatch(value)) {
-                                      return 'Inserisci una descrizione valida!';
                                     }
 
                                     return null;

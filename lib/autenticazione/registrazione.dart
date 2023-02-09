@@ -37,6 +37,7 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
   String imagePickedPath = '';
   String? errorMessage = 'Qualcosa è andato storto';
   bool biometria = false;
+  bool checkTerms = false;
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
   final TextEditingController _controllerRepeatPassword =
@@ -125,6 +126,21 @@ class _RegistrazioneWidgetState extends State<RegistrazioneWidget> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  10, 4, 0, 20),
+                              child: Text(
+                                'Stai creando un nuovo account in qualità di Caregiver.',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Lexend Deca',
+                                      color: const Color(0xFF95A1AC),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 4, 0, 20),

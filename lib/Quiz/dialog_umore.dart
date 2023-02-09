@@ -89,12 +89,9 @@ class _DialogUmore extends State<DialogUmore> {
                           child: TextFormField(
                             validator: (value) {
                               String val = value!.replaceAll(' ', '');
-                              RegExp reg = RegExp(r'^[a-zA-Z ]*$');
 
                               if (value.isEmpty || val.isEmpty) {
                                 return 'Inserisci una descrizione!';
-                              } else if (!reg.hasMatch(value)) {
-                                return 'Inserisci una descrizione valida!';
                               }
                               return null;
                             },

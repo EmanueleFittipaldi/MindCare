@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mindcare/controller/auth.dart';
 import 'package:mindcare/controller/image_upload.dart';
 import 'package:mindcare/model/quesito.dart';
@@ -249,5 +250,33 @@ passata come parametro */
           numeroTentativi: collectionRef.get('numeroTentativi')));
     }
     return result;
+  }
+
+  Future<void> deleteQuiz(caregiverUID, userUID, quesito) async {
+    var user = FirebaseFirestore.instance.collection('user');
+    var docSnapshot = user
+        .doc(caregiverUID)
+        .collection('Pazienti')
+        .doc(userUID)
+        .collection('Quesiti')
+        .doc(quesito['quesitoID']);
+
+    if (quesito['tipologia'] == 'Associa l\'immagine al nome') {
+      await FirebaseStorage.instance.refFromURL(quesito['opzione1']).delete();
+      await FirebaseStorage.instance.refFromURL(quesito['opzione2']).delete();
+      await FirebaseStorage.instance.refFromURL(quesito['opzione3']).delete();
+      await FirebaseStorage.instance
+          .refFromURL(quesito['opzione4'])
+          .delete(); //eliminazione immagine
+
+    } else if (quesito['tipologia'] == 'Associa il nome all\'immagine') {
+      await FirebaseStorage.instance
+          .refFromURL(quesito['domandaImmagine'])
+          .delete();
+    } //riferimento al documento da eliminare
+    await FirebaseFirestore.instance
+        .runTransaction((Transaction deleteTransaction) async {
+      deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione
+    });
   }
 }

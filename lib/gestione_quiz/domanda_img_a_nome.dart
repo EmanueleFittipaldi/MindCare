@@ -156,10 +156,7 @@ class _CreazioneDomandaImmagineANomeWidgetState
                             if (val.isEmpty || value.isEmpty) {
                               return 'Inserisci il titolo della domanda!';
                             }
-                            RegExp reg = RegExp(r'^[a-zA-Z ]*$');
-                            if (!reg.hasMatch(value)) {
-                              return 'Inserisci un titolo della domanda valido!';
-                            }
+
                             return null;
                           },
                           controller: textController,

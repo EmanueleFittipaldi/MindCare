@@ -27,6 +27,8 @@ import '../controller/auth.dart';
 import 'package:cron/cron.dart';
 import 'package:path/path.dart';
 
+import '../widget_tree.dart';
+
 class HomePazienteWidget extends StatefulWidget {
   final String caregiverUID;
   const HomePazienteWidget({Key? key, required this.caregiverUID})
@@ -96,6 +98,10 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.resumed:
+        Navigator.of(scaffoldKey.currentContext!).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const WidgetTree()),
+            (Route<dynamic> route) => false);
+
         break;
       case AppLifecycleState.inactive:
         break;
@@ -220,11 +226,11 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                                               .checkUmore(widget.caregiverUID,
                                                   Auth().currentUser!.uid);
 
+                                          box.put('umore', 'false');
                                           if (!bool) {
                                             if (box.get('umore') == null ||
                                                 box.get('umore') == 'false') {
                                               box.put('umore', 'true');
-
                                               Future.delayed(
                                                   const Duration(seconds: 3),
                                                   () async {
@@ -487,7 +493,7 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
                                                                     data[
                                                                         'profileImagePath'],
                                                                     fit: BoxFit
-                                                                        .cover,
+                                                                        .contain,
                                                                   )
                                                                 : Image.asset(
                                                                     'assets/images/add_photo.png',

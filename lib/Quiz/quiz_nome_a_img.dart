@@ -3,12 +3,13 @@
 import 'dart:async';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/no_piu_tentativi.dart';
-import 'package:mindcare/quiz/quiz_terminato.dart';
+import 'package:mindcare/Quiz/quiz_terminato.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:mindcare/model/report.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
+import '../model/utente.dart';
 import '../widget_tree.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 // ignore: depend_on_referenced_packages
@@ -16,7 +17,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 class NomeAImmagineWidget extends StatefulWidget {
   final Box box;
-  const NomeAImmagineWidget({required this.box, Key? key}) : super(key: key);
+  final Utente user;
+  const NomeAImmagineWidget({required this.box, required this.user, Key? key})
+      : super(key: key);
 
   @override
   _NomeAImmagineWidgetState createState() => _NomeAImmagineWidgetState();
@@ -309,7 +312,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                 builder: (context) => QuizTerminatoWidget(
                     report: report,
                     caregiverID: widget.box.get('statoCorrente')['caregiverID'],
-                    userID: widget.box.get('statoCorrente')['userID'],
+                    user: widget.user,
                     reportID: reportID)),
             (Route<dynamic> route) => false);
       });

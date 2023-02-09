@@ -192,7 +192,9 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       ImmagineANomeWidget(
-                                                          box: box)));
+                                                        box: box,
+                                                        user: widget.user,
+                                                      )));
                                         }
                                       } else {
                                         // ignore: use_build_context_synchronously
@@ -200,7 +202,9 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     ImmagineANomeWidget(
-                                                        box: box)));
+                                                      box: box,
+                                                      user: widget.user,
+                                                    )));
                                       }
                                     },
                                   ),
@@ -357,7 +361,9 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       NomeAImmagineWidget(
-                                                          box: box)));
+                                                        box: box,
+                                                        user: widget.user,
+                                                      )));
                                         }
                                       } else {
                                         // ignore: use_build_context_synchronously
@@ -365,7 +371,9 @@ class _SelezionaTipologiaWidgetState extends State<SelezionaTipologiaWidget> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     NomeAImmagineWidget(
-                                                        box: box)));
+                                                      box: box,
+                                                      user: widget.user,
+                                                    )));
                                       }
                                     },
                                   ),

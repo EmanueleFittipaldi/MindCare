@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mindcare/controller/album_controller.dart';
 import 'package:mindcare/controller/auth.dart';
+import 'package:mindcare/controller/quiz_controller.dart';
+import 'package:mindcare/controller/sos_controller.dart';
 
 class UserController {
   Future<String?> getCaregiverID(patientID) async {
@@ -118,10 +121,23 @@ class UserController {
             .delete(); //eliminazione immagine
       }
     } else if (type == 'Paziente') {
-      var docSnapshot = user
-          .doc(caregiveruid)
-          .collection('Pazienti')
-          .doc(useruid); //riferimento al documento da eliminare
+      var docSnapshot =
+          user.doc(caregiveruid).collection('Pazienti').doc(useruid);
+      var quesiti = await docSnapshot.collection('Quesiti').get();
+      for (var item in quesiti.docs) {
+        QuizController().deleteQuiz(caregiveruid, useruid, item);
+      }
+      var ricordi = await docSnapshot.collection('Ricordi').get();
+      for (var item in ricordi.docs) {
+        AlbumController().deleteMemory(
+            useruid, caregiveruid, item['ricordoID'], item['filePath']);
+      }
+      var contatti = await docSnapshot.collection('ContattiSOS').get();
+      for (var item in contatti.docs) {
+        ContattoController().deleteContatto(useruid, caregiveruid,
+            item['contattoID'], item['profileImagePath']);
+      }
+      //riferimento al documento da eliminare
       await FirebaseFirestore.instance
           .runTransaction((Transaction deleteTransaction) async {
         deleteTransaction.delete(docSnapshot); //transazione per l'eliminazione

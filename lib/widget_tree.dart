@@ -103,7 +103,7 @@ class _WidgetTreeState extends State<WidgetTree> {
       } on PlatformException catch (e) {
         // ignore: prefer_interpolation_to_compose_strings, avoid_print
         print("stampo l'errore " + e.code.toString());
-        if(e.code.toString() == "auth_in_progress"){
+        if (e.code.toString() == "auth_in_progress") {
           isAuthenticated = true;
         }
       }
@@ -112,7 +112,7 @@ class _WidgetTreeState extends State<WidgetTree> {
         Fluttertoast.showToast(msg: "Identità non riconosciuta");
         Auth().signOut();
         print("Non ti ho riconosciuto quindi ho fatto il logout");
-        }
+      }
     }
     // ignore: avoid_print
     print("isAuthenticated#2 $isAuthenticated");

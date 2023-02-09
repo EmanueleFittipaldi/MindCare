@@ -74,7 +74,7 @@ passata come parametro */
       onWillPop: () async {
         var confirmDialogResponse = await PanaraConfirmDialog.show(
           context,
-          title: "Creazione ricordo",
+          title: "Creazione contatto",
           message:
               "Vuoi davvero annullare la creazione? Tutti i dati verranno persi!",
           confirmButtonText: "Conferma",
