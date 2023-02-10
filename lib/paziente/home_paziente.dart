@@ -98,10 +98,6 @@ class _HomePazienteWidgetState extends State<HomePazienteWidget>
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.resumed:
-        Navigator.of(scaffoldKey.currentContext!).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const WidgetTree()),
-            (Route<dynamic> route) => false);
-
         break;
       case AppLifecycleState.inactive:
         break;
