@@ -11,7 +11,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:video_player/video_player.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tags/flutter_tags.dart';
+import 'package:material_tag_editor/tag_editor.dart';
 
 class RicordoImmagineWidget extends StatefulWidget {
   final String userID;
@@ -38,7 +38,6 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
   TextEditingController controllerTag = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<TagsState> _globalKey = GlobalKey<TagsState>();
   late VideoPlayerController _videoPlayerController;
   bool? switchDescritpionValue = true;
   bool isNetworkImage = false;
@@ -636,138 +635,65 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
                               )
                             : const Text(''),
                         Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                15, 15, 15, 10),
-                            child: Tags(
-                              key: _globalKey,
-                              columns: 3,
-                              itemCount: tags.length,
-                              itemBuilder: (index) {
-                                final String currentItem = tags[index];
-                                return ItemTags(
-                                  color: FlutterFlowTheme.of(context)
-                                      .backgroundPrimaryColor,
-                                  textColor: FlutterFlowTheme.of(context)
-                                      .tertiaryColor,
-                                  index: index,
-                                  title: currentItem,
-                                  textStyle: const TextStyle(fontSize: 14),
-                                  combine: ItemTagsCombine.withTextBefore,
-                                  // ignore: avoid_print
-                                  onPressed: (i) => print(i),
-                                  // ignore: avoid_print
-                                  onLongPressed: (i) => print(i),
-                                  removeButton: ItemTagsRemoveButton(
-                                    onRemoved: () {
-                                      setState(() {
-                                        tags.removeAt(index);
-                                      });
-                                      return true;
-                                    },
-                                  ),
-                                );
-                              },
-                            )),
-                        Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              15, 15, 15, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 15, 0),
-                                  child: TextFormField(
-                                    controller: controllerTag,
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      hintText: 'Aggiungi tag:',
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .borderColor,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .borderColor,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .borderErrorColor,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .borderErrorColor,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'IBM Plex Sans',
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                              FlutterFlowIconButton(
-                                borderColor: const Color(0xFFE0E3E7),
-                                borderRadius: 20,
-                                borderWidth: 1,
-                                buttonSize: 60,
-                                icon: Icon(
-                                  Icons.add,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 25,
-                                ),
-                                onPressed: () {
-                                  var string = controllerTag.text;
-                                  if (tags.length > 2) {
-                                    Fluttertoast.showToast(
-                                        msg:
-                                            'Massimo tre tag puoi aggiungere!');
-                                  } else {
-                                    var checkChar = string.replaceAll(' ', '');
-                                    if (string.isEmpty || checkChar == '') {
-                                      Fluttertoast.showToast(
-                                          msg: 'Caratteri tag non validi!');
-                                    } else {
-                                      String newItem =
-                                          string.trim().toLowerCase();
-                                      setState(() {
-                                        controllerTag.clear();
-                                        if (!tags.contains(newItem)) {
-                                          tags.add(newItem);
-                                        }
-                                      });
+                              15, 15, 15, 10),
+                          child: TagEditor(
+                            length: tags.length,
+                            delimiters: [',', ' '],
+                            hasAddButton: true,
+                            inputDecoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Inserisci tag...',
+                            ),
+                            onTagChanged: (newValue) {
+                              if (tags.length > 2) {
+                                PanaraInfoDialog.show(
+                                  context,
+                                  title: "Aggiunta tag",
+                                  message: "Massimo tre tag puoi aggiungere!",
+                                  buttonText: "Okay",
+                                  onTapDismiss: () {
+                                    Navigator.pop(context);
+                                  },
+                                  panaraDialogType: PanaraDialogType.normal,
+                                  barrierDismissible:
+                                      false, // optional parameter (default is true)
+                                );
+                              } else {
+                                var checkChar = newValue.replaceAll(' ', '');
+                                if (newValue.isEmpty || checkChar == '') {
+                                  PanaraInfoDialog.show(
+                                    context,
+                                    title: "Aggiunta tag",
+                                    message: "Caratteri tag non validi!",
+                                    buttonText: "Okay",
+                                    onTapDismiss: () {
+                                      Navigator.pop(context);
+                                    },
+                                    panaraDialogType: PanaraDialogType.normal,
+                                    barrierDismissible:
+                                        false, // optional parameter (default is true)
+                                  );
+                                } else {
+                                  String newItem =
+                                      newValue.trim().toLowerCase();
+                                  setState(() {
+                                    controllerTag.clear();
+                                    if (!tags.contains(newItem)) {
+                                      tags.add(newItem);
                                     }
-                                  }
-                                },
-                              ),
-                            ],
+                                  });
+                                }
+                              }
+                            },
+                            tagBuilder: (context, index) => _Chip(
+                                index: index,
+                                label: tags[index],
+                                onDeleted: (index) => setState(() {
+                                      tags.removeAt(index);
+                                    })),
                           ),
-                        ),
+                        )
                       ],
                     ),
                     Padding(
@@ -868,6 +794,33 @@ class _RicordoImmagineWidgetState extends State<RicordoImmagineWidget> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Chip extends StatelessWidget {
+  const _Chip({
+    required this.label,
+    required this.onDeleted,
+    required this.index,
+  });
+
+  final String label;
+  final ValueChanged<int> onDeleted;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      labelPadding: const EdgeInsets.only(left: 8.0),
+      label: Text(label),
+      deleteIcon: Icon(
+        Icons.close,
+        size: 18,
+      ),
+      onDeleted: () {
+        onDeleted(index);
+      },
     );
   }
 }

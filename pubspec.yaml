@@ -52,7 +52,6 @@ dependencies:
   hive_flutter: ^1.1.0
   percent_indicator: ^4.2.2
   carousel_slider: ^4.2.1
-  flutter_tags: ^0.4.9+1
   animated_custom_dropdown: ^1.2.2
   group_button: ^5.2.2
   calendar_date_picker2: ^0.3.5
@@ -71,6 +70,7 @@ dependencies:
   timezone: ^0.8.0
   flutter_native_timezone: ^2.0.0
   rxdart: ^0.27.5
+  material_tag_editor: ^0.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
