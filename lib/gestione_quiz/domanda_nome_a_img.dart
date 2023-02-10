@@ -926,8 +926,19 @@ passata come parametro */
                                 await ImageUpload().uploadImage(imagDomanda);
                           }
                           if (imageUrlDomanda == null) {
-                            Fluttertoast.showToast(
-                                msg: 'Caricara un\'immagine');
+                            // ignore: use_build_context_synchronously
+                            PanaraInfoDialog.show(
+                              context,
+                              title: "Crea quiz",
+                              message: "Carica un'immagine!",
+                              buttonText: "Okay",
+                              onTapDismiss: () {
+                                Navigator.pop(context);
+                              },
+                              panaraDialogType: PanaraDialogType.warning,
+                              barrierDismissible:
+                                  false, // optional parameter (default is true)
+                            );
                           } else {
                             //Creazione del quesito
                             QuizController().creazioneQuesitoNomeImg(

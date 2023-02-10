@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 // ignore: unused_import
 import 'package:mindcare/appbar/appbar_caregiver.dart';
 import 'package:mindcare/model/ricordo.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_video_player.dart';
@@ -153,9 +154,21 @@ class _RicordoWidgetState extends State<RicordoWidget> {
                                                   if (widget.ricordo
                                                           .descrizione ==
                                                       '') {
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            'Non è presente una descrizione da leggere!');
+                                                    PanaraInfoDialog.show(
+                                                      context,
+                                                      title: "Text-to-speech",
+                                                      message:
+                                                          "Non è presente una descrizione da leggere!",
+                                                      buttonText: "Okay",
+                                                      onTapDismiss: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      panaraDialogType:
+                                                          PanaraDialogType
+                                                              .normal,
+                                                      barrierDismissible:
+                                                          false, // optional parameter (default is true)
+                                                    );
                                                   } else {
                                                     String language = 'it-IT';
                                                     tts.setLanguage(language);

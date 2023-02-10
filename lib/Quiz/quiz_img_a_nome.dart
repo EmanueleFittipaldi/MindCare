@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:mindcare/Quiz/no_piu_tentativi.dart';
+import 'package:mindcare/init_homepage.dart';
 import 'package:mindcare/model/report.dart';
 import 'package:mindcare/model/utente.dart';
 import 'package:mindcare/Quiz/quiz_terminato.dart';
@@ -216,7 +217,10 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
 
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const WidgetTree()),
+          MaterialPageRoute(
+              builder: (context) => InitHomepage(
+                  user: widget.user,
+                  carUID: widget.box.get('statoCorrente')['caregiverID'])),
           (Route<dynamic> route) => false);
     } else {
       setState(() {});
@@ -508,7 +512,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                           context)
                                                       .tertiaryColor,
                                                   image: DecorationImage(
-                                                    fit: BoxFit.contain,
+                                                    fit: BoxFit.cover,
                                                     image: Image.network(
                                                       quesito['opzione1'],
                                                     ).image,
@@ -548,7 +552,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                           context)
                                                       .tertiaryColor,
                                                   image: DecorationImage(
-                                                    fit: BoxFit.contain,
+                                                    fit: BoxFit.cover,
                                                     image: Image.network(
                                                       quesito['opzione2'],
                                                     ).image,
@@ -602,7 +606,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                             context)
                                                         .tertiaryColor,
                                                     image: DecorationImage(
-                                                      fit: BoxFit.contain,
+                                                      fit: BoxFit.cover,
                                                       image: Image.network(
                                                         quesito['opzione3'],
                                                       ).image,
@@ -645,7 +649,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                             context)
                                                         .tertiaryColor,
                                                     image: DecorationImage(
-                                                      fit: BoxFit.contain,
+                                                      fit: BoxFit.cover,
                                                       image: Image.network(
                                                         quesito['opzione4'],
                                                       ).image,

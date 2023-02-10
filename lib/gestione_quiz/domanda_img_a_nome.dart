@@ -786,7 +786,19 @@ class _CreazioneDomandaImmagineANomeWidgetState
                               imageUrlOp2 == null ||
                               imageUrlOp3 == null ||
                               imageUrlOp4 == null) {
-                            Fluttertoast.showToast(msg: 'Caricare le immagini');
+                            // ignore: use_build_context_synchronously
+                            PanaraInfoDialog.show(
+                              context,
+                              title: "Crea quiz",
+                              message: "Carica le immagini!",
+                              buttonText: "Okay",
+                              onTapDismiss: () {
+                                Navigator.pop(context);
+                              },
+                              panaraDialogType: PanaraDialogType.warning,
+                              barrierDismissible:
+                                  false, // optional parameter (default is true)
+                            );
                           } else {
                             //Creazione del quesito
                             QuizController().createQuesitoImgNome(

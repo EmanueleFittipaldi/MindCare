@@ -154,16 +154,24 @@ class _SosWidgetState extends State<SosWidget> {
     // ignore: no_leading_underscores_for_local_identifiers
     Future<void> _sendSMS(String phoneNumber) async {
       await getLocation();
-      final Uri url = Uri(
-        scheme: 'sms',
-        path: phoneNumber,
-        query: encodeQueryParameters(<String, String>{
-          'body':
-              'SOS MINDCARE: AIUTO! Mi sono perso! Indirizzo: $_currentAddress'
-        }),
-      );
-      if (!await launchUrl(url)) {
-        throw 'Cannot lunch $url';
+      if (Platform.isAndroid) {
+        final Uri url = Uri(
+          scheme: 'sms',
+          path: phoneNumber,
+          query: encodeQueryParameters(<String, String>{
+            'body':
+                'SOS MINDCARE: AIUTO! Mi sono perso! Indirizzo: $_currentAddress'
+          }),
+        );
+        if (!await launchUrl(url)) {
+          throw 'Cannot lunch $url';
+        }
+      } else if (Platform.isIOS) {
+        var uri =
+            'sms:$phoneNumber&body=SOS MINDCARE: AIUTO! Mi sono perso! Indirizzo: $_currentAddress';
+        if (!await launchUrl(Uri.parse(uri))) {
+          throw 'Cannot lunch $uri';
+        }
       }
     }
 

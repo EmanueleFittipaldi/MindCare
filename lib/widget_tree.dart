@@ -183,7 +183,8 @@ class _WidgetTreeState extends State<WidgetTree> {
                       DateTime dateNow = DateTime.now();
 
                       if (dateNow.difference(date!).inHours > 24) {
-                        Fluttertoast.showToast(msg: 'Verifica scaduata!');
+                        Fluttertoast.showToast(
+                            msg: 'Verifica dell\'email scaduata!');
 
                         deleteUserDB(type!);
                         Auth().currentUser!.delete();
@@ -205,7 +206,8 @@ class _WidgetTreeState extends State<WidgetTree> {
                           Auth().currentUser!.metadata.creationTime;
                       DateTime dateNow = DateTime.now();
                       if (dateNow.difference(date!).inHours > 24) {
-                        Fluttertoast.showToast(msg: 'Verifica scaduta!');
+                        Fluttertoast.showToast(
+                            msg: 'Verifica dell\'email scaduata!');
                         deleteUserDB(type!);
                         Auth().currentUser!.delete();
                       } else {

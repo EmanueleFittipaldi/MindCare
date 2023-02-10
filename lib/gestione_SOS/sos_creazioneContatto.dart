@@ -586,8 +586,19 @@ passata come parametro */
                                   await ImageUpload().uploadImage(imagContatto);
                             }
                             if (imageUrlSos == null) {
-                              Fluttertoast.showToast(
-                                  msg: 'Caricare un\'immagine');
+                              // ignore: use_build_context_synchronously
+                              PanaraInfoDialog.show(
+                                context,
+                                title: "Crea contatto",
+                                message: "Carica un'immagine!",
+                                buttonText: "Okay",
+                                onTapDismiss: () {
+                                  Navigator.pop(context);
+                                },
+                                panaraDialogType: PanaraDialogType.warning,
+                                barrierDismissible:
+                                    false, // optional parameter (default is true)
+                              );
                             } else {
                               // ignore: prefer_typing_uninitialized_variables
                               var filePath;

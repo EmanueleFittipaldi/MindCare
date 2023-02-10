@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mindcare/Quiz/no_piu_tentativi.dart';
 import 'package:mindcare/Quiz/quiz_terminato.dart';
+import 'package:mindcare/init_homepage.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:mindcare/model/report.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -211,7 +212,10 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
       };
       widget.box.put('statoCorrente', statoCorrente);
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const WidgetTree()),
+          MaterialPageRoute(
+              builder: (context) => InitHomepage(
+                  user: widget.user,
+                  carUID: widget.box.get('statoCorrente')['caregiverID'])),
           (Route<dynamic> route) => false);
     } else {
       setState(() {});
@@ -487,7 +491,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                     quesito['domandaImmagine'],
                                     width: double.infinity,
                                     height: 200,
-                                    fit: BoxFit.contain,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
