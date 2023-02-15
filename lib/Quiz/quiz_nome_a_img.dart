@@ -491,7 +491,7 @@ class _NomeAImmagineWidgetState extends State<NomeAImmagineWidget> {
                                     quesito['domandaImmagine'],
                                     width: double.infinity,
                                     height: 200,
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.contain,
                                   ),
                                 ),
                               ),

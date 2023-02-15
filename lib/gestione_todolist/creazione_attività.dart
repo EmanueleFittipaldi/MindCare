@@ -186,10 +186,7 @@ class _CreazioneAttivitaState extends State<CreazioneAttivita> {
                                               value.length > 100) {
                                             return 'Inserisci una descrizione valida di max 100 caratteri';
                                           }
-                                          RegExp reg = RegExp(r'^[a-zA-Z ]*$');
-                                          if (!reg.hasMatch(value)) {
-                                            return 'Inserisci una descrizione valida!';
-                                          }
+
                                           return null;
                                         },
                                         controller: descrizioneController,

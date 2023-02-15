@@ -512,7 +512,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                           context)
                                                       .tertiaryColor,
                                                   image: DecorationImage(
-                                                    fit: BoxFit.cover,
+                                                    fit: BoxFit.contain,
                                                     image: Image.network(
                                                       quesito['opzione1'],
                                                     ).image,
@@ -552,7 +552,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                           context)
                                                       .tertiaryColor,
                                                   image: DecorationImage(
-                                                    fit: BoxFit.cover,
+                                                    fit: BoxFit.contain,
                                                     image: Image.network(
                                                       quesito['opzione2'],
                                                     ).image,
@@ -606,7 +606,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                             context)
                                                         .tertiaryColor,
                                                     image: DecorationImage(
-                                                      fit: BoxFit.cover,
+                                                      fit: BoxFit.contain,
                                                       image: Image.network(
                                                         quesito['opzione3'],
                                                       ).image,
@@ -649,7 +649,7 @@ class _ImmagineANomeWidgetState extends State<ImmagineANomeWidget> {
                                                             context)
                                                         .tertiaryColor,
                                                     image: DecorationImage(
-                                                      fit: BoxFit.cover,
+                                                      fit: BoxFit.contain,
                                                       image: Image.network(
                                                         quesito['opzione4'],
                                                       ).image,
